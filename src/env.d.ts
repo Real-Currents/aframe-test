@@ -12,7 +12,7 @@ interface ImportMetaEnv {
   readonly VITE_COGNITO_DOMAIN: string
   readonly VITE_COGNITO_REDIRECT_SIGNIN: string
   readonly VITE_COGNITO_REDIRECT_SIGNOUT: string
-  readonly VITE_MAPBOX_TOKEN: string
+  readonly VITE_MAPBOX_ACCESS_TOKEN: string
   
 }
 
