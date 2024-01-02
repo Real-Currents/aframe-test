@@ -4,9 +4,9 @@ import { getCurrentUser } from "@aws-amplify/auth/cognito";
 import {
     Button,
     Flex,
-    Heading,
-    Image,
-    Text,
+    // Heading,
+    // Image,
+    // Text,
     withAuthenticator,
     useAuthenticator,
     UseAuthenticator
@@ -18,18 +18,39 @@ import reactLogo from './assets/react.svg';
 import reduxLogo from './assets/redux.svg';
 import viteLogo from './assets/vite.svg';
 
-import { User } from "../models/User";
-import { selectUser } from "../features";
+import User from '../models/User';
+import {
+    updateUserId,
+    updateUserName,
+    selectUser
+} from "../features";
 import {
     decrement,
     increment,
-    incrementByAmount,
-    incrementByAmountAsync,
     selectCount
 } from "./features/counter/counterSlice";
-import {updateUser} from "../features/user/userSlice";
 
-function App({ content, user }: { content: () => HTMLElement, user: Promise<User> }): ReactElement {
+
+
+function getUserLabel (u: User) {
+    return (u.hasOwnProperty("signInUserSession")
+        && !!u.signInUserSession
+        && u.signInUserSession.hasOwnProperty("idToken")
+        && u.signInUserSession?.idToken.hasOwnProperty("payload")
+    ) ? (
+            (u.signInUserSession?.idToken.payload.hasOwnProperty("name") && !!u.signInUserSession?.idToken.payload.name) ?
+                u.signInUserSession?.idToken.payload.name :
+                (u.signInUserSession?.idToken.payload.hasOwnProperty("email") && !!u.signInUserSession?.idToken.payload.email) ?
+                    u.signInUserSession?.idToken.payload.email :
+                    u.username
+        ) :
+        (u.hasOwnProperty("email") && !!u.email) ?
+            u.email :
+            u.username
+}
+
+
+function App ({ content, user }: { content: () => HTMLElement, user: Promise<User> }): ReactElement {
 
     (function init () {
         // Check access to react/vite environment variables
@@ -37,7 +58,7 @@ function App({ content, user }: { content: () => HTMLElement, user: Promise<User
         // console.log(aws_config);
     }());
 
-    const allowMenuToBeClosed = false;
+    const allowMenuToBeClosed = true;
     const [ controlPanelOpen, setControlPanelOpen ] = useState<boolean>(!allowMenuToBeClosed);
     const [ showMenuButton, setShowMenuButton ] = useState<boolean>(!!allowMenuToBeClosed);
 
@@ -50,15 +71,30 @@ function App({ content, user }: { content: () => HTMLElement, user: Promise<User
     const userState: User = useSelector(selectUser);
     const dispatch = useDispatch();
 
-    dispatch(updateUser(user));
-
-    const [ bid, setBid ] = useState<number>(0);
-
     useEffect(() => {
-        if (bid > 0.0) {
-            alert(`Thank you for your bid of $${bid}!`);
+        console.log("Initial userState:", userState);
+        console.log("user type:", user.constructor.name);
+        function updateUser (u: User) {
+            try {
+                if (!!u.userId) {
+                    console.log("Update userId:", u.userId);
+                    dispatch(updateUserId(u.userId));
+                }
+                if (!!u.userId && !!u.username) {
+                    console.log("Update username:", u.username);
+                    dispatch(updateUserName(u.username));
+                }
+            } catch (e: any) {
+                console.error(e);
+            }
         }
-    }, [ bid ])
+        if (user.hasOwnProperty("then")) {
+            user.then(u => updateUser(u));
+        } else {
+            const u = (user as unknown) as User;
+            updateUser(u);
+        }
+    }, [ user ]);
 
     function addContentToCurrentComponent () {
         if (!content_loaded) {
@@ -127,61 +163,17 @@ function App({ content, user }: { content: () => HTMLElement, user: Promise<User
                   justifyContent="space-between" >
 
                 <Flex direction="column" flex={(controlPanelOpen)? "initial" : "auto"}>
-                    <h1 style={{textAlign: "center"}}>Amplify + Redux + React (TS) + Vite</h1>
-                    <br />
-                    <Flex
-                        direction={{ base: 'column', large: 'row' }}
-                        justifyContent="center"
-                        padding="1rem"
-                        width="100%"
-                    >
-                        <Image
-                            alt="Abstract art"
-                            height="21rem"
-                            objectFit="cover"
-                            src="https://images.unsplash.com/photo-1500462918059-b1a0cb512f1d?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987"
-                        />
-                        <Flex direction="column"
-                              justifyContent="space-between"
-                              maxWidth="32rem">
-                            <Heading level={3}>Abstract art</Heading>
-                            <Text>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                eiusmod tempor incididunt ut labore et dolore magna aliqua. Volutpat
-                                sed cras ornare arcu dui. Duis aute irure dolor in reprehenderit in
-                                voluptate velit esse.
-                            </Text>
-                            <Counter setBid={setBid} />
+                    <h1 style={{textAlign: "center"}}>BEAD Filters + Map</h1>
 
-                        </Flex>
-                    </Flex>
-                    <div className="card" style={{ textAlign: "center" }}>
-                        <p>
-                            Edit <code>App.tsx</code> and save to test HMR
-                        </p>
-                        <a href="https://docs.amplify.aws/react/tools/libraries/" target="_blank">
-                            <img src={amplifyLogo} className="logo" alt="AWS Amplify" />
-                        </a>
-                        <a href="https://redux-toolkit.js.org/" target="_blank">
-                            <img src={reduxLogo} className="logo redux" alt="Redux logo" />
-                        </a>
-                        <a href="https://react.dev" target="_blank">
-                            <img src={reactLogo} className="logo react" alt="React logo" />
-                        </a>
-                        <a href="https://vitejs.dev" target="_blank">
-                            <img src={viteLogo} className="logo" alt="Vite logo" />
-                        </a>
-                    </div>
-                    <p className="read-the-docs" style={{ textAlign: "center" }}>
-                        Click on the AWS Amplify, Redux, React and Vite logos to learn more
-                    </p>
+                    {/*<!-- Filters + Map component -->*/}
+
                 </Flex>
 
                 <ControlPanel
                     open={controlPanelOpen}
                     showMenuButton={showMenuButton}
                     toggleFunction={toggleControlPanel}
-                    user={Promise.resolve(userState)}>
+                    user={user}>
                     <ApplicationMenu />
                 </ControlPanel>
                 {/*<div className={"amplify-sign-out"}><SignOutButton /></div>*/}
@@ -191,11 +183,7 @@ function App({ content, user }: { content: () => HTMLElement, user: Promise<User
     );
 }
 
-
-
-function Counter (props: {
-    setBid: Function
-}) {
+function Counter () {
     const count = useSelector(selectCount);
     const dispatch = useDispatch();
 
@@ -212,17 +200,13 @@ function Counter (props: {
                     onClick={() => (dispatch as Function)(decrement())} >
                 -
             </Button>
-            <Button
-                onClick={ () => props.setBid(count) }
-                variation="primary"
-            >
-                Bid ${count} on this item
-            </Button>
         </div>
     );
 }
 
-function ApplicationMenu() {
+function ApplicationMenu () {
+
+    // const userState: User = useSelector(selectUser);
 
     function showPrintOptions() {
         try {
@@ -235,6 +219,7 @@ function ApplicationMenu() {
 
     return (
         <div id={"application-menu"} style={{ minWidth: "254px" }}>
+
             <div id={"print-exec"} className="row">
                 <Button type="submit"  id={"print-config-btn"}
                         className={"amplify-button amplify-field-group__control amplify-button--primary amplify-button--fullwidth btn btn-primary btn-lg"}
@@ -367,9 +352,9 @@ function ControlPanel (props: {
     const [ open, setOpen ] = (props.hasOwnProperty("open") && typeof props.open === "boolean") ?
         [ props.open, (v: boolean) => v ] :
         useState<boolean>(
-        (props.hasOwnProperty("showMenuButton") && typeof props.showMenuButton === "boolean") ?
-            !props.showMenuButton :
-            false
+            (props.hasOwnProperty("showMenuButton") && typeof props.showMenuButton === "boolean") ?
+                !props.showMenuButton :
+                false
         );
     const toggle: Function = (props.hasOwnProperty("toggleFunction") && props.toggleFunction !== null && !!props.toggleFunction) ?
         props.toggleFunction :
@@ -389,23 +374,6 @@ function ControlPanel (props: {
             setUserState(u);
         }
     });
-
-    function getUserLabel (u: User) {
-        return (u.hasOwnProperty("signInUserSession")
-            && !!u.signInUserSession
-            && u.signInUserSession.hasOwnProperty("idToken")
-            && u.signInUserSession?.idToken.hasOwnProperty("payload")
-        ) ? (
-                (u.signInUserSession?.idToken.payload.hasOwnProperty("name") && !!u.signInUserSession?.idToken.payload.name) ?
-                    u.signInUserSession?.idToken.payload.name :
-                    (u.signInUserSession?.idToken.payload.hasOwnProperty("email") && !!u.signInUserSession?.idToken.payload.email) ?
-                        u.signInUserSession?.idToken.payload.email :
-                        u.username
-            ) :
-            (u.hasOwnProperty("email") && !!u.email) ?
-                u.email :
-                u.username
-    }
 
     return (
         <div className={open ? "control-panel": "control-panel closed"}>
