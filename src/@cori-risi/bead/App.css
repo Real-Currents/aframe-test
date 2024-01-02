@@ -57,6 +57,20 @@
   color: #888;
 }
 
+.row > button {
+  margin-left: 4px;
+  margin-right: 8px;
+}
+
+.value {
+  font-size: 24px;
+  padding-left: 16px;
+  padding-right: 16px;
+  margin-top: 2px;
+  font-family: "Courier New", Courier, monospace;
+}
+
+
 /** Amplify overrides **/
 :root, [data-amplify-theme] {
   font-family: TT Hoves Light,Montserrat,sans-serif;
@@ -109,6 +123,7 @@
 .control-panel {
   position: fixed;
   right: 0;
+  margin-top: -44px;
   padding: 12px 6px;
   background-color: var(--main-bg-color);
 }
@@ -150,15 +165,18 @@
 
 .menu-toggle__control {
   float: right;
-  margin-top: -44px;
   margin-right: 6px;
 }
 
-@media (max-height: 859px) {
+@media (max-height: 960px) {
+
+  .control-panel {
+    margin-top: -36px;
+  }
 
   .control-panel .controls {
-    max-height: calc(100vh - 112px);
-    min-height: calc(100vh - 112px);
+    max-height: calc(100vh - 96px);
+    min-height: calc(100vh - 96px);
     background-color: transparent;
   }
 
@@ -167,7 +185,6 @@
   }
 
   .menu-toggle__control {
-    margin-top: -24px;
     margin-right: 6px;
   }
 

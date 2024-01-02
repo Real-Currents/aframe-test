@@ -41,7 +41,7 @@
 //       payload: config,
 //     });
 //   };
-//   const updateAuthUser = useCallback((user: AuthUser) => {
+//   const updateAuthUser = useCallback((user: User) => {
 //     dispatch({ type: ACTIONS.UPDATE_AUTH_USER, payload: user });
 //   }, []);
 //   const { config, user, updateAuthUser } = useContext<AppContextPropsType>(AppContext);
