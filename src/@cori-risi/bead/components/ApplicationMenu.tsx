@@ -1,5 +1,6 @@
 import {Button, Card} from "@aws-amplify/ui-react";
 import "./styles/ApplicationMenu.scss";
+import {useState} from "react";
 
 
 function ApplicationMenu () {
@@ -46,29 +47,86 @@ function ApplicationMenu () {
      */
 
     //
+    // Inputs
+    //
+
+    type Inputs = {
+        width: string,
+        height: string,
+        dpi: string,
+        // format: string,
+        // unit: string,
+        // style: string
+    };
+    const [ inputs, setInputs ] = useState<Inputs>({
+        width: "8",
+        height: "6",
+        dpi: "300",
+        // format: "png",
+        // unit: "in",
+        // style: "mapbox://styles/ruralinno/clhgnms6802i701qn0c9y0pow"
+    });
+
+    //
     // Errors
     //
 
-    const errors = {
-        width: {
-            state: false,
-            msg: 'Width must be a positive number!',
-            grp: 'widthGroup'
-        },
-        height: {
-            state: false,
-            grp: 'heightGroup'
-        },
-        dpi: {
-            state: false,
-            msg: 'DPI must be a positive number!',
-            grp: 'dpiGroup'
-        }
-    };
+    // const errors: Errors = {
+    //     width: {
+    //         state: false,
+    //         msg: 'Width must be a positive number!',
+    //         grp: 'widthGroup'
+    //     },
+    //     height: {
+    //         state: false,
+    //         grp: 'heightGroup'
+    //     },
+    //     dpi: {
+    //         state: false,
+    //         msg: 'DPI must be a positive number!',
+    //         grp: 'dpiGroup'
+    //     }
+    // };
 
-    function isError() {
+    type ErrorState = {
+        state: boolean,
+        msg: string,
+        grp: string
+    };
+    type InputErrors = {
+        [input: string]: ErrorState,
+        width: ErrorState,
+        height: ErrorState,
+        dpi: ErrorState
+    };
+    type Errors = Partial<Record<keyof InputErrors, string>>;
+    const [ errors, setErrors ] = useState<Errors>(validate(inputs));
+    // const errors: Errors ={
+    //     width:  {
+    //         state: false,
+    //         msg: 'Width must be a positive number!',
+    //         grp: 'widthGroup'
+    //     },
+    //     height: {
+    //         state: false,
+    //         msg: 'Height must be a positive number!',
+    //         grp: 'heightGroup'
+    //     },
+    //     dpi: {
+    //         state: false,
+    //         msg: 'DPI must be a positive number!',
+    //         grp: 'dpiGroup'
+    //     }
+    // };
+
+    function isError(inputName?: string): boolean {
         'use strict';
-        for (let e in errors) {
+
+        if (!!inputName) {
+            return (errors[inputName] && !! errors[inputName].state && touched[inputName]) ?
+                <p className={"form-error"}>{errors[inputName].msg}</p> :
+                null
+        } else for (let e in errors) {
             if (errors[e].state) {
                 return true;
             }
@@ -77,10 +135,49 @@ function ApplicationMenu () {
     }
 
     //
+    // Validate "touched" inputs
+    //
+
+    type Touched = Partial<Record<keyof Inputs, boolean>>;
+    const [ touched, setTouched ] = useState<Touched>({});
+
+    function validate (newInputs: Inputs): Errors {
+        const newErrors: Errors = {};
+
+        newErrors.width = {
+            state: (parseInt(newInputs.width) !== parseInt(newInputs.width)
+                || parseInt(newInputs.width) < 0
+            ),
+            msg: 'Width must be a positive number!',
+            grp: 'widthGroup'
+        };
+
+        newErrors.height = {
+            state: (parseInt(newInputs.height) !== parseInt(newInputs.height)
+                || parseInt(newInputs.height) < 0
+            ),
+            msg: 'Height must be a positive number!',
+            grp: 'heightGroup'
+        };
+
+        newErrors.dpi = {
+            state: (parseInt(newInputs.dpi) !== parseInt(newInputs.dpi)
+                || parseInt(newInputs.dpi) < 0
+            ),
+            msg: 'DPI must be a positive number!',
+            grp: 'dpiGroup'
+        };
+
+        console.log("Errors: ", newErrors);
+
+        return newErrors;
+    }
+
+    //
     // Generate printable map rendering
     //
 
-    function generatePrintMap(element, map) {
+    function generatePrintMap (element, map) {
 
         if (isError()) {
             console.error('The current configuration is invalid! Please ' +
@@ -246,9 +343,9 @@ function ApplicationMenu () {
                 {/* Print config form */}
 
                 <form id={"print-config"}>
-                    <br/>
                     <fieldset id="config-fields">
-                        <div>
+                        <div style={{ display: "none" }}>
+                            <br/>
                             <div className="col-sm-4">
                                 <div className="form-group">
                                     <label className={"form-label"}>Unit: </label>{/*<br />*/}
@@ -276,7 +373,7 @@ function ApplicationMenu () {
                         <br />
 
                         <div className="col-sm-5">
-                            <div className="form-group">
+                            <div className={"form-group"}>
                                 <label className={"form-label"} htmlFor="styleSelect">Map style</label>
                                 <select id="styleSelect" className="form-control">
                                     <option value="mapbox://styles/ruralinno/clhgnms6802i701qn0c9y0pow">CORI/RISI Assessment Map</option>
@@ -285,61 +382,92 @@ function ApplicationMenu () {
                                     <option value="mapbox://styles/ruralinno/ckmxgvwii0tn317o6nt0reg27">CORI Satellite Fade/Zoom</option>
                                     <option value="mapbox://styles/mapbox/light-v9">Mapbox Light</option>
                                     <option value="mapbox://styles/mapbox/streets-v10">Mapbox Streets</option>
-                                    <option value="https://tiles.stadiamaps.com/styles/alidade_smooth.json">Stadia Maps Alidade Smooth</option>
-                                    <option value="https://tiles.stadiamaps.com/styles/alidade_smooth_dark.json">Stadia Maps Alidade Smooth Dark</option>
-                                    <option value="https://tiles.stadiamaps.com/styles/outdoors.json">Stadia Maps Outdoors</option>
-                                    <option value="https://tiles.stadiamaps.com/styles/osm_bright.json">Stadia Maps OSM Bright</option>
+                                    {/*<option value="https://tiles.stadiamaps.com/styles/alidade_smooth.json">Stadia Maps Alidade Smooth</option>*/}
+                                    {/*<option value="https://tiles.stadiamaps.com/styles/alidade_smooth_dark.json">Stadia Maps Alidade Smooth Dark</option>*/}
+                                    {/*<option value="https://tiles.stadiamaps.com/styles/outdoors.json">Stadia Maps Outdoors</option>*/}
+                                    {/*<option value="https://tiles.stadiamaps.com/styles/osm_bright.json">Stadia Maps OSM Bright</option>*/}
                                 </select>
+                            </div>
+                            <div className={"form-group"}>
+                                <div className="col-sm-4">
+                                    <div className="form-group" id="latGroup">
+                                        <label className={"form-label"} htmlFor="latInput">Latitude</label>
+                                        <input type="text" className="form-control" id="latInput" autoComplete="off"
+                                               readOnly value="" />
+                                    </div>
+                                </div>
+                                <div className="col-sm-4">
+                                    <div className="form-group" id="lonGroup">
+                                        <label className={"form-label"} htmlFor="lonInput">Longitude</label>
+                                        <input type="text" className="form-control" id="lonInput" autoComplete="off"
+                                               readOnly value="" />
+                                    </div>
+                                </div>
+                                <div className="col-sm-4">
+                                    <div className="form-group" id="zoomGroup">
+                                        <label className={"form-label"} htmlFor="zoomInput">Zoom</label>
+                                        <input type="text" className="form-control" id="zoomInput" autoComplete="off"
+                                               readOnly value="" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
                         <br />
 
                         <div>
-                            <div className="col-sm-2">
+                            <div className="col-sm-4">
                                 <div className="form-group" id="widthGroup">
-                                    <label className={"form-label"} htmlFor="widthInput">Width</label>
+                                    <label className={"form-label"} htmlFor="widthInput">Width (inches)</label>
                                     <input type="text" className="form-control" id="widthInput" autoComplete="off"
-                                           readOnly value="8" />
+                                           minLength="1" maxLength="2"
+                                           onBlur={ (event) => {
+                                               setTouched({ ...touched, width: true })
+                                           }}
+                                           onChange={event => {
+                                               setInputs({ ...inputs, width: event.target.value })
+                                               setErrors(
+                                                   validate({ ...inputs, width: event.target.value })
+                                               )
+                                           }}
+                                           value={inputs.width} />
+                                    { isError("width") }
                                 </div>
                             </div>
-                            <div className="col-sm-2">
+                            <div className="col-sm-4">
                                 <div className="form-group" id="heightGroup">
-                                    <label className={"form-label"} htmlFor="heightInput">Height</label>
+                                    <label className={"form-label"} htmlFor="heightInput">Height (inches)</label>
                                     <input type="text" className="form-control" id="heightInput" autoComplete="off"
-                                           readOnly value="6" />
+                                           minLength="1" maxLength="2"
+                                           onBlur={ (event) => {
+                                               setTouched({ ...touched, height: true })
+                                           }}
+                                           onChange={event => {
+                                               setInputs({ ...inputs, height: event.target.value })
+                                               setErrors(
+                                                   validate({ ...inputs, height: event.target.value })
+                                               )
+                                           }}
+                                           value={inputs.height} />
+                                    { isError("height") }
                                 </div>
                             </div>
-                            <div className="col-sm-3">
+                            <div className="col-sm-4">
                                 <div className="form-group" id="dpiGroup">
                                     <label className={"form-label"} htmlFor="dpiInput">DPI</label>
                                     <input type="text" className="form-control" id="dpiInput" autoComplete="off"
-                                           readOnly value="300" />
-                                </div>
-                            </div>
-                            <div className="col-sm-5">
-                                <div>
-                                    <div className="col-sm-4">
-                                        <div className="form-group" id="latGroup">
-                                            <label className={"form-label"} htmlFor="latInput">Latitude</label>
-                                            <input type="text" className="form-control" id="latInput" autoComplete="off"
-                                                   readOnly value="" />
-                                        </div>
-                                    </div>
-                                    <div className="col-sm-4">
-                                        <div className="form-group" id="lonGroup">
-                                            <label className={"form-label"} htmlFor="lonInput">Longitude</label>
-                                            <input type="text" className="form-control" id="lonInput" autoComplete="off"
-                                                   readOnly value="" />
-                                        </div>
-                                    </div>
-                                    <div className="col-sm-4">
-                                        <div className="form-group" id="zoomGroup">
-                                            <label className={"form-label"} htmlFor="zoomInput">Zoom</label>
-                                            <input type="text" className="form-control" id="zoomInput" autoComplete="off"
-                                                   readOnly value="" />
-                                        </div>
-                                    </div>
+                                           minLength="2" maxLength="3"
+                                           onBlur={ (event) => {
+                                               setTouched({ ...touched, dpi: true })
+                                           }}
+                                           onChange={event => {
+                                               setInputs({ ...inputs, dpi: event.target.value })
+                                               setErrors(
+                                                   validate({ ...inputs, dpi: event.target.value })
+                                               )
+                                           }}
+                                           value={inputs.dpi} />
+                                    { isError("dpi") }
                                 </div>
                             </div>
                         </div>
