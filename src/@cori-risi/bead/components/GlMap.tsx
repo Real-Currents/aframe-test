@@ -1,21 +1,23 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import Map, { Source, Layer } from 'react-map-gl';
+import type {MapRef} from 'react-map-gl';
 import { fitBounds } from 'viewport-mercator-project';
 import "mapbox-gl/dist/mapbox-gl.css";
 
 import style from "./styles/GlMap.module.css";
 
 import {
+    BbTr10020Type,
     bb_tr_100_20,
     contourStyle
 } from '../styles';
 
 type GlMapProps = {
-  mapboxToken: string;
+  mapboxToken: string,
   filter: {
-    state: string;
-    bb_service: string;
-  };
+    bb_service: string,
+    state: string
+  }
 };
 
 const USA_BOUNDS: [[number, number], [number, number]] = [
@@ -23,8 +25,8 @@ const USA_BOUNDS: [[number, number], [number, number]] = [
     [-66, 49]   // Northeast coordinates: [Longitude, Latitude]
 ];
 
-const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter }) => {
-  const mapRef = useRef<Map>(); // You can specify the type of ref if known.
+const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter }: GlMapProps) => {
+  const mapRef = useRef<MapRef | null>(null);
 
   const { longitude, latitude, zoom } = fitBounds({
     width: window.innerWidth > 1000 ? 1000 : window.innerWidth,
@@ -40,7 +42,7 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter }) => {
   const [map_zoom, setMapZoom] = useState<number>(zoom);
 
   const onMove = (event: any) => { // Specify the type of event if known
-    setMapZoom(event.viewState.zoom);
+    setMapZoom(event.viewState!.zoom!);
   };
 
   const onHover = useCallback((event: any) => { // Specify the type of event if known
@@ -115,6 +117,7 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter }) => {
           <Layer {...contourStyle} >
           </Layer>
       </Source>
+      {/*// Check if there is a pre-existing type definition for Source and Layer*/}
       <Source {...bb_tr_100_20.sources[0]} >
           <Layer 
             {...bb_tr_100_20.layers[0]} 

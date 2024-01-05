@@ -45,7 +45,33 @@ export const mapboxStyle = {
     ...MAP_STYLE,
 };
 
-// bb_map_tr_100_20_2022june (bb_tr_100_20)
+// Define a type for individual source objects
+// type SourceType = {
+//     id: string;
+//     type: string;
+//     url: string;
+//     generateId: boolean;
+// };
+
+// // Define a type for individual layer objects
+// type LayerType = {
+//     id: string;
+//     source: string;
+//     "source-layer": string;
+//     type: string;
+//     paint: {
+//         "fill-color": any;  // Replace 'any' with a more specific type if possible
+//         "fill-opacity": any; // Replace 'any' with a more specific type if possible
+//     };
+// };
+
+// // Define the type for the overall bb_tr_100_20 object
+// export type BbTr10020Type = {
+//     sources: SourceType[];
+//     layers: LayerType[];
+// };
+
+
 export const bb_tr_100_20 = {
     "sources": [{
         "id": "bb_tr_100_20",

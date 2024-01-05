@@ -51,6 +51,10 @@ function getUserLabel (u: User) {
             u.username
 }
 
+type FilterProps = {
+    bb_service: string,
+    state: string
+}
 
 function App ({ content, user }: { content: () => HTMLElement, user: Promise<User> }): ReactElement {
 
@@ -73,14 +77,14 @@ function App ({ content, user }: { content: () => HTMLElement, user: Promise<Use
     const userState: User = useSelector(selectUser);
     const dispatch = useDispatch();
 
-    const [filter, setFilter] = useState<any[]>({
+    const [filter, setFilter] = useState<FilterProps>({
         bb_service: "all",
         state: "all",
     });
 
-    function handleChange(event) {
+    function handleChange(event: any) {
 
-        if (event.target.name === "bb-radio") {
+        if (event.target.name === "bb-radio" && typeof event.target.value === 'string') {
           setFilter({...filter, bb_service: event.target.value});
         }
 
@@ -201,7 +205,9 @@ function App ({ content, user }: { content: () => HTMLElement, user: Promise<Use
                   sx={{ width: 300 }}
                   renderInput={(params) => <TextField {...params} label="State Abbr" />}
                   onChange={(event, newValue) => {
-                    setFilter({...filter, state: newValue});
+                    if (typeof newValue === 'string') {
+                        setFilter({...filter, state: newValue});
+                    }
                   }}
                 />
 
