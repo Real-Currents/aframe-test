@@ -23,11 +23,6 @@ import {
     updateUserName,
     selectUser
 } from "../features";
-import {
-    decrement,
-    increment,
-    selectCount
-} from "./features/counter/counterSlice";
 
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
@@ -224,27 +219,6 @@ function App ({ content, user }: { content: () => HTMLElement, user: Promise<Use
 export default withAuthenticator(App, {
     loginMechanisms: ['username']
 });
-
-function Counter () {
-    const count = useSelector(selectCount);
-    const dispatch = useDispatch();
-
-    return (
-        <div className={"row"}>
-            <Button className={"button"}
-                    aria-label={"Increment bid"}
-                    onClick={() => (dispatch as Function)(increment())} >
-                +
-            </Button>
-            <span className={"value"}>${count}</span>
-            <Button className={"button"}
-                    aria-label={"Decrement bid"}
-                    onClick={() => (dispatch as Function)(decrement())} >
-                -
-            </Button>
-        </div>
-    );
-}
 
 function ControlPanel (props: {
     children?: ReactElement,
