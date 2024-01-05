@@ -14,6 +14,7 @@ import {
 import '@aws-amplify/ui-react/styles.css';
 import './App.css';
 import ApplicationMenu from "./components/ApplicationMenu";
+import GlMap from './components/GlMap';
 import './components/styles/ApplicationMenu.scss';
 
 import User from '../models/User';
@@ -28,7 +29,15 @@ import {
     selectCount
 } from "./features/counter/counterSlice";
 
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
 
+const MAPBOX_TOKEN = 'pk.eyJ1IjoicnVyYWxpbm5vIiwiYSI6ImNqeHl0cW0xODBlMm0zY2x0dXltYzRuazUifQ.zZBovoCHzLIW0wCZveEKzA';
 
 function getUserLabel (u: User) {
     return (u.hasOwnProperty("signInUserSession")
@@ -68,6 +77,19 @@ function App ({ content, user }: { content: () => HTMLElement, user: Promise<Use
 
     const userState: User = useSelector(selectUser);
     const dispatch = useDispatch();
+
+    const [filter, setFilter] = useState<any[]>({
+        bb_service: "all",
+        state: "all",
+    });
+
+    function handleChange(event) {
+
+        if (event.target.name === "bb-radio") {
+          setFilter({...filter, bb_service: event.target.value});
+        }
+
+    }
 
     useEffect(() => {
         console.log("Initial userState:", userState);
@@ -157,26 +179,43 @@ function App ({ content, user }: { content: () => HTMLElement, user: Promise<Use
 
     return (
         <>
-            <Flex direction="row"
-                  justifyContent="space-between" >
+            <div className="App">
+              <div className="controls">
+                <h1>Broadband access</h1>
 
-                <Flex direction="column" flex={(controlPanelOpen)? "initial" : "auto"}>
-                    <h1 style={{textAlign: "center"}}>BEAD Filters + Map</h1>
+                <FormControl>
+                  <FormLabel id="bb-service-radio">Broadband service level</FormLabel>
+                  <RadioGroup
+                    row
+                    aria-labelledby="bb-service-radio"
+                    defaultValue="all"
+                    name="bb-radio"
+                    onChange={handleChange}
+                  >
+                    <FormControlLabel value="all" control={<Radio />} label="All" />
+                    <FormControlLabel value="served" control={<Radio />} label="Served" />
+                    <FormControlLabel value="underserved" control={<Radio />} label="Underserved" />
+                    <FormControlLabel value="unserved" control={<Radio />} label="Unserved" />
+                  </RadioGroup>
+                </FormControl>   
 
-                    {/*<!-- Filters + Map component -->*/}
+                <Autocomplete
+                  disablePortal
+                  id="state-select"
+                  options={["NH", "MA", "VT", "ME"]}
+                  sx={{ width: 300 }}
+                  renderInput={(params) => <TextField {...params} label="State Abbr" />}
+                  onChange={(event, newValue) => {
+                    setFilter({...filter, state: newValue});
+                  }}
+                />
 
-                </Flex>
+              </div>  
+              <div className="map-container">
+                <GlMap mapboxToken={MAPBOX_TOKEN} filter={filter} />
+              </div>          
+            </div>
 
-                <ControlPanel
-                    open={controlPanelOpen}
-                    showMenuButton={showMenuButton}
-                    toggleFunction={toggleControlPanel}
-                    user={user}>
-                    <ApplicationMenu />
-                </ControlPanel>
-                {/*<div className={"amplify-sign-out"}><SignOutButton /></div>*/}
-
-            </Flex>
         </>
     );
 }
