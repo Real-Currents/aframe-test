@@ -88,7 +88,7 @@ const initMain = (evt: Event) => {
     initHeader(evt);
 
     for (const elm of react_app_container.childNodes) {
-        const innerElm: HTMLElement = elm;
+        const innerElm: HTMLElement = elm as HTMLElement;
         if (elm.nodeType === 1) {
             // console.log("Found embedded content:", innerElm);
 
@@ -96,14 +96,16 @@ const initMain = (evt: Event) => {
                 //
                 // MapBox test map
                 //
-                const map: MapRef = new mapboxgl.Map({
+                const map: Map = new mapboxgl.Map({
                     container: 'map', // container ID
-                    style: 'mapbox://styles/mapbox/streets-v12', // style URL
+                    style: 'mapbox://styles/ruralinno/clhgnms6802i701qn0c9y0pow', // style URL
                     center: [-74.5, 40], // starting position [lng, lat]
                     zoom: 9 // starting zoom
                 });
 
-                window["map"] = map;
+                (map as { [key: string]: any })["map"] = map;
+
+                (window as { [key: string]: any })["map"] = (map as unknown) as MapRef;
             }
 
             root_content.appendChild(innerElm);

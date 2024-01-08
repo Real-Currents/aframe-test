@@ -93,11 +93,6 @@ function App ({ app_id, content, user }: { app_id: string, content: () => HTMLEl
     }, [ user ]);
 
     function addContentToCurrentComponent () {
-        console.log("addContentToCurrentComponent: ", {
-            app_container: document.getElementById(app_id) ,
-            content,
-            content_loaded
-        })
         if (!content_loaded) {
             // Anything in here is fired on component mount.
             const app_container = document.getElementById(app_id) ;
@@ -106,12 +101,14 @@ function App ({ app_id, content, user }: { app_id: string, content: () => HTMLEl
                     content() :
                     { childNodes: [] };
                 setTimeout((container) => {
-                    console.log("Will append content: ", app_content);
+                    // console.log("Will append content: ", app_content);
                     // container.append(app_content.childNodes);
-                    app_content.childNodes.forEach(c => {
-                        container.insertAdjacentElement('beforeend', c);
+                    app_content.childNodes.forEach((c: ChildNode) => {
+                        if (c.nodeType === 1) {
+                            const element: HTMLElement = c as HTMLElement;
+                            container.insertAdjacentElement('beforeend', element);
+                        }
                     });
-
                 }, 53, app_container);
                 content_loaded = true;
             }
