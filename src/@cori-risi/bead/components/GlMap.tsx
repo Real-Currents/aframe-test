@@ -28,8 +28,8 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter }: GlMapProps) => {
   const mapRef = useRef<MapRef | null>(null);
 
   const { longitude, latitude, zoom } = fitBounds({
-    width: window.innerWidth > 1000 ? 1000 : window.innerWidth,
-    height: 500,
+    width: window.innerWidth,
+    height: window.innerHeight,
     bounds: USA_BOUNDS,
     padding: 20 // Optional padding around the bounds
   });
@@ -55,22 +55,6 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter }: GlMapProps) => {
       setHoverInfo(hoveredFeature && { feature: hoveredFeature, x, y });
 
     }
-  }, []);
-
-  useEffect(() => {
-    const resizeMap = () => {
-      if (mapRef.current) {
-        const map = mapRef.current.getMap();
-        map.fitBounds(USA_BOUNDS, { padding: 20 });
-      }
-    };
-
-    window.addEventListener('resize', resizeMap);
-    resizeMap(); // Call resizeMap on component mount to fit bounds on load
-
-    return () => {
-      window.removeEventListener('resize', resizeMap);
-    };
   }, []);
 
   useEffect(() => {

@@ -35,9 +35,7 @@ const Interface = () => {
     <>
         <div className={style["interface"]}>
             <Sidebar onFilterChange={handleFilterChange} filter={filter} />
-            <div className="map-container">
-                <GlMap mapboxToken={MAPBOX_TOKEN} filter={filter} />
-            </div>          
+            <GlMap mapboxToken={MAPBOX_TOKEN} filter={filter} />
         </div>
 
         </>

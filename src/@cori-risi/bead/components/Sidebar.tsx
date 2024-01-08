@@ -20,7 +20,7 @@ const Sidebar = ({ onFilterChange, filter }) => {
 
     return (
       <>
-        <div className={style["controls"]}>
+        <div className={style["sidebar"]}>
           <FormControl>
             <FormLabel id="bb-service-radio">Broadband service level</FormLabel>
             <RadioGroup

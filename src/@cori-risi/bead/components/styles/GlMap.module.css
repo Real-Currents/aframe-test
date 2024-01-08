@@ -1,13 +1,13 @@
 .map-wrapper {
 	width: 100%;
-	height: 100%;
+	height: 100vh;
 	position: relative;
 }
 
 .zoom-message {
 	position: absolute;
 	top: 0px;
-	left: 0px;
+	left: 50vw;
 	font-size: 20px;
 	padding: 10px;
 
