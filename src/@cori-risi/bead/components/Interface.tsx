@@ -15,14 +15,14 @@ import style from "./styles/Interface.module.css";
 
 type FilterProps = {
     bb_service: string,
-    state: string
+    isp_count: number[]
 }
 
 const Interface = () => {
 
     const [filter, setFilter] = useState<FilterProps>({
         bb_service: "all",
-        state: "all",
+        isp_count: [0, 10],
     });
 
     const handleFilterChange = (newFilter) => {

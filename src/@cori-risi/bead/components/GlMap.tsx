@@ -7,7 +7,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import style from "./styles/GlMap.module.css";
 
 import {
-    bb_tr_100_20,
+    bead_dev,
     contourStyle
 } from '../styles';
 
@@ -52,6 +52,8 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter }: GlMapProps) => {
       } = event;
       const hoveredFeature = features && features[0];
 
+      console.log(hoveredFeature);
+
       setHoverInfo(hoveredFeature && { feature: hoveredFeature, x, y });
 
     }
@@ -60,21 +62,16 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter }: GlMapProps) => {
   useEffect(() => {
 
     let bb_filter: any = ["all"]; // Specify the type of bb_filter if known
-    let st_filter: any = ["all"]; // Specify the type of st_filter if known
-
-    if (filter.state !== "all") {
-      st_filter = ['==', ['get', 'state_abbr'], filter.state];
-    }
 
     if (filter.bb_service === "served") {
-      bb_filter = ['==', ['get', 'category'], "Served"];
+      bb_filter = ['==', ['get', 'bead_category'], "Served"];
     } else if (filter.bb_service === "underserved") {
-      bb_filter = ['==', ['get', 'category'], "Underserved"];
+      bb_filter = ['==', ['get', 'bead_category'], "Underserved"];
     } else if (filter.bb_service === "unserved") {
-      bb_filter = ['==', ['get', 'category'], "Unserved"];
+      bb_filter = ['==', ['get', 'bead_category'], "Unserved"];
     }
 
-    let new_filter: any = ["all", bb_filter, st_filter]; // Specify the type of new_filter if known
+    let new_filter: any = ["all", bb_filter]; // Specify the type of new_filter if known
 
     setLayerFilter(new_filter);
 
@@ -94,7 +91,7 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter }: GlMapProps) => {
         }}
         mapStyle="mapbox://styles/mapbox/light-v9"
         mapboxAccessToken={mapboxToken}
-        interactiveLayerIds={[bb_tr_100_20.layers[0]['id']]}
+        interactiveLayerIds={[bead_dev.layers[0]['id']]}
         onMouseMove={onHover}
         onMove={onMove}
       >
@@ -103,9 +100,9 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter }: GlMapProps) => {
             </Layer>
         </Source>
         {/*// Check if there is a pre-existing type definition for Source and Layer*/}
-        <Source {...bb_tr_100_20.sources[0]} >
+        <Source {...bead_dev.sources[0]} >
             <Layer 
-              {...bb_tr_100_20.layers[0]} 
+              {...bead_dev.layers[0]} 
               filter={layerFilter}
             />
             {hoverInfo && (
@@ -115,7 +112,7 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter }: GlMapProps) => {
                   <br />
                   {hoverInfo.feature.properties.state_abbr}
                   <br />
-                  {hoverInfo.feature.properties.category}
+                  {hoverInfo.feature.properties.bead_category}
                 </div>
               </div>
             )}         

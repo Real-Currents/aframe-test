@@ -69,18 +69,18 @@ export const mapboxStyle = {
 // };
 
 
-export const bb_tr_100_20 = {
+export const bead_dev = {
     "sources": [{
-        "id": "bb_tr_100_20",
+        "id": "bead_dev",
         "type": "vector",
-        "url": "mapbox://ruralinno.bb_map_tr_2022decareav3", 
+        "url": "mapbox://ruralinno.vt_test3", 
         "generateId": true
     }],
     "layers": [
         {
-            "id": "bb_tr_100_20.style",
-            "source": "bb_tr_100_20",
-            "source-layer": "sch_broadbandbb_map_tr_category_2022decareav3e",
+            "id": "bead_dev.style",
+            "source": "bead_dev",
+            "source-layer": "proj_beadvt_test3",
             "type": "fill",
             "paint": {
                 // "fill-color": "#0080ff", // blue color fill
@@ -89,7 +89,7 @@ export const bb_tr_100_20 = {
                     ['boolean', ['feature-state', 'hover'], false],
                     'rgba(255, 255, 255, 0.5)',
                     [
-                        "match", ["get", "category" ], // "bl_100_20_area"],
+                        "match", ["get", "bead_category" ], // "bl_100_20_area"],
                         ...((obj) => {
                             const array = [];
                             for (let k in obj) {
