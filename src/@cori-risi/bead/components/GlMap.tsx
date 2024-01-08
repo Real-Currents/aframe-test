@@ -53,8 +53,6 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter }: GlMapProps) => {
       } = event;
       const hoveredFeature = features && features[0];
 
-      console.log(hoveredFeature);
-
       setHoverInfo(hoveredFeature && { feature: hoveredFeature, x, y });
 
     }
@@ -81,6 +79,7 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter }: GlMapProps) => {
     let bb_filter: any = ["all"]; // Specify the type of bb_filter if known
     let st_filter: any = ["all"]; // Specify the type of st_filter if known
 
+    console.log("What is filter.state", filter.state);
     if (filter.state !== "all") {
       st_filter = ['==', ['get', 'state_abbr'], filter.state];
     }

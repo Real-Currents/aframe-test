@@ -211,6 +211,9 @@ function App ({ app_id, content, user }: { app_id: string, content: () => HTMLEl
                     if (typeof newValue === 'string') {
                         setFilter({...filter, state: newValue});
                     }
+                    else if (newValue === null) {
+                        setFilter({...filter, state: "all"});
+                    }
                   }}
                 />
 
