@@ -128,6 +128,12 @@
   background-color: var(--main-bg-color);
 }
 
+@media print {
+  * .control-panel {
+    display: none !important;
+  }
+}
+
 .control-panel .controls {
   max-height: calc(100vh - 124px);
   min-height: calc(100vh - 124px);

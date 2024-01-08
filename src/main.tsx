@@ -98,7 +98,7 @@ const initMain = (evt: Event) => {
                 //
                 const map: Map = new mapboxgl.Map({
                     container: 'map', // container ID
-                    style: 'mapbox://styles/mapbox/streets-v12', // style URL
+                    style: 'mapbox://styles/ruralinno/clhgnms6802i701qn0c9y0pow', // style URL
                     center: [-74.5, 40], // starting position [lng, lat]
                     zoom: 9 // starting zoom
                 });

@@ -1,6 +1,6 @@
 import { Button } from "@aws-amplify/ui-react";
 import { useState } from "react";
-import { LngLat, MapRef } from "react-map-gl";
+import { LngLat, Map, MapRef } from "react-map-gl";
 
 export function MDAPrinter (props: {}) {
 
@@ -44,6 +44,15 @@ export function MDAPrinter (props: {}) {
         } | [{
             checked?: string,
         }],
+        latInput: {
+            value: string
+        },
+        lonInput: {
+            value: string
+        },
+        zoomInput: {
+            value: string
+        },
         widthInput: {
             value: string
         },
@@ -69,21 +78,27 @@ export function MDAPrinter (props: {}) {
     //
 
     type Inputs = {
-        [index: string]: string,
+        [index: string]: number | string,
+        // longitude: number,
+        // latitude: number,
+        // zoom: number,
         width: string,
         height: string,
         dpi: string,
         // format: string,
         // unit: string,
-        // style: string
+        // style: string,
     };
     const [ inputs, setInputs ] = useState<Inputs>({
+        longitude: 0, /* read-only */
+        latitude: 0, /* read-only */
+        zoom: 0, /* read-only */
         width: "8",
         height: "6",
         dpi: "300",
-        // format: "png",
-        // unit: "in",
-        // style: "mapbox://styles/ruralinno/clhgnms6802i701qn0c9y0pow"
+        format: "png", /* hidden */
+        unit: "in", /* hidden */
+        style: "mapbox://styles/ruralinno/clhgnms6802i701qn0c9y0pow",
     });
 
     //
@@ -277,7 +292,18 @@ export function MDAPrinter (props: {}) {
             return;
         }
 
+        const center: LngLat = map.getCenter();
+        const longitude: number = center.lng;
+        const latitude: number = center.lat;
+        const zoom: number = map.getZoom();
+        const bearing: number = map.getBearing();
+        const pitch: number = map.getPitch();
+
         const form: PrintForm = (document.getElementById('print-config') as unknown) as PrintForm;
+
+        form.lonInput.value = longitude.toString();
+        form.latInput.value = latitude.toString();
+        form.zoomInput.value = zoom.toString();
 
         const width: number = Number(form.widthInput.value);
         const height: number = Number(form.heightInput.value);
@@ -285,11 +311,6 @@ export function MDAPrinter (props: {}) {
         const format: string = form.outputOptions[0].checked ? 'png' : 'pdf';
         const unit: string = form.unitOptions[0].checked ? 'in' : 'mm';
         const style: string = form.styleSelect.value;
-
-        const zoom: number = map.getZoom();
-        const center: LngLat = map.getCenter();
-        const bearing: number = map.getBearing();
-        const pitch: number = map.getPitch();
 
         const printHandler = () => {
             createMapImage(element_id, map, width, height, dpi, format, unit, style, zoom, center, bearing, pitch);
@@ -321,12 +342,75 @@ export function MDAPrinter (props: {}) {
         return conversionFactor * length + 'px';
     }
 
-    function showPrintOptions() {
+    function showPrintOptions (element_id: string, map: MapRef) {
+
         try {
             const print_config_form = document.getElementById("print-config")!;
             print_config_form.className = "show";
+
+            //
+            // Initialize map => form update
+            //
+
+            function updateFormValues () {
+                const center: LngLat = map.getCenter();
+                const longitude: number = center.lng;
+                const latitude: number = center.lat;
+                const zoom: number = map.getZoom();
+                const bearing: number = map.getBearing();
+                const pitch: number = map.getPitch();
+
+                const form: PrintForm = (print_config_form as unknown) as PrintForm;
+
+                form.lonInput.value = longitude.toString();
+                form.latInput.value = latitude.toString();
+                form.zoomInput.value = zoom.toString();
+                const style: string = form.styleSelect.value;
+            }
+
+            map.on('boxzoomend', (e) => {
+                console.log('event type:', e.type);
+                updateFormValues();
+            });
+
+            map.on('click', (e) => {
+                console.log('event type:', e.type);
+                updateFormValues();
+            });
+
+            map.on('mouseup', (e) => {
+                console.log('event type:', e.type);
+                updateFormValues();
+            });
+
+            map.on('touchend', (e) => {
+                console.log('event type:', e.type);
+                updateFormValues();
+            });
+
+            map.on('wheel', (e) => {
+                console.log('event type:', e.type);
+                updateFormValues();
+            });
+
+            updateFormValues();
+
+
+            //
+            // Update map style from form selector
+            //
+            if (print_config_form.hasOwnProperty("styleSelect")) {
+
+                const print_map_style_selector: HTMLOptionElement = (print_config_form as { [key: string]: any })["styleSelect"] as HTMLOptionElement;
+
+                print_map_style_selector.addEventListener('change', (e) => {
+                    (map as any).setStyle!(print_map_style_selector.value);
+                });
+            }
+
             const print_config_button = document.getElementById("print-config-btn")!;
             print_config_button.className = "amplify-button hide";
+
         } catch (e: unknown) {}
     }
 
@@ -334,7 +418,10 @@ export function MDAPrinter (props: {}) {
         <div id={"print-exec"} className="row">
             <Button type="submit"  id={"print-config-btn"}
                     className={"amplify-button amplify-field-group__control amplify-button--primary amplify-button--fullwidth btn btn-primary btn-lg"}
-                    onClick={showPrintOptions}>
+                    onClick={() => (window.hasOwnProperty("map")) ?
+                        showPrintOptions("map", (window as { [key: string]: any })["map"] as MapRef) :
+                        window.alert('This app does not have a "map" object in global scope')
+                    }>
                 Show print options
             </Button>
 
