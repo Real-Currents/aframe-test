@@ -56,7 +56,7 @@ type FilterProps = {
     state: string
 }
 
-function App ({ content, user }: { content: () => HTMLElement, user: Promise<User> }): ReactElement {
+function App ({ app_id, content, user }: { app_id: string, content: () => HTMLElement, user: Promise<User> }): ReactElement {
 
     (function init () {
         // Check access to react/vite environment variables
@@ -118,16 +118,19 @@ function App ({ content, user }: { content: () => HTMLElement, user: Promise<Use
     function addContentToCurrentComponent () {
         if (!content_loaded) {
             // Anything in here is fired on component mount.
-            const app_container = document.getElementsByClassName("embedded-app")[0];
+            const app_container = document.getElementById(app_id) ;
             if (!!app_container) {
-                const app_first_child = app_container.childNodes[0] || null;
                 const app_content = (typeof content === 'function') ?
                     content() :
                     { childNodes: [] };
                 setTimeout((container) => {
+                    // console.log("Will append content: ", app_content);
                     // container.append(app_content.childNodes);
-                    app_content.childNodes.forEach(c => {
-                        container.insertBefore(c, app_first_child)
+                    app_content.childNodes.forEach((c: ChildNode) => {
+                        if (c.nodeType === 1) {
+                            const element: HTMLElement = c as HTMLElement;
+                            container.insertAdjacentElement('beforeend', element);
+                        }
                     });
                 }, 53, app_container);
                 content_loaded = true;
