@@ -78,7 +78,6 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter }: GlMapProps) => {
     let bb_filter: any = ["all"]; // Specify the type of bb_filter if known
     let st_filter: any = ["all"]; // Specify the type of st_filter if known
 
-    console.log("What is filter.state", filter.state);
     if (filter.state !== "all") {
       st_filter = ['==', ['get', 'state_abbr'], filter.state];
     }
@@ -98,45 +97,47 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter }: GlMapProps) => {
   }, [filter]);
 
   return (
-    <Map
-      ref={mapRef}
-      initialViewState={{
-        latitude: latitude,
-        longitude: longitude,
-        zoom: zoom
-      }}
-      mapStyle="mapbox://styles/mapbox/light-v9"
-      mapboxAccessToken={mapboxToken}
-      interactiveLayerIds={[bb_tr_100_20.layers[0]['id']]}
-      onMouseMove={onHover}
-      onMove={onMove}
-    >
-      <Source id={"mapbox-terrain"} type={"vector"} url={"mapbox://mapbox.mapbox-terrain-v2"} >
-          <Layer {...contourStyle} >
-          </Layer>
-      </Source>
-      {/*// Check if there is a pre-existing type definition for Source and Layer*/}
-      <Source {...bb_tr_100_20.sources[0]} >
-          <Layer 
-            {...bb_tr_100_20.layers[0]} 
-            filter={layerFilter}
-          />
-          {hoverInfo && (
-            <div className="tooltip" style={{left: hoverInfo.x, top: hoverInfo.y}}>
-              <div>
-                <b>{hoverInfo.feature.properties.geoid_tr}</b>
-                <br />
-                {hoverInfo.feature.properties.state_abbr}
-                <br />
-                {hoverInfo.feature.properties.category}
+    <div className={style["map-wrapper"]}>
+            {map_zoom < MIN_ZOOM_LEVEL && (
+          <div className={style["zoom-message"]}>Zoom closer to view data</div>
+        )}   
+      <Map
+        ref={mapRef}
+        initialViewState={{
+          latitude: latitude,
+          longitude: longitude,
+          zoom: zoom
+        }}
+        mapStyle="mapbox://styles/mapbox/light-v9"
+        mapboxAccessToken={mapboxToken}
+        interactiveLayerIds={[bb_tr_100_20.layers[0]['id']]}
+        onMouseMove={onHover}
+        onMove={onMove}
+      >
+        <Source id={"mapbox-terrain"} type={"vector"} url={"mapbox://mapbox.mapbox-terrain-v2"} >
+            <Layer {...contourStyle} >
+            </Layer>
+        </Source>
+        {/*// Check if there is a pre-existing type definition for Source and Layer*/}
+        <Source {...bb_tr_100_20.sources[0]} >
+            <Layer 
+              {...bb_tr_100_20.layers[0]} 
+              filter={layerFilter}
+            />
+            {hoverInfo && (
+              <div className="tooltip" style={{left: hoverInfo.x, top: hoverInfo.y}}>
+                <div>
+                  <b>{hoverInfo.feature.properties.geoid_tr}</b>
+                  <br />
+                  {hoverInfo.feature.properties.state_abbr}
+                  <br />
+                  {hoverInfo.feature.properties.category}
+                </div>
               </div>
-            </div>
-          )}
-      </Source>
-      {map_zoom < MIN_ZOOM_LEVEL && (
-        <div className={style["zoom-message"]}>Zoom closer to view data</div>
-      )}
-    </Map>
+            )}         
+        </Source>
+      </Map>
+    </div>
   );
 };
 
