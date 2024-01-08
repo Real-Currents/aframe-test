@@ -1,114 +1,12 @@
-:root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  /*text-align: center;*/
-  --main-bg-color: #fffff9;
+.App {
+  width: 100vw;
+
+  position: relative;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes logo-float {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(10px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .logo.react {
-    animation: logo-spin infinite 20s linear;
-  }
-  .logo.redux {
-    animation: logo-float infinite 3s ease-in-out;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
-
-.row > button {
-  margin-left: 4px;
-  margin-right: 8px;
-}
-
-.value {
-  font-size: 24px;
-  padding-left: 16px;
-  padding-right: 16px;
-  margin-top: 2px;
-  font-family: "Courier New", Courier, monospace;
-}
-
-
-/** Amplify overrides **/
-:root, [data-amplify-theme] {
-  font-family: TT Hoves Light,Montserrat,sans-serif;
-  --amplify-internal-button-color: #FFFFFF;
-  --amplify-internal-button-background-color: rgb(0, 85, 102);
-}
-
-* .amplify-button, * .amplify-button--primary {
-  font-family: TT Hoves Light,Montserrat,sans-serif;
-  --amplify-components-button-primary-color: #FFFFFF;
-  --amplify-internal-button-border-color: rgb(0, 85, 102);
-  --amplify-internal-button-background-color:  rgb(0, 85, 102);
-  color: var( --amplify-components-button-primary-color );
-}
-
-.amplify-button:hover, .amplify-button--primary:hover {
-  --amplify-internal-button-background-color: var(--amplify-components-button-primary-hover-background-color);
-  --amplify-internal-button-border-color: var(--amplify-components-button-primary-hover-border-color);
-  --amplify-internal-button-color: var(--amplify-components-button-primary-hover-color);
-}
-
-.amplify-button:hover, .amplify-button--primary:hover {
-  --amplify-components-button-primary-color: #FFFFFF;
-  --amplify-internal-button-border-color: #07353F;
-  --amplify-internal-button-background-color: #07353F;
-}
-
-.amplify-button.hide {
-  display: none;
-}
-
-
-.amplify-sign-out {
-  /*float: right;*/
-  margin-top: -44px;
-  margin-right: 6px;
-  min-width: max-content;
-  width: 100%;
+.App h1 {
+  font-family: monospace;
+  margin-bottom: 5px;
 }
 
 @media (max-height: 859px) {
@@ -250,51 +148,27 @@
 }
 
 #print-exec #print-config.show {
+  max-width: 1000px;
+  margin: 0px auto 20px auto;
   display: block;
 }
 
-
-/*--------------------------------------------------------------
-# Accessibility
---------------------------------------------------------------*/
-/* Text meant only for screen readers. */
-.screen-reader-text:not(:focus):not(:active),
-.sr-dropdown-button {
-  border: 0;
-  clip: rect(1px, 1px, 1px, 1px);
-  clip-path: inset(50%);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute !important;
-  width: 1px;
-  word-wrap: normal !important; /* Many screen reader and browser combinations announce broken words as they would appear visually. */
-}
-
-.screen-reader-text:focus {
-  clip: auto !important;
-  clip-path: none;
-  display: block;
-  font-size: 0.875rem;
-  font-weight: bold;
-  height: auto;
-  left: 5px;
-  line-height: normal;
-  padding: 15px 23px 14px;
-  text-decoration: none;
-  top: 5px;
-  width: auto;
-  z-index: 100000;
-  /* Above WP toolbar. */
-}
-
-.skip-link {
+.tooltip {
   position: absolute;
-  width: 100%;
-  max-width: calc(100vw - 5px);
-}
+  margin: 8px;
+  padding: 4px;
+  max-width: 300px;
+  font-size: 15px;
+  z-index: 9;
+  pointer-events: none;
 
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 5px;
+  color: black;
+
+  font-family: "Bitter", monospace;
+}
 
 #map {
   position: relative;

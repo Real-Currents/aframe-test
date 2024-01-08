@@ -16,17 +16,14 @@ import './App.css';
 import ApplicationMenu from "./components/ApplicationMenu";
 import './components/styles/ApplicationMenu.scss';
 
+import Interface from './components/Interface';
+
 import User from '../models/User';
 import {
     updateUserId,
     updateUserName,
     selectUser
 } from "../features";
-import {
-    decrement,
-    increment,
-    selectCount
-} from "./features/counter/counterSlice";
 
 function getUserLabel (u: User) {
     return (u.hasOwnProperty("signInUserSession")
@@ -44,7 +41,6 @@ function getUserLabel (u: User) {
             u.email :
             u.username
 }
-
 
 function App ({ app_id, content, user }: { app_id: string, content: () => HTMLElement, user: Promise<User> }): ReactElement {
 
@@ -158,26 +154,10 @@ function App ({ app_id, content, user }: { app_id: string, content: () => HTMLEl
 
     return (
         <>
-            <Flex direction="row"
-                  justifyContent="space-between" >
+            <div className="App">
+                <Interface />         
+            </div>
 
-                <Flex direction="column" flex={(controlPanelOpen)? "initial" : "auto"}>
-                    <h1 style={{textAlign: "center"}}>BEAD Filters + Map</h1>
-
-                    {/*<!-- Filters + Map component -->*/}
-
-                </Flex>
-
-                <ControlPanel
-                    open={controlPanelOpen}
-                    showMenuButton={showMenuButton}
-                    toggleFunction={toggleControlPanel}
-                    user={user}>
-                    <ApplicationMenu />
-                </ControlPanel>
-                {/*<div className={"amplify-sign-out"}><SignOutButton /></div>*/}
-
-            </Flex>
         </>
     );
 }
@@ -186,27 +166,6 @@ function App ({ app_id, content, user }: { app_id: string, content: () => HTMLEl
 export default withAuthenticator(App, {
     loginMechanisms: ['username']
 });
-
-function Counter () {
-    const count = useSelector(selectCount);
-    const dispatch = useDispatch();
-
-    return (
-        <div className={"row"}>
-            <Button className={"button"}
-                    aria-label={"Increment bid"}
-                    onClick={() => (dispatch as Function)(increment())} >
-                +
-            </Button>
-            <span className={"value"}>${count}</span>
-            <Button className={"button"}
-                    aria-label={"Decrement bid"}
-                    onClick={() => (dispatch as Function)(decrement())} >
-                -
-            </Button>
-        </div>
-    );
-}
 
 function ControlPanel (props: {
     children?: ReactElement,
