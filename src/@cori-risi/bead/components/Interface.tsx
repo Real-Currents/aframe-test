@@ -11,8 +11,6 @@ import TextField from '@mui/material/TextField';
 import GlMap from './../components/GlMap';
 import Sidebar from './../components/Sidebar';
 
-const MAPBOX_TOKEN = 'pk.eyJ1IjoicnVyYWxpbm5vIiwiYSI6ImNqeHl0cW0xODBlMm0zY2x0dXltYzRuazUifQ.zZBovoCHzLIW0wCZveEKzA';
-
 import style from "./styles/Interface.module.css";
 
 type FilterProps = {
@@ -35,7 +33,7 @@ const Interface = () => {
     <>
         <div className={style["interface"]}>
             <Sidebar onFilterChange={handleFilterChange} filter={filter} />
-            <GlMap mapboxToken={MAPBOX_TOKEN} filter={filter} />
+            <GlMap mapboxToken={process.env.MAPBOX_TOKEN} filter={filter} />
         </div>
 
         </>
