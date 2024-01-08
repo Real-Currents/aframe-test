@@ -1,5 +1,5 @@
 #application-menu {
-  border: solid #07353F 1px;
+  border: solid #26535c 1px;
   border-radius: 6px;
 }
 
@@ -8,15 +8,19 @@
 }
 
 
-/* Hide download and print options for now... */
-#data-download-link,
-#print-exec {
-  display: none;
-}
+///* Hide download and print options for now... */
+//#data-download-link,
+//#print-exec {
+//  display: none;
+//}
 
 
 * .form-label {
   font-family: "TT Hoves Bold";
   font-weight: bold;
   text-align: justify;
+}
+
+* .form-error {
+  color: orangered;
 }
