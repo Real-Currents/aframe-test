@@ -1,4 +1,4 @@
-import React, {ReactElement} from 'react';
+import React, {ReactElement, useState} from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from "react-redux";
 import { Amplify } from "aws-amplify";
@@ -12,6 +12,11 @@ import aws_config from '../amplifyconfiguration.json';
 import App from './@cori-risi/bead/App.tsx';
 import store from "./@cori-risi/bead/app/store";
 import User from "./@cori-risi/models/User";
+
+import mapboxgl, {Map} from 'mapbox-gl';
+import {MapRef} from "react-map-gl";
+
+mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
 Amplify.configure(aws_config);
 
@@ -83,11 +88,29 @@ const initMain = (evt: Event) => {
     initHeader(evt);
 
     for (const elm of react_app_container.childNodes) {
-        const innerElm = elm;
+        const innerElm: HTMLElement = elm;
         if (elm.nodeType === 1) {
+            // console.log("Found embedded content:", innerElm);
+
+            if (innerElm.id === "map") {
+                //
+                // MapBox test map
+                //
+                const map: MapRef = new mapboxgl.Map({
+                    container: 'map', // container ID
+                    style: 'mapbox://styles/mapbox/streets-v12', // style URL
+                    center: [-74.5, 40], // starting position [lng, lat]
+                    zoom: 9 // starting zoom
+                });
+
+                window["map"] = map;
+            }
+
             root_content.appendChild(innerElm);
         }
     }
+
+    console.log("Found embedded content:", root_content);
 
     const root = ReactDOM.createRoot(react_app_container!);
     root.render(
@@ -97,7 +120,7 @@ const initMain = (evt: Event) => {
                     {/*<Router>*/}
                     {/*    <ApiContextProvider aws_config={aws_config}>*/}
                     {/*        <App />*/}
-                    <App content={() => root_content} user={user} />
+                    <App app_id={react_app_id} content={() => root_content} user={user} />
                     {/*    </ApiContextProvider>*/}
                     {/*</Router>*/}
                 </Provider>
