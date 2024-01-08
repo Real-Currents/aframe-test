@@ -7,7 +7,6 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import style from "./styles/GlMap.module.css";
 
 import {
-    BbTr10020Type,
     bb_tr_100_20,
     contourStyle
 } from '../styles';

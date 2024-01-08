@@ -45,7 +45,6 @@ export const mapboxStyle = {
     ...MAP_STYLE,
 };
 
-// Define a type for individual source objects
 // type SourceType = {
 //     id: string;
 //     type: string;
@@ -53,19 +52,17 @@ export const mapboxStyle = {
 //     generateId: boolean;
 // };
 
-// // Define a type for individual layer objects
 // type LayerType = {
 //     id: string;
 //     source: string;
 //     "source-layer": string;
 //     type: string;
 //     paint: {
-//         "fill-color": any;  // Replace 'any' with a more specific type if possible
-//         "fill-opacity": any; // Replace 'any' with a more specific type if possible
+//         "fill-color": any;  
+//         "fill-opacity": any; 
 //     };
 // };
 
-// // Define the type for the overall bb_tr_100_20 object
 // export type BbTr10020Type = {
 //     sources: SourceType[];
 //     layers: LayerType[];
