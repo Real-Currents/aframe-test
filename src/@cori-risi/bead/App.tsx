@@ -118,15 +118,9 @@ function App ({ app_id, content, user }: { app_id: string, content: () => HTMLEl
             window.hasOwnProperty("innerWidth") &&
             window.hasOwnProperty("innerHeight")
         ) {
-            console.log("Update width to: " + window.innerWidth);
             setWidth(window.innerWidth);
-            console.log("Update height to: " + window.innerHeight);
             setHeight(window.innerHeight);
-            console.log("Update height/width ratio to: " + window.innerHeight/window.innerWidth);
             setRatio(window.innerHeight/window.innerWidth);
-            setTimeout(() => {
-                console.log({windowWidth, windowHeight, windowRatio})
-            });
 
             if (window.innerWidth < 960) {
                 setShowMenuButton(true);
