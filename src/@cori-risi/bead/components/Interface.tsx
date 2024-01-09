@@ -1,12 +1,11 @@
 import React, { useState} from 'react';
-
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
-import Autocomplete from '@mui/material/Autocomplete';
-import TextField from '@mui/material/TextField';
+// import Radio from '@mui/material/Radio';
+// import RadioGroup from '@mui/material/RadioGroup';
+// import FormControlLabel from '@mui/material/FormControlLabel';
+// import FormControl from '@mui/material/FormControl';
+// import FormLabel from '@mui/material/FormLabel';
+// import Autocomplete from '@mui/material/Autocomplete';
+// import TextField from '@mui/material/TextField';
 
 import GlMap from './GlMap';
 import Sidebar from './Sidebar';
@@ -15,7 +14,7 @@ const MAPBOX_TOKEN = 'pk.eyJ1IjoicnVyYWxpbm5vIiwiYSI6ImNqeHl0cW0xODBlMm0zY2x0dXl
 
 import style from "./styles/Interface.module.css";
 
-type FilterProps = {
+export type FilterProps = {
     bb_service: string,
     state: string
 }
@@ -27,14 +26,14 @@ const Interface = () => {
         state: "all",
     });
 
-    const handleFilterChange = (newFilter) => {
+    const handleFilterChange = (newFilter: FilterProps) => {
         setFilter(newFilter);
     };
 
     return (
     <>
         <div className={style["interface"]}>
-            <Sidebar onFilterChange={handleFilterChange} filter={filter} />
+            <Sidebar<FilterProps> onFilterChange={handleFilterChange} filter={filter}  />
             <GlMap mapboxToken={MAPBOX_TOKEN} filter={filter} />
         </div>
 
