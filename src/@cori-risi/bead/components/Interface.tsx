@@ -8,8 +8,8 @@ import FormLabel from '@mui/material/FormLabel';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 
-import GlMap from './../components/GlMap';
-import Sidebar from './../components/Sidebar';
+import GlMap from './GlMap';
+import Sidebar from './Sidebar';
 
 const MAPBOX_TOKEN = 'pk.eyJ1IjoicnVyYWxpbm5vIiwiYSI6ImNqeHl0cW0xODBlMm0zY2x0dXltYzRuazUifQ.zZBovoCHzLIW0wCZveEKzA';
 
