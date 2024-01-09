@@ -146,6 +146,8 @@ function App ({ app_id, content, user }: { app_id: string, content: () => HTMLEl
         setControlPanelOpen(!controlPanelOpen);
     }
 
+    console.log("ALIVE?");
+
     return (
         <>
             <Flex className="App" direction="row"

@@ -109,7 +109,7 @@ export const bead_dev: MapboxSourceLayerStyles = {
 
 // Work-around:
 //   "Property 'generateId' does not exist on type 'IntrinsicAttributes & SourceProps'."
-(bb_tr_100_20.sources[0] as any)!["generateId"] = true;
+(bead_dev.sources[0] as any)!["generateId"] = true;
 
 export const contourStyle: IntrinsicAttributes & LayerProps = {
     "id": "terrain-data",
