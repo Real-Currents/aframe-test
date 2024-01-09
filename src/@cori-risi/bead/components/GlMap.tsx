@@ -14,8 +14,7 @@ import {
 type GlMapProps = {
   mapboxToken: string,
   filter: {
-    bb_service: string,
-    state: string
+    bb_service: string
   }
 };
 

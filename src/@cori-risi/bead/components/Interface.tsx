@@ -28,11 +28,13 @@ const Interface = () => {
         setFilter(newFilter);
     };
 
+    const MAPBOX_TOKEN =  typeof process.env.MAPBOX_TOKEN === 'string'? process.env.MAPBOX_TOKEN: '';
+
     return (
     <>
         <div className={style["interface"]}>
             <Sidebar<FilterProps> onFilterChange={handleFilterChange} filter={filter}  />
-            <GlMap mapboxToken={process.env.MAPBOX_TOKEN} filter={filter} />
+            <GlMap mapboxToken={MAPBOX_TOKEN} filter={filter} />
         </div>
 
         </>

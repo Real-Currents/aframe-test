@@ -50,8 +50,7 @@ export const bead_dev: MapboxSourceLayerStyles = {
     "sources": [{
         "id": "bead_dev",
         "type": "vector",
-        "url": "mapbox://ruralinno.vt_test3", 
-        "generateId": true
+        "url": "mapbox://ruralinno.vt_test3"
     }],
     "layers": [
         {
