@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import Map, { Source, Layer } from 'react-map-gl';
-import type {MapRef} from 'react-map-gl';
+import type { MapRef } from 'react-map-gl';
 import { fitBounds } from 'viewport-mercator-project';
 import "mapbox-gl/dist/mapbox-gl.css";
 
