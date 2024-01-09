@@ -1,30 +1,7 @@
 import MAP_STYLE from './mapbox_style.json';
-
-export const CONTOUR_STYLE = {
-  "id": "terrain-data",
-  "source": "mapbox-terrain",
-  "source-layer": "contour",
-  "type": "line",
-  "paint": {
-    "line-color": "#26535c",
-    "line-opacity": [
-      "interpolate",
-      [
-        "linear"
-      ],
-      [
-        "zoom"
-      ],
-      0,
-      0,
-      7,
-      0.05,
-      22,
-      0.5
-    ],
-    "line-width": 1
-  }
-}
+import React from "react";
+import IntrinsicAttributes = React.JSX.IntrinsicAttributes;
+import {LayerProps, SourceProps} from "react-map-gl";
 
 // For more information on data-driven styles, see https://www.mapbox.com/help/gl-dds-ref/
 
@@ -63,18 +40,17 @@ export const mapboxStyle = {
 //     };
 // };
 
-// export type BbTr10020Type = {
-//     sources: SourceType[];
-//     layers: LayerType[];
-// };
+export type MapboxSourceLayerStyles = {
+    sources: [(IntrinsicAttributes & SourceProps)];
+    layers: [(IntrinsicAttributes & LayerProps)];
+};
 
 
-export const bb_tr_100_20 = {
+export const bb_tr_100_20: MapboxSourceLayerStyles = {
     "sources": [{
         "id": "bb_tr_100_20",
         "type": "vector",
-        "url": "mapbox://ruralinno.bb_map_tr_2022decareav3", 
-        "generateId": true
+        "url": "mapbox://ruralinno.bb_map_tr_2022decareav3"
     }],
     "layers": [
         {
@@ -130,6 +106,32 @@ export const bb_tr_100_20 = {
     ]
 };
 
-export const contourStyle = {
-    ...CONTOUR_STYLE
+// Work-around:
+//   "Property 'generateId' does not exist on type 'IntrinsicAttributes & SourceProps'."
+(bb_tr_100_20.sources[0] as any)!["generateId"] = true;
+
+export const contourStyle: IntrinsicAttributes & LayerProps = {
+    "id": "terrain-data",
+    "source": "mapbox-terrain",
+    "source-layer": "contour",
+    "type": "line",
+    "paint": {
+        "line-color": "#26535c",
+        "line-opacity": [
+            "interpolate",
+            [
+                "linear"
+            ],
+            [
+                "zoom"
+            ],
+            0,
+            0,
+            7,
+            0.05,
+            22,
+            0.5
+        ],
+        "line-width": 1
+    }
 };

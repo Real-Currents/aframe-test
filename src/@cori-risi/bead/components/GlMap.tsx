@@ -94,7 +94,11 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter }: GlMapProps) => {
         }}
         mapStyle="mapbox://styles/mapbox/light-v9"
         mapboxAccessToken={mapboxToken}
-        interactiveLayerIds={[bb_tr_100_20.layers[0]['id']]}
+        interactiveLayerIds={
+            (bb_tr_100_20.layers !== null && bb_tr_100_20.layers[0].hasOwnProperty('id') ) ? [
+                bb_tr_100_20.layers[0]['id']!
+            ] : []
+        }
         onMouseMove={onHover}
         onMove={onMove}
       >

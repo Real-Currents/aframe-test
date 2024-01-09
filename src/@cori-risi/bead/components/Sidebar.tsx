@@ -10,7 +10,7 @@ import TextField from '@mui/material/TextField';
 
 import style from "./styles/Sidebar.module.css";
 
-const Sidebar = ({ onFilterChange, filter }) => {
+function Sidebar<T>({ onFilterChange, filter }: { onFilterChange: (newFilter: T) => void, filter: any }) {
 
     function handleBroadbandChange(event: any) {
       if (event.target.name === "bb-radio" && typeof event.target.value === 'string') {
