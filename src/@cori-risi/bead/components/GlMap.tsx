@@ -8,6 +8,7 @@ import style from "./styles/GlMap.module.css";
 
 import {
     bead_dev,
+    bb_tr_100_20,
     contourStyle
 } from '../styles';
 
@@ -96,11 +97,12 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter }: GlMapProps) => {
         onMouseMove={onHover}
         onMove={onMove}
       >
+
         <Source id={"mapbox-terrain"} type={"vector"} url={"mapbox://mapbox.mapbox-terrain-v2"} >
             <Layer {...contourStyle} >
             </Layer>
         </Source>
-        {/*// Check if there is a pre-existing type definition for Source and Layer*/}
+
         <Source {...bead_dev.sources[0]} >
             <Layer 
               {...bead_dev.layers[0]} 
@@ -109,7 +111,7 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter }: GlMapProps) => {
             {hoverInfo && (
               <div className="tooltip" style={{left: hoverInfo.x, top: hoverInfo.y}}>
                 <div>
-                  <b>{hoverInfo.feature.properties.geoid_tr}</b>
+                  <b>{hoverInfo.feature.properties.geoid_bl}</b>
                   <br />
                   {hoverInfo.feature.properties.state_abbr}
                   <br />
@@ -118,6 +120,14 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter }: GlMapProps) => {
               </div>
             )}         
         </Source>
+
+        {/** BEAD track layer sanity check  */}
+        <Source {...bb_tr_100_20.sources[0]}>
+            <Layer
+              {...bb_tr_100_20.layers[0]}
+            />
+        </Source>
+
       </Map>
     </div>
   );

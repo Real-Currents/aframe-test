@@ -22,24 +22,6 @@ export const mapboxStyle = {
     ...MAP_STYLE,
 };
 
-// type SourceType = {
-//     id: string;
-//     type: string;
-//     url: string;
-//     generateId: boolean;
-// };
-
-// type LayerType = {
-//     id: string;
-//     source: string;
-//     "source-layer": string;
-//     type: string;
-//     paint: {
-//         "fill-color": any;  
-//         "fill-opacity": any; 
-//     };
-// };
-
 export type MapboxSourceLayerStyles = {
     sources: [(IntrinsicAttributes & SourceProps)];
     layers: [(IntrinsicAttributes & LayerProps)];
@@ -95,12 +77,13 @@ export const bead_dev: MapboxSourceLayerStyles = {
                     "interpolate", [ "linear" ],
                     ["zoom"],
                     0, 0,
-                    9, 0.01,
-                    10, 1.0,
-                    11, 1.0,
-                    12, 0.0,
-                    // 15, 1.0,
-                    // 18, 0.05
+                    8, 0.01,
+                    9, 0.25,
+                    10, 0.5,
+                    11, 0.75,
+                    12, 1.0,
+                    17, 1.0,
+                    18, 0.05
                 ]
             },
         }
@@ -111,18 +94,17 @@ export const bead_dev: MapboxSourceLayerStyles = {
 //   "Property 'generateId' does not exist on type 'IntrinsicAttributes & SourceProps'."
 (bead_dev.sources[0] as any)!["generateId"] = true;
 
-
-export const bead_dev: MapboxSourceLayerStyles = {
+export const bb_tr_100_20: MapboxSourceLayerStyles = {
     "sources": [{
-        "id": "bead_dev",
+        "id": "bb_tr_100_20",
         "type": "vector",
-        "url": "mapbox://ruralinno.vt_test3"
+        "url": "mapbox://ruralinno.bb_map_tr_2022decareav3"
     }],
     "layers": [
         {
-            "id": "bead_dev.style",
-            "source": "bead_dev",
-            "source-layer": "proj_beadvt_test3",
+            "id": "bb_tr_100_20.style",
+            "source": "bb_tr_100_20",
+            "source-layer": "sch_broadbandbb_map_tr_category_2022decareav3e",
             "type": "fill",
             "paint": {
                 // "fill-color": "#0080ff", // blue color fill
@@ -131,7 +113,7 @@ export const bead_dev: MapboxSourceLayerStyles = {
                     ['boolean', ['feature-state', 'hover'], false],
                     'rgba(255, 255, 255, 0.5)',
                     [
-                        "match", ["get", "bead_category" ], // "bl_100_20_area"],
+                        "match", ["get", "category" ], // "bl_100_20_area"],
                         // "Served", "rgba(19, 3, 50, 0.5)",
                         // "Underserved", "rgba(118, 88, 162, 0.75)",
                         // "Unserved", "rgba(203, 190, 220, 0.85)",
@@ -166,11 +148,12 @@ export const bead_dev: MapboxSourceLayerStyles = {
                     "interpolate", [ "linear" ],
                     ["zoom"],
                     0, 0,
-                    9, 0.01,
-                    // 10, 1.0,
-                    // 11, 1.0,
-                    12, 1.0,
-                    15, 1.0,
+                    8, 0.01,
+                    9, 0.25,
+                    10, 0.5,
+                    11, 0.5,
+                    12, 0.25,
+                    // 15, 1.0,
                     // 18, 0.05
                 ]
             },
@@ -180,7 +163,7 @@ export const bead_dev: MapboxSourceLayerStyles = {
 
 // Work-around:
 //   "Property 'generateId' does not exist on type 'IntrinsicAttributes & SourceProps'."
-(bead_dev.sources[0] as any)!["generateId"] = true;
+(bb_tr_100_20.sources[0] as any)!["generateId"] = true;
 
 export const contourStyle: IntrinsicAttributes & LayerProps = {
     "id": "terrain-data",
