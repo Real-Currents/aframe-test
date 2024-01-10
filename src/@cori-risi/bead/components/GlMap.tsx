@@ -111,7 +111,26 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter }: GlMapProps) => {
             {hoverInfo && (
               <div className="tooltip" style={{left: hoverInfo.x, top: hoverInfo.y}}>
                 <div>
-                  <b>{hoverInfo.feature.properties.geoid_bl}</b>
+                    <b>{hoverInfo.feature.properties.geoid_bl}</b>
+                    {[ ...((obj) => {
+                        const array = [];
+                        for (let attr in obj) {
+                            if (obj.hasOwnProperty(attr)) {
+                                array.push(attr.toString());
+                                console.log(`${attr.toString()}: ${obj[attr]}`);
+                            }
+                        }
+                        return array;
+                    })(hoverInfo.feature.properties) ].map((attr) =>
+                        (hoverInfo.feature.properties.hasOwnProperty(attr)
+                            && hoverInfo.feature.properties[attr] !== null
+                            && typeof hoverInfo.feature.properties[attr] === "string"
+                        ) ? (<>
+                            <br/>
+                            {hoverInfo.feature.properties[attr]}({attr})
+                            </>
+                        ) : (<span></span>)
+                    )}
                   <br />
                   {hoverInfo.feature.properties.state_abbr}
                   <br />
