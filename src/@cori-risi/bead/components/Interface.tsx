@@ -10,25 +10,25 @@ import React, { useState} from 'react';
 import GlMap from './GlMap';
 import Sidebar from './Sidebar';
 
-const MAPBOX_TOKEN = 'pk.eyJ1IjoicnVyYWxpbm5vIiwiYSI6ImNqeHl0cW0xODBlMm0zY2x0dXltYzRuazUifQ.zZBovoCHzLIW0wCZveEKzA';
-
 import style from "./styles/Interface.module.css";
 
 export type FilterProps = {
     bb_service: string,
-    state: string
+    isp_count: number[]
 }
 
 const Interface = () => {
 
     const [filter, setFilter] = useState<FilterProps>({
         bb_service: "all",
-        state: "all",
+        isp_count: [0, 10],
     });
 
     const handleFilterChange = (newFilter: FilterProps) => {
         setFilter(newFilter);
     };
+
+    const MAPBOX_TOKEN =  typeof process.env.MAPBOX_TOKEN === 'string'? process.env.MAPBOX_TOKEN: '';
 
     return (
     <>

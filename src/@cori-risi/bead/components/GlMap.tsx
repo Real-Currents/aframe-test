@@ -7,6 +7,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import style from "./styles/GlMap.module.css";
 
 import {
+    bead_dev,
     bb_tr_100_20,
     contourStyle
 } from '../styles';
@@ -14,8 +15,7 @@ import {
 type GlMapProps = {
   mapboxToken: string,
   filter: {
-    bb_service: string,
-    state: string
+    bb_service: string
   }
 };
 
@@ -60,21 +60,16 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter }: GlMapProps) => {
   useEffect(() => {
 
     let bb_filter: any = ["all"]; // Specify the type of bb_filter if known
-    let st_filter: any = ["all"]; // Specify the type of st_filter if known
-
-    if (filter.state !== "all") {
-      st_filter = ['==', ['get', 'state_abbr'], filter.state];
-    }
 
     if (filter.bb_service === "served") {
-      bb_filter = ['==', ['get', 'category'], "Served"];
+      bb_filter = ['==', ['get', 'bead_category'], "Served"];
     } else if (filter.bb_service === "underserved") {
-      bb_filter = ['==', ['get', 'category'], "Underserved"];
+      bb_filter = ['==', ['get', 'bead_category'], "Underserved"];
     } else if (filter.bb_service === "unserved") {
-      bb_filter = ['==', ['get', 'category'], "Unserved"];
+      bb_filter = ['==', ['get', 'bead_category'], "Unserved"];
     }
 
-    let new_filter: any = ["all", bb_filter, st_filter]; // Specify the type of new_filter if known
+    let new_filter: any = ["all", bb_filter]; // Specify the type of new_filter if known
 
     setLayerFilter(new_filter);
 
@@ -95,35 +90,44 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter }: GlMapProps) => {
         mapStyle="mapbox://styles/mapbox/light-v9"
         mapboxAccessToken={mapboxToken}
         interactiveLayerIds={
-            (bb_tr_100_20.layers !== null && bb_tr_100_20.layers[0].hasOwnProperty('id') ) ? [
-                bb_tr_100_20.layers[0]['id']!
+            (bead_dev.layers !== null && bead_dev.layers[0].hasOwnProperty('id') ) ? [
+                bead_dev.layers[0]['id']!
             ] : []
         }
         onMouseMove={onHover}
         onMove={onMove}
       >
+
         <Source id={"mapbox-terrain"} type={"vector"} url={"mapbox://mapbox.mapbox-terrain-v2"} >
             <Layer {...contourStyle} >
             </Layer>
         </Source>
-        {/*// Check if there is a pre-existing type definition for Source and Layer*/}
-        <Source {...bb_tr_100_20.sources[0]} >
+
+        <Source {...bead_dev.sources[0]} >
             <Layer 
-              {...bb_tr_100_20.layers[0]} 
+              {...bead_dev.layers[0]} 
               filter={layerFilter}
             />
             {hoverInfo && (
               <div className="tooltip" style={{left: hoverInfo.x, top: hoverInfo.y}}>
                 <div>
-                  <b>{hoverInfo.feature.properties.geoid_tr}</b>
+                  <b>{hoverInfo.feature.properties.geoid_bl}</b>
                   <br />
                   {hoverInfo.feature.properties.state_abbr}
                   <br />
-                  {hoverInfo.feature.properties.category}
+                  {hoverInfo.feature.properties.bead_category}
                 </div>
               </div>
             )}         
         </Source>
+
+        {/** BEAD track layer sanity check  */}
+        <Source {...bb_tr_100_20.sources[0]}>
+            <Layer
+              {...bb_tr_100_20.layers[0]}
+            />
+        </Source>
+
       </Map>
     </div>
   );
