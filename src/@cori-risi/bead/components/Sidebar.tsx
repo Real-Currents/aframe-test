@@ -16,9 +16,21 @@ function valuetext(value: number) {
 
 function Sidebar<T>({ onFilterChange, filter }: { onFilterChange: (newFilter: T) => void, filter: any }) {
 
-  const handleChange = (event: Event, newValue: number | number[]) => {
-    console.log("changed", newValue as number[]);
-    onFilterChange({...filter, isp_count: newValue as number[]});
+  const handleChange = (event: Event, newValue: number | number[], activeThumb: number) => {
+
+    let slider_vals: number[] = newValue as number[];
+
+    // if (slider_vals[0] === slider_vals[1]) {
+    //   if (slider_vals[1] === 10) {
+    //     slider_vals[0] = 9;
+    //   }
+    //   else {
+    //     slider_vals[1] = slider_vals[1] + 1;
+    //   }
+    // }
+
+    onFilterChange({...filter, isp_count: slider_vals});
+
   };
 
   function handleBroadbandChange(event: any) {
@@ -30,8 +42,10 @@ function Sidebar<T>({ onFilterChange, filter }: { onFilterChange: (newFilter: T)
   return (
     <>
       <div className={style["sidebar"]}>
+        <h1>Filters</h1>
+        <hr />
         <FormControl>
-          <FormLabel id="bb-service-radio">Broadband service level</FormLabel>
+          <h3>Broadband service level</h3>
           <RadioGroup
             row
             aria-labelledby="bb-service-radio"
@@ -45,6 +59,8 @@ function Sidebar<T>({ onFilterChange, filter }: { onFilterChange: (newFilter: T)
             <FormControlLabel value="unserved" control={<Radio />} label="Unserved" />
           </RadioGroup>
         </FormControl>
+        <hr />
+        <h3>ISP County</h3>
         <Slider
           getAriaLabel={() => 'ISP Count'}
           value={filter.isp_count}
