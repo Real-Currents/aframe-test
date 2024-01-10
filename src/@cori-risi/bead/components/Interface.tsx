@@ -13,14 +13,22 @@ import Sidebar from './Sidebar';
 import style from "./styles/Interface.module.css";
 
 export type FilterProps = {
-    bb_service: string,
+    bb_service: {
+        served: boolean,
+        underserved: boolean,
+        unserved: boolean
+    },
     isp_count: number[]
 }
 
 const Interface = () => {
 
     const [filter, setFilter] = useState<FilterProps>({
-        bb_service: "all",
+        bb_service:  {
+            served: true,
+            underserved: true,
+            unserved: true
+        },
         isp_count: [0, 10],
     });
 

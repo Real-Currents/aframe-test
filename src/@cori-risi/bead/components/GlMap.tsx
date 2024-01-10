@@ -15,7 +15,12 @@ import {
 type GlMapProps = {
   mapboxToken: string,
   filter: {
-    bb_service: string
+    bb_service: {
+      served: boolean,
+      underserved: boolean,
+      unserved: boolean
+    },
+    isp_count: number[]
   }
 };
 
@@ -37,7 +42,7 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter }: GlMapProps) => {
   const MIN_ZOOM_LEVEL = 10;
 
   const [hoverInfo, setHoverInfo] = useState<any>(null); // Specify the type of hoverInfo if known
-  const [layerFilter, setLayerFilter] = useState<string[]>(['all']); // Specify the type of layerFilter if known
+  const [layerFilter, setLayerFilter] = useState<any>(['all']); // Specify the type of layerFilter if known
   const [map_zoom, setMapZoom] = useState<number>(zoom);
 
   const onMove = (event: any) => { // Specify the type of event if known
@@ -58,18 +63,30 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter }: GlMapProps) => {
   }, []);
 
   useEffect(() => {
+    
 
-    let bb_filter: any = ["all"]; // Specify the type of bb_filter if known
+    let bb_array: any[] = [];
 
-    if (filter.bb_service === "served") {
-      bb_filter = ['==', ['get', 'bead_category'], "Served"];
-    } else if (filter.bb_service === "underserved") {
-      bb_filter = ['==', ['get', 'bead_category'], "Underserved"];
-    } else if (filter.bb_service === "unserved") {
-      bb_filter = ['==', ['get', 'bead_category'], "Unserved"];
+    if (filter.bb_service.served === true) {
+      bb_array = [...bb_array, "Served"];
+    }
+    
+    if (filter.bb_service.underserved === true) {
+      bb_array = [...bb_array, "Underserved"];
     }
 
-    let new_filter: any = ["all", bb_filter]; // Specify the type of new_filter if known
+    if (filter.bb_service.unserved === true) {
+      bb_array = [...bb_array, "Unserved"];
+    }
+
+
+    let isp_filter: any = [
+      'all',
+      ['>=', ['get', 'cnt_isp'], filter.isp_count[0]],
+      ['<=', ['get', 'cnt_isp'], filter.isp_count[1]]
+    ];
+
+    let new_filter: any = ["all", ['in', ['get', 'bead_category'], ['literal', bb_array]], isp_filter]; 
 
     setLayerFilter(new_filter);
 
