@@ -1,13 +1,12 @@
 import React, { useState} from 'react';
 
-// import Radio from '@mui/material/Radio';
-// import RadioGroup from '@mui/material/RadioGroup';
-// import FormControl from '@mui/material/FormControl';
-
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 import FormGroup from '@mui/material/FormGroup';
 import Checkbox from '@mui/material/Checkbox';
+
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
 
 import Slider from '@mui/material/Slider';
 
@@ -21,7 +20,7 @@ function Sidebar<T>({ onFilterChange, filter }: { onFilterChange: (newFilter: T)
   };
 
   function handleBroadbandChange(event: any) {
-    
+
     if (typeof event.target.checked === 'boolean') {
       onFilterChange({...filter, bb_service: {...filter.bb_service, [event.target.name]: event.target.checked}});
     }
@@ -31,8 +30,19 @@ function Sidebar<T>({ onFilterChange, filter }: { onFilterChange: (newFilter: T)
   return (
     <>
       <div className={style["sidebar"]}>
-        <h1>Filters</h1>
+        <div className={style["color-dropdown"]}>
+          <Autocomplete
+            disablePortal
+            disableClearable
+            id="map-colors"
+            defaultValue={"BEAD service level"}
+            options={["BEAD service level", "ISP count"]}
+            sx={{ width: "100%" }}
+            renderInput={(params) => <TextField {...params} label="Color scheme" />}
+          />
+        </div>
         <hr />
+        <h1>Filters</h1>
         <h3>Broadband service level</h3>
         <FormGroup row>
           <FormControlLabel
@@ -66,31 +76,17 @@ function Sidebar<T>({ onFilterChange, filter }: { onFilterChange: (newFilter: T)
             label="Unserved"
           />                    
         </FormGroup>
-{/*        <FormControl>
-          <RadioGroup
-            row
-            aria-labelledby="bb-service-radio"
-            defaultValue="all"
-            name="bb-radio"
-            onChange={handleBroadbandChange}
-          >
-            <FormControlLabel value="all" control={<Radio />} label="All" />
-            <FormControlLabel value="served" control={<Radio />} label="Served" />
-            <FormControlLabel value="underserved" control={<Radio />} label="Underserved" />
-            <FormControlLabel value="unserved" control={<Radio />} label="Unserved" />
-          </RadioGroup>
-        </FormControl>*/}
-        <hr />
         <h3>ISP County</h3>
-        <Slider
-          getAriaLabel={() => 'ISP Count'}
-          value={filter.isp_count}
-          onChange={handleISPChange}
-          valueLabelDisplay="auto"
-          min={0}
-          max={10}
-        />
-
+        <div className={style["slider"]}>
+          <Slider
+            getAriaLabel={() => 'ISP Count'}
+            value={filter.isp_count}
+            onChange={handleISPChange}
+            valueLabelDisplay="auto"
+            min={0}
+            max={10}
+          />
+        </div>
       </div>  
     </>
   );

@@ -16,7 +16,19 @@
 
 }
 
+.sidebar h1 {
+  margin-top: 15px;
+}
 
 .sidebar h3 {
   margin-top: 10px;
+}
+
+.sidebar .color-dropdown {
+  margin: 5px 0px 15px 0px;
+}
+
+.sidebar .slider {
+  width: 90%;
+  margin: 0 auto;
 }

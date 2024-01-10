@@ -4,7 +4,11 @@ import type { MapRef } from 'react-map-gl';
 import { fitBounds } from 'viewport-mercator-project';
 import "mapbox-gl/dist/mapbox-gl.css";
 
+import { format } from 'd3-format';
+
 import style from "./styles/GlMap.module.css";
+
+const percentFormat = format('.1%');
 
 import {
     bead_dev,
@@ -56,6 +60,8 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter }: GlMapProps) => {
         point: { x, y }
       } = event;
       const hoveredFeature = features && features[0];
+
+      console.log("hoveredFeature is ", hoveredFeature);
 
       setHoverInfo(hoveredFeature && { feature: hoveredFeature, x, y });
 
@@ -128,11 +134,12 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter }: GlMapProps) => {
             {hoverInfo && (
               <div className="tooltip" style={{left: hoverInfo.x, top: hoverInfo.y}}>
                 <div>
-                  <b>{hoverInfo.feature.properties.geoid_bl}</b>
-                  <br />
-                  {hoverInfo.feature.properties.state_abbr}
-                  <br />
-                  {hoverInfo.feature.properties.bead_category}
+                  <p>
+                    <em>BEAD category:</em> <b>{hoverInfo.feature.properties.bead_category}</b><br />
+                    <em>Total locations:</em> <b>{hoverInfo.feature.properties.cnt_total_locations}</b><br />
+                    <em>ISP count:</em> <b>{hoverInfo.feature.properties.cnt_isp}</b><br />
+                    <em>Pct. served:</em> <b>{percentFormat(hoverInfo.feature.properties.pct_served)}</b><br />
+                  </p>
                 </div>
               </div>
             )}         
