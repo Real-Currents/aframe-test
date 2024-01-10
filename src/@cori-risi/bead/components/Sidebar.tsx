@@ -14,7 +14,7 @@ function valuetext(value: number) {
   return `${value}°C`;
 }
 
-const Sidebar = ({ onFilterChange, filter }: { onFilterChange: Function, filter: any }) => {
+function Sidebar<T>({ onFilterChange, filter }: { onFilterChange: (newFilter: T) => void, filter: any }) {
 
   const handleChange = (event: Event, newValue: number | number[]) => {
     console.log("changed", newValue as number[]);

@@ -1,8 +1,7 @@
-import {Button, Card} from "@aws-amplify/ui-react";
-import "./styles/ApplicationMenu.scss";
-import {useState} from "react";
+import { Card } from "@aws-amplify/ui-react";
 import { MDAPrinter } from "./MDAPrinter";
 import { MDADownloader } from "./MDADownloader";
+import "./styles/ApplicationMenu.scss";
 
 
 function ApplicationMenu () {
