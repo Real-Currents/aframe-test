@@ -68,6 +68,8 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter, fillColor }: GlMapPr
       } = event;
       const hoveredFeature = features && features[0];
 
+      console.log("hoveredFeature is ", hoveredFeature);
+
       setHoverInfo(hoveredFeature && { feature: hoveredFeature, x, y });
 
     }

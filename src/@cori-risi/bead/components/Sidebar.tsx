@@ -115,7 +115,7 @@ function Sidebar<T>({
             min={0}
             max={500}
           />
-        </div>        
+        </div>
       </div>  
     </>
   );
