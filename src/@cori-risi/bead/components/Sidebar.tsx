@@ -12,7 +12,14 @@ import Slider from '@mui/material/Slider';
 
 import style from "./styles/Sidebar.module.css";
 
-function Sidebar<T>({ onFilterChange, filter }: { onFilterChange: (newFilter: T) => void, filter: any }) {
+import { getFillColor } from './../utils/controls';
+
+function Sidebar<T>({ 
+  onFilterChange, onFillColorChange, filter }: {
+   onFilterChange: (newFilter: T) => void, 
+   onFillColorChange: (newFilter: T) => void,
+   filter: any 
+ }) {
 
   const handleISPChange = (event: Event, newValue: number | number[], activeThumb: number) => {
     let slider_vals: number[] = newValue as number[];
@@ -24,8 +31,11 @@ function Sidebar<T>({ onFilterChange, filter }: { onFilterChange: (newFilter: T)
     if (typeof event.target.checked === 'boolean') {
       onFilterChange({...filter, bb_service: {...filter.bb_service, [event.target.name]: event.target.checked}});
     }
-
   }
+
+  function handleFillColorChange(event: React.SyntheticEvent, newValue: string) {
+    onFillColorChange(getFillColor(newValue));
+  };
 
   return (
     <>
@@ -35,10 +45,11 @@ function Sidebar<T>({ onFilterChange, filter }: { onFilterChange: (newFilter: T)
             disablePortal
             disableClearable
             id="map-colors"
-            defaultValue={"BEAD service level"}
-            options={["BEAD service level", "ISP count"]}
+            defaultValue={"BEAD category"}
+            options={["BEAD category", "ISP count"]}
             sx={{ width: "100%" }}
             renderInput={(params) => <TextField {...params} label="Color scheme" />}
+            onChange={handleFillColorChange}
           />
         </div>
         <hr />

@@ -25,7 +25,8 @@ type GlMapProps = {
       unserved: boolean
     },
     isp_count: number[]
-  }
+  },
+  fillColor: any[]
 };
 
 const USA_BOUNDS: [[number, number], [number, number]] = [
@@ -33,7 +34,7 @@ const USA_BOUNDS: [[number, number], [number, number]] = [
     [-66, 49]   // Northeast coordinates: [Longitude, Latitude]
 ];
 
-const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter }: GlMapProps) => {
+const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter, fillColor }: GlMapProps) => {
   const mapRef = useRef<MapRef | null>(null);
 
   const { longitude, latitude, zoom } = fitBounds({
@@ -60,8 +61,6 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter }: GlMapProps) => {
         point: { x, y }
       } = event;
       const hoveredFeature = features && features[0];
-
-      console.log("hoveredFeature is ", hoveredFeature);
 
       setHoverInfo(hoveredFeature && { feature: hoveredFeature, x, y });
 
@@ -130,6 +129,9 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter }: GlMapProps) => {
             <Layer 
               {...bead_dev.layers[0]} 
               filter={layerFilter}
+              paint={{
+                'fill-color': fillColor // assuming fillColor is in the correct format
+              }}
             />
             {hoverInfo && (
               <div className="tooltip" style={{left: hoverInfo.x, top: hoverInfo.y}}>
