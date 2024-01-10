@@ -8,6 +8,7 @@ import style from "./styles/GlMap.module.css";
 
 import {
     bb_tr_100_20,
+    bead_dev,
     contourStyle
 } from '../styles';
 
@@ -102,28 +103,32 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter }: GlMapProps) => {
         onMouseMove={onHover}
         onMove={onMove}
       >
-        <Source id={"mapbox-terrain"} type={"vector"} url={"mapbox://mapbox.mapbox-terrain-v2"} >
-            <Layer {...contourStyle} >
-            </Layer>
-        </Source>
-        {/*// Check if there is a pre-existing type definition for Source and Layer*/}
-        <Source {...bb_tr_100_20.sources[0]} >
-            <Layer 
-              {...bb_tr_100_20.layers[0]} 
-              filter={layerFilter}
-            />
-            {hoverInfo && (
-              <div className="tooltip" style={{left: hoverInfo.x, top: hoverInfo.y}}>
-                <div>
-                  <b>{hoverInfo.feature.properties.geoid_tr}</b>
-                  <br />
-                  {hoverInfo.feature.properties.state_abbr}
-                  <br />
-                  {hoverInfo.feature.properties.category}
+          <Source id={"mapbox-terrain"} type={"vector"} url={"mapbox://mapbox.mapbox-terrain-v2"} >
+              <Layer {...contourStyle} >
+              </Layer>
+          </Source>
+          <Source {...bb_tr_100_20.sources[0]} >
+              <Layer
+                {...bb_tr_100_20.layers[0]}
+                filter={layerFilter}
+              />
+              {hoverInfo && (
+                <div className="tooltip" style={{left: hoverInfo.x, top: hoverInfo.y}}>
+                  <div>
+                    <b>{hoverInfo.feature.properties.geoid_tr}</b>
+                    <br />
+                    {hoverInfo.feature.properties.state_abbr}
+                    <br />
+                    {hoverInfo.feature.properties.category}
+                  </div>
                 </div>
-              </div>
-            )}         
-        </Source>
+              )}
+          </Source>
+          <Source {...bead_dev.sources[0]} >
+              <Layer
+                  {...bead_dev.layers[0]}
+              />
+          </Source>
       </Map>
     </div>
   );
