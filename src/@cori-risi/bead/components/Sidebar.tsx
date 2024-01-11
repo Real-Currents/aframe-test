@@ -17,7 +17,7 @@ import { getFillColor } from './../utils/controls';
 function Sidebar<T>({ 
   onFilterChange, onFillColorChange, filter }: {
    onFilterChange: (newFilter: T) => void, 
-   onFillColorChange: (newFilter: T) => void,
+   onFillColorChange: (newFillColor: any[]) => void,
    filter: any 
  }) {
 
@@ -38,8 +38,10 @@ function Sidebar<T>({
     }
   }
 
-  function handleFillColorChange(event: React.SyntheticEvent, newValue: string) {
-    onFillColorChange(getFillColor(newValue));
+  function handleFillColorChange(event: React.SyntheticEvent, newValue: string): void {
+    if (typeof newValue === "string") {
+      onFillColorChange(getFillColor(newValue));
+    }
   };
 
   return (

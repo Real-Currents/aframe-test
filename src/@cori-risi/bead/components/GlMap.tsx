@@ -27,13 +27,16 @@ type GlMapProps = {
     isp_count: number[],
     total_locations: number[]
   },
-  fillColor: any[]
+  fillColor: any
 };
 
 const USA_BOUNDS: [[number, number], [number, number]] = [
     [-125, 24], // Southwest coordinates: [Longitude, Latitude]
     [-66, 49]   // Northeast coordinates: [Longitude, Latitude]
 ];
+
+// const selectedBlock: string = (hoverInfo && hoverInfo.feature.properties.geoid_bl) || '';
+// const filter: any = useMemo(() => ['in', 'geoid_bl', selectedBlock], [selectedBlock]);
 
 const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter, fillColor }: GlMapProps) => {
   const mapRef = useRef<MapRef | null>(null);
@@ -137,7 +140,7 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter, fillColor }: GlMapPr
               {...bead_dev.layers[0]} 
               filter={layerFilter}
               paint={{
-                'fill-color': fillColor // assuming fillColor is in the correct format
+                'fill-color': fillColor 
               }}
             />
             {hoverInfo && (

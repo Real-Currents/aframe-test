@@ -10,7 +10,7 @@ const colors = {
     }
 };
 
-export function getFillColor(color_scheme: "BEAD category" | "ISP count"): any[] | string {  
+export function getFillColor(color_scheme: string): any {  
 
   if (color_scheme === "BEAD category") {
     return [
@@ -24,7 +24,7 @@ export function getFillColor(color_scheme: "BEAD category" | "ISP count"): any[]
   }
 
   if (color_scheme === "ISP count") {
-    
+
     return [
         'interpolate',
         ['linear'],
