@@ -24,7 +24,8 @@ type GlMapProps = {
       underserved: boolean,
       unserved: boolean
     },
-    isp_count: number[]
+    isp_count: number[],
+    total_locations: number[]
   },
   fillColor: any[]
 };
@@ -44,7 +45,7 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter, fillColor }: GlMapPr
     padding: 20 // Optional padding around the bounds
   });
 
-  const MIN_ZOOM_LEVEL = 10;
+  const MIN_ZOOM_LEVEL = 9;
 
   const [hoverInfo, setHoverInfo] = useState<any>(null); // Specify the type of hoverInfo if known
   const [layerFilter, setLayerFilter] = useState<any>(['all']); // Specify the type of layerFilter if known
@@ -91,7 +92,13 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter, fillColor }: GlMapPr
       ['<=', ['get', 'cnt_isp'], filter.isp_count[1]]
     ];
 
-    let new_filter: any = ["all", ['in', ['get', 'bead_category'], ['literal', bb_array]], isp_filter]; 
+    let total_locations_filter: any = [
+      'all',
+      ['>=', ['get', 'cnt_total_locations'], filter.total_locations[0]],
+      ['<=', ['get', 'cnt_total_locations'], filter.total_locations[1]]
+    ];
+
+    let new_filter: any = ["all", ['in', ['get', 'bead_category'], ['literal', bb_array]], isp_filter, total_locations_filter]; 
 
     setLayerFilter(new_filter);
 

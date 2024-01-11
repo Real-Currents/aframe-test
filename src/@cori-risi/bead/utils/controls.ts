@@ -24,21 +24,24 @@ export function getFillColor(color_scheme: "BEAD category" | "ISP count"): any[]
   }
 
   if (color_scheme === "ISP count") {
+    
     return [
-            "match", ["get", "cnt_isp"],
-            0, "pink",
-            1, "#2F2CBA",
-            2, "#58B4ED",
-            3, "#f0cf48",
-            4, "#FA804A",
-            5, "#B11A00",
-            6, "#B11A00",
-            7, "#B11A00",
-            8, "#B11A00",
-            9, "#B11A00",
-            10, "#B11A00",
-            "dimgray"
-        ]
+        'interpolate',
+        ['linear'],
+        ["get", "cnt_isp"],
+            0,
+            "rgba(163, 226, 181, 0.7)",
+            2,
+            "rgba(125, 179, 149, 0.7)",
+            4,
+            "rgba(99, 147, 127, 0.7)",
+            6,
+            "rgba(73, 115, 105, 0.7)",
+            8,
+            "rgba(48, 84, 84, 0.7)",
+            10,
+            "rgba(22, 52, 62, 0.7)"
+    ]
   }
 
   return "red";

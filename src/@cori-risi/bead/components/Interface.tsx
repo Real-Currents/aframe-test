@@ -13,7 +13,8 @@ export type FilterProps = {
         underserved: boolean,
         unserved: boolean
     },
-    isp_count: number[]
+    isp_count: number[],
+    total_locations: number[]
 }
 
 const Interface = () => {
@@ -25,6 +26,7 @@ const Interface = () => {
             unserved: true
         },
         isp_count: [0, 10],
+        total_locations: [0, 500]
     });
 
     const [fillColor, setFillColor] = useState<any[]>(getFillColor("BEAD category"));

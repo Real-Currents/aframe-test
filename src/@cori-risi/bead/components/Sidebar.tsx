@@ -21,9 +21,14 @@ function Sidebar<T>({
    filter: any 
  }) {
 
-  const handleISPChange = (event: Event, newValue: number | number[], activeThumb: number) => {
+  const handleISPChange = (event: Event, newValue: number | number[]) => {
     let slider_vals: number[] = newValue as number[];
     onFilterChange({...filter, isp_count: slider_vals});
+  };
+
+  const handleTotalLocationsChange = (event: Event, newValue: number | number[]) => {
+    let slider_vals: number[] = newValue as number[];
+    onFilterChange({...filter, total_locations: slider_vals});
   };
 
   function handleBroadbandChange(event: any) {
@@ -48,7 +53,7 @@ function Sidebar<T>({
             defaultValue={"BEAD category"}
             options={["BEAD category", "ISP count"]}
             sx={{ width: "100%" }}
-            renderInput={(params) => <TextField {...params} label="Color scheme" />}
+            renderInput={(params) => <TextField {...params} label="Color map by" />}
             onChange={handleFillColorChange}
           />
         </div>
@@ -87,7 +92,7 @@ function Sidebar<T>({
             label="Unserved"
           />                    
         </FormGroup>
-        <h3>ISP County</h3>
+        <h3>ISP Count</h3>
         <div className={style["slider"]}>
           <Slider
             getAriaLabel={() => 'ISP Count'}
@@ -98,6 +103,17 @@ function Sidebar<T>({
             max={10}
           />
         </div>
+        <h3>Total locations</h3>
+        <div className={style["slider"]}>
+          <Slider
+            getAriaLabel={() => 'Total locations'}
+            value={filter.total_locations}
+            onChange={handleTotalLocationsChange}
+            valueLabelDisplay="auto"
+            min={0}
+            max={500}
+          />
+        </div>        
       </div>  
     </>
   );
