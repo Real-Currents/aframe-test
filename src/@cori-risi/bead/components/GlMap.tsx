@@ -147,13 +147,6 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter, fillColor }: GlMapPr
             )}         
         </Source>
 
-        {/** BEAD track layer sanity check  */}
-{/*        <Source {...bb_tr_100_20.sources[0]}>
-            <Layer
-              {...bb_tr_100_20.layers[0]}
-            />
-        </Source>*/}
-
       </Map>
     </div>
   );
