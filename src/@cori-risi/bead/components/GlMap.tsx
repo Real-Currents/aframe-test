@@ -8,6 +8,9 @@ import { format } from 'd3-format';
 
 import style from "./styles/GlMap.module.css";
 
+import IntrinsicAttributes = React.JSX.IntrinsicAttributes;
+import {LayerProps} from "react-map-gl";
+
 const percentFormat = format('.1%');
 
 import {
@@ -47,6 +50,8 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter, fillColor }: GlMapPr
     bounds: USA_BOUNDS,
     padding: 20 // Optional padding around the bounds
   });
+
+  const [layerAttributes, setLayerAttributes] = useState<(IntrinsicAttributes & LayerProps)>({...bead_dev.layers[0]});
 
   const MIN_ZOOM_LEVEL = 9;
 
@@ -107,6 +112,21 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter, fillColor }: GlMapPr
 
   }, [filter]);
 
+
+  useEffect(() => {
+
+    const newLayerAttributes: (LayerProps & IntrinsicAttributes) = {
+      ...layerAttributes
+    };
+
+    (newLayerAttributes as any)!["paint"] = {
+      "fill-color": fillColor
+    };
+
+    setLayerAttributes(newLayerAttributes);
+
+  }, [fillColor]);
+
   return (
     <div className={style["map-wrapper"]}>
             {map_zoom < MIN_ZOOM_LEVEL && (
@@ -137,11 +157,11 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter, fillColor }: GlMapPr
 
         <Source {...bead_dev.sources[0]} >
             <Layer 
-              {...bead_dev.layers[0]} 
+              {...layerAttributes} 
               filter={layerFilter}
-              paint={{
-                'fill-color': fillColor 
-              }}
+              // paint={{
+              //   'fill-color': fillColor 
+              // }}
             />
             {hoverInfo && (
               <div className="tooltip" style={{left: hoverInfo.x, top: hoverInfo.y}}>
