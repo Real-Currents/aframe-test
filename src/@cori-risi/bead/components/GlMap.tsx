@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react';
+import React, { useState, useCallback, useEffect, useRef, useMemo } from 'react';
 import Map, { Source, Layer } from 'react-map-gl';
 import type { MapRef } from 'react-map-gl';
 import { fitBounds } from 'viewport-mercator-project';
@@ -37,9 +37,6 @@ const USA_BOUNDS: [[number, number], [number, number]] = [
     [-125, 24], // Southwest coordinates: [Longitude, Latitude]
     [-66, 49]   // Northeast coordinates: [Longitude, Latitude]
 ];
-
-// const selectedBlock: string = (hoverInfo && hoverInfo.feature.properties.geoid_bl) || '';
-// const filter: any = useMemo(() => ['in', 'geoid_bl', selectedBlock], [selectedBlock]);
 
 const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter, fillColor }: GlMapProps) => {
   const mapRef = useRef<MapRef | null>(null);
