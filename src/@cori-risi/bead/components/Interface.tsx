@@ -1,28 +1,39 @@
 import React, { useState} from 'react';
-// import Radio from '@mui/material/Radio';
-// import RadioGroup from '@mui/material/RadioGroup';
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import FormControl from '@mui/material/FormControl';
-// import FormLabel from '@mui/material/FormLabel';
-// import Autocomplete from '@mui/material/Autocomplete';
-// import TextField from '@mui/material/TextField';
 
 import GlMap from './GlMap';
 import Sidebar from './Sidebar';
 
 import style from "./styles/Interface.module.css";
 
+import { getFillColor } from './../utils/controls';
+
 export type FilterProps = {
-    bb_service: string,
-    isp_count: number[]
+    bb_service: {
+        served: boolean,
+        underserved: boolean,
+        unserved: boolean
+    },
+    isp_count: number[],
+    total_locations: number[]
 }
 
 const Interface = () => {
 
     const [filter, setFilter] = useState<FilterProps>({
-        bb_service: "all",
+        bb_service:  {
+            served: true,
+            underserved: true,
+            unserved: true
+        },
         isp_count: [0, 10],
+        total_locations: [0, 500]
     });
+
+    const [fillColor, setFillColor] = useState<any[]>(getFillColor("BEAD category"));
+
+    const handleFillColorChange = (newFillColor: any[]) => {
+        setFillColor(newFillColor);
+    };
 
     const handleFilterChange = (newFilter: FilterProps) => {
         setFilter(newFilter);
@@ -33,8 +44,8 @@ const Interface = () => {
     return (
     <>
         <div className={style["interface"]}>
-            <Sidebar<FilterProps> onFilterChange={handleFilterChange} filter={filter}  />
-            <GlMap mapboxToken={MAPBOX_TOKEN} filter={filter} />
+            <Sidebar<FilterProps> onFilterChange={handleFilterChange} onFillColorChange={handleFillColorChange} filter={filter}  />
+            <GlMap mapboxToken={MAPBOX_TOKEN} filter={filter} fillColor={fillColor} />
         </div>
 
         </>

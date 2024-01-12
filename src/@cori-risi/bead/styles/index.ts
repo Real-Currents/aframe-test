@@ -47,7 +47,7 @@ export const bead_dev: MapboxSourceLayerStyles = {
                     ['boolean', ['feature-state', 'hover'], false],
                     'rgba(255, 255, 255, 0.5)',
                     [
-                        "match", ["get", "bead_category" ], // "bl_100_20_area"],
+                        "match", ["get", "bead_category" ],
                         ...((obj) => {
                             const array = [];
                             for (let k in obj) {

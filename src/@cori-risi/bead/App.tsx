@@ -16,6 +16,8 @@ import './App.css';
 import ApplicationMenu from "./components/ApplicationMenu";
 import './components/styles/ApplicationMenu.scss';
 
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
 import Interface from './components/Interface';
 
 import User from '../models/User';
@@ -41,6 +43,20 @@ function getUserLabel (u: User) {
             u.email :
             u.username
 }
+
+const theme = createTheme({
+    typography: {
+        fontFamily: 'Bitter, TT Hoves, Helvetica, Arial',
+    },
+    palette: {
+        primary: {
+            main: '#00835D',
+            light: '#A3E2B5',
+            dark: '#26535C',
+            contrastText: 'white',
+        },
+    },
+});
 
 function App ({ app_id, content, user }: { app_id: string, content: () => HTMLElement, user: Promise<User> }): ReactElement {
 
@@ -148,22 +164,24 @@ function App ({ app_id, content, user }: { app_id: string, content: () => HTMLEl
 
     return (
         <>
-            <Flex className="App" direction="row"
-                  justifyContent="space-between" >
+            <ThemeProvider theme={theme}>
+                <Flex className="App" direction="row"
+                      justifyContent="space-between" >
 
-                <Flex direction="column" flex={(controlPanelOpen)? "initial" : "auto"}>
-                    <Interface />
+                    <Flex direction="column" flex={(controlPanelOpen)? "initial" : "auto"}>
+                        <Interface />
+                    </Flex>
+
+                    {/*<ControlPanel*/}
+                    {/*    open={controlPanelOpen}*/}
+                    {/*    showMenuButton={showMenuButton}*/}
+                    {/*    toggleFunction={toggleControlPanel}*/}
+                    {/*    user={user}>*/}
+                    {/*    <ApplicationMenu />*/}
+                    {/*</ControlPanel>*/}
+
                 </Flex>
-
-                {/*<ControlPanel*/}
-                {/*    open={controlPanelOpen}*/}
-                {/*    showMenuButton={showMenuButton}*/}
-                {/*    toggleFunction={toggleControlPanel}*/}
-                {/*    user={user}>*/}
-                {/*    <ApplicationMenu />*/}
-                {/*</ControlPanel>*/}
-
-            </Flex>
+            </ThemeProvider>
         </>
     );
 }
