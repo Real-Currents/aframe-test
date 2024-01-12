@@ -1,30 +1,7 @@
 import MAP_STYLE from './mapbox_style.json';
-
-export const CONTOUR_STYLE = {
-  "id": "terrain-data",
-  "source": "mapbox-terrain",
-  "source-layer": "contour",
-  "type": "line",
-  "paint": {
-    "line-color": "#26535c",
-    "line-opacity": [
-      "interpolate",
-      [
-        "linear"
-      ],
-      [
-        "zoom"
-      ],
-      0,
-      0,
-      7,
-      0.05,
-      22,
-      0.5
-    ],
-    "line-width": 1
-  }
-}
+import React from "react";
+import IntrinsicAttributes = React.JSX.IntrinsicAttributes;
+import {LayerProps, SourceProps} from "react-map-gl";
 
 // For more information on data-driven styles, see https://www.mapbox.com/help/gl-dds-ref/
 
@@ -45,42 +22,23 @@ export const mapboxStyle = {
     ...MAP_STYLE,
 };
 
-// type SourceType = {
-//     id: string;
-//     type: string;
-//     url: string;
-//     generateId: boolean;
-// };
-
-// type LayerType = {
-//     id: string;
-//     source: string;
-//     "source-layer": string;
-//     type: string;
-//     paint: {
-//         "fill-color": any;  
-//         "fill-opacity": any; 
-//     };
-// };
-
-// export type BbTr10020Type = {
-//     sources: SourceType[];
-//     layers: LayerType[];
-// };
+export type MapboxSourceLayerStyles = {
+    sources: [(IntrinsicAttributes & SourceProps)];
+    layers: [(IntrinsicAttributes & LayerProps)];
+};
 
 
-export const bb_tr_100_20 = {
+export const bead_dev: MapboxSourceLayerStyles = {
     "sources": [{
-        "id": "bb_tr_100_20",
+        "id": "bead_dev",
         "type": "vector",
-        "url": "mapbox://ruralinno.bb_map_tr_2022decareav3", 
-        "generateId": true
+        "url": "mapbox://ruralinno.vt_test3"
     }],
     "layers": [
         {
-            "id": "bb_tr_100_20.style",
-            "source": "bb_tr_100_20",
-            "source-layer": "sch_broadbandbb_map_tr_category_2022decareav3e",
+            "id": "bead_dev.style",
+            "source": "bead_dev",
+            "source-layer": "proj_beadvt_test3",
             "type": "fill",
             "paint": {
                 // "fill-color": "#0080ff", // blue color fill
@@ -89,7 +47,7 @@ export const bb_tr_100_20 = {
                     ['boolean', ['feature-state', 'hover'], false],
                     'rgba(255, 255, 255, 0.5)',
                     [
-                        "match", ["get", "category" ], // "bl_100_20_area"],
+                        "match", ["get", "bead_category" ],
                         ...((obj) => {
                             const array = [];
                             for (let k in obj) {
@@ -119,10 +77,12 @@ export const bb_tr_100_20 = {
                     "interpolate", [ "linear" ],
                     ["zoom"],
                     0, 0,
-                    9, 0.01,
-                    10, 1.0,
-                    11, 1.0,
-                    15, 1.0,
+                    8, 0.01,
+                    9, 0.25,
+                    10, 0.5,
+                    11, 0.75,
+                    12, 1.0,
+                    17, 1.0,
                     18, 0.05
                 ]
             },
@@ -130,6 +90,103 @@ export const bb_tr_100_20 = {
     ]
 };
 
-export const contourStyle = {
-    ...CONTOUR_STYLE
+// Work-around:
+//   "Property 'generateId' does not exist on type 'IntrinsicAttributes & SourceProps'."
+(bead_dev.sources[0] as any)!["generateId"] = true;
+
+export const bb_tr_100_20: MapboxSourceLayerStyles = {
+    "sources": [{
+        "id": "bb_tr_100_20",
+        "type": "vector",
+        "url": "mapbox://ruralinno.bb_map_tr_2022decareav3"
+    }],
+    "layers": [
+        {
+            "id": "bb_tr_100_20.style",
+            "source": "bb_tr_100_20",
+            "source-layer": "sch_broadbandbb_map_tr_category_2022decareav3e",
+            "type": "fill",
+            "paint": {
+                // "fill-color": "#0080ff", // blue color fill
+                "fill-color": [
+                    'case',
+                    ['boolean', ['feature-state', 'hover'], false],
+                    'rgba(255, 255, 255, 0.5)',
+                    [
+                        "match", ["get", "category" ], // "bl_100_20_area"],
+                        // "Served", "rgba(19, 3, 50, 0.5)",
+                        // "Underserved", "rgba(118, 88, 162, 0.75)",
+                        // "Unserved", "rgba(203, 190, 220, 0.85)",
+                        // "Not Reported", "rgba(105, 105, 105, 0)",
+                        ...((obj) => {
+                            const array = [];
+                            for (let k in obj) {
+                                if (obj.hasOwnProperty(k)) {
+                                    let category = "Not Reported";
+                                    if (k === "served_area") {
+                                        category = ("Served");
+                                    } else if (k === "underserved_area") {
+                                        category = ("Underserved");
+                                    } else if (k === "unserved_area") {
+                                        category = ("Unserved");
+                                    } else if (k === "not_reported") {
+                                        category = ("Not Reported");
+                                    } else break;
+                                    array.push(category);
+                                    array.push(obj[k]);
+                                    console.log(`${category}:  ${obj[k]}`);
+                                }
+                            }
+                            return array;
+                        })(colors["legend_colors"]["bb_bead_categories"]),
+                        // "rgba(105, 105, 105, 0)",
+                        colors["legend_colors"]["bb_bead_categories"]["default"]
+                    ]
+                ],
+                // "fill-opacity": 0.25,
+                "fill-opacity": [
+                    "interpolate", [ "linear" ],
+                    ["zoom"],
+                    0, 0,
+                    8, 0.01,
+                    9, 0.25,
+                    10, 0.5,
+                    11, 0.5,
+                    12, 0.25,
+                    // 15, 1.0,
+                    // 18, 0.05
+                ]
+            },
+        }
+    ]
+};
+
+// Work-around:
+//   "Property 'generateId' does not exist on type 'IntrinsicAttributes & SourceProps'."
+(bb_tr_100_20.sources[0] as any)!["generateId"] = true;
+
+export const contourStyle: IntrinsicAttributes & LayerProps = {
+    "id": "terrain-data",
+    "source": "mapbox-terrain",
+    "source-layer": "contour",
+    "type": "line",
+    "paint": {
+        "line-color": "#26535c",
+        "line-opacity": [
+            "interpolate",
+            [
+                "linear"
+            ],
+            [
+                "zoom"
+            ],
+            0,
+            0,
+            7,
+            0.05,
+            22,
+            0.5
+        ],
+        "line-width": 1
+    }
 };
