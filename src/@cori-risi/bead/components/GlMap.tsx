@@ -178,5 +178,6 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter, fillColor }: GlMapPr
       </Map>
     </div>
   );
+}
 
 export default GlMap;
