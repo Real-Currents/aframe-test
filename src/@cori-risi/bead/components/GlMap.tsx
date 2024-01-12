@@ -129,7 +129,7 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter, fillColor }: GlMapPr
   return (
     <div className={style["map-wrapper"]}>
             {map_zoom < MIN_ZOOM_LEVEL && (
-          <div className={style["zoom-message"]}>Zoom closer to view data</div>
+          <div className={style["zoom-message"]}>Zoom in to Vermont view data</div>
         )}   
       <Map
         ref={mapRef}
