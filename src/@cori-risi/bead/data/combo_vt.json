@@ -1,0 +1,2654 @@
+[
+  {
+    "combo_isp_id": "99969",
+    "agg_new_alias_clean": "[GoNetspeed]"
+  },
+  {
+    "combo_isp_id": "99959",
+    "agg_new_alias_clean": "[Consolidated Communications,Wireless Partners, LLC]"
+  },
+  {
+    "combo_isp_id": "99951",
+    "agg_new_alias_clean": "[Wireless Partners, LLC]"
+  },
+  {
+    "combo_isp_id": "99580",
+    "agg_new_alias_clean": "[GREEN MOUNTAIN ACCESS,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "99579",
+    "agg_new_alias_clean": "[Franklin Telephone Company,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "99578",
+    "agg_new_alias_clean": "[FirstLight Fiber,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "99577",
+    "agg_new_alias_clean": "[Fidium Fiber,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "99576",
+    "agg_new_alias_clean": "[ECFiber,Fidium Fiber,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "99575",
+    "agg_new_alias_clean": "[ECFiber,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "99574",
+    "agg_new_alias_clean": "[Consolidated Communications,Franklin Telephone Company,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "99573",
+    "agg_new_alias_clean": "[Consolidated Communications,ECFiber,Fidium Fiber,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "99572",
+    "agg_new_alias_clean": "[Consolidated Communications,ECFiber,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "99571",
+    "agg_new_alias_clean": "[Consolidated Communications,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "99570",
+    "agg_new_alias_clean": "[Cloud Alliance,Consolidated Communications,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "99569",
+    "agg_new_alias_clean": "[Cloud Alliance,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "99568",
+    "agg_new_alias_clean": "[Charter Communications Inc,Fidium Fiber,FirstLight Fiber,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "99567",
+    "agg_new_alias_clean": "[Charter Communications Inc,Fidium Fiber,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "99566",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,FirstLight Fiber,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "99565",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,ECFiber,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "99564",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "99563",
+    "agg_new_alias_clean": "[Charter Communications Inc,Cloud Alliance,Fidium Fiber,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "99562",
+    "agg_new_alias_clean": "[Charter Communications Inc,Cloud Alliance,Consolidated Communications,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "99561",
+    "agg_new_alias_clean": "[Charter Communications Inc,Cloud Alliance,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "99560",
+    "agg_new_alias_clean": "[Charter Communications Inc,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "99558",
+    "agg_new_alias_clean": "[Burlington Telecom,Consolidated Communications,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "99557",
+    "agg_new_alias_clean": "[Burlington Telecom,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "99556",
+    "agg_new_alias_clean": "[GREEN MOUNTAIN ACCESS,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "99555",
+    "agg_new_alias_clean": "[Fidium Fiber,FirstLight Fiber,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "99554",
+    "agg_new_alias_clean": "[Fidium Fiber,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "99553",
+    "agg_new_alias_clean": "[ECFiber,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "99552",
+    "agg_new_alias_clean": "[Consolidated Communications,FirstLight Fiber,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "99551",
+    "agg_new_alias_clean": "[Consolidated Communications,Fidium Fiber,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "99550",
+    "agg_new_alias_clean": "[Consolidated Communications,ECFiber,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "99549",
+    "agg_new_alias_clean": "[Consolidated Communications,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "99548",
+    "agg_new_alias_clean": "[Cloud Alliance,Consolidated Communications,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "99547",
+    "agg_new_alias_clean": "[Cloud Alliance,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "99546",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "99545",
+    "agg_new_alias_clean": "[Burlington Telecom,Fidium Fiber,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "99544",
+    "agg_new_alias_clean": "[Burlington Telecom,Consolidated Communications,Fidium Fiber,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "99543",
+    "agg_new_alias_clean": "[Burlington Telecom,Consolidated Communications,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "99542",
+    "agg_new_alias_clean": "[Burlington Telecom,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "99541",
+    "agg_new_alias_clean": "[VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "99540",
+    "agg_new_alias_clean": "[Consolidated Communications,GoNetspeed,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "99539",
+    "agg_new_alias_clean": "[GoNetspeed,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "99538",
+    "agg_new_alias_clean": "[GoNetspeed,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "99537",
+    "agg_new_alias_clean": "[Consolidated Communications,VTel Wireless, Inc.,Wireless Partners, LLC]"
+  },
+  {
+    "combo_isp_id": "99536",
+    "agg_new_alias_clean": "[VTel Wireless, Inc.,Wireless Partners, LLC]"
+  },
+  {
+    "combo_isp_id": "99535",
+    "agg_new_alias_clean": "[VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "99377",
+    "agg_new_alias_clean": "[ECFiber,Vermont Telephone Company,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "99376",
+    "agg_new_alias_clean": "[Fidium Fiber,Vermont Telephone Company,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "99375",
+    "agg_new_alias_clean": "[Vermont Telephone Company,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "99374",
+    "agg_new_alias_clean": "[Vermont Telephone Company,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "99373",
+    "agg_new_alias_clean": "[Vermont Telephone Company]"
+  },
+  {
+    "combo_isp_id": "99368",
+    "agg_new_alias_clean": "[GREEN MOUNTAIN ACCESS,Verizon]"
+  },
+  {
+    "combo_isp_id": "99113",
+    "agg_new_alias_clean": "[ECFiber,Verizon]"
+  },
+  {
+    "combo_isp_id": "98944",
+    "agg_new_alias_clean": "[Consolidated Communications,ECFiber,Verizon]"
+  },
+  {
+    "combo_isp_id": "98942",
+    "agg_new_alias_clean": "[Consolidated Communications,Verizon]"
+  },
+  {
+    "combo_isp_id": "98862",
+    "agg_new_alias_clean": "[Cloud Alliance,Verizon]"
+  },
+  {
+    "combo_isp_id": "98697",
+    "agg_new_alias_clean": "[Charter Communications Inc,ECFiber,Verizon]"
+  },
+  {
+    "combo_isp_id": "97750",
+    "agg_new_alias_clean": "[GREEN MOUNTAIN ACCESS,Verizon,Xfinity]"
+  },
+  {
+    "combo_isp_id": "97696",
+    "agg_new_alias_clean": "[ECFiber,Verizon,Xfinity]"
+  },
+  {
+    "combo_isp_id": "97645",
+    "agg_new_alias_clean": "[Consolidated Communications,Verizon,Xfinity]"
+  },
+  {
+    "combo_isp_id": "97426",
+    "agg_new_alias_clean": "[Verizon,Xfinity]"
+  },
+  {
+    "combo_isp_id": "96792",
+    "agg_new_alias_clean": "[GREEN MOUNTAIN ACCESS,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "96791",
+    "agg_new_alias_clean": "[FirstLight Fiber,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "96790",
+    "agg_new_alias_clean": "[Fidium Fiber,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "96789",
+    "agg_new_alias_clean": "[ECFiber,Fidium Fiber,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "96788",
+    "agg_new_alias_clean": "[ECFiber,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "96787",
+    "agg_new_alias_clean": "[Consolidated Communications,GREEN MOUNTAIN ACCESS,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "96786",
+    "agg_new_alias_clean": "[Consolidated Communications,Franklin Telephone Company,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "96785",
+    "agg_new_alias_clean": "[Consolidated Communications,Fidium Fiber,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "96784",
+    "agg_new_alias_clean": "[Consolidated Communications,ECFiber,Fidium Fiber,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "96783",
+    "agg_new_alias_clean": "[Consolidated Communications,ECFiber,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "96782",
+    "agg_new_alias_clean": "[Consolidated Communications,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "96781",
+    "agg_new_alias_clean": "[Cloud Alliance,Consolidated Communications,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "96780",
+    "agg_new_alias_clean": "[Cloud Alliance,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "96779",
+    "agg_new_alias_clean": "[Charter Communications Inc,FirstLight Fiber,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "96778",
+    "agg_new_alias_clean": "[Charter Communications Inc,Fidium Fiber,FirstLight Fiber,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "96777",
+    "agg_new_alias_clean": "[Charter Communications Inc,Fidium Fiber,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "96776",
+    "agg_new_alias_clean": "[Charter Communications Inc,ECFiber,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "96775",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,FirstLight Fiber,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "96774",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,Fidium Fiber,FirstLight Fiber,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "96773",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,Fidium Fiber,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "96772",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "96771",
+    "agg_new_alias_clean": "[Charter Communications Inc,Cloud Alliance,Consolidated Communications,FirstLight Fiber,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "96770",
+    "agg_new_alias_clean": "[Charter Communications Inc,Cloud Alliance,Consolidated Communications,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "96769",
+    "agg_new_alias_clean": "[Charter Communications Inc,Cloud Alliance,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "96768",
+    "agg_new_alias_clean": "[Charter Communications Inc,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "96765",
+    "agg_new_alias_clean": "[Burlington Telecom,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "96764",
+    "agg_new_alias_clean": "[GREEN MOUNTAIN ACCESS,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "96763",
+    "agg_new_alias_clean": "[FirstLight Fiber,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "96762",
+    "agg_new_alias_clean": "[Fidium Fiber,FirstLight Fiber,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "96761",
+    "agg_new_alias_clean": "[Fidium Fiber,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "96760",
+    "agg_new_alias_clean": "[ECFiber,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "96759",
+    "agg_new_alias_clean": "[Consolidated Communications,FirstLight Fiber,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "96758",
+    "agg_new_alias_clean": "[Consolidated Communications,Fidium Fiber,FirstLight Fiber,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "96757",
+    "agg_new_alias_clean": "[Consolidated Communications,Fidium Fiber,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "96756",
+    "agg_new_alias_clean": "[Consolidated Communications,ECFiber,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "96755",
+    "agg_new_alias_clean": "[Consolidated Communications,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "96754",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "96753",
+    "agg_new_alias_clean": "[Burlington Telecom,Consolidated Communications,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "96752",
+    "agg_new_alias_clean": "[Burlington Telecom,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "96751",
+    "agg_new_alias_clean": "[Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "96750",
+    "agg_new_alias_clean": "[GoNetspeed,GREEN MOUNTAIN ACCESS,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "96749",
+    "agg_new_alias_clean": "[Consolidated Communications,GoNetspeed,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "96748",
+    "agg_new_alias_clean": "[GoNetspeed,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "96747",
+    "agg_new_alias_clean": "[GoNetspeed,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "96746",
+    "agg_new_alias_clean": "[Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "96562",
+    "agg_new_alias_clean": "[GREEN MOUNTAIN ACCESS,Verizon,Vermont Telephone Company,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "96561",
+    "agg_new_alias_clean": "[Fidium Fiber,Verizon,Vermont Telephone Company,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "96560",
+    "agg_new_alias_clean": "[ECFiber,Verizon,Vermont Telephone Company,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "96559",
+    "agg_new_alias_clean": "[Verizon,Vermont Telephone Company,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "96558",
+    "agg_new_alias_clean": "[Verizon,Vermont Telephone Company,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "96557",
+    "agg_new_alias_clean": "[Verizon,Vermont Telephone Company]"
+  },
+  {
+    "combo_isp_id": "96386",
+    "agg_new_alias_clean": "[Verizon]"
+  },
+  {
+    "combo_isp_id": "95366",
+    "agg_new_alias_clean": "[Fidium Fiber,UNITED STATES CELLULAR CORPORATION,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "95365",
+    "agg_new_alias_clean": "[Consolidated Communications,UNITED STATES CELLULAR CORPORATION,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "95364",
+    "agg_new_alias_clean": "[Fidium Fiber,FirstLight Fiber,UNITED STATES CELLULAR CORPORATION,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "95363",
+    "agg_new_alias_clean": "[Fidium Fiber,UNITED STATES CELLULAR CORPORATION,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "95362",
+    "agg_new_alias_clean": "[ECFiber,UNITED STATES CELLULAR CORPORATION,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "95361",
+    "agg_new_alias_clean": "[Consolidated Communications,ECFiber,UNITED STATES CELLULAR CORPORATION,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "95360",
+    "agg_new_alias_clean": "[Consolidated Communications,UNITED STATES CELLULAR CORPORATION,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "95359",
+    "agg_new_alias_clean": "[UNITED STATES CELLULAR CORPORATION,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "95358",
+    "agg_new_alias_clean": "[Consolidated Communications,UNITED STATES CELLULAR CORPORATION,VTel Wireless, Inc.,Wireless Partners, LLC]"
+  },
+  {
+    "combo_isp_id": "95357",
+    "agg_new_alias_clean": "[UNITED STATES CELLULAR CORPORATION,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "95310",
+    "agg_new_alias_clean": "[UNITED STATES CELLULAR CORPORATION,Vermont Telephone Company,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "95256",
+    "agg_new_alias_clean": "[Fidium Fiber,UNITED STATES CELLULAR CORPORATION,Verizon]"
+  },
+  {
+    "combo_isp_id": "94716",
+    "agg_new_alias_clean": "[ECFiber,UNITED STATES CELLULAR CORPORATION,Verizon,Xfinity]"
+  },
+  {
+    "combo_isp_id": "94703",
+    "agg_new_alias_clean": "[Consolidated Communications,UNITED STATES CELLULAR CORPORATION,Verizon,Xfinity]"
+  },
+  {
+    "combo_isp_id": "94670",
+    "agg_new_alias_clean": "[UNITED STATES CELLULAR CORPORATION,Verizon,Xfinity]"
+  },
+  {
+    "combo_isp_id": "94502",
+    "agg_new_alias_clean": "[Fidium Fiber,UNITED STATES CELLULAR CORPORATION,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "94501",
+    "agg_new_alias_clean": "[Consolidated Communications,ECFiber,UNITED STATES CELLULAR CORPORATION,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "94500",
+    "agg_new_alias_clean": "[Consolidated Communications,UNITED STATES CELLULAR CORPORATION,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "94499",
+    "agg_new_alias_clean": "[Fidium Fiber,FirstLight Fiber,UNITED STATES CELLULAR CORPORATION,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "94498",
+    "agg_new_alias_clean": "[Fidium Fiber,UNITED STATES CELLULAR CORPORATION,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "94497",
+    "agg_new_alias_clean": "[Consolidated Communications,Fidium Fiber,FirstLight Fiber,UNITED STATES CELLULAR CORPORATION,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "94496",
+    "agg_new_alias_clean": "[Consolidated Communications,ECFiber,UNITED STATES CELLULAR CORPORATION,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "94495",
+    "agg_new_alias_clean": "[Consolidated Communications,UNITED STATES CELLULAR CORPORATION,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "94494",
+    "agg_new_alias_clean": "[UNITED STATES CELLULAR CORPORATION,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "94493",
+    "agg_new_alias_clean": "[UNITED STATES CELLULAR CORPORATION,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "94433",
+    "agg_new_alias_clean": "[UNITED STATES CELLULAR CORPORATION,Verizon,Vermont Telephone Company,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "94417",
+    "agg_new_alias_clean": "[UNITED STATES CELLULAR CORPORATION,Verizon]"
+  },
+  {
+    "combo_isp_id": "94371",
+    "agg_new_alias_clean": "[UNITED STATES CELLULAR CORPORATION]"
+  },
+  {
+    "combo_isp_id": "93670",
+    "agg_new_alias_clean": "[ECFiber,Topsham Telephone Company,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "93669",
+    "agg_new_alias_clean": "[Consolidated Communications,ECFiber,Topsham Telephone Company,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "93668",
+    "agg_new_alias_clean": "[Topsham Telephone Company,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "93667",
+    "agg_new_alias_clean": "[Topsham Telephone Company,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "93665",
+    "agg_new_alias_clean": "[Consolidated Communications,Topsham Communications,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "93664",
+    "agg_new_alias_clean": "[Topsham Communications,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "93663",
+    "agg_new_alias_clean": "[Consolidated Communications,Topsham Communications,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "93662",
+    "agg_new_alias_clean": "[Topsham Communications,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "93661",
+    "agg_new_alias_clean": "[Consolidated Communications,Topsham Communications,Topsham Telephone Company,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "93660",
+    "agg_new_alias_clean": "[Topsham Communications,Topsham Telephone Company,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "93549",
+    "agg_new_alias_clean": "[Consolidated Communications,Tilson Broadband,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "93548",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,Tilson Broadband,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "93547",
+    "agg_new_alias_clean": "[Tilson Broadband,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "93546",
+    "agg_new_alias_clean": "[Charter Communications Inc,Tilson Broadband,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "93076",
+    "agg_new_alias_clean": "[TDS Telecom,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "93075",
+    "agg_new_alias_clean": "[TDS Telecom,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "93069",
+    "agg_new_alias_clean": "[TDS Telecom,Vermont Telephone Company,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "93068",
+    "agg_new_alias_clean": "[TDS Telecom,Vermont Telephone Company,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "92982",
+    "agg_new_alias_clean": "[Charter Communications Inc,Fidium Fiber,TDS Telecom,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "92981",
+    "agg_new_alias_clean": "[TDS Telecom,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "92980",
+    "agg_new_alias_clean": "[TDS Telecom,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "92926",
+    "agg_new_alias_clean": "[TDS Telecom,UNITED STATES CELLULAR CORPORATION,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "92925",
+    "agg_new_alias_clean": "[TDS Telecom,UNITED STATES CELLULAR CORPORATION,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "92867",
+    "agg_new_alias_clean": "[TDS Telecom,UNITED STATES CELLULAR CORPORATION,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "92866",
+    "agg_new_alias_clean": "[TDS Telecom,UNITED STATES CELLULAR CORPORATION,Verizon,Vermont Telephone Company,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "92794",
+    "agg_new_alias_clean": "[TDS Telecom]"
+  },
+  {
+    "combo_isp_id": "92654",
+    "agg_new_alias_clean": "[GREEN MOUNTAIN ACCESS,T-Mobile US]"
+  },
+  {
+    "combo_isp_id": "92500",
+    "agg_new_alias_clean": "[Fidium Fiber,T-Mobile US]"
+  },
+  {
+    "combo_isp_id": "92382",
+    "agg_new_alias_clean": "[ECFiber,Fidium Fiber,T-Mobile US]"
+  },
+  {
+    "combo_isp_id": "92381",
+    "agg_new_alias_clean": "[ECFiber,T-Mobile US]"
+  },
+  {
+    "combo_isp_id": "92206",
+    "agg_new_alias_clean": "[Consolidated Communications,ECFiber,T-Mobile US]"
+  },
+  {
+    "combo_isp_id": "92201",
+    "agg_new_alias_clean": "[Consolidated Communications,T-Mobile US]"
+  },
+  {
+    "combo_isp_id": "92126",
+    "agg_new_alias_clean": "[Cloud Alliance,Consolidated Communications,T-Mobile US]"
+  },
+  {
+    "combo_isp_id": "91903",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,T-Mobile US]"
+  },
+  {
+    "combo_isp_id": "91841",
+    "agg_new_alias_clean": "[Charter Communications Inc,T-Mobile US]"
+  },
+  {
+    "combo_isp_id": "90901",
+    "agg_new_alias_clean": "[GREEN MOUNTAIN ACCESS,T-Mobile US,Xfinity]"
+  },
+  {
+    "combo_isp_id": "90867",
+    "agg_new_alias_clean": "[Fidium Fiber,T-Mobile US,Xfinity]"
+  },
+  {
+    "combo_isp_id": "90852",
+    "agg_new_alias_clean": "[ECFiber,T-Mobile US,Xfinity]"
+  },
+  {
+    "combo_isp_id": "90801",
+    "agg_new_alias_clean": "[Consolidated Communications,T-Mobile US,Xfinity]"
+  },
+  {
+    "combo_isp_id": "90616",
+    "agg_new_alias_clean": "[T-Mobile US,Xfinity]"
+  },
+  {
+    "combo_isp_id": "90400",
+    "agg_new_alias_clean": "[Consolidated Communications,T-Mobile US,Wireless Partners, LLC]"
+  },
+  {
+    "combo_isp_id": "89927",
+    "agg_new_alias_clean": "[GREEN MOUNTAIN ACCESS,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "89926",
+    "agg_new_alias_clean": "[Franklin Telephone Company,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "89925",
+    "agg_new_alias_clean": "[FirstLight Fiber,GREEN MOUNTAIN ACCESS,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "89924",
+    "agg_new_alias_clean": "[Fidium Fiber,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "89923",
+    "agg_new_alias_clean": "[ECFiber,Fidium Fiber,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "89922",
+    "agg_new_alias_clean": "[ECFiber,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "89921",
+    "agg_new_alias_clean": "[Consolidated Communications,GREEN MOUNTAIN ACCESS,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "89920",
+    "agg_new_alias_clean": "[Consolidated Communications,Franklin Telephone Company,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "89919",
+    "agg_new_alias_clean": "[Consolidated Communications,Fidium Fiber,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "89918",
+    "agg_new_alias_clean": "[Consolidated Communications,ECFiber,FirstLight Fiber,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "89917",
+    "agg_new_alias_clean": "[Consolidated Communications,ECFiber,Fidium Fiber,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "89916",
+    "agg_new_alias_clean": "[Consolidated Communications,ECFiber,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "89915",
+    "agg_new_alias_clean": "[Consolidated Communications,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "89914",
+    "agg_new_alias_clean": "[Cloud Alliance,Consolidated Communications,Fidium Fiber,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "89913",
+    "agg_new_alias_clean": "[Cloud Alliance,Consolidated Communications,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "89912",
+    "agg_new_alias_clean": "[Cloud Alliance,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "89911",
+    "agg_new_alias_clean": "[Charter Communications Inc,Fidium Fiber,FirstLight Fiber,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "89910",
+    "agg_new_alias_clean": "[Charter Communications Inc,Fidium Fiber,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "89909",
+    "agg_new_alias_clean": "[Charter Communications Inc,ECFiber,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "89908",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,FirstLight Fiber,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "89907",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,Fidium Fiber,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "89906",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,ECFiber,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "89905",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "89904",
+    "agg_new_alias_clean": "[Charter Communications Inc,Cloud Alliance,Fidium Fiber,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "89903",
+    "agg_new_alias_clean": "[Charter Communications Inc,Cloud Alliance,Consolidated Communications,FirstLight Fiber,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "89902",
+    "agg_new_alias_clean": "[Charter Communications Inc,Cloud Alliance,Consolidated Communications,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "89901",
+    "agg_new_alias_clean": "[Charter Communications Inc,Cloud Alliance,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "89899",
+    "agg_new_alias_clean": "[Charter Communications Inc,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "89897",
+    "agg_new_alias_clean": "[GREEN MOUNTAIN ACCESS,T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "89896",
+    "agg_new_alias_clean": "[Franklin Telephone Company,T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "89895",
+    "agg_new_alias_clean": "[FirstLight Fiber,GREEN MOUNTAIN ACCESS,T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "89894",
+    "agg_new_alias_clean": "[FirstLight Fiber,T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "89893",
+    "agg_new_alias_clean": "[Fidium Fiber,FirstLight Fiber,T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "89892",
+    "agg_new_alias_clean": "[Fidium Fiber,T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "89891",
+    "agg_new_alias_clean": "[ECFiber,T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "89890",
+    "agg_new_alias_clean": "[Consolidated Communications,GREEN MOUNTAIN ACCESS,T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "89889",
+    "agg_new_alias_clean": "[Consolidated Communications,Franklin Telephone Company,T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "89888",
+    "agg_new_alias_clean": "[Consolidated Communications,FirstLight Fiber,T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "89887",
+    "agg_new_alias_clean": "[Consolidated Communications,Fidium Fiber,GREEN MOUNTAIN ACCESS,T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "89886",
+    "agg_new_alias_clean": "[Consolidated Communications,Fidium Fiber,FirstLight Fiber,T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "89885",
+    "agg_new_alias_clean": "[Consolidated Communications,Fidium Fiber,T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "89884",
+    "agg_new_alias_clean": "[Consolidated Communications,ECFiber,FirstLight Fiber,T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "89883",
+    "agg_new_alias_clean": "[Consolidated Communications,ECFiber,T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "89882",
+    "agg_new_alias_clean": "[Consolidated Communications,T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "89881",
+    "agg_new_alias_clean": "[Cloud Alliance,Fidium Fiber,T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "89880",
+    "agg_new_alias_clean": "[Cloud Alliance,Consolidated Communications,Fidium Fiber,T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "89879",
+    "agg_new_alias_clean": "[Cloud Alliance,Consolidated Communications,T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "89878",
+    "agg_new_alias_clean": "[Cloud Alliance,T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "89877",
+    "agg_new_alias_clean": "[Charter Communications Inc,Fidium Fiber,FirstLight Fiber,T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "89876",
+    "agg_new_alias_clean": "[Charter Communications Inc,Fidium Fiber,T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "89875",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,Fidium Fiber,FirstLight Fiber,T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "89874",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "89873",
+    "agg_new_alias_clean": "[Burlington Telecom,Fidium Fiber,T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "89872",
+    "agg_new_alias_clean": "[Burlington Telecom,Consolidated Communications,FirstLight Fiber,T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "89871",
+    "agg_new_alias_clean": "[Burlington Telecom,Consolidated Communications,Fidium Fiber,T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "89870",
+    "agg_new_alias_clean": "[Burlington Telecom,Consolidated Communications,T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "89869",
+    "agg_new_alias_clean": "[Burlington Telecom,T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "89868",
+    "agg_new_alias_clean": "[T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "89867",
+    "agg_new_alias_clean": "[GoNetspeed,GREEN MOUNTAIN ACCESS,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "89866",
+    "agg_new_alias_clean": "[FirstLight Fiber,GoNetspeed,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "89865",
+    "agg_new_alias_clean": "[Fidium Fiber,GoNetspeed,T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "89864",
+    "agg_new_alias_clean": "[Consolidated Communications,GoNetspeed,T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "89863",
+    "agg_new_alias_clean": "[GoNetspeed,T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "89862",
+    "agg_new_alias_clean": "[GoNetspeed,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "89861",
+    "agg_new_alias_clean": "[Consolidated Communications,FirstLight Fiber,T-Mobile US,VTel Wireless, Inc.,Wireless Partners, LLC]"
+  },
+  {
+    "combo_isp_id": "89860",
+    "agg_new_alias_clean": "[Consolidated Communications,Fidium Fiber,T-Mobile US,VTel Wireless, Inc.,Wireless Partners, LLC]"
+  },
+  {
+    "combo_isp_id": "89859",
+    "agg_new_alias_clean": "[Consolidated Communications,DVFiber,T-Mobile US,VTel Wireless, Inc.,Wireless Partners, LLC]"
+  },
+  {
+    "combo_isp_id": "89858",
+    "agg_new_alias_clean": "[Consolidated Communications,T-Mobile US,VTel Wireless, Inc.,Wireless Partners, LLC]"
+  },
+  {
+    "combo_isp_id": "89856",
+    "agg_new_alias_clean": "[Consolidated Communications,T-Mobile US,VTel Wireless, Inc.,Wireless Partners, LLC,Xfinity]"
+  },
+  {
+    "combo_isp_id": "89855",
+    "agg_new_alias_clean": "[T-Mobile US,VTel Wireless, Inc.,Wireless Partners, LLC]"
+  },
+  {
+    "combo_isp_id": "89854",
+    "agg_new_alias_clean": "[Consolidated Communications,T-Mobile US,VTel Wireless, Inc.,Whip_City_Fiber]"
+  },
+  {
+    "combo_isp_id": "89853",
+    "agg_new_alias_clean": "[T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "89694",
+    "agg_new_alias_clean": "[T-Mobile US,Vermont Telephone Company,Xfinity]"
+  },
+  {
+    "combo_isp_id": "89693",
+    "agg_new_alias_clean": "[FirstLight Fiber,T-Mobile US,Vermont Telephone Company,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "89692",
+    "agg_new_alias_clean": "[ECFiber,T-Mobile US,Vermont Telephone Company,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "89691",
+    "agg_new_alias_clean": "[Consolidated Communications,ECFiber,T-Mobile US,Vermont Telephone Company,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "89690",
+    "agg_new_alias_clean": "[Consolidated Communications,T-Mobile US,Vermont Telephone Company,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "89689",
+    "agg_new_alias_clean": "[Fidium Fiber,T-Mobile US,Vermont Telephone Company,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "89688",
+    "agg_new_alias_clean": "[ECFiber,T-Mobile US,Vermont Telephone Company,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "89687",
+    "agg_new_alias_clean": "[Consolidated Communications,ECFiber,T-Mobile US,Vermont Telephone Company,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "89686",
+    "agg_new_alias_clean": "[Consolidated Communications,T-Mobile US,Vermont Telephone Company,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "89685",
+    "agg_new_alias_clean": "[T-Mobile US,Vermont Telephone Company,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "89684",
+    "agg_new_alias_clean": "[T-Mobile US,Vermont Telephone Company,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "89683",
+    "agg_new_alias_clean": "[T-Mobile US,Vermont Telephone Company]"
+  },
+  {
+    "combo_isp_id": "89678",
+    "agg_new_alias_clean": "[GREEN MOUNTAIN ACCESS,T-Mobile US,Verizon]"
+  },
+  {
+    "combo_isp_id": "89193",
+    "agg_new_alias_clean": "[Consolidated Communications,ECFiber,T-Mobile US,Verizon]"
+  },
+  {
+    "combo_isp_id": "89182",
+    "agg_new_alias_clean": "[Consolidated Communications,T-Mobile US,Verizon]"
+  },
+  {
+    "combo_isp_id": "88732",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,T-Mobile US,Verizon]"
+  },
+  {
+    "combo_isp_id": "88605",
+    "agg_new_alias_clean": "[Charter Communications Inc,T-Mobile US,Verizon]"
+  },
+  {
+    "combo_isp_id": "87245",
+    "agg_new_alias_clean": "[GREEN MOUNTAIN ACCESS,T-Mobile US,Verizon,Xfinity]"
+  },
+  {
+    "combo_isp_id": "87187",
+    "agg_new_alias_clean": "[Fidium Fiber,T-Mobile US,Verizon,Xfinity]"
+  },
+  {
+    "combo_isp_id": "87087",
+    "agg_new_alias_clean": "[Consolidated Communications,ECFiber,T-Mobile US,Verizon,Xfinity]"
+  },
+  {
+    "combo_isp_id": "87077",
+    "agg_new_alias_clean": "[Consolidated Communications,T-Mobile US,Verizon,Xfinity]"
+  },
+  {
+    "combo_isp_id": "86640",
+    "agg_new_alias_clean": "[T-Mobile US,Verizon,Xfinity]"
+  },
+  {
+    "combo_isp_id": "86349",
+    "agg_new_alias_clean": "[GoNetspeed,T-Mobile US,Verizon]"
+  },
+  {
+    "combo_isp_id": "85676",
+    "agg_new_alias_clean": "[GREEN MOUNTAIN ACCESS,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "85675",
+    "agg_new_alias_clean": "[Franklin Telephone Company,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "85674",
+    "agg_new_alias_clean": "[FirstLight Fiber,GREEN MOUNTAIN ACCESS,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "85673",
+    "agg_new_alias_clean": "[Fidium Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "85672",
+    "agg_new_alias_clean": "[ECFiber,Fidium Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "85671",
+    "agg_new_alias_clean": "[ECFiber,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "85670",
+    "agg_new_alias_clean": "[Consolidated Communications,GREEN MOUNTAIN ACCESS,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "85669",
+    "agg_new_alias_clean": "[Consolidated Communications,FirstLight Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "85668",
+    "agg_new_alias_clean": "[Consolidated Communications,Fidium Fiber,GREEN MOUNTAIN ACCESS,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "85667",
+    "agg_new_alias_clean": "[Consolidated Communications,Fidium Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "85666",
+    "agg_new_alias_clean": "[Consolidated Communications,ECFiber,Fidium Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "85665",
+    "agg_new_alias_clean": "[Consolidated Communications,ECFiber,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "85664",
+    "agg_new_alias_clean": "[Consolidated Communications,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "85663",
+    "agg_new_alias_clean": "[Cloud Alliance,Consolidated Communications,Fidium Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "85662",
+    "agg_new_alias_clean": "[Cloud Alliance,Consolidated Communications,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "85661",
+    "agg_new_alias_clean": "[Cloud Alliance,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "85659",
+    "agg_new_alias_clean": "[Charter Communications Inc,FirstLight Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "85658",
+    "agg_new_alias_clean": "[Charter Communications Inc,Fidium Fiber,FirstLight Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "85657",
+    "agg_new_alias_clean": "[Charter Communications Inc,Fidium Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "85656",
+    "agg_new_alias_clean": "[Charter Communications Inc,ECFiber,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "85655",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,FirstLight Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "85654",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,Fidium Fiber,FirstLight Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "85653",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,Fidium Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "85652",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,ECFiber,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "85651",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "85650",
+    "agg_new_alias_clean": "[Charter Communications Inc,Cloud Alliance,FirstLight Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "85649",
+    "agg_new_alias_clean": "[Charter Communications Inc,Cloud Alliance,Fidium Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "85648",
+    "agg_new_alias_clean": "[Charter Communications Inc,Cloud Alliance,Consolidated Communications,Fidium Fiber,FirstLight Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "85647",
+    "agg_new_alias_clean": "[Charter Communications Inc,Cloud Alliance,Consolidated Communications,Fidium Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "85646",
+    "agg_new_alias_clean": "[Charter Communications Inc,Cloud Alliance,Consolidated Communications,ECFiber,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "85645",
+    "agg_new_alias_clean": "[Charter Communications Inc,Cloud Alliance,Consolidated Communications,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "85644",
+    "agg_new_alias_clean": "[Charter Communications Inc,Cloud Alliance,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "85642",
+    "agg_new_alias_clean": "[Charter Communications Inc,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "85638",
+    "agg_new_alias_clean": "[Burlington Telecom,Consolidated Communications,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "85637",
+    "agg_new_alias_clean": "[GREEN MOUNTAIN ACCESS,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85636",
+    "agg_new_alias_clean": "[Franklin Telephone Company,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85635",
+    "agg_new_alias_clean": "[FirstLight Fiber,GREEN MOUNTAIN ACCESS,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85634",
+    "agg_new_alias_clean": "[FirstLight Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85633",
+    "agg_new_alias_clean": "[Fidium Fiber,GREEN MOUNTAIN ACCESS,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85632",
+    "agg_new_alias_clean": "[Fidium Fiber,FirstLight Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85631",
+    "agg_new_alias_clean": "[Fidium Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85630",
+    "agg_new_alias_clean": "[ECFiber,FirstLight Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85629",
+    "agg_new_alias_clean": "[ECFiber,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85628",
+    "agg_new_alias_clean": "[Consolidated Communications,GREEN MOUNTAIN ACCESS,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85627",
+    "agg_new_alias_clean": "[Consolidated Communications,Franklin Telephone Company,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85626",
+    "agg_new_alias_clean": "[Consolidated Communications,FirstLight Fiber,GREEN MOUNTAIN ACCESS,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85625",
+    "agg_new_alias_clean": "[Consolidated Communications,FirstLight Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85624",
+    "agg_new_alias_clean": "[Consolidated Communications,Fidium Fiber,GREEN MOUNTAIN ACCESS,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85623",
+    "agg_new_alias_clean": "[Consolidated Communications,Fidium Fiber,FirstLight Fiber,GREEN MOUNTAIN ACCESS,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85622",
+    "agg_new_alias_clean": "[Consolidated Communications,Fidium Fiber,FirstLight Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85621",
+    "agg_new_alias_clean": "[Consolidated Communications,Fidium Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85620",
+    "agg_new_alias_clean": "[Consolidated Communications,ECFiber,FirstLight Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85619",
+    "agg_new_alias_clean": "[Consolidated Communications,ECFiber,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85618",
+    "agg_new_alias_clean": "[Consolidated Communications,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85617",
+    "agg_new_alias_clean": "[Cloud Alliance,Fidium Fiber,FirstLight Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85616",
+    "agg_new_alias_clean": "[Cloud Alliance,Fidium Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85615",
+    "agg_new_alias_clean": "[Cloud Alliance,Consolidated Communications,FirstLight Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85614",
+    "agg_new_alias_clean": "[Cloud Alliance,Consolidated Communications,Fidium Fiber,FirstLight Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85613",
+    "agg_new_alias_clean": "[Cloud Alliance,Consolidated Communications,Fidium Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85612",
+    "agg_new_alias_clean": "[Cloud Alliance,Consolidated Communications,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85611",
+    "agg_new_alias_clean": "[Cloud Alliance,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85610",
+    "agg_new_alias_clean": "[Charter Communications Inc,Fidium Fiber,FirstLight Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85609",
+    "agg_new_alias_clean": "[Charter Communications Inc,Fidium Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85608",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,Fidium Fiber,FirstLight Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85607",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,Fidium Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85606",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85605",
+    "agg_new_alias_clean": "[Charter Communications Inc,Cloud Alliance,Fidium Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85604",
+    "agg_new_alias_clean": "[Charter Communications Inc,Cloud Alliance,Consolidated Communications,Fidium Fiber,FirstLight Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85603",
+    "agg_new_alias_clean": "[Burlington Telecom,Fidium Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85602",
+    "agg_new_alias_clean": "[Burlington Telecom,Consolidated Communications,FirstLight Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85601",
+    "agg_new_alias_clean": "[Burlington Telecom,Consolidated Communications,Fidium Fiber,FirstLight Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85600",
+    "agg_new_alias_clean": "[Burlington Telecom,Consolidated Communications,Fidium Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85599",
+    "agg_new_alias_clean": "[Burlington Telecom,Consolidated Communications,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85598",
+    "agg_new_alias_clean": "[Burlington Telecom,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85597",
+    "agg_new_alias_clean": "[T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85596",
+    "agg_new_alias_clean": "[GoNetspeed,GREEN MOUNTAIN ACCESS,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "85595",
+    "agg_new_alias_clean": "[FirstLight Fiber,GoNetspeed,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "85594",
+    "agg_new_alias_clean": "[Fidium Fiber,GoNetspeed,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "85593",
+    "agg_new_alias_clean": "[Consolidated Communications,GoNetspeed,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "85592",
+    "agg_new_alias_clean": "[Consolidated Communications,Fidium Fiber,GoNetspeed,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85591",
+    "agg_new_alias_clean": "[Consolidated Communications,GoNetspeed,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85590",
+    "agg_new_alias_clean": "[GoNetspeed,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85589",
+    "agg_new_alias_clean": "[GoNetspeed,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "85586",
+    "agg_new_alias_clean": "[T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "85363",
+    "agg_new_alias_clean": "[ECFiber,T-Mobile US,Verizon,Vermont Telephone Company,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "85362",
+    "agg_new_alias_clean": "[Consolidated Communications,ECFiber,T-Mobile US,Verizon,Vermont Telephone Company,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "85361",
+    "agg_new_alias_clean": "[Consolidated Communications,T-Mobile US,Verizon,Vermont Telephone Company,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "85360",
+    "agg_new_alias_clean": "[Fidium Fiber,FirstLight Fiber,T-Mobile US,Verizon,Vermont Telephone Company,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85359",
+    "agg_new_alias_clean": "[Fidium Fiber,T-Mobile US,Verizon,Vermont Telephone Company,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85358",
+    "agg_new_alias_clean": "[ECFiber,T-Mobile US,Verizon,Vermont Telephone Company,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85357",
+    "agg_new_alias_clean": "[Consolidated Communications,FirstLight Fiber,T-Mobile US,Verizon,Vermont Telephone Company,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85356",
+    "agg_new_alias_clean": "[Consolidated Communications,Fidium Fiber,FirstLight Fiber,T-Mobile US,Verizon,Vermont Telephone Company,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85355",
+    "agg_new_alias_clean": "[Consolidated Communications,Fidium Fiber,T-Mobile US,Verizon,Vermont Telephone Company,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85354",
+    "agg_new_alias_clean": "[Consolidated Communications,ECFiber,T-Mobile US,Verizon,Vermont Telephone Company,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85353",
+    "agg_new_alias_clean": "[Consolidated Communications,T-Mobile US,Verizon,Vermont Telephone Company,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85352",
+    "agg_new_alias_clean": "[Burlington Telecom,Consolidated Communications,FirstLight Fiber,T-Mobile US,Verizon,Vermont Telephone Company,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85351",
+    "agg_new_alias_clean": "[Burlington Telecom,Consolidated Communications,T-Mobile US,Verizon,Vermont Telephone Company,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85350",
+    "agg_new_alias_clean": "[T-Mobile US,Verizon,Vermont Telephone Company,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "85349",
+    "agg_new_alias_clean": "[T-Mobile US,Verizon,Vermont Telephone Company,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "84994",
+    "agg_new_alias_clean": "[T-Mobile US,Verizon]"
+  },
+  {
+    "combo_isp_id": "83534",
+    "agg_new_alias_clean": "[Fidium Fiber,FirstLight Fiber,T-Mobile US,UNITED STATES CELLULAR CORPORATION,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "83533",
+    "agg_new_alias_clean": "[Fidium Fiber,T-Mobile US,UNITED STATES CELLULAR CORPORATION,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "83532",
+    "agg_new_alias_clean": "[Consolidated Communications,Fidium Fiber,T-Mobile US,UNITED STATES CELLULAR CORPORATION,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "83531",
+    "agg_new_alias_clean": "[Consolidated Communications,ECFiber,T-Mobile US,UNITED STATES CELLULAR CORPORATION,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "83530",
+    "agg_new_alias_clean": "[Consolidated Communications,T-Mobile US,UNITED STATES CELLULAR CORPORATION,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "83529",
+    "agg_new_alias_clean": "[Fidium Fiber,FirstLight Fiber,T-Mobile US,UNITED STATES CELLULAR CORPORATION,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "83528",
+    "agg_new_alias_clean": "[Fidium Fiber,T-Mobile US,UNITED STATES CELLULAR CORPORATION,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "83527",
+    "agg_new_alias_clean": "[ECFiber,T-Mobile US,UNITED STATES CELLULAR CORPORATION,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "83526",
+    "agg_new_alias_clean": "[Consolidated Communications,FirstLight Fiber,T-Mobile US,UNITED STATES CELLULAR CORPORATION,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "83525",
+    "agg_new_alias_clean": "[Consolidated Communications,Fidium Fiber,FirstLight Fiber,T-Mobile US,UNITED STATES CELLULAR CORPORATION,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "83524",
+    "agg_new_alias_clean": "[Consolidated Communications,Fidium Fiber,T-Mobile US,UNITED STATES CELLULAR CORPORATION,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "83523",
+    "agg_new_alias_clean": "[Consolidated Communications,ECFiber,T-Mobile US,UNITED STATES CELLULAR CORPORATION,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "83522",
+    "agg_new_alias_clean": "[Consolidated Communications,T-Mobile US,UNITED STATES CELLULAR CORPORATION,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "83521",
+    "agg_new_alias_clean": "[T-Mobile US,UNITED STATES CELLULAR CORPORATION,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "83520",
+    "agg_new_alias_clean": "[T-Mobile US,UNITED STATES CELLULAR CORPORATION,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "83442",
+    "agg_new_alias_clean": "[FirstLight Fiber,T-Mobile US,UNITED STATES CELLULAR CORPORATION,Vermont Telephone Company,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "83441",
+    "agg_new_alias_clean": "[Fidium Fiber,T-Mobile US,UNITED STATES CELLULAR CORPORATION,Vermont Telephone Company,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "83440",
+    "agg_new_alias_clean": "[ECFiber,T-Mobile US,UNITED STATES CELLULAR CORPORATION,Vermont Telephone Company,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "83439",
+    "agg_new_alias_clean": "[Consolidated Communications,T-Mobile US,UNITED STATES CELLULAR CORPORATION,Vermont Telephone Company,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "83438",
+    "agg_new_alias_clean": "[T-Mobile US,UNITED STATES CELLULAR CORPORATION,Vermont Telephone Company,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "83437",
+    "agg_new_alias_clean": "[T-Mobile US,UNITED STATES CELLULAR CORPORATION,Vermont Telephone Company,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "82123",
+    "agg_new_alias_clean": "[Fidium Fiber,FirstLight Fiber,T-Mobile US,UNITED STATES CELLULAR CORPORATION,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "82122",
+    "agg_new_alias_clean": "[Fidium Fiber,T-Mobile US,UNITED STATES CELLULAR CORPORATION,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "82121",
+    "agg_new_alias_clean": "[Consolidated Communications,FirstLight Fiber,T-Mobile US,UNITED STATES CELLULAR CORPORATION,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "82120",
+    "agg_new_alias_clean": "[Consolidated Communications,Fidium Fiber,T-Mobile US,UNITED STATES CELLULAR CORPORATION,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "82119",
+    "agg_new_alias_clean": "[Consolidated Communications,ECFiber,T-Mobile US,UNITED STATES CELLULAR CORPORATION,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "82118",
+    "agg_new_alias_clean": "[Consolidated Communications,T-Mobile US,UNITED STATES CELLULAR CORPORATION,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "82117",
+    "agg_new_alias_clean": "[Charter Communications Inc,T-Mobile US,UNITED STATES CELLULAR CORPORATION,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "82116",
+    "agg_new_alias_clean": "[FirstLight Fiber,T-Mobile US,UNITED STATES CELLULAR CORPORATION,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "82115",
+    "agg_new_alias_clean": "[Fidium Fiber,FirstLight Fiber,T-Mobile US,UNITED STATES CELLULAR CORPORATION,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "82114",
+    "agg_new_alias_clean": "[Fidium Fiber,T-Mobile US,UNITED STATES CELLULAR CORPORATION,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "82113",
+    "agg_new_alias_clean": "[Consolidated Communications,FirstLight Fiber,T-Mobile US,UNITED STATES CELLULAR CORPORATION,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "82112",
+    "agg_new_alias_clean": "[Consolidated Communications,Fidium Fiber,FirstLight Fiber,T-Mobile US,UNITED STATES CELLULAR CORPORATION,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "82111",
+    "agg_new_alias_clean": "[Consolidated Communications,Fidium Fiber,T-Mobile US,UNITED STATES CELLULAR CORPORATION,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "82110",
+    "agg_new_alias_clean": "[Consolidated Communications,ECFiber,FirstLight Fiber,T-Mobile US,UNITED STATES CELLULAR CORPORATION,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "82109",
+    "agg_new_alias_clean": "[Consolidated Communications,ECFiber,Fidium Fiber,T-Mobile US,UNITED STATES CELLULAR CORPORATION,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "82108",
+    "agg_new_alias_clean": "[Consolidated Communications,ECFiber,T-Mobile US,UNITED STATES CELLULAR CORPORATION,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "82107",
+    "agg_new_alias_clean": "[Consolidated Communications,T-Mobile US,UNITED STATES CELLULAR CORPORATION,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "82106",
+    "agg_new_alias_clean": "[T-Mobile US,UNITED STATES CELLULAR CORPORATION,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "82105",
+    "agg_new_alias_clean": "[T-Mobile US,UNITED STATES CELLULAR CORPORATION,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "81996",
+    "agg_new_alias_clean": "[FirstLight Fiber,T-Mobile US,UNITED STATES CELLULAR CORPORATION,Verizon,Vermont Telephone Company,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "81995",
+    "agg_new_alias_clean": "[Fidium Fiber,FirstLight Fiber,T-Mobile US,UNITED STATES CELLULAR CORPORATION,Verizon,Vermont Telephone Company,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "81994",
+    "agg_new_alias_clean": "[Fidium Fiber,T-Mobile US,UNITED STATES CELLULAR CORPORATION,Verizon,Vermont Telephone Company,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "81993",
+    "agg_new_alias_clean": "[Consolidated Communications,Fidium Fiber,FirstLight Fiber,T-Mobile US,UNITED STATES CELLULAR CORPORATION,Verizon,Vermont Telephone Company,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "81992",
+    "agg_new_alias_clean": "[Consolidated Communications,Fidium Fiber,T-Mobile US,UNITED STATES CELLULAR CORPORATION,Verizon,Vermont Telephone Company,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "81991",
+    "agg_new_alias_clean": "[Consolidated Communications,T-Mobile US,UNITED STATES CELLULAR CORPORATION,Verizon,Vermont Telephone Company,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "81990",
+    "agg_new_alias_clean": "[T-Mobile US,UNITED STATES CELLULAR CORPORATION,Verizon,Vermont Telephone Company,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "81989",
+    "agg_new_alias_clean": "[T-Mobile US,UNITED STATES CELLULAR CORPORATION,Verizon,Vermont Telephone Company,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "80849",
+    "agg_new_alias_clean": "[Consolidated Communications,Fidium Fiber,FirstLight Fiber,T-Mobile US,TPx Communications,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "80848",
+    "agg_new_alias_clean": "[Consolidated Communications,T-Mobile US,TPx Communications,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "80776",
+    "agg_new_alias_clean": "[Consolidated Communications,Fidium Fiber,T-Mobile US,TPx Communications,UNITED STATES CELLULAR CORPORATION,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "80685",
+    "agg_new_alias_clean": "[ECFiber,T-Mobile US,Topsham Telephone Company]"
+  },
+  {
+    "combo_isp_id": "80684",
+    "agg_new_alias_clean": "[Consolidated Communications,ECFiber,T-Mobile US,Topsham Telephone Company,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "80683",
+    "agg_new_alias_clean": "[Consolidated Communications,T-Mobile US,Topsham Telephone Company,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "80682",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,T-Mobile US,Topsham Telephone Company,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "80681",
+    "agg_new_alias_clean": "[T-Mobile US,Topsham Telephone Company,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "80680",
+    "agg_new_alias_clean": "[Consolidated Communications,T-Mobile US,Topsham Telephone Company,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "80679",
+    "agg_new_alias_clean": "[T-Mobile US,Topsham Telephone Company,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "80677",
+    "agg_new_alias_clean": "[Fidium Fiber,T-Mobile US,Topsham Communications,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "80676",
+    "agg_new_alias_clean": "[ECFiber,T-Mobile US,Topsham Communications,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "80675",
+    "agg_new_alias_clean": "[Consolidated Communications,ECFiber,T-Mobile US,Topsham Communications,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "80674",
+    "agg_new_alias_clean": "[Consolidated Communications,T-Mobile US,Topsham Communications,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "80673",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,T-Mobile US,Topsham Communications,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "80672",
+    "agg_new_alias_clean": "[T-Mobile US,Topsham Communications,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "80669",
+    "agg_new_alias_clean": "[Consolidated Communications,ECFiber,T-Mobile US,Topsham Communications,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "80668",
+    "agg_new_alias_clean": "[Consolidated Communications,T-Mobile US,Topsham Communications,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "80667",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,T-Mobile US,Topsham Communications,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "80666",
+    "agg_new_alias_clean": "[T-Mobile US,Topsham Communications,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "80665",
+    "agg_new_alias_clean": "[Consolidated Communications,T-Mobile US,Topsham Communications,Topsham Telephone Company,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "80664",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,T-Mobile US,Topsham Communications,Topsham Telephone Company,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "80663",
+    "agg_new_alias_clean": "[T-Mobile US,Topsham Communications,Topsham Telephone Company,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "80662",
+    "agg_new_alias_clean": "[Consolidated Communications,T-Mobile US,Topsham Communications,Topsham Telephone Company,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "80661",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,T-Mobile US,Topsham Communications,Topsham Telephone Company,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "80509",
+    "agg_new_alias_clean": "[Consolidated Communications,Tilson Broadband,T-Mobile US]"
+  },
+  {
+    "combo_isp_id": "80508",
+    "agg_new_alias_clean": "[Consolidated Communications,Tilson Broadband,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "80507",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,Tilson Broadband,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "80506",
+    "agg_new_alias_clean": "[Charter Communications Inc,Tilson Broadband,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "80505",
+    "agg_new_alias_clean": "[Consolidated Communications,Tilson Broadband,T-Mobile US,VTel Wireless, Inc.,Wireless Partners, LLC]"
+  },
+  {
+    "combo_isp_id": "80504",
+    "agg_new_alias_clean": "[Tilson Broadband,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "80502",
+    "agg_new_alias_clean": "[Consolidated Communications,FirstLight Fiber,Tilson Broadband,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "80501",
+    "agg_new_alias_clean": "[Consolidated Communications,Tilson Broadband,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "80500",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,Tilson Broadband,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "80499",
+    "agg_new_alias_clean": "[Charter Communications Inc,Cloud Alliance,Consolidated Communications,Tilson Broadband,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "80498",
+    "agg_new_alias_clean": "[Charter Communications Inc,Tilson Broadband,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "80497",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,Tilson Broadband,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "80496",
+    "agg_new_alias_clean": "[Tilson Broadband,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "80494",
+    "agg_new_alias_clean": "[Tilson Broadband,T-Mobile US]"
+  },
+  {
+    "combo_isp_id": "79784",
+    "agg_new_alias_clean": "[ECFiber,TDS Telecom,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "79783",
+    "agg_new_alias_clean": "[Consolidated Communications,TDS Telecom,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "79782",
+    "agg_new_alias_clean": "[Consolidated Communications,TDS Telecom,T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "79781",
+    "agg_new_alias_clean": "[TDS Telecom,T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "79780",
+    "agg_new_alias_clean": "[TDS Telecom,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "79775",
+    "agg_new_alias_clean": "[TDS Telecom,T-Mobile US,Vermont Telephone Company,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "79619",
+    "agg_new_alias_clean": "[GREEN MOUNTAIN ACCESS,TDS Telecom,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "79618",
+    "agg_new_alias_clean": "[ECFiber,TDS Telecom,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "79617",
+    "agg_new_alias_clean": "[Consolidated Communications,ECFiber,TDS Telecom,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "79616",
+    "agg_new_alias_clean": "[Consolidated Communications,TDS Telecom,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "79615",
+    "agg_new_alias_clean": "[Charter Communications Inc,Cloud Alliance,Consolidated Communications,TDS Telecom,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "79614",
+    "agg_new_alias_clean": "[Consolidated Communications,GREEN MOUNTAIN ACCESS,TDS Telecom,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "79613",
+    "agg_new_alias_clean": "[Consolidated Communications,TDS Telecom,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "79612",
+    "agg_new_alias_clean": "[TDS Telecom,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "79611",
+    "agg_new_alias_clean": "[TDS Telecom,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "79600",
+    "agg_new_alias_clean": "[TDS Telecom,T-Mobile US,Verizon,Vermont Telephone Company,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "79599",
+    "agg_new_alias_clean": "[TDS Telecom,T-Mobile US,Verizon,Vermont Telephone Company,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "79513",
+    "agg_new_alias_clean": "[Consolidated Communications,TDS Telecom,T-Mobile US,UNITED STATES CELLULAR CORPORATION,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "79512",
+    "agg_new_alias_clean": "[TDS Telecom,T-Mobile US,UNITED STATES CELLULAR CORPORATION,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "79511",
+    "agg_new_alias_clean": "[TDS Telecom,T-Mobile US,UNITED STATES CELLULAR CORPORATION,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "79400",
+    "agg_new_alias_clean": "[Consolidated Communications,TDS Telecom,T-Mobile US,UNITED STATES CELLULAR CORPORATION,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "79399",
+    "agg_new_alias_clean": "[TDS Telecom,T-Mobile US,UNITED STATES CELLULAR CORPORATION,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "79397",
+    "agg_new_alias_clean": "[Consolidated Communications,TDS Telecom,T-Mobile US,UNITED STATES CELLULAR CORPORATION,Verizon,Vermont Telephone Company,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "79396",
+    "agg_new_alias_clean": "[TDS Telecom,T-Mobile US,UNITED STATES CELLULAR CORPORATION,Verizon,Vermont Telephone Company,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "79395",
+    "agg_new_alias_clean": "[TDS Telecom,T-Mobile US,UNITED STATES CELLULAR CORPORATION,Verizon,Vermont Telephone Company,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "79128",
+    "agg_new_alias_clean": "[T-Mobile US]"
+  },
+  {
+    "combo_isp_id": "77797",
+    "agg_new_alias_clean": "[Consolidated Communications,Stowe Communications LLC,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "77796",
+    "agg_new_alias_clean": "[Consolidated Communications,Stowe Communications LLC,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "77795",
+    "agg_new_alias_clean": "[Stowe Communications LLC,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "77794",
+    "agg_new_alias_clean": "[Consolidated Communications,Stowe Communications LLC,Verizon,Vermont Telephone Company,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "77793",
+    "agg_new_alias_clean": "[Consolidated Communications,FirstLight Fiber,Stowe Communications LLC,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "77792",
+    "agg_new_alias_clean": "[Consolidated Communications,Stowe Communications LLC,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "77791",
+    "agg_new_alias_clean": "[Consolidated Communications,Stowe Communications LLC,T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "77790",
+    "agg_new_alias_clean": "[Stowe Communications LLC,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "77789",
+    "agg_new_alias_clean": "[Consolidated Communications,FirstLight Fiber,Stowe Communications LLC,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "77788",
+    "agg_new_alias_clean": "[Consolidated Communications,Fidium Fiber,FirstLight Fiber,Stowe Communications LLC,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "77787",
+    "agg_new_alias_clean": "[Consolidated Communications,Stowe Communications LLC,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "77786",
+    "agg_new_alias_clean": "[Stowe Communications LLC,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "77785",
+    "agg_new_alias_clean": "[Consolidated Communications,FirstLight Fiber,Stowe Communications LLC,T-Mobile US,Verizon,Vermont Telephone Company,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "6769",
+    "agg_new_alias_clean": "[Hub66, Inc.,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "6768",
+    "agg_new_alias_clean": "[Consolidated Communications,Hub66, Inc.,Vermont Telephone Company,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "6767",
+    "agg_new_alias_clean": "[Hub66, Inc.,Vermont Telephone Company,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "6766",
+    "agg_new_alias_clean": "[Hub66, Inc.,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "6765",
+    "agg_new_alias_clean": "[Hub66, Inc.,Verizon,Vermont Telephone Company,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "6749",
+    "agg_new_alias_clean": "[Hub66, Inc.,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "6737",
+    "agg_new_alias_clean": "[Hub66, Inc.,T-Mobile US,Verizon,Vermont Telephone Company,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "49449",
+    "agg_new_alias_clean": "[Consolidated Communications,New England Wireless Co.,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "49448",
+    "agg_new_alias_clean": "[Consolidated Communications,New England Wireless Co.,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "49447",
+    "agg_new_alias_clean": "[New England Wireless Co.,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "49446",
+    "agg_new_alias_clean": "[New England Wireless Co.,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "49445",
+    "agg_new_alias_clean": "[Consolidated Communications,New England Wireless Co.,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "49444",
+    "agg_new_alias_clean": "[Consolidated Communications,New England Wireless Co.,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "49443",
+    "agg_new_alias_clean": "[New England Wireless Co.,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "49442",
+    "agg_new_alias_clean": "[Consolidated Communications,New England Wireless Co.,Verizon,VTel Wireless, Inc.,Wireless Partners, LLC]"
+  },
+  {
+    "combo_isp_id": "49441",
+    "agg_new_alias_clean": "[New England Wireless Co.,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "49440",
+    "agg_new_alias_clean": "[New England Wireless Co.,Verizon]"
+  },
+  {
+    "combo_isp_id": "49439",
+    "agg_new_alias_clean": "[Consolidated Communications,New England Wireless Co.,T-Mobile US,Xfinity]"
+  },
+  {
+    "combo_isp_id": "49438",
+    "agg_new_alias_clean": "[Fidium Fiber,New England Wireless Co.,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "49437",
+    "agg_new_alias_clean": "[Consolidated Communications,New England Wireless Co.,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "49436",
+    "agg_new_alias_clean": "[Fidium Fiber,New England Wireless Co.,T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "49435",
+    "agg_new_alias_clean": "[Consolidated Communications,Fidium Fiber,New England Wireless Co.,T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "49434",
+    "agg_new_alias_clean": "[Consolidated Communications,New England Wireless Co.,T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "49433",
+    "agg_new_alias_clean": "[New England Wireless Co.,T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "49432",
+    "agg_new_alias_clean": "[Consolidated Communications,New England Wireless Co.,T-Mobile US,VTel Wireless, Inc.,Wireless Partners, LLC]"
+  },
+  {
+    "combo_isp_id": "49431",
+    "agg_new_alias_clean": "[Consolidated Communications,New England Wireless Co.,T-Mobile US,VTel Wireless, Inc.,Wireless Partners, LLC,Xfinity]"
+  },
+  {
+    "combo_isp_id": "49430",
+    "agg_new_alias_clean": "[New England Wireless Co.,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "49429",
+    "agg_new_alias_clean": "[Consolidated Communications,New England Wireless Co.,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "49428",
+    "agg_new_alias_clean": "[FirstLight Fiber,New England Wireless Co.,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "49427",
+    "agg_new_alias_clean": "[Consolidated Communications,FirstLight Fiber,New England Wireless Co.,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "49426",
+    "agg_new_alias_clean": "[Consolidated Communications,Fidium Fiber,New England Wireless Co.,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "49425",
+    "agg_new_alias_clean": "[Consolidated Communications,New England Wireless Co.,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "49424",
+    "agg_new_alias_clean": "[New England Wireless Co.,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "49423",
+    "agg_new_alias_clean": "[Consolidated Communications,New England Wireless Co.,T-Mobile US,Verizon,VTel Wireless, Inc.,Wireless Partners, LLC]"
+  },
+  {
+    "combo_isp_id": "49422",
+    "agg_new_alias_clean": "[New England Wireless Co.,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "49421",
+    "agg_new_alias_clean": "[Fidium Fiber,New England Wireless Co.,T-Mobile US,UNITED STATES CELLULAR CORPORATION,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "49420",
+    "agg_new_alias_clean": "[Consolidated Communications,New England Wireless Co.,T-Mobile US,UNITED STATES CELLULAR CORPORATION,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "49419",
+    "agg_new_alias_clean": "[Consolidated Communications,New England Wireless Co.,T-Mobile US,UNITED STATES CELLULAR CORPORATION,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "49418",
+    "agg_new_alias_clean": "[Fidium Fiber,New England Wireless Co.,T-Mobile US,UNITED STATES CELLULAR CORPORATION,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "49417",
+    "agg_new_alias_clean": "[Consolidated Communications,Fidium Fiber,New England Wireless Co.,T-Mobile US,UNITED STATES CELLULAR CORPORATION,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "49416",
+    "agg_new_alias_clean": "[Consolidated Communications,New England Wireless Co.,T-Mobile US,UNITED STATES CELLULAR CORPORATION,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "49415",
+    "agg_new_alias_clean": "[New England Wireless Co.,T-Mobile US,UNITED STATES CELLULAR CORPORATION,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "49414",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,NEW Alliance]"
+  },
+  {
+    "combo_isp_id": "49412",
+    "agg_new_alias_clean": "[Consolidated Communications,NEW Alliance,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "49411",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,NEW Alliance,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "49410",
+    "agg_new_alias_clean": "[Charter Communications Inc,NEW Alliance,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "49409",
+    "agg_new_alias_clean": "[NEW Alliance,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "49408",
+    "agg_new_alias_clean": "[Consolidated Communications,NEW Alliance,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "49407",
+    "agg_new_alias_clean": "[Cloud Alliance,NEW Alliance,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "49406",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,FirstLight Fiber,NEW Alliance,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "49405",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,Fidium Fiber,NEW Alliance,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "49404",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,NEW Alliance,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "49403",
+    "agg_new_alias_clean": "[Charter Communications Inc,NEW Alliance,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "49402",
+    "agg_new_alias_clean": "[NEW Alliance,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "49399",
+    "agg_new_alias_clean": "[Charter Communications Inc,NEW Alliance,Tilson Broadband,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "49398",
+    "agg_new_alias_clean": "[Consolidated Communications,NEW Alliance,T-Mobile US]"
+  },
+  {
+    "combo_isp_id": "49396",
+    "agg_new_alias_clean": "[Consolidated Communications,NEW Alliance,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "49395",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,FirstLight Fiber,NEW Alliance,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "49394",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,NEW Alliance,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "49393",
+    "agg_new_alias_clean": "[Charter Communications Inc,NEW Alliance,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "49392",
+    "agg_new_alias_clean": "[Consolidated Communications,NEW Alliance,T-Mobile US,VTel Wireless, Inc.,Wireless Partners, LLC]"
+  },
+  {
+    "combo_isp_id": "49391",
+    "agg_new_alias_clean": "[NEW Alliance,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "49388",
+    "agg_new_alias_clean": "[Consolidated Communications,NEW Alliance,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "49387",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,FirstLight Fiber,NEW Alliance,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "49386",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,NEW Alliance,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "49385",
+    "agg_new_alias_clean": "[Charter Communications Inc,Cloud Alliance,Consolidated Communications,NEW Alliance,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "49384",
+    "agg_new_alias_clean": "[Charter Communications Inc,NEW Alliance,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "49383",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,FirstLight Fiber,NEW Alliance,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "49382",
+    "agg_new_alias_clean": "[NEW Alliance,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "49380",
+    "agg_new_alias_clean": "[Consolidated Communications,NEW Alliance,Tilson Broadband,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "49379",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,NEW Alliance,Tilson Broadband,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "49378",
+    "agg_new_alias_clean": "[Charter Communications Inc,NEW Alliance,Tilson Broadband,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "49377",
+    "agg_new_alias_clean": "[NEW Alliance,Tilson Broadband,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "49376",
+    "agg_new_alias_clean": "[Consolidated Communications,NEW Alliance,Tilson Broadband,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "49375",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,FirstLight Fiber,NEW Alliance,Tilson Broadband,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "49374",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,NEW Alliance,Tilson Broadband,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "49373",
+    "agg_new_alias_clean": "[Charter Communications Inc,NEW Alliance,Tilson Broadband,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "49372",
+    "agg_new_alias_clean": "[NEW Alliance]"
+  },
+  {
+    "combo_isp_id": "48572",
+    "agg_new_alias_clean": "[Consolidated Communications,NEK Broadband,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "48571",
+    "agg_new_alias_clean": "[NEK Broadband,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "48570",
+    "agg_new_alias_clean": "[Consolidated Communications,NEK Broadband,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "48569",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,NEK Broadband,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "48568",
+    "agg_new_alias_clean": "[NEK Broadband,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "48567",
+    "agg_new_alias_clean": "[Consolidated Communications,NEK Broadband,Tilson Broadband,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "48566",
+    "agg_new_alias_clean": "[NEK Broadband,T-Mobile US]"
+  },
+  {
+    "combo_isp_id": "48565",
+    "agg_new_alias_clean": "[Consolidated Communications,NEK Broadband,NEW Alliance,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "48564",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,NEK Broadband,NEW Alliance,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "48563",
+    "agg_new_alias_clean": "[NEK Broadband,NEW Alliance,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "48562",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,NEK Broadband,NEW Alliance,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "18634",
+    "agg_new_alias_clean": "[Consolidated Communications,Maple Broadband,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "18633",
+    "agg_new_alias_clean": "[GoNetspeed,Maple Broadband,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "18632",
+    "agg_new_alias_clean": "[Maple Broadband,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "18631",
+    "agg_new_alias_clean": "[GoNetspeed,Maple Broadband,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "18630",
+    "agg_new_alias_clean": "[Maple Broadband,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "18629",
+    "agg_new_alias_clean": "[Consolidated Communications,Fidium Fiber,Maple Broadband,T-Mobile US]"
+  },
+  {
+    "combo_isp_id": "18628",
+    "agg_new_alias_clean": "[Fidium Fiber,Maple Broadband,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "18627",
+    "agg_new_alias_clean": "[Consolidated Communications,Maple Broadband,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "18626",
+    "agg_new_alias_clean": "[Consolidated Communications,Maple Broadband,T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "18625",
+    "agg_new_alias_clean": "[GoNetspeed,Maple Broadband,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "18624",
+    "agg_new_alias_clean": "[Consolidated Communications,Fidium Fiber,Maple Broadband,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "18623",
+    "agg_new_alias_clean": "[Consolidated Communications,Maple Broadband,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "18622",
+    "agg_new_alias_clean": "[Consolidated Communications,Fidium Fiber,Maple Broadband,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "18621",
+    "agg_new_alias_clean": "[Consolidated Communications,Maple Broadband,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "18620",
+    "agg_new_alias_clean": "[GoNetspeed,GREEN MOUNTAIN ACCESS,Maple Broadband,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "18619",
+    "agg_new_alias_clean": "[GoNetspeed,Maple Broadband,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "18261",
+    "agg_new_alias_clean": "[Consolidated Communications,Mansfield Community Fiber]"
+  },
+  {
+    "combo_isp_id": "18260",
+    "agg_new_alias_clean": "[Consolidated Communications,Mansfield Community Fiber,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "18259",
+    "agg_new_alias_clean": "[Mansfield Community Fiber,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "18258",
+    "agg_new_alias_clean": "[Consolidated Communications,Mansfield Community Fiber,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "18257",
+    "agg_new_alias_clean": "[Mansfield Community Fiber,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "18256",
+    "agg_new_alias_clean": "[Consolidated Communications,Mansfield Community Fiber,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "18255",
+    "agg_new_alias_clean": "[Consolidated Communications,Mansfield Community Fiber,T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "18254",
+    "agg_new_alias_clean": "[Mansfield Community Fiber,T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "18253",
+    "agg_new_alias_clean": "[Mansfield Community Fiber,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "18252",
+    "agg_new_alias_clean": "[Consolidated Communications,FirstLight Fiber,Mansfield Community Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "18251",
+    "agg_new_alias_clean": "[Consolidated Communications,Fidium Fiber,Mansfield Community Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "18250",
+    "agg_new_alias_clean": "[Consolidated Communications,Mansfield Community Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "18249",
+    "agg_new_alias_clean": "[Consolidated Communications,Mansfield Community Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "18248",
+    "agg_new_alias_clean": "[Mansfield Community Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "18247",
+    "agg_new_alias_clean": "[Mansfield Community Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "18246",
+    "agg_new_alias_clean": "[Consolidated Communications,Mansfield Community Fiber,Stowe Communications LLC,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "18245",
+    "agg_new_alias_clean": "[Consolidated Communications,Mansfield Community Fiber,Stowe Communications LLC,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "13485",
+    "agg_new_alias_clean": "[Consolidated Communications,Kingdom Fiber,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "13484",
+    "agg_new_alias_clean": "[Cloud Alliance,Consolidated Communications,Kingdom Fiber,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "13483",
+    "agg_new_alias_clean": "[Kingdom Fiber,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "13482",
+    "agg_new_alias_clean": "[Consolidated Communications,Kingdom Fiber,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "13481",
+    "agg_new_alias_clean": "[Consolidated Communications,Fidium Fiber,Kingdom Fiber,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "13480",
+    "agg_new_alias_clean": "[Consolidated Communications,Kingdom Fiber,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "13479",
+    "agg_new_alias_clean": "[Cloud Alliance,Consolidated Communications,Kingdom Fiber,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "13478",
+    "agg_new_alias_clean": "[Cloud Alliance,Kingdom Fiber,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "13477",
+    "agg_new_alias_clean": "[Consolidated Communications,Kingdom Fiber,T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "13476",
+    "agg_new_alias_clean": "[Cloud Alliance,Consolidated Communications,Kingdom Fiber,T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "13475",
+    "agg_new_alias_clean": "[Kingdom Fiber,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "13474",
+    "agg_new_alias_clean": "[Consolidated Communications,Kingdom Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "13473",
+    "agg_new_alias_clean": "[Cloud Alliance,Consolidated Communications,FirstLight Fiber,Kingdom Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "13472",
+    "agg_new_alias_clean": "[Cloud Alliance,Consolidated Communications,Kingdom Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "13471",
+    "agg_new_alias_clean": "[Consolidated Communications,FirstLight Fiber,Kingdom Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "13470",
+    "agg_new_alias_clean": "[Consolidated Communications,Kingdom Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "13469",
+    "agg_new_alias_clean": "[Cloud Alliance,Consolidated Communications,FirstLight Fiber,Kingdom Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "13468",
+    "agg_new_alias_clean": "[Cloud Alliance,Consolidated Communications,Kingdom Fiber,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "13467",
+    "agg_new_alias_clean": "[Consolidated Communications,Kingdom Fiber,New England Wireless Co.,T-Mobile US,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "13466",
+    "agg_new_alias_clean": "[Kingdom Fiber,New England Wireless Co.,T-Mobile US,VTel Wireless, Inc.]"
+  },
+  {
+    "combo_isp_id": "13425",
+    "agg_new_alias_clean": "[Cloud Alliance,Consolidated Communications,Fidium Fiber,FirstLight Fiber,King Street Wireless, L.P.,TDS Telecom,T-Mobile US,Verizon,VTel Wireless, Inc.,Xfinity]"
+  },
+  {
+    "combo_isp_id": "101760",
+    "agg_new_alias_clean": "[GREEN MOUNTAIN ACCESS]"
+  },
+  {
+    "combo_isp_id": "101628",
+    "agg_new_alias_clean": "[Fidium Fiber]"
+  },
+  {
+    "combo_isp_id": "101517",
+    "agg_new_alias_clean": "[ECFiber,Fidium Fiber]"
+  },
+  {
+    "combo_isp_id": "101516",
+    "agg_new_alias_clean": "[ECFiber]"
+  },
+  {
+    "combo_isp_id": "101358",
+    "agg_new_alias_clean": "[Consolidated Communications,ECFiber]"
+  },
+  {
+    "combo_isp_id": "101357",
+    "agg_new_alias_clean": "[Consolidated Communications]"
+  },
+  {
+    "combo_isp_id": "101289",
+    "agg_new_alias_clean": "[Cloud Alliance]"
+  },
+  {
+    "combo_isp_id": "101092",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications]"
+  },
+  {
+    "combo_isp_id": "101045",
+    "agg_new_alias_clean": "[Charter Communications Inc]"
+  },
+  {
+    "combo_isp_id": "100324",
+    "agg_new_alias_clean": "[GREEN MOUNTAIN ACCESS,Xfinity]"
+  },
+  {
+    "combo_isp_id": "100285",
+    "agg_new_alias_clean": "[ECFiber,Xfinity]"
+  },
+  {
+    "combo_isp_id": "100253",
+    "agg_new_alias_clean": "[Consolidated Communications,ECFiber,Xfinity]"
+  },
+  {
+    "combo_isp_id": "100251",
+    "agg_new_alias_clean": "[Consolidated Communications,Xfinity]"
+  },
+  {
+    "combo_isp_id": "100227",
+    "agg_new_alias_clean": "[Charter Communications Inc,Consolidated Communications,Xfinity]"
+  },
+  {
+    "combo_isp_id": "100112",
+    "agg_new_alias_clean": "[Xfinity]"
+  }
+]

@@ -14,7 +14,8 @@ export type FilterProps = {
         unserved: boolean
     },
     isp_count: number[],
-    total_locations: number[]
+    total_locations: number[],
+    isp_combo: string
 }
 
 const Interface = () => {
@@ -26,10 +27,12 @@ const Interface = () => {
             unserved: true
         },
         isp_count: [0, 10],
-        total_locations: [0, 500]
+        total_locations: [0, 500],
+        isp_combo: "all"
     });
 
     const [fillColor, setFillColor] = useState<any[]>(getFillColor("BEAD category"));
+    const [multipleISP, setMultipleISP] = useState<string>("");
 
     const handleFillColorChange = (newFillColor: any[]) => {
         setFillColor(newFillColor);

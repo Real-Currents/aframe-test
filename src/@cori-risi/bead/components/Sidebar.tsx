@@ -14,11 +14,17 @@ import style from "./styles/Sidebar.module.css";
 
 import { getFillColor } from './../utils/controls';
 
+import isp_name from './../data/isp_name.json';
+import isp_lookup from './../data/isp_dict.json';
+
 function Sidebar<T>({ 
-  onFilterChange, onFillColorChange, filter }: {
-   onFilterChange: (newFilter: T) => void, 
-   onFillColorChange: (newFillColor: any[]) => void,
-   filter: any 
+  onFilterChange, 
+  onFillColorChange, 
+  filter }: 
+  {
+    onFilterChange: (newFilter: T) => void, 
+    onFillColorChange: (newFillColor: any[]) => void,
+    filter: any 
  }) {
 
   const handleISPChange = (event: Event, newValue: number | number[]) => {
@@ -43,6 +49,16 @@ function Sidebar<T>({
       onFillColorChange(getFillColor(newValue));
     }
   };
+
+  function handleMultipleISPChange(event: any, newValue: any ): void {
+
+    let sortedISPs = newValue.slice().sort().join();
+    let isp_combo = isp_lookup[sortedISPs];
+    
+    if (typeof isp_combo === "string") {
+      onFilterChange({...filter, isp_combo: isp_combo});
+    }
+  }
 
   return (
     <>
@@ -116,6 +132,22 @@ function Sidebar<T>({
             max={500}
           />
         </div>
+        <h3>ISPs</h3>
+        <Autocomplete
+          multiple
+          id="tags-standard"
+          options={isp_name}
+          defaultValue={[]}
+          onChange={handleMultipleISPChange}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              variant="standard"
+              label="Multiple values"
+              placeholder="ISPs"
+            />
+          )}
+        />        
       </div>  
     </>
   );

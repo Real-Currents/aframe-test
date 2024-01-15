@@ -68,7 +68,7 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter, fillColor }: GlMapPr
       } = event;
       const hoveredFeature = features && features[0];
 
-      console.log("hoveredFeature is ", hoveredFeature);
+      // console.log("hoveredFeature is ", hoveredFeature);
 
       setHoverInfo(hoveredFeature && { feature: hoveredFeature, x, y });
 
@@ -77,7 +77,6 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter, fillColor }: GlMapPr
 
   useEffect(() => {
     
-
     let bb_array: any[] = [];
 
     if (filter.bb_service.served === true) {
@@ -92,7 +91,6 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter, fillColor }: GlMapPr
       bb_array = [...bb_array, "Unserved"];
     }
 
-
     let isp_filter: any = [
       'all',
       ['>=', ['get', 'cnt_isp'], filter.isp_count[0]],
@@ -105,7 +103,14 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter, fillColor }: GlMapPr
       ['<=', ['get', 'cnt_total_locations'], filter.total_locations[1]]
     ];
 
+
+
     let new_filter: any = ["all", ['in', ['get', 'bead_category'], ['literal', bb_array]], isp_filter, total_locations_filter]; 
+
+    if (filter.isp_combo !== "all") {
+      let isp_combo_filter = ['match', ['get', 'combo_isp_id'], filter.isp_combo, true, false];
+      new_filter = ["all", ['in', ['get', 'bead_category'], ['literal', bb_array]], isp_filter, total_locations_filter, isp_combo_filter]; 
+    }
 
     setLayerFilter(new_filter);
 
