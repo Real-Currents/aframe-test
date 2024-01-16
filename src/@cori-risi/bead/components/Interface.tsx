@@ -15,7 +15,7 @@ export type FilterProps = {
     },
     isp_count: number[],
     total_locations: number[],
-    isp_combo: string
+    isp_combos: string[]
 }
 
 const Interface = () => {
@@ -28,7 +28,7 @@ const Interface = () => {
         },
         isp_count: [0, 10],
         total_locations: [0, 500],
-        isp_combo: "all"
+        isp_combos: []
     });
 
     const [fillColor, setFillColor] = useState<any[]>(getFillColor("BEAD category"));

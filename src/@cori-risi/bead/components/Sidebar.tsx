@@ -15,7 +15,13 @@ import style from "./styles/Sidebar.module.css";
 import { getFillColor } from './../utils/controls';
 
 import isp_name from './../data/isp_name.json';
-import isp_lookup from './../data/isp_dict.json';
+import isp_dict from './../data/isp_dict.json';
+
+interface IspLookup {
+  [key: string]: string;
+}
+
+const isp_lookup: IspLookup = isp_dict;
 
 function Sidebar<T>({ 
   onFilterChange, 
@@ -52,12 +58,19 @@ function Sidebar<T>({
 
   function handleMultipleISPChange(event: any, newValue: any ): void {
 
-    let sortedISPs = newValue.slice().sort().join();
-    let isp_combo = isp_lookup[sortedISPs];
-    
-    if (typeof isp_combo === "string") {
-      onFilterChange({...filter, isp_combo: isp_combo});
+    let valid_isp_combos: string[] = [];
+    for (let isp of newValue) {
+      
+      for (let key of Object.keys(isp_lookup)) {
+
+        if (key.includes(isp)) {
+          let combo_id: string = isp_lookup[key]
+          valid_isp_combos.push(combo_id);
+        }
+      }
     }
+    
+    onFilterChange({...filter, isp_combos: valid_isp_combos});
   }
 
   return (
