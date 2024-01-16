@@ -11,6 +11,13 @@ import style from "./styles/GlMap.module.css";
 import IntrinsicAttributes = React.JSX.IntrinsicAttributes;
 import {LayerProps} from "react-map-gl";
 
+import combo_dict from './../data/combo_dict.json';
+
+interface ComboLookup {
+  [key: string]: string;
+}
+const combo_lookup: ComboLookup = combo_dict;
+
 const percentFormat = format('.1%');
 
 import {
@@ -174,6 +181,7 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter, fillColor }: GlMapPr
                     <em>Total locations:</em> <b>{hoverInfo.feature.properties.cnt_total_locations}</b><br />
                     <em>ISP count:</em> <b>{hoverInfo.feature.properties.cnt_isp}</b><br />
                     <em>Pct. served:</em> <b>{percentFormat(hoverInfo.feature.properties.pct_served)}</b><br />
+                    <em>ISPs:</em> {combo_lookup[hoverInfo.feature.properties.combo_isp_id]}<br />
                   </p>
                 </div>
               </div>
