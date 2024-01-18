@@ -16,6 +16,7 @@ import { getFillColor } from './../utils/controls';
 
 import isp_name from './../data/isp_name.json';
 import isp_dict from './../data/isp_dict.json';
+import county_name_geoid from './../data/geoid_co_name_crosswalk.json';
 
 interface IspLookup {
   [key: string]: string;
@@ -71,6 +72,21 @@ function Sidebar<T>({
     }
     
     onFilterChange({...filter, isp_combos: valid_isp_combos});
+  }
+
+  function handleCountiesChange (event: any, newValue: any): void {
+
+    let valid_geoid_co: string[] = [];
+    for (let county_name of newValue) {
+
+      let filtered_records = county_name_geoid.filter(d => d.label === county_name);
+
+      if (filtered_records.length > 0 && typeof filtered_records[0].id === 'string') {
+        valid_geoid_co.push(filtered_records[0].id);
+      }
+    }
+
+    onFilterChange({...filter, counties: valid_geoid_co});
   }
 
   return (
@@ -156,11 +172,27 @@ function Sidebar<T>({
             <TextField
               {...params}
               variant="standard"
-              label="Multiple values"
-              placeholder="ISPs"
+              label="Filter ISPs"
+              placeholder="Filter ISPs"
             />
           )}
-        />        
+        />      
+        <h3>County</h3>
+        <Autocomplete
+          multiple
+          id="tags-standard"
+          options={county_name_geoid.map(d => d.label)}
+          // defaultValue={""}
+          onChange={handleCountiesChange}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              variant="standard"
+              label="Filter counties"
+              placeholder="Filter counties"
+            />
+          )}
+        />    
       </div>  
     </>
   );

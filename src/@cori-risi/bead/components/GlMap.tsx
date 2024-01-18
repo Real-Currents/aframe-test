@@ -36,7 +36,8 @@ type GlMapProps = {
     },
     isp_count: number[],
     total_locations: number[],
-    isp_combos: string[]
+    isp_combos: string[],
+    counties: string[]
   },
   fillColor: any
 };
@@ -114,8 +115,13 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter, fillColor }: GlMapPr
     let new_filter: any = ["all", ['in', ['get', 'bead_category'], ['literal', bb_array]], isp_filter, total_locations_filter]; 
 
     if (filter.isp_combos.length !== 0) {
-      let isp_combo_filter = ['in', ['get', 'combo_isp_id'], ['literal', filter.isp_combos]]
-      new_filter = ["all", ['in', ['get', 'bead_category'], ['literal', bb_array]], isp_filter, total_locations_filter, isp_combo_filter]; 
+      let isp_combo_filter = ['in', ['get', 'combo_isp_id'], ['literal', filter.isp_combos]];
+      new_filter.push(isp_combo_filter);
+    }
+
+    if (filter.counties.length !== 0) {
+      let counties_filter = ['in', ['get', 'geoid_co'], ['literal', filter.counties]];
+      new_filter.push(counties_filter);
     }
 
     setLayerFilter(new_filter);
