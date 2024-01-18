@@ -44,6 +44,19 @@ export function getFillColor(color_scheme: string): any {
     ]
   }
 
+  if (color_scheme === "Total locations") {
+
+    return [
+        'interpolate',
+        ['linear'],
+        ['get', 'cnt_total_locations'],
+        0, 'rgba(163, 226, 181, 0.7)',
+        372,
+        'rgba(22, 52, 62, 0.7)'
+    ]
+
+  }
+
   return "red";
                         
 }

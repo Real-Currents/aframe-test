@@ -82,7 +82,7 @@ function Sidebar<T>({
             disableClearable
             id="map-colors"
             defaultValue={"BEAD category"}
-            options={["BEAD category", "ISP count"]}
+            options={["BEAD category", "ISP count", "Total locations"]}
             sx={{ width: "100%" }}
             renderInput={(params) => <TextField {...params} label="Color map by" />}
             onChange={handleFillColorChange}

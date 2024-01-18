@@ -181,6 +181,8 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter, fillColor }: GlMapPr
                     <em>Total locations:</em> <b>{hoverInfo.feature.properties.cnt_total_locations}</b><br />
                     <em>ISP count:</em> <b>{hoverInfo.feature.properties.cnt_isp}</b><br />
                     <em>Pct. served:</em> <b>{percentFormat(hoverInfo.feature.properties.pct_served)}</b><br />
+                    <em>Locations with 100/20 service:</em> <b>{hoverInfo.feature.properties.cnt_100_20}</b><br />
+                    <em>Locations with 25/3 service:</em> <b>{hoverInfo.feature.properties.cnt_25_3}</b><br />
                     <em>ISPs:</em> {combo_lookup[hoverInfo.feature.properties.combo_isp_id]}<br />
                   </p>
                 </div>
