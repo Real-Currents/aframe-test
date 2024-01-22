@@ -1,4 +1,22 @@
-.interface {
+.map-interface {
 	display: flex;
 }
 
+.detail-interface {
+	background-color: red;
+	height: 500px;
+}
+
+.open-button {
+	position: absolute;
+	background-color: white;
+
+	border: 1px solid black;
+
+	padding: 5px 5px;
+	width: 300px;
+
+	text-align: center;
+
+	z-index: 30;
+}

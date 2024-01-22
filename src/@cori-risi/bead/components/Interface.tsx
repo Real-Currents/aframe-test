@@ -36,6 +36,8 @@ const Interface = () => {
     const [fillColor, setFillColor] = useState<any[]>(getFillColor("BEAD category"));
     const [multipleISP, setMultipleISP] = useState<string>("");
 
+    const [isDrawerShowing, setDrawerShowing] = useState(true);
+
     const handleFillColorChange = (newFillColor: any[]) => {
         setFillColor(newFillColor);
     };
@@ -46,11 +48,23 @@ const Interface = () => {
 
     const MAPBOX_TOKEN =  typeof process.env.MAPBOX_TOKEN === 'string'? process.env.MAPBOX_TOKEN: '';
 
+    const handleToggleDrawer = () => {
+        setDrawerShowing(!isDrawerShowing);
+    };    
+
     return (
     <>
-        <div className={style["interface"]}>
-            <Sidebar<FilterProps> onFilterChange={handleFilterChange} onFillColorChange={handleFillColorChange} filter={filter}  />
-            <GlMap mapboxToken={MAPBOX_TOKEN} filter={filter} fillColor={fillColor} />
+        <div>
+            <button className={style["open-button"]} onClick={handleToggleDrawer}>
+                {isDrawerShowing ? "Hide filters" : "Show filters"}
+            </button>
+            <div className={style["map-interface"]}>
+                <Sidebar<FilterProps> onFilterChange={handleFilterChange} onFillColorChange={handleFillColorChange} filter={filter} isShowing={isDrawerShowing} />
+                <GlMap mapboxToken={MAPBOX_TOKEN} filter={filter} fillColor={fillColor} />
+            </div>
+            <div className={style["detail-interface"]}>
+                <p>Testing the detail interface here</p>
+            </div>
         </div>
 
         </>

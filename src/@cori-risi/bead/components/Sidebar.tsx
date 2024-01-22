@@ -1,5 +1,7 @@
 import React, { useState} from 'react';
 
+import { useSpring, animated } from "react-spring";
+
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 import FormGroup from '@mui/material/FormGroup';
@@ -27,12 +29,19 @@ const isp_lookup: IspLookup = isp_dict;
 function Sidebar<T>({ 
   onFilterChange, 
   onFillColorChange, 
-  filter }: 
+  filter,
+  isShowing
+}: 
   {
     onFilterChange: (newFilter: T) => void, 
     onFillColorChange: (newFillColor: any[]) => void,
-    filter: any 
+    filter: any,
+    isShowing: boolean
  }) {
+
+  const props = useSpring({
+    left: isShowing ? "0px": "-300px"
+  });  
 
   const handleISPChange = (event: Event, newValue: number | number[]) => {
     let slider_vals: number[] = newValue as number[];
@@ -91,109 +100,109 @@ function Sidebar<T>({
 
   return (
     <>
-      <div className={style["sidebar"]}>
-        <div className={style["color-dropdown"]}>
+        <animated.div style={props} className={style["sidebar"]}>
+          <div className={style["color-dropdown"]}>
+            <Autocomplete
+              disablePortal
+              disableClearable
+              id="map-colors"
+              defaultValue={"BEAD category"}
+              options={["BEAD category", "ISP count", "Total locations"]}
+              sx={{ width: "100%" }}
+              renderInput={(params) => <TextField {...params} label="Color map by" />}
+              onChange={handleFillColorChange}
+            />
+          </div>
+          <hr />
+          <h1>Filters</h1>
+          <h3>Broadband service level</h3>
+          <FormGroup row>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={filter.bb_service.served}
+                  onChange={handleBroadbandChange}
+                  name="served"
+                />
+              }
+              label="Served"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={filter.bb_service.underserved}
+                  onChange={handleBroadbandChange}
+                  name="underserved"
+                />
+              }
+              label="Underserved"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={filter.bb_service.unserved}
+                  onChange={handleBroadbandChange}
+                  name="unserved"
+                />
+              }
+              label="Unserved"
+            />                    
+          </FormGroup>
+          <h3>ISP Count</h3>
+          <div className={style["slider"]}>
+            <Slider
+              getAriaLabel={() => 'ISP Count'}
+              value={filter.isp_count}
+              onChange={handleISPChange}
+              valueLabelDisplay="auto"
+              min={0}
+              max={10}
+            />
+          </div>
+          <h3>Total locations</h3>
+          <div className={style["slider"]}>
+            <Slider
+              getAriaLabel={() => 'Total locations'}
+              value={filter.total_locations}
+              onChange={handleTotalLocationsChange}
+              valueLabelDisplay="auto"
+              min={0}
+              max={500}
+            />
+          </div>
+          <h3>ISPs</h3>
           <Autocomplete
-            disablePortal
-            disableClearable
-            id="map-colors"
-            defaultValue={"BEAD category"}
-            options={["BEAD category", "ISP count", "Total locations"]}
-            sx={{ width: "100%" }}
-            renderInput={(params) => <TextField {...params} label="Color map by" />}
-            onChange={handleFillColorChange}
-          />
-        </div>
-        <hr />
-        <h1>Filters</h1>
-        <h3>Broadband service level</h3>
-        <FormGroup row>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={filter.bb_service.served}
-                onChange={handleBroadbandChange}
-                name="served"
+            multiple
+            id="tags-standard"
+            options={isp_name}
+            defaultValue={[]}
+            onChange={handleMultipleISPChange}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                variant="standard"
+                label="Filter ISPs"
+                placeholder="Filter ISPs"
               />
-            }
-            label="Served"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={filter.bb_service.underserved}
-                onChange={handleBroadbandChange}
-                name="underserved"
+            )}
+          />      
+          <h3>County</h3>
+          <Autocomplete
+            multiple
+            id="tags-standard"
+            options={county_name_geoid.map(d => d.label)}
+            // defaultValue={""}
+            onChange={handleCountiesChange}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                variant="standard"
+                label="Filter counties"
+                placeholder="Filter counties"
               />
-            }
-            label="Underserved"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={filter.bb_service.unserved}
-                onChange={handleBroadbandChange}
-                name="unserved"
-              />
-            }
-            label="Unserved"
-          />                    
-        </FormGroup>
-        <h3>ISP Count</h3>
-        <div className={style["slider"]}>
-          <Slider
-            getAriaLabel={() => 'ISP Count'}
-            value={filter.isp_count}
-            onChange={handleISPChange}
-            valueLabelDisplay="auto"
-            min={0}
-            max={10}
-          />
-        </div>
-        <h3>Total locations</h3>
-        <div className={style["slider"]}>
-          <Slider
-            getAriaLabel={() => 'Total locations'}
-            value={filter.total_locations}
-            onChange={handleTotalLocationsChange}
-            valueLabelDisplay="auto"
-            min={0}
-            max={500}
-          />
-        </div>
-        <h3>ISPs</h3>
-        <Autocomplete
-          multiple
-          id="tags-standard"
-          options={isp_name}
-          defaultValue={[]}
-          onChange={handleMultipleISPChange}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              variant="standard"
-              label="Filter ISPs"
-              placeholder="Filter ISPs"
-            />
-          )}
-        />      
-        <h3>County</h3>
-        <Autocomplete
-          multiple
-          id="tags-standard"
-          options={county_name_geoid.map(d => d.label)}
-          // defaultValue={""}
-          onChange={handleCountiesChange}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              variant="standard"
-              label="Filter counties"
-              placeholder="Filter counties"
-            />
-          )}
-        />    
-      </div>  
+            )}
+          />    
+      </animated.div>
     </>
   );
 

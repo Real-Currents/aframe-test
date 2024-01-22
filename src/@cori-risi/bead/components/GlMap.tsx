@@ -189,6 +189,8 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter, fillColor }: GlMapPr
                     <em>Pct. served:</em> <b>{percentFormat(hoverInfo.feature.properties.pct_served)}</b><br />
                     <em>Locations with 100/20 service:</em> <b>{hoverInfo.feature.properties.cnt_100_20}</b><br />
                     <em>Locations with 25/3 service:</em> <b>{hoverInfo.feature.properties.cnt_25_3}</b><br />
+                    // Add a check to ensure if combo_isp_id is valid
+                    // 0 will return No ISP found
                     <em>ISPs:</em> {combo_lookup[hoverInfo.feature.properties.combo_isp_id]}<br />
                   </p>
                 </div>

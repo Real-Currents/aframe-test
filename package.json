@@ -22,6 +22,7 @@
     "react-dom": "^18.2.0",
     "react-map-gl": "^7.1.7",
     "react-redux": "^9.0.0",
+    "react-spring": "^9.7.3",
     "redux": "^5.0.0",
     "viewport-mercator-project": "^7.0.4"
   },
