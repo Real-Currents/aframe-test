@@ -28,7 +28,7 @@
     font-weight: bold;	
 }
 
-@media (max-width: 600px) {
+@media (max-width: var(--maxWidthTrigger)) {
 
 	.zoom-message {
 		margin-top: var(--sidebarHeight);

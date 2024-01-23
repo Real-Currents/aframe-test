@@ -1,6 +1,7 @@
 :root {
   --sidebarWidth: 400px;
   --sidebarHeight: 36px;
+  --maxWidthTrigger: 600px;
 }
 
 

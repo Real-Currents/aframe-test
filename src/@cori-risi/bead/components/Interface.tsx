@@ -33,6 +33,7 @@ const Interface = () => {
         counties: []
     });
 
+    const maxWidthTrigger: number = 600;
     const [fillColor, setFillColor] = useState<any[]>(getFillColor("BEAD category"));
     const [multipleISP, setMultipleISP] = useState<string>("");
     const [isDrawerShowing, setDrawerShowing] = useState(true);
@@ -53,7 +54,7 @@ const Interface = () => {
 
     window.addEventListener('resize', function(event) {
 
-        if (window.innerWidth > 600 && isDrawerShowing === false) {
+        if (window.innerWidth > maxWidthTrigger && isDrawerShowing === false) {
           setDrawerShowing(true);
         }
     });    
