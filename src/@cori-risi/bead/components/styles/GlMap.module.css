@@ -9,11 +9,11 @@
 	position: absolute;
 
 	top: 0px;
-	left: 0px;
+	right: 0px;
 	z-index: 10;
 
 
-	width: 100%;
+	width: calc(100% - var(--sidebarWidth));
 
 	font-size: 20px;
 	padding: 12px;
@@ -26,4 +26,13 @@
     text-align: center;
     color: white;
     font-weight: bold;	
+}
+
+@media (max-width: 600px) {
+
+	.zoom-message {
+		margin-top: var(--sidebarHeight);
+		width: 100%;
+	}
+
 }

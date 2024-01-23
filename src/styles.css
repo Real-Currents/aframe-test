@@ -1,3 +1,9 @@
+:root {
+  --sidebarWidth: 400px;
+  --sidebarHeight: 36px;
+}
+
+
 body {
   margin: 0px;
 }

@@ -15,8 +15,9 @@
 
   position: absolute;
   top: 0px;
+  left: 0px;
   height: 100vh;
-  width: 300px;
+  width: var(--sidebarWidth);
   z-index: 20;
 
 }
@@ -43,8 +44,8 @@
   .sidebar {
 
       width: 100%;
-      top: 36px;
-      height: calc(100vh - 36px);
+      top: var(--sidebarHeight);
+      height: calc(100vh - var(--sidebarHeight));
 
       border-right: none;
 
