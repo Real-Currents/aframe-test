@@ -1,17 +1,13 @@
 .map-interface {
 	display: flex;
-}
-
-.detail-interface {
-	background-color: red;
-	height: 500px;
+	border-bottom: 2px solid black;
 }
 
 .open-button {
 	display: none;
 }
 
-@media (max-width: var(--maxWidthTrigger)) {
+@media (max-width: 600px) {
 
 	.open-button {
 

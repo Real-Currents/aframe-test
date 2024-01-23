@@ -1,0 +1,11 @@
+.detailed-view {
+	background-color: #FBF8E9;
+
+	height: 600px;
+	width: 100%;
+	max-width: 975px;
+	
+	margin: 0 auto;
+	padding: 20px;
+
+}

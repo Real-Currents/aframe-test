@@ -39,7 +39,8 @@ type GlMapProps = {
     isp_combos: string[],
     counties: string[]
   },
-  fillColor: any
+  fillColor: any,
+  onFocusBlockChange: (newFocusBlock: string) => void
 };
 
 const USA_BOUNDS: [[number, number], [number, number]] = [
@@ -47,7 +48,7 @@ const USA_BOUNDS: [[number, number], [number, number]] = [
     [-66, 49]   // Northeast coordinates: [Longitude, Latitude]
 ];
 
-const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter, fillColor }: GlMapProps) => {
+const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter, fillColor, onFocusBlockChange }: GlMapProps) => {
   const mapRef = useRef<MapRef | null>(null);
 
   const { longitude, latitude, zoom } = fitBounds({
@@ -81,6 +82,19 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter, fillColor }: GlMapPr
 
       setHoverInfo(hoveredFeature && { feature: hoveredFeature, x, y });
 
+    }
+  }, []);
+
+  const onClick = useCallback((event: any) => {
+    if (mapRef !== null && mapRef.current !== null) {
+      const {
+        features
+      } = event;
+      const clickedFeature = features && features[0];
+
+      if (clickedFeature) {
+        onFocusBlockChange(clickedFeature.properties.geoid_bl);
+      }
     }
   }, []);
 
@@ -147,7 +161,13 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter, fillColor }: GlMapPr
     <div className={style["map-wrapper"]}>
             {map_zoom < MIN_ZOOM_LEVEL && (
           <div className={style["zoom-message"]}>Zoom in to Vermont view data</div>
-        )}   
+        )} 
+        <a href="#detail">  
+          <button className={style["detail-button"]}>
+              Detailed View
+              <svg viewBox="0 0 22 14" aria-hidden="true"><polygon points="18.8743237 0 22 3.62676411 10.6828079 14 0 3.57495046 3.2339044 0.0505492411 10.7824379 7.41694926"></polygon></svg>
+          </button>  
+        </a>
       <Map
         ref={mapRef}
         initialViewState={{
@@ -164,6 +184,7 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter, fillColor }: GlMapPr
         }
         onMouseMove={onHover}
         onMove={onMove}
+        onClick={onClick}
       >
 
         <Source id={"mapbox-terrain"} type={"vector"} url={"mapbox://mapbox.mapbox-terrain-v2"} >

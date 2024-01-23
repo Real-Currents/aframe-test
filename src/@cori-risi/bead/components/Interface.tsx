@@ -2,6 +2,7 @@ import React, { useState} from 'react';
 
 import GlMap from './GlMap';
 import Sidebar from './Sidebar';
+import DetailedView from './DetailedView';
 
 import style from "./styles/Interface.module.css";
 
@@ -19,6 +20,8 @@ export type FilterProps = {
     counties: string[]
 }
 
+const maxWidthTrigger: number = 600;
+
 const Interface = () => {
 
     const [filter, setFilter] = useState<FilterProps>({
@@ -33,10 +36,14 @@ const Interface = () => {
         counties: []
     });
 
-    const maxWidthTrigger: number = 600;
     const [fillColor, setFillColor] = useState<any[]>(getFillColor("BEAD category"));
     const [multipleISP, setMultipleISP] = useState<string>("");
-    const [isDrawerShowing, setDrawerShowing] = useState(true);
+    const [isDrawerShowing, setDrawerShowing] = useState<boolean>(true);
+    const [focusBlock, setFocusBlock] = useState<string>("");
+
+    const handleFocusBlockClick = (newFocusBlock: string) => {
+        setFocusBlock(newFocusBlock);
+    }
 
     const handleFillColorChange = (newFillColor: any[]) => {
         setFillColor(newFillColor);
@@ -54,7 +61,7 @@ const Interface = () => {
 
     window.addEventListener('resize', function(event) {
 
-        if (window.innerWidth > maxWidthTrigger && isDrawerShowing === false) {
+        if (window.innerWidth > 600 && isDrawerShowing === false) {
           setDrawerShowing(true);
         }
     });    
@@ -66,12 +73,20 @@ const Interface = () => {
                 {isDrawerShowing ? "Hide filters" : "Show filters"}
             </button>
             <div className={style["map-interface"]}>
-                <Sidebar<FilterProps> onFilterChange={handleFilterChange} onFillColorChange={handleFillColorChange} filter={filter} isShowing={isDrawerShowing} />
-                <GlMap mapboxToken={MAPBOX_TOKEN} filter={filter} fillColor={fillColor} />
+                <Sidebar<FilterProps> 
+                    onFilterChange={handleFilterChange} 
+                    onFillColorChange={handleFillColorChange} 
+                    filter={filter} 
+                    isShowing={isDrawerShowing} 
+                />
+                <GlMap 
+                    mapboxToken={MAPBOX_TOKEN} 
+                    filter={filter} 
+                    fillColor={fillColor} 
+                    onFocusBlockChange={handleFocusBlockClick}
+                />              
             </div>
-            <div className={style["detail-interface"]}>
-                <p>Testing the detail interface here</p>
-            </div>
+            <DetailedView />
         </div>
 
         </>
