@@ -65,6 +65,7 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter, fillColor, onFocusBl
   const [hoverInfo, setHoverInfo] = useState<any>(null); // Specify the type of hoverInfo if known
   const [layerFilter, setLayerFilter] = useState<any>(['all']); // Specify the type of layerFilter if known
   const [map_zoom, setMapZoom] = useState<number>(zoom);
+  const [clickedBlock, setClickedBlock] = useState<string>("");
 
   const onMove = (event: any) => { // Specify the type of event if known
     setMapZoom(event.viewState!.zoom!);
@@ -94,6 +95,7 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter, fillColor, onFocusBl
 
       if (clickedFeature) {
         onFocusBlockChange(clickedFeature.properties.geoid_bl);
+        setClickedBlock(clickedFeature.properties.geoid_bl);
       }
     }
   }, []);
@@ -162,12 +164,14 @@ const GlMap: React.FC<GlMapProps> = ({ mapboxToken, filter, fillColor, onFocusBl
             {map_zoom < MIN_ZOOM_LEVEL && (
           <div className={style["zoom-message"]}>Zoom in to Vermont view data</div>
         )} 
-        <a href="#detail">  
-          <button className={style["detail-button"]}>
-              Detailed View
-              <svg viewBox="0 0 22 14" aria-hidden="true"><polygon points="18.8743237 0 22 3.62676411 10.6828079 14 0 3.57495046 3.2339044 0.0505492411 10.7824379 7.41694926"></polygon></svg>
-          </button>  
-        </a>
+        {clickedBlock.length > 0 && (
+          <a href="#detail">  
+            <button className={style["detail-button"]}>
+                Detailed View
+                <svg viewBox="0 0 22 14" aria-hidden="true"><polygon points="18.8743237 0 22 3.62676411 10.6828079 14 0 3.57495046 3.2339044 0.0505492411 10.7824379 7.41694926"></polygon></svg>
+            </button>  
+          </a>
+        )}
       <Map
         ref={mapRef}
         initialViewState={{
