@@ -40,7 +40,8 @@ function Sidebar<T>({
  }) {
 
   const props = useSpring({
-    left: isShowing ? "0px": "-300px"
+    display: isShowing ? "block": "none",
+    opacity: isShowing ? 1: 0
   });  
 
   const handleISPChange = (event: Event, newValue: number | number[]) => {

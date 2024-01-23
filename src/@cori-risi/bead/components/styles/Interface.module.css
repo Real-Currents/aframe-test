@@ -8,15 +8,26 @@
 }
 
 .open-button {
-	position: absolute;
-	background-color: white;
+	display: none;
+}
 
-	border: 1px solid black;
+@media (max-width: 600px) {
 
-	padding: 5px 5px;
-	width: 300px;
+	.open-button {
 
-	text-align: center;
+		display: block;
 
-	z-index: 30;
+		position: absolute;
+		background-color: white;
+
+		border-bottom: 2px solid black;
+
+		padding: 5px 5px;
+		width: 100%;
+
+		text-align: center;
+
+		z-index: 30;
+	}
+
 }

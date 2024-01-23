@@ -35,7 +35,6 @@ const Interface = () => {
 
     const [fillColor, setFillColor] = useState<any[]>(getFillColor("BEAD category"));
     const [multipleISP, setMultipleISP] = useState<string>("");
-
     const [isDrawerShowing, setDrawerShowing] = useState(true);
 
     const handleFillColorChange = (newFillColor: any[]) => {
@@ -51,6 +50,13 @@ const Interface = () => {
     const handleToggleDrawer = () => {
         setDrawerShowing(!isDrawerShowing);
     };    
+
+    window.addEventListener('resize', function(event) {
+
+        if (window.innerWidth > 600 && isDrawerShowing === false) {
+          setDrawerShowing(true);
+        }
+    });    
 
     return (
     <>
