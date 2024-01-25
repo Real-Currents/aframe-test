@@ -172,13 +172,13 @@ function App ({ app_id, content, user }: { app_id: string, content: () => HTMLEl
                         <Interface />
                     </Flex>
 
-                    {/*<ControlPanel*/}
-                    {/*    open={controlPanelOpen}*/}
-                    {/*    showMenuButton={showMenuButton}*/}
-                    {/*    toggleFunction={toggleControlPanel}*/}
-                    {/*    user={user}>*/}
-                    {/*    <ApplicationMenu />*/}
-                    {/*</ControlPanel>*/}
+                    <ControlPanel
+                        open={controlPanelOpen}
+                        showMenuButton={showMenuButton}
+                        toggleFunction={toggleControlPanel}
+                        user={user}>
+                        <ApplicationMenu />
+                    </ControlPanel>
 
                 </Flex>
             </ThemeProvider>

@@ -1,26 +1,27 @@
 import React, {ReactElement, useState} from 'react';
 import ReactDOM from 'react-dom/client';
+import PropTypes from "prop-types";
 import { Provider } from "react-redux";
 import { Amplify } from "aws-amplify";
-import { AuthConfig } from "@aws-amplify/core";
 import { getCurrentUser } from "@aws-amplify/auth/cognito";
-import PropTypes from "prop-types";
 
-// import aws_config from "./aws-config";
-// import aws_config from '@/amplifyconfiguration.json';
+import ApiContextProvider from "./@cori-risi/contexts/ApiContextProvider";
+import "@cori-risi/cori.data.api/src/@cori-risi/components/styles/CustomAmplifyAuthenticator.css";
+
 import aws_config from '../amplifyconfiguration.json';
 import App from './@cori-risi/bead/App.tsx';
 import store from "./@cori-risi/bead/app/store";
 import User from "./@cori-risi/models/User";
 
 import mapboxgl, {Map} from 'mapbox-gl';
-import {MapRef} from "react-map-gl";
+import { MapRef } from "react-map-gl";
+import {fetchAuthSession} from "@aws-amplify/auth";
 
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
 Amplify.configure(aws_config);
 
-const auth: AuthConfig = Amplify.getConfig().Auth!; //?.Cognito;
+const auth = Amplify.getConfig().Auth!; //?.Cognito;
 
 function OfflineNotification (props: { children?: ReactElement }) {
     console.log(`VITE_OFFLINE_NOTIFICATION: ${import.meta.env.VITE_OFFLINE_NOTIFICATION}`)
@@ -78,12 +79,11 @@ const initMain = (evt: Event) => {
     react_app_container.id = 'react-app';
     const root_content: HTMLElement = document.createElement("div");
     const user: Promise<User> = getCurrentUser();
+    const session = fetchAuthSession();
 
-    console.log("AWS Auth config: ", auth);
-
-    console.log("AWS Cognito config:", auth?.Cognito);
-
-    console.log(evt);
+    // console.log("AWS Auth config: ", auth);
+    // console.log("AWS Cognito config:", auth?.Cognito);
+    // console.log(evt);
 
     initHeader(evt);
 
@@ -120,10 +120,10 @@ const initMain = (evt: Event) => {
             <OfflineNotification>
                 <Provider store={store}>
                     {/*<Router>*/}
-                    {/*    <ApiContextProvider aws_config={aws_config}>*/}
-                    {/*        <App />*/}
-                    <App app_id={react_app_id} content={() => root_content} user={user} />
-                    {/*    </ApiContextProvider>*/}
+                        <ApiContextProvider session={session} user={user}>
+                            {/*<App />*/}
+                            <App app_id={react_app_id} content={() => root_content} user={user} />
+                        </ApiContextProvider>
                     {/*</Router>*/}
                 </Provider>
             </OfflineNotification>
