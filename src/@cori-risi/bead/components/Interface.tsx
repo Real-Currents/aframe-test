@@ -40,6 +40,11 @@ const Interface = () => {
     const [multipleISP, setMultipleISP] = useState<string>("");
     const [isDrawerShowing, setDrawerShowing] = useState<boolean>(true);
     const [focusBlock, setFocusBlock] = useState<string>("");
+    const [detailedInfo, setDetailedInfo] = useState<string[]>([]);
+
+    const handleDetailedInfo = (newDetailedInfo: string) => {
+        setDetailedInfo(newDetailedInfo);
+    }
 
     const handleFocusBlockClick = (newFocusBlock: string) => {
         setFocusBlock(newFocusBlock);
@@ -84,9 +89,10 @@ const Interface = () => {
                     filter={filter} 
                     fillColor={fillColor} 
                     onFocusBlockChange={handleFocusBlockClick}
+                    onDetailedInfoChange={handleDetailedInfo}
                 />              
             </div>
-            <DetailedView />
+            <DetailedView detailedInfo={detailedInfo} />
         </div>
 
         </>
