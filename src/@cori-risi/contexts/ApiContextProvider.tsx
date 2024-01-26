@@ -3,7 +3,7 @@ import React, {createContext, ReactElement, useEffect, useState} from "react";
 import axios, { AxiosInstance } from 'axios';
 import queryString from 'query-string';
 import User from "../models/User";
-// import { autoSignIn } from "../utils";
+import { autoSignIn } from "../utils";
 import "./styles/ApiContextProvider.css";
 import {fetchAuthSession, JWT} from "@aws-amplify/auth";
 import {getCurrentUser} from "@aws-amplify/auth/cognito";
@@ -20,7 +20,7 @@ export const ApiContext = createContext<ApiContextType>({
     token: null,
 });
 
-export default function ApiContextProvider (props: { children?: ReactElement, baseURL: string, session: Promise<any>, user: Promise<User> }) {
+export default function ApiContextProvider (props: { baseURL: string, children?: ReactElement }) {
     const [ authenticated_user, setAuthenticatedUser ] = useState<User | null>(null);
     const [ token, setToken ] = useState<JWT | null>(null);
     const [ apiClient, setApiClient ] = useState<AxiosInstance | null>(null);
@@ -48,50 +48,44 @@ export default function ApiContextProvider (props: { children?: ReactElement, ba
         token
     });
 
-    const user: Promise<User> = getCurrentUser();
     const session = fetchAuthSession();
+    const user: Promise<User> = getCurrentUser();
 
-    useEffect(() => {
-        // console.log(props.session);
-        // Update state based on session (if needed)
-        props.session.then((sess) => {
-            // console.log("API Session config:", sess);
+    session.then((sess) => {
+        // console.log("API Session config:", sess);
 
-            const tokens = sess.tokens;
+        const tokens = sess.tokens;
 
-            // console.log("API tokens:", tokens);
+        // console.log("API tokens:", tokens);
 
-            setToken(tokens.idToken);
+        setToken(tokens.idToken);
 
-            if (!!tokens.idToken) {
+        if (!!tokens.idToken) {
 
-                const accessToken = tokens.idToken.toString();
+            const accessToken = tokens.idToken.toString();
 
-                const apiClient = axios.create({
-                    baseURL: props.baseURL,
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${accessToken}`,
-                    },
-                });
+            const apiClient = axios.create({
+                baseURL: props.baseURL,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${accessToken}`,
+                },
+            });
 
-                setState({
-                    apiClient,
-                    authenticated_user,
-                    token
-                })
-            }
-        });
-    }, [ props.session ]);
+            setState({
+                apiClient,
+                authenticated_user,
+                token
+            })
+        }
+    });
 
-    useEffect(() => {
-        // Update state based on user (if needed)
-        props.user.then((user) => {
-            // console.log("API User:", user);
+    // Update state based on user (if needed)
+    user.then((user) => {
+        // console.log("API User:", user);
 
-            setAuthenticatedUser(user);
-        });
-    }, [ props.user ]);
+        setAuthenticatedUser(user);
+    });
 
     useEffect(() => {
         if (apiClient !== null && authenticated_user !== null && token !== null) {
