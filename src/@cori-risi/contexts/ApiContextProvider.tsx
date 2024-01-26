@@ -5,7 +5,8 @@ import queryString from 'query-string';
 import User from "../models/User";
 // import { autoSignIn } from "../utils";
 import "./styles/ApiContextProvider.css";
-import { JWT } from "@aws-amplify/auth";
+import {fetchAuthSession, JWT} from "@aws-amplify/auth";
+import {getCurrentUser} from "@aws-amplify/auth/cognito";
 
 interface ApiContextType {
     apiClient: AxiosInstance | null;
@@ -19,7 +20,7 @@ export const ApiContext = createContext<ApiContextType>({
     token: null,
 });
 
-export default function ApiContextProvider (props: { children?: ReactElement, session: Promise<any>, user: Promise<User> }) {
+export default function ApiContextProvider (props: { children?: ReactElement, baseURL: string, session: Promise<any>, user: Promise<User> }) {
     const [ authenticated_user, setAuthenticatedUser ] = useState<User | null>(null);
     const [ token, setToken ] = useState<JWT | null>(null);
     const [ apiClient, setApiClient ] = useState<AxiosInstance | null>(null);
@@ -47,6 +48,9 @@ export default function ApiContextProvider (props: { children?: ReactElement, se
         token
     });
 
+    const user: Promise<User> = getCurrentUser();
+    const session = fetchAuthSession();
+
     useEffect(() => {
         // console.log(props.session);
         // Update state based on session (if needed)
@@ -64,7 +68,7 @@ export default function ApiContextProvider (props: { children?: ReactElement, se
                 const accessToken = tokens.idToken.toString();
 
                 const apiClient = axios.create({
-                    baseURL: `http://localhost:8080`,
+                    baseURL: props.baseURL,
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${accessToken}`,
