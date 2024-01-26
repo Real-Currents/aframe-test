@@ -64,6 +64,9 @@ function App ({ app_id, content, user }: { app_id: string, content: () => HTMLEl
         // Check access to react/vite environment variables
         console.log("Welcome to Amplify React app version:", import.meta.env.VITE_APP_VERSION);
         // console.log(aws_config);
+
+        window.scrollTo(0, 0);
+
     }());
 
     const allowMenuToBeClosed = true;
