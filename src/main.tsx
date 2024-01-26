@@ -1,46 +1,76 @@
-import React, {ReactElement, useState} from 'react';
+import React, { ReactElement } from 'react';
 import ReactDOM from 'react-dom/client';
-import { Provider } from "react-redux";
-import { Amplify } from "aws-amplify";
-import { AuthConfig } from "@aws-amplify/core";
-import { getCurrentUser } from "@aws-amplify/auth/cognito";
 import PropTypes from "prop-types";
+import { Amplify } from "aws-amplify";
 
-// import aws_config from "./aws-config";
-// import aws_config from '@/amplifyconfiguration.json';
 import aws_config from '../amplifyconfiguration.json';
 import App from './@cori-risi/bead/App.tsx';
-import store from "./@cori-risi/bead/app/store";
-import User from "./@cori-risi/models/User";
 
-import mapboxgl, {Map} from 'mapbox-gl';
-import {MapRef} from "react-map-gl";
+import mapboxgl from 'mapbox-gl';
+// import {Map} from 'mapbox-gl';
+// import { MapRef } from "react-map-gl";
 
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
 Amplify.configure(aws_config);
 
-const auth: AuthConfig = Amplify.getConfig().Auth!; //?.Cognito;
+const init_event = new Event("Initialize frontend app!");
 
-function OfflineNotification (props: { children?: ReactElement }) {
-    console.log(`VITE_OFFLINE_NOTIFICATION: ${import.meta.env.VITE_OFFLINE_NOTIFICATION}`)
-    if (import.meta.env.VITE_OFFLINE_NOTIFICATION !== "false") {
-        return <div className="offline-notification"
-                    dangerouslySetInnerHTML={{
-                        __html: import.meta.env.VITE_OFFLINE_NOTIFICATION
-                    }}
-                    style={{height: "calc(100vh - 290px)", padding: "25%"}} />
-    } else return props.children;
-}
+function initMain (evt: Event) {
+    const react_app_id: string = 'react-app';
+    const react_app_container: HTMLElement = document.getElementById(react_app_id) || document.createElement("div");
+    react_app_container.id = 'react-app';
+    const root_content: HTMLElement = document.createElement("div");
 
-OfflineNotification.propTypes = { children: PropTypes.node };
+    initHeader(evt);
+
+    for (const elm of react_app_container.childNodes) {
+        const innerElm: HTMLElement = elm as HTMLElement;
+        if (elm.nodeType === 1) {
+            // console.log("Found embedded content:", innerElm);
+
+            // if (innerElm.id === "map") {
+            //     //
+            //     // MapBox test map
+            //     //
+            //     const map: Map = new mapboxgl.Map({
+            //         container: 'map', // container ID
+            //         style: 'mapbox://styles/ruralinno/clhgnms6802i701qn0c9y0pow', // style URL
+            //         center: [-74.5, 40], // starting position [lng, lat]
+            //         zoom: 9 // starting zoom
+            //     });
+            //
+            //     (map as { [key: string]: any })["map"] = map;
+            //
+            //     (window as { [key: string]: any })["map"] = (map as unknown) as MapRef;
+            // }
+
+            root_content.appendChild(innerElm);
+        }
+    }
+
+    console.log("Found embedded content:", root_content);
+
+    const root = ReactDOM.createRoot(react_app_container!);
+    root.render(
+        <React.StrictMode>
+            <OfflineNotification>
+                {/*<App />*/}
+                <App app_id={react_app_id}
+                     content={() => root_content} />
+            </OfflineNotification>
+        </React.StrictMode>
+    );
+
+    react_app_container.style.opacity = "1.0";
+};
 
 /**TODO:
  * To enable the following React header component, go into the index.html file and change the id
  * of the first div to "react-header" and comment out the cori.apps "src/bundle.js" script tag
  * that is just before the "src/main.tsx" script tag near the closing body tag.
  */
-const initHeader = (evt: Event) => {
+function initHeader (evt: Event) {
     const header_id = 'react-header';
     const header: HTMLElement | null = document.getElementById(header_id);
 
@@ -72,67 +102,17 @@ const initHeader = (evt: Event) => {
     }
 }
 
-const initMain = (evt: Event) => {
-    const react_app_id: string = 'react-app';
-    const react_app_container: HTMLElement = document.getElementById(react_app_id) || document.createElement("div");
-    react_app_container.id = 'react-app';
-    const root_content: HTMLElement = document.createElement("div");
-    const user: Promise<User> = getCurrentUser();
+function OfflineNotification (props: { children?: ReactElement }) {
+    console.log(`VITE_OFFLINE_NOTIFICATION: ${import.meta.env.VITE_OFFLINE_NOTIFICATION}`)
+    if (import.meta.env.VITE_OFFLINE_NOTIFICATION !== "false") {
+        return <div className="offline-notification"
+                    dangerouslySetInnerHTML={{
+                        __html: import.meta.env.VITE_OFFLINE_NOTIFICATION
+                    }}
+                    style={{height: "calc(100vh - 290px)", padding: "25%"}} />
+    } else return props.children;
+}
 
-    console.log("AWS Auth config: ", auth);
-
-    console.log("AWS Cognito config:", auth?.Cognito);
-
-    console.log(evt);
-
-    initHeader(evt);
-
-    for (const elm of react_app_container.childNodes) {
-        const innerElm: HTMLElement = elm as HTMLElement;
-        if (elm.nodeType === 1) {
-            // console.log("Found embedded content:", innerElm);
-
-            if (innerElm.id === "map") {
-                //
-                // MapBox test map
-                //
-                const map: Map = new mapboxgl.Map({
-                    container: 'map', // container ID
-                    style: 'mapbox://styles/ruralinno/clhgnms6802i701qn0c9y0pow', // style URL
-                    center: [-74.5, 40], // starting position [lng, lat]
-                    zoom: 9 // starting zoom
-                });
-
-                (map as { [key: string]: any })["map"] = map;
-
-                (window as { [key: string]: any })["map"] = (map as unknown) as MapRef;
-            }
-
-            root_content.appendChild(innerElm);
-        }
-    }
-
-    console.log("Found embedded content:", root_content);
-
-    const root = ReactDOM.createRoot(react_app_container!);
-    root.render(
-        <React.StrictMode>
-            <OfflineNotification>
-                <Provider store={store}>
-                    {/*<Router>*/}
-                    {/*    <ApiContextProvider aws_config={aws_config}>*/}
-                    {/*        <App />*/}
-                    <App app_id={react_app_id} content={() => root_content} user={user} />
-                    {/*    </ApiContextProvider>*/}
-                    {/*</Router>*/}
-                </Provider>
-            </OfflineNotification>
-        </React.StrictMode>
-    );
-
-    react_app_container.style.opacity = "1.0";
-};
-
-const init_event = new Event("Initialize frontend app!");
+OfflineNotification.propTypes = { children: PropTypes.node };
 
 initMain(init_event);
