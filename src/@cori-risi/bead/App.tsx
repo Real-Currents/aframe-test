@@ -1,12 +1,11 @@
-import { ReactElement, useEffect, useState } from 'react';
-import { useSelector, useDispatch } from "react-redux";
+import React, { ReactElement, useEffect, useState } from 'react';
+import {useSelector, useDispatch, Provider} from "react-redux";
+// import { Provider } from "react-redux";
+// import { BrowserRouter as Router } from "react-router-dom";
 import { getCurrentUser } from "@aws-amplify/auth/cognito";
 import {
     Button,
     Flex,
-    // Heading,
-    // Image,
-    // Text,
     withAuthenticator,
     useAuthenticator,
     UseAuthenticator
@@ -21,11 +20,9 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Interface from './components/Interface';
 
 import User from '../models/User';
-import {
-    updateUserId,
-    updateUserName,
-    selectUser
-} from "../features";
+import store from "./app/store";
+
+import ApiContextProvider from "../contexts/ApiContextProvider";
 
 function getUserLabel (u: User) {
     return (u.hasOwnProperty("signInUserSession")
@@ -58,7 +55,7 @@ const theme = createTheme({
     },
 });
 
-function App ({ app_id, content, user }: { app_id: string, content: () => HTMLElement, user: Promise<User> }): ReactElement {
+function App ({ app_id, content }: { app_id: string, content: () => HTMLElement }): ReactElement {
 
     (function init () {
         // Check access to react/vite environment variables
@@ -78,34 +75,6 @@ function App ({ app_id, content, user }: { app_id: string, content: () => HTMLEl
     const [ windowWidth, setWidth ]   = useState<number>(0);
     const [ windowHeight, setHeight ] = useState<number>(0);
     const [ windowRatio, setRatio ] = useState<number>(0);
-
-    const userState: User = useSelector(selectUser);
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        console.log("Initial userState:", userState);
-        console.log("user type:", user.constructor.name);
-        function updateUser (u: User) {
-            try {
-                if (!!u.userId) {
-                    console.log("Update userId:", u.userId);
-                    dispatch(updateUserId(u.userId));
-                }
-                if (!!u.userId && !!u.username) {
-                    console.log("Update username:", u.username);
-                    dispatch(updateUserName(u.username));
-                }
-            } catch (e: any) {
-                console.error(e);
-            }
-        }
-        if (user.hasOwnProperty("then")) {
-            user.then(u => updateUser(u));
-        } else {
-            const u = (user as unknown) as User;
-            updateUser(u);
-        }
-    }, [ user ]);
 
     function addContentToCurrentComponent () {
         if (!content_loaded) {
@@ -167,24 +136,30 @@ function App ({ app_id, content, user }: { app_id: string, content: () => HTMLEl
 
     return (
         <>
-            <ThemeProvider theme={theme}>
-                <Flex className="App" direction="row"
-                      justifyContent="space-between" >
+                <Provider store={store}>
+                    {/*<Router>*/}
+                    <ApiContextProvider>
+                        <ThemeProvider theme={theme}>
+                            <Flex className="App" direction="row"
+                                  justifyContent="space-between" >
 
-                    <Flex direction="column" flex={(controlPanelOpen)? "initial" : "auto"}>
-                        <Interface />
-                    </Flex>
+                                <Flex direction="column" flex={(controlPanelOpen)? "initial" : "auto"}>
+                                    <Interface />
+                                </Flex>
 
-                    {/*<ControlPanel*/}
-                    {/*    open={controlPanelOpen}*/}
-                    {/*    showMenuButton={showMenuButton}*/}
-                    {/*    toggleFunction={toggleControlPanel}*/}
-                    {/*    user={user}>*/}
-                    {/*    <ApplicationMenu />*/}
-                    {/*</ControlPanel>*/}
+                                {/*<ControlPanel*/}
+                                {/*    open={controlPanelOpen}*/}
+                                {/*    showMenuButton={showMenuButton}*/}
+                                {/*    toggleFunction={toggleControlPanel}*/}
+                                {/*    user={user} >*/}
+                                {/*    <ApplicationMenu />*/}
+                                {/*</ControlPanel>*/}
 
-                </Flex>
-            </ThemeProvider>
+                            </Flex>
+                        </ThemeProvider>
+                    </ApiContextProvider>
+                    {/*</Router>*/}
+                </Provider>
         </>
     );
 }

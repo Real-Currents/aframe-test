@@ -2,28 +2,143 @@ import React, {createContext, ReactElement, useEffect, useState} from "react";
 // import { AmplifyProvider } from "@aws-amplify/ui-react";
 import axios, { AxiosInstance } from 'axios';
 import queryString from 'query-string';
-import User from "../models/User";
-import { autoSignIn } from "../utils";
+// import { autoSignIn } from "../utils";
 import "./styles/ApiContextProvider.css";
 import {fetchAuthSession, JWT} from "@aws-amplify/auth";
 import {getCurrentUser} from "@aws-amplify/auth/cognito";
+import {useDispatch, useSelector} from "react-redux";
+import {
+    updateUserId,
+    updateUserName,
+    selectUser
+} from "../features";
+import User from "../models/User";
+
+const BASE_URL = `${import.meta.env.VITE_CORI_DATA_API}`;
 
 interface ApiContextType {
     apiClient: AxiosInstance | null;
     authenticated_user: User | null;
+    baseURL: string;
     token: JWT | null;
 }
 
 export const ApiContext = createContext<ApiContextType>({
     apiClient: null,
     authenticated_user: null,
+    baseURL: BASE_URL,
     token: null,
 });
 
-export default function ApiContextProvider (props: { baseURL: string, children?: ReactElement }) {
+let hasAuthSession = false;
+let hasAuthUser = false;
+let hasAuthClient = false;
+
+export default function ApiContextProvider (props: { children?: ReactElement }) {
+    const [ apiClient, setApiClient ] = useState<AxiosInstance | null>(null);
     const [ authenticated_user, setAuthenticatedUser ] = useState<User | null>(null);
     const [ token, setToken ] = useState<JWT | null>(null);
-    const [ apiClient, setApiClient ] = useState<AxiosInstance | null>(null);
+
+    const [ state, setState ] = useState({
+        apiClient,
+        authenticated_user,
+        baseURL: BASE_URL,
+        token
+    });
+
+    const session = fetchAuthSession();
+    const user: Promise<User> = getCurrentUser();
+    const userState: User = useSelector(selectUser);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        session.then((sess) => {
+
+            if (!hasAuthSession) {
+
+                hasAuthSession = true;
+
+                console.log("API Session is authenticated:", hasAuthSession);
+                console.log("API Session config:", sess);
+
+                const tokens = sess.tokens!;
+
+                console.log("API tokens:", tokens);
+
+                setToken(tokens.idToken!);
+
+                if (!!tokens.idToken && !hasAuthClient) {
+
+                    hasAuthClient = true;
+
+                    const accessToken = tokens.idToken.toString();
+
+                    const client = axios.create({
+                        baseURL: BASE_URL,
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${accessToken}`,
+                        },
+                    });
+
+                    setState({
+                        apiClient: client,
+                        authenticated_user,
+                        baseURL: BASE_URL,
+                        token: tokens.idToken
+                    });
+
+                    setApiClient(client);
+
+                    user.then((u) => {
+                        if (!hasAuthUser) {
+
+                            console.log("Initial userState:", userState);
+                            console.log("user type:", u.constructor.name);
+
+                            hasAuthUser = true;
+
+                            console.log("API User is authenticated:", hasAuthSession);
+                            console.log("API User:", u);
+
+                            function updateUser (u: User) {
+
+                                try {
+                                    if (!!u.userId) {
+                                        console.log("Update userId:", u.userId);
+                                        dispatch(updateUserId(u.userId));
+                                    }
+                                    if (!!u.userId && !!u.username) {
+                                        console.log("Update username:", u.username);
+                                        dispatch(updateUserName(u.username));
+                                    }
+                                } catch (e: any) {
+                                    console.error(e);
+                                }
+
+                                setAuthenticatedUser(u);
+
+                                // if (!!hasAuthClient) {
+                                //
+                                //     setState({
+                                //         apiClient: client,
+                                //         authenticated_user: u,
+                                //         baseURL: BASE_URL,
+                                //         token: tokens.idToken
+                                //     });
+                                // }
+                            }
+
+                            updateUser(u);
+                        }
+                    });
+                }
+            }
+        });
+    }, []);
+
+    /** OLD STUFF (from BCAT and Connect Humanity)... will cleanup soon **/
+
     // const [ config, setConfig ] = useState(null);
     // const [ cognito, setCognito ] = useState({
     //     clientId: '',
@@ -33,74 +148,15 @@ export default function ApiContextProvider (props: { baseURL: string, children?:
     //     hostedAuthenticationUrl: '',
     //     logoutUrl: '',
     // });
+
     // const [ ready, setReady ] = useState(false);
     // const [ signOut, setSignOut ] = useState(null);
 
-    const init_geoid = queryString.parse(location.search).geoid;              //<- This is not constant because of search bar
-    const init_location_label = queryString.parse(location.search).location;  //<- ...same
-    const [init_path, setInitPath] = useState(location.pathname + "")
-    const [geoid, setGeoid] = useState(init_geoid);
-    const [location_label, setLocationLabel] = useState(init_location_label);
-
-    const [ state, setState ] = useState({
-        apiClient,
-        authenticated_user,
-        token
-    });
-
-    const session = fetchAuthSession();
-    const user: Promise<User> = getCurrentUser();
-
-    session.then((sess) => {
-        // console.log("API Session config:", sess);
-
-        const tokens = sess.tokens;
-
-        // console.log("API tokens:", tokens);
-
-        setToken(tokens.idToken);
-
-        if (!!tokens.idToken) {
-
-            const accessToken = tokens.idToken.toString();
-
-            const apiClient = axios.create({
-                baseURL: props.baseURL,
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${accessToken}`,
-                },
-            });
-
-            setState({
-                apiClient,
-                authenticated_user,
-                token
-            })
-        }
-    });
-
-    // Update state based on user (if needed)
-    user.then((user) => {
-        // console.log("API User:", user);
-
-        setAuthenticatedUser(user);
-    });
-
-    useEffect(() => {
-        if (apiClient !== null && authenticated_user !== null && token !== null) {
-            setState({
-                apiClient,
-                authenticated_user,
-                token
-            });
-        }
-    }, [
-        apiClient,
-        authenticated_user,
-        token
-    ])
-
+    // const init_geoid = queryString.parse(location.search).geoid;              //<- This is not constant because of search bar
+    // const init_location_label = queryString.parse(location.search).location;  //<- ...same
+    // const [init_path, setInitPath] = useState(location.pathname + "")
+    // const [geoid, setGeoid] = useState(init_geoid);
+    // const [location_label, setLocationLabel] = useState(init_location_label);
 
     // window.AmplifyService = AmplifyService;
 
@@ -253,7 +309,7 @@ export default function ApiContextProvider (props: { baseURL: string, children?:
     //         authenticated_user,
     //         token
     //     });
-    // }, [ token ])
+    // }, [ token ]);
 
     return (
         // <AmplifyProvider>

@@ -1,18 +1,14 @@
 import React, { ReactElement } from 'react';
 import ReactDOM from 'react-dom/client';
 import PropTypes from "prop-types";
-import { Provider } from "react-redux";
 import { Amplify } from "aws-amplify";
-
-import ApiContextProvider from "./@cori-risi/contexts/ApiContextProvider";
 
 import aws_config from '../amplifyconfiguration.json';
 import App from './@cori-risi/bead/App.tsx';
-import store from "./@cori-risi/bead/app/store";
-import User from "./@cori-risi/models/User";
 
-import mapboxgl, {Map} from 'mapbox-gl';
-import { MapRef } from "react-map-gl";
+import mapboxgl from 'mapbox-gl';
+// import {Map} from 'mapbox-gl';
+// import { MapRef } from "react-map-gl";
 
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
@@ -33,21 +29,21 @@ function initMain (evt: Event) {
         if (elm.nodeType === 1) {
             // console.log("Found embedded content:", innerElm);
 
-            if (innerElm.id === "map") {
-                //
-                // MapBox test map
-                //
-                const map: Map = new mapboxgl.Map({
-                    container: 'map', // container ID
-                    style: 'mapbox://styles/ruralinno/clhgnms6802i701qn0c9y0pow', // style URL
-                    center: [-74.5, 40], // starting position [lng, lat]
-                    zoom: 9 // starting zoom
-                });
-
-                (map as { [key: string]: any })["map"] = map;
-
-                (window as { [key: string]: any })["map"] = (map as unknown) as MapRef;
-            }
+            // if (innerElm.id === "map") {
+            //     //
+            //     // MapBox test map
+            //     //
+            //     const map: Map = new mapboxgl.Map({
+            //         container: 'map', // container ID
+            //         style: 'mapbox://styles/ruralinno/clhgnms6802i701qn0c9y0pow', // style URL
+            //         center: [-74.5, 40], // starting position [lng, lat]
+            //         zoom: 9 // starting zoom
+            //     });
+            //
+            //     (map as { [key: string]: any })["map"] = map;
+            //
+            //     (window as { [key: string]: any })["map"] = (map as unknown) as MapRef;
+            // }
 
             root_content.appendChild(innerElm);
         }
@@ -59,16 +55,9 @@ function initMain (evt: Event) {
     root.render(
         <React.StrictMode>
             <OfflineNotification>
-                <Provider store={store}>
-                    {/*<Router>*/}
-                    {/*    <ApiContextProvider*/}
-                    {/*        baseURL={import.meta.env.VITE_CORI_DATA_API} >*/}
-                            {/*<App />*/}
-                            <App app_id={react_app_id}
-                                 content={() => root_content} />
-                        {/*</ApiContextProvider>*/}
-                    {/*</Router>*/}
-                </Provider>
+                {/*<App />*/}
+                <App app_id={react_app_id}
+                     content={() => root_content} />
             </OfflineNotification>
         </React.StrictMode>
     );

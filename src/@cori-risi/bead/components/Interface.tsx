@@ -42,7 +42,7 @@ const Interface = () => {
     const [focusBlock, setFocusBlock] = useState<string>("");
     const [detailedInfo, setDetailedInfo] = useState<string[]>([]);
 
-    const handleDetailedInfo = (newDetailedInfo: string) => {
+    const handleDetailedInfo = (newDetailedInfo: string[]) => {
         setDetailedInfo(newDetailedInfo);
     }
 
