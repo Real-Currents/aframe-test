@@ -115,4 +115,24 @@ function OfflineNotification (props: { children?: ReactElement }) {
 
 OfflineNotification.propTypes = { children: PropTypes.node };
 
+function PrivacyAuthenticator (props: { children?: ReactElement }) {
+    // if (import.meta.env.VITE_OFFLINE_NOTIFICATION !== "false") {
+        return (
+            <div className="container">
+                <div className="alert-bar__simple">
+                    <p></p><p>This Site uses cookies to offer you a better browsing experience and to analyze Site
+                    traffic. By continuing to access the Site, you consent to our use of cookies and storage and use of
+                    your data as provided in our <a href="http://ruralinnovation.us/privacy-policy/">Privacy Policy</a>.
+                </p><p></p>
+                </div>
+                <button aria-label="Close cookies disclaimer" className="alert-bar__close btn mint">
+                    OK
+                </button>
+            </div>
+        )
+    // } else return props.children;
+}
+
+PrivacyAuthenticator.propTypes = { children: PropTypes.node };
+
 initMain(init_event);
