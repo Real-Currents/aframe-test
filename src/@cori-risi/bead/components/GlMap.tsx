@@ -113,7 +113,7 @@ const GlMap: React.FC < GlMapProps > = ({
                   .then(result => {
                       console.log("result is ", result);
                       if (result.data) {
-                        let names: string[] = result.data.features.map(d => d.properties.new_alias);
+                        let names: string[] = result.data.features.map((d: { properties: { new_alias: string } }) => d.properties.new_alias);
                         onDetailedInfoChange(names);
                       }
                   })
