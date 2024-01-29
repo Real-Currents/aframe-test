@@ -86,20 +86,21 @@ export const bead_dev: MapboxSourceLayerStyles = {
                 ]
             },
         },
-        {
-            "id": "bead_dev.style_line",
-            "source": "bead_dev",
-            "source-layer": "proj_beadvt_test3",
-            "type": "line",
-            "paint": {
-                "line-color": "red", // Set the color of the border
-                "line-width": 4 // Set the width of the border
-            }
-        }
     ]
 };
 
 // Work-around:
+//   Source has 2 element(s) but target allows only 1.
+bead_dev.layers.push({
+     "id": "bead_dev.style_line",
+     "source": "bead_dev",
+     "source-layer": "proj_beadvt_test3",
+     "type": "line",
+     "paint": {
+         "line-color": "red", // Set the color of the border
+         "line-width": 4 // Set the width of the border
+     }
+ });
 //   "Property 'generateId' does not exist on type 'IntrinsicAttributes & SourceProps'."
 (bead_dev.sources[0] as any) !["generateId"] = true;
 
