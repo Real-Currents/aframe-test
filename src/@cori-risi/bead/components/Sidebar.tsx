@@ -168,7 +168,7 @@ function Sidebar<T>({
               onChange={handleTotalLocationsChange}
               valueLabelDisplay="auto"
               min={0}
-              max={500}
+              max={1015}
             />
           </div>
           <h3>ISPs</h3>

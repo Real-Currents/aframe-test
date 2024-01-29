@@ -19,9 +19,9 @@
 .tooltip {
   position: absolute;
   margin: 8px;
-  padding: 4px;
-  max-width: 300px;
-  font-size: 15px;
+  padding: 10px;
+  width: 370px;
+  font-size: .87rem;
   z-index: 9;
   pointer-events: none;
 
@@ -31,6 +31,46 @@
   color: black;
 
   font-family: "Bitter", monospace;
+}
+
+.tooltip div {
+  margin-bottom: 5px;
+}
+
+.tooltip .flex-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.tooltip .flex-container .div {
+  width: 100%;
+}
+
+.tooltip span {
+  font-weight: normal;
+}
+
+.tooltip h5 {
+  font-weight: bold;
+  font-family: "TT Hoves", sans-serif;
+  margin-bottom: 10px;
+}
+
+.tooltip h6 {
+  font-weight: 500;
+  font-family: "TT Hoves", sans-serif;
+  margin-bottom: 0px;
+}
+
+.tooltip table {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.tooltip td {
+  border: .5px solid #d0d2ce;
+  min-width: 30px;
+  padding: 5px;
 }
 
 /* ControlPanel menu */

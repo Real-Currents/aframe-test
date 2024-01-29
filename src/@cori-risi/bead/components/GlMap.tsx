@@ -95,7 +95,7 @@ const GlMap: React.FC < GlMapProps > = ({
             } = event;
             const hoveredFeature = features && features[0];
 
-            // console.log("hoveredFeature is ", hoveredFeature);
+            console.log("hoveredFeature is ", hoveredFeature);
 
             setHoverInfo(hoveredFeature && { feature: hoveredFeature, x, y });
 
@@ -295,16 +295,69 @@ const GlMap: React.FC < GlMapProps > = ({
                         {hoverInfo && (
                           <div className="tooltip" style={{left: hoverInfo.x, top: hoverInfo.y}}>
                             <div>
-                              <p>
-                                <em>BEAD category:</em> <b>{hoverInfo.feature.properties.bead_category}</b><br />
-                                <em>Total locations:</em> <b>{hoverInfo.feature.properties.cnt_total_locations}</b><br />
-                                <em>ISP count:</em> <b>{hoverInfo.feature.properties.cnt_isp}</b><br />
-                                <em>Pct. served:</em> <b>{percentFormat(hoverInfo.feature.properties.pct_served)}</b><br />
-                                <em>Locations with 100/20 service:</em> <b>{hoverInfo.feature.properties.cnt_100_20}</b><br />
-                                <em>Locations with 25/3 service:</em> <b>{hoverInfo.feature.properties.cnt_25_3}</b><br />
-                                <em>ISPs:</em> {hoverInfo.feature.properties.combo_isp_id ? combo_lookup[hoverInfo.feature.properties.combo_isp_id]: "N/A"}<br />
-                              </p>
+                            <h5>Block ID: {hoverInfo.feature.properties.geoid_bl} | {hoverInfo.feature.properties.bead_category}</h5> 
+                            <div className="flex-container">
+                                <div>
+                                    <h6>Broadband access</h6>
+                                    <table>
+                                        <tr>
+                                            <td>Total locations</td>
+                                            <td>{hoverInfo.feature.properties.cnt_total_locations}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>ISP count</td>
+                                            <td>{hoverInfo.feature.properties.cnt_isp}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Percent served</td>
+                                            <td>{percentFormat(hoverInfo.feature.properties.pct_served)}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>100/20 locations</td>
+                                            <td>{hoverInfo.feature.properties.cnt_100_20}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>25/3 locations</td>
+                                            <td>{hoverInfo.feature.properties.cnt_25_3}</td>
+                                        </tr>                                
+                                    </table>
+                                </div>
+                                <div>
+                                    <h6>Broadband technologies</h6>
+                                    <table>
+                                        <tr>
+                                            <td>Coaxial cable</td>
+                                            <td>{hoverInfo.feature.properties.has_coaxial_cable? "Yes": "No"}</td>
+                                        </tr>   
+                                        <tr>
+                                            <td>Copper wire</td>
+                                            <td>{hoverInfo.feature.properties.has_copperwire? "Yes": "No"}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Fiber</td>
+                                            <td>{hoverInfo.feature.properties.has_fiber? "Yes": "No"}</td>
+                                        </tr> 
+                                        <tr>
+                                            <td>LBR wireless</td>
+                                            <td>{hoverInfo.feature.properties.has_lbr_wireless? "Yes": "No"}</td>
+                                        </tr> 
+                                        <tr>
+                                            <td>Licensed wireless</td>
+                                            <td>{hoverInfo.feature.properties.has_licensed_wireless? "Yes": "No"}</td>
+                                        </tr> 
+                                    </table>
+                                </div>
                             </div>
+                            <div>
+                                <h6>Previous grant funding? {hoverInfo.feature.properties.has_award_geoid_bl? <span>Yes</span>: <span>No</span>}</h6>
+                            </div>
+                            <div>
+                                <h6>Internet service providers</h6>
+                                <p>
+                                    {hoverInfo.feature.properties.combo_isp_id ? combo_lookup[hoverInfo.feature.properties.combo_isp_id]: "N/A"}
+                                </p>
+                            </div>
+                          </div>
                           </div>
                         )}
                     </Source>
