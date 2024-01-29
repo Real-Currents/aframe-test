@@ -95,7 +95,7 @@ const GlMap: React.FC < GlMapProps > = ({
             } = event;
             const hoveredFeature = features && features[0];
 
-            console.log("hoveredFeature is ", hoveredFeature);
+            // console.log("hoveredFeature is ", hoveredFeature);
 
             setHoverInfo(hoveredFeature && { feature: hoveredFeature, x, y });
 
@@ -143,7 +143,6 @@ const GlMap: React.FC < GlMapProps > = ({
                 .then(result => {
 
                     onFocusBlockChange(clickedFeature.properties.geoid_bl.toString());
-                    setClickedBlock(clickedFeature.properties.geoid_bl.toString());
 
                     console.log("result is ", result);
 
@@ -177,7 +176,7 @@ const GlMap: React.FC < GlMapProps > = ({
                         const clickedFeature = features[0]!;
 
                         console.log("Feature clicked:", clickedFeature);
-
+                        setClickedBlock(clickedFeature.properties.geoid_bl.toString());
                         getBlockInfoFromApi(clickedFeature, token);
                     }
                 }

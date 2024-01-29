@@ -6,6 +6,8 @@ import { Amplify } from "aws-amplify";
 import aws_config from '../amplifyconfiguration.json';
 import App from './@cori-risi/bead/App.tsx';
 
+import './fonts.css';
+
 import mapboxgl from 'mapbox-gl';
 // import {Map} from 'mapbox-gl';
 // import { MapRef } from "react-map-gl";

@@ -31,7 +31,7 @@ const Interface = () => {
             unserved: true
         },
         isp_count: [0, 10],
-        total_locations: [0, 500],
+        total_locations: [0, 1015],
         isp_combos: [],
         counties: []
     });

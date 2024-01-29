@@ -22,12 +22,14 @@
 
 }
 
-.sidebar h1 {
+.sidebar h4 {
   margin-top: 15px;
 }
 
-.sidebar h3 {
-  margin-top: 10px;
+.sidebar h5 {
+  margin-top: 15px;
+  font-weight: 400;
+  font-size: 1rem;
 }
 
 .sidebar .color-dropdown {

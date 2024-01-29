@@ -21,7 +21,7 @@
   margin: 8px;
   padding: 10px;
   width: 370px;
-  font-size: .87rem;
+  font-size: 1em;
   z-index: 9;
   pointer-events: none;
 
@@ -52,14 +52,16 @@
 
 .tooltip h5 {
   font-weight: bold;
-  font-family: "TT Hoves", sans-serif;
+  font-family: "TT Hoves Bold", sans-serif;
   margin-bottom: 10px;
+  font-size: 1rem;
 }
 
 .tooltip h6 {
-  font-weight: 500;
+  font-weight: 600;
   font-family: "TT Hoves", sans-serif;
   margin-bottom: 0px;
+  font-size: .9rem;
 }
 
 .tooltip table {

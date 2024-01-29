@@ -115,8 +115,8 @@ function Sidebar<T>({
             />
           </div>
           <hr />
-          <h1>Filters</h1>
-          <h3>Broadband service level</h3>
+          <h4>Filters</h4>
+          <h5>Broadband service level</h5>
           <FormGroup row>
             <FormControlLabel
               control={
@@ -149,7 +149,7 @@ function Sidebar<T>({
               label="Unserved"
             />                    
           </FormGroup>
-          <h3>ISP Count</h3>
+          <h5>ISP Count</h5>
           <div className={style["slider"]}>
             <Slider
               getAriaLabel={() => 'ISP Count'}
@@ -160,7 +160,7 @@ function Sidebar<T>({
               max={10}
             />
           </div>
-          <h3>Total locations</h3>
+          <h5>Total locations</h5>
           <div className={style["slider"]}>
             <Slider
               getAriaLabel={() => 'Total locations'}
@@ -171,7 +171,7 @@ function Sidebar<T>({
               max={1015}
             />
           </div>
-          <h3>ISPs</h3>
+          <h5>ISPs</h5>
           <Autocomplete
             multiple
             id="tags-standard"
@@ -187,7 +187,7 @@ function Sidebar<T>({
               />
             )}
           />      
-          <h3>County</h3>
+          <h5>County</h5>
           <Autocomplete
             multiple
             id="tags-standard"
