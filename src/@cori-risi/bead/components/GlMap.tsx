@@ -13,7 +13,7 @@ import style from "./styles/GlMap.module.css";
 import IntrinsicAttributes = React.JSX.IntrinsicAttributes;
 import { LayerProps } from "react-map-gl";
 
-import combo_dict from './../data/combo_dict.json';
+import combo_dict from './../data/combo_sample2_dict.json';
 
 import {
     bead_dev,
@@ -101,6 +101,7 @@ const GlMap: React.FC < GlMapProps > = ({
 
         }
     }, []);
+
 
     const getBlockInfoFromApi = (clickedFeature: {
         properties: {

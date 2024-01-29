@@ -17,7 +17,7 @@ import style from "./styles/Sidebar.module.css";
 import { getFillColor } from './../utils/controls';
 
 import isp_name from './../data/isp_name.json';
-import isp_dict from './../data/isp_dict.json';
+import isp_dict from './../data/isp_sample2_dict.json';
 import county_name_geoid from './../data/geoid_co_name_crosswalk.json';
 
 interface IspLookup {
