@@ -253,7 +253,7 @@ const GlMap: React.FC < GlMapProps > = ({
         (apiContext.hasOwnProperty("token") && apiContext.token !== null) ? (
             <div className={style["map-wrapper"]}>
                 {map_zoom < MIN_ZOOM_LEVEL && (
-                  <div className={style["zoom-message"]}>Zoom in to Vermont view data</div>
+                  <div className={style["zoom-message"]}>Zoom in to AL, HI, MA, or PR to view data</div>
                 )}
                 {clickedBlock.length > 0 && (
                   <a href="#detail">
