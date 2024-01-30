@@ -17,7 +17,11 @@ export type FilterProps = {
     isp_count: number[],
     total_locations: number[],
     isp_combos: string[],
-    counties: string[]
+    counties: string[],
+    has_award: {
+        yes: boolean,
+        no: boolean
+    }
 }
 
 const maxWidthTrigger: number = 600;
@@ -33,7 +37,11 @@ const Interface = () => {
         isp_count: [0, 10],
         total_locations: [0, 1015],
         isp_combos: [],
-        counties: []
+        counties: [],
+        has_award: {
+            yes: true,
+            no: true
+        }
     });
 
     const [fillColor, setFillColor] = useState<any[]>(getFillColor("BEAD category"));

@@ -40,7 +40,11 @@ type GlMapProps = {
         isp_count: number[],
         total_locations: number[],
         isp_combos: string[],
-        counties: string[]
+        counties: string[],
+        has_award: {
+            yes: boolean,
+            no: boolean
+        }
     },
     fillColor: any,
     onFocusBlockChange: (newFocusBlock: string) => void,
@@ -197,7 +201,7 @@ const GlMap: React.FC < GlMapProps > = ({
 
         if (filter.bb_service.unserved === true) {
             bb_array = [...bb_array, "Unserved"];
-        }
+        }  
 
         let isp_filter: any = [
             'all',
@@ -227,6 +231,24 @@ const GlMap: React.FC < GlMapProps > = ({
                 ['literal', filter.counties]
             ];
             new_filter.push(counties_filter);
+        }
+
+        if (filter.has_award.yes !== filter.has_award.no) {
+
+            if (filter.has_award.yes === true) {
+                let has_award_filter = ['==', ['get', 'has_award_geoid_bl'], true];
+                new_filter.push(has_award_filter);
+            }
+            else {
+                let has_award_filter = ['==', ['get', 'has_award_geoid_bl'], false];
+                new_filter.push(has_award_filter);
+            }
+        }
+        else {
+            if (filter.has_award.yes === false) {
+                let has_award_filter = ['==', ['get', 'has_award_geoid_bl'], null];
+                new_filter.push(has_award_filter);
+            }
         }
 
         setLayerFilter(new_filter);
@@ -299,51 +321,55 @@ const GlMap: React.FC < GlMapProps > = ({
                                 <div>
                                     <h6>Broadband access</h6>
                                     <table>
-                                        <tr>
-                                            <td>Total locations</td>
-                                            <td>{hoverInfo.feature.properties.cnt_total_locations}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>ISP count</td>
-                                            <td>{hoverInfo.feature.properties.cnt_isp}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Percent served</td>
-                                            <td>{percentFormat(hoverInfo.feature.properties.pct_served)}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>100/20 locations</td>
-                                            <td>{hoverInfo.feature.properties.cnt_100_20}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>25/3 locations</td>
-                                            <td>{hoverInfo.feature.properties.cnt_25_3}</td>
-                                        </tr>                                
+                                        <tbody>
+                                            <tr>
+                                                <td>Total locations</td>
+                                                <td>{hoverInfo.feature.properties.cnt_total_locations}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>ISP count</td>
+                                                <td>{hoverInfo.feature.properties.cnt_isp}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Percent served</td>
+                                                <td>{percentFormat(hoverInfo.feature.properties.pct_served)}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>100/20 locations</td>
+                                                <td>{hoverInfo.feature.properties.cnt_100_20}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>25/3 locations</td>
+                                                <td>{hoverInfo.feature.properties.cnt_25_3}</td>
+                                            </tr>   
+                                        </tbody>                             
                                     </table>
                                 </div>
                                 <div>
                                     <h6>Broadband technologies</h6>
                                     <table>
-                                        <tr>
-                                            <td>Coaxial cable</td>
-                                            <td>{hoverInfo.feature.properties.has_coaxial_cable? "Yes": "No"}</td>
-                                        </tr>   
-                                        <tr>
-                                            <td>Copper wire</td>
-                                            <td>{hoverInfo.feature.properties.has_copperwire? "Yes": "No"}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Fiber</td>
-                                            <td>{hoverInfo.feature.properties.has_fiber? "Yes": "No"}</td>
-                                        </tr> 
-                                        <tr>
-                                            <td>LBR wireless</td>
-                                            <td>{hoverInfo.feature.properties.has_lbr_wireless? "Yes": "No"}</td>
-                                        </tr> 
-                                        <tr>
-                                            <td>Licensed wireless</td>
-                                            <td>{hoverInfo.feature.properties.has_licensed_wireless? "Yes": "No"}</td>
-                                        </tr> 
+                                        <tbody>
+                                            <tr>
+                                                <td>Coaxial cable</td>
+                                                <td>{hoverInfo.feature.properties.has_coaxial_cable? "Yes": "No"}</td>
+                                            </tr>   
+                                            <tr>
+                                                <td>Copper wire</td>
+                                                <td>{hoverInfo.feature.properties.has_copperwire? "Yes": "No"}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Fiber</td>
+                                                <td>{hoverInfo.feature.properties.has_fiber? "Yes": "No"}</td>
+                                            </tr> 
+                                            <tr>
+                                                <td>LBR wireless</td>
+                                                <td>{hoverInfo.feature.properties.has_lbr_wireless? "Yes": "No"}</td>
+                                            </tr> 
+                                            <tr>
+                                                <td>Licensed wireless</td>
+                                                <td>{hoverInfo.feature.properties.has_licensed_wireless? "Yes": "No"}</td>
+                                            </tr> 
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>

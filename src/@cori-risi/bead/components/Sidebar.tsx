@@ -61,6 +61,13 @@ function Sidebar<T>({
     }
   }
 
+  function handleAwardChange(event: any) {
+
+    if (typeof event.target.checked === 'boolean') {
+      onFilterChange({...filter, has_award: {...filter.has_award, [event.target.name]: event.target.checked}});
+    }
+  }
+
   function handleFillColorChange(event: React.SyntheticEvent, newValue: string): void {
     if (typeof newValue === "string") {
       onFillColorChange(getFillColor(newValue));
@@ -149,6 +156,29 @@ function Sidebar<T>({
               label="Unserved"
             />                    
           </FormGroup>
+          <h5>Received award?</h5>
+          <FormGroup row>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={filter.has_award.yes}
+                  onChange={handleAwardChange}
+                  name="yes"
+                />
+              }
+              label="Yes"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={filter.has_award.no}
+                  onChange={handleAwardChange}
+                  name="no"
+                />
+              }
+              label="No"
+            />                 
+          </FormGroup>          
           <h5>ISP Count</h5>
           <div className={style["slider"]}>
             <Slider
