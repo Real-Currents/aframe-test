@@ -32,12 +32,12 @@ export const bead_dev: MapboxSourceLayerStyles = {
     "sources": [{
         "id": "bead_dev",
         "type": "vector",
-        "url": "mapbox://ruralinno.vt_test3"
+        "url": "mapbox://ruralinno.sample2"
     }],
     "layers": [{
             "id": "bead_dev.style",
             "source": "bead_dev",
-            "source-layer": "proj_beadvt_test3",
+            "source-layer": "proj_beadsample2",
             "type": "fill",
             "paint": {
                 // "fill-color": "#0080ff", // blue color fill
