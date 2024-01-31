@@ -137,7 +137,7 @@ const GlMap: React.FC < GlMapProps > = ({
 
         // console.log("API Client:", client);
 
-        if (client !== null) {
+        if (client !== null && client.hasOwnProperty("get") && typeof client.get === "function") {
 
             client.get("/rest/bead/isp_tech/bl?geoid_bl=" + clickedFeature.properties.geoid_bl)
                 .then(result => {
@@ -158,7 +158,16 @@ const GlMap: React.FC < GlMapProps > = ({
                 })
                 .catch(error => {
                     console.error("Error fetching data:", error);
+                    if (error.hasOwnProperty("code") && error.code! === "ERR_BAD_REQUEST") {
+                        window.alert("Please refresh session!");
+                        apiContext.autoSignOut();
+                    }
                 });
+
+        } else {
+            console.log("API Client Error:", client);
+            window.alert("Please refresh session!");
+            apiContext.autoSignOut();
         }
     }
 

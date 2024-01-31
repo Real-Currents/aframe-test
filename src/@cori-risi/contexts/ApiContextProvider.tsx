@@ -1,8 +1,8 @@
 import React, {createContext, ReactElement, useEffect, useState} from "react";
 // import { AmplifyProvider } from "@aws-amplify/ui-react";
 import axios, { AxiosInstance } from 'axios';
-import queryString from 'query-string';
 // import { autoSignIn } from "../utils";
+// import queryString from 'query-string';
 import "./styles/ApiContextProvider.css";
 import {fetchAuthSession, JWT} from "@aws-amplify/auth";
 import {getCurrentUser} from "@aws-amplify/auth/cognito";
@@ -13,19 +13,24 @@ import {
     selectUser
 } from "../features";
 import User from "../models/User";
+import {useAuthenticator, UseAuthenticator} from "@aws-amplify/ui-react";
 
 const BASE_URL = `${import.meta.env.VITE_CORI_DATA_API}`;
 
 interface ApiContextType {
     apiClient: AxiosInstance | null;
+    authenticated: boolean;
     authenticated_user: User | null;
+    autoSignOut: () => void;
     baseURL: string;
     token: JWT | null;
 }
 
 export const ApiContext = createContext<ApiContextType>({
     apiClient: null,
+    authenticated: false,
     authenticated_user: null,
+    autoSignOut: () => { console.log("API Session signOut()!") },
     baseURL: BASE_URL,
     token: null,
 });
@@ -41,100 +46,136 @@ export default function ApiContextProvider (props: { children?: ReactElement }) 
 
     const [ state, setState ] = useState({
         apiClient,
+        authenticated: false,
         authenticated_user,
+        autoSignOut: () => { console.log("API Session signOut()!") },
         baseURL: BASE_URL,
         token
     });
 
-    const session = fetchAuthSession();
-    const user: Promise<User> = getCurrentUser();
+    const authenticator: UseAuthenticator = useAuthenticator();
     const userState: User = useSelector(selectUser);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        session.then((sess) => {
+        const session = fetchAuthSession();
+        const user: Promise<User> = getCurrentUser();
 
-            if (!hasAuthSession) {
+        session
+            .then((sess) => {
 
-                hasAuthSession = true;
+                if (!hasAuthSession) {
 
-                console.log("API Session is authenticated:", hasAuthSession);
-                console.log("API Session config:", sess);
+                    hasAuthSession = true;
 
-                const tokens = sess.tokens!;
+                    console.log("API Session is authenticated:", hasAuthSession);
+                    console.log("API Session config:", sess);
 
-                console.log("API tokens:", tokens);
+                    const {
+                        // signIn,
+                        // signUp,
+                        // forceNewPassword,
+                        // confirmResetPassword,
+                        // confirmSignIn,
+                        // confirmSignUp,
+                        // confirmVerifyUser,
+                        // forgotPassword,
+                        // setupTotp,
+                        // verifyUser,
+                        signOut
+                    } = authenticator;
 
-                setToken(tokens.idToken!);
+                    const tokens = sess.tokens!;
 
-                if (!!tokens.idToken && !hasAuthClient) {
+                    console.log("API tokens:", tokens);
 
-                    hasAuthClient = true;
+                    setToken(tokens.idToken!);
 
-                    const accessToken = tokens.idToken.toString();
+                    if (!!tokens.idToken && !hasAuthClient) {
 
-                    const client = axios.create({
-                        baseURL: BASE_URL,
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${accessToken}`,
-                        },
-                    });
+                        hasAuthClient = true;
 
-                    setState({
-                        apiClient: client,
-                        authenticated_user,
-                        baseURL: BASE_URL,
-                        token: tokens.idToken
-                    });
+                        const accessToken = tokens.idToken.toString();
 
-                    setApiClient(client);
+                        try {
 
-                    user.then((u) => {
-                        if (!hasAuthUser) {
+                            const client = axios.create({
+                                baseURL: BASE_URL,
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Authorization': `Bearer ${accessToken}`,
+                                },
+                            });
 
-                            console.log("Initial userState:", userState);
-                            console.log("user type:", u.constructor.name);
+                            setState({
+                                apiClient: client,
+                                authenticated: true,
+                                authenticated_user,
+                                autoSignOut: signOut,
+                                baseURL: BASE_URL,
+                                token: tokens.idToken
+                            });
 
-                            hasAuthUser = true;
+                            setApiClient(client);
 
-                            console.log("API User is authenticated:", hasAuthSession);
-                            console.log("API User:", u);
+                        } catch (e: any) {
+                            console.log("Axios Error:", e);
+                        }
 
-                            function updateUser (u: User) {
+                        user.then((u) => {
+                            if (!hasAuthUser) {
 
-                                try {
-                                    if (!!u.userId) {
-                                        console.log("Update userId:", u.userId);
-                                        dispatch(updateUserId(u.userId));
+                                console.log("Initial userState:", userState);
+                                console.log("user type:", u.constructor.name);
+
+                                hasAuthUser = true;
+
+                                console.log("API User is authenticated:", hasAuthSession);
+                                console.log("API User:", u);
+
+                                function updateUser (u: User) {
+
+                                    try {
+                                        if (!!u.userId) {
+                                            console.log("Update userId:", u.userId);
+                                            dispatch(updateUserId(u.userId));
+                                        }
+                                        if (!!u.userId && !!u.username) {
+                                            console.log("Update username:", u.username);
+                                            dispatch(updateUserName(u.username));
+                                        }
+                                    } catch (e: any) {
+                                        console.error(e);
                                     }
-                                    if (!!u.userId && !!u.username) {
-                                        console.log("Update username:", u.username);
-                                        dispatch(updateUserName(u.username));
-                                    }
-                                } catch (e: any) {
-                                    console.error(e);
+
+                                    // setState({
+                                    //     apiClient: (!!hasAuthClient) ? apiClient : axios.create({
+                                    //         baseURL: BASE_URL,
+                                    //         headers: {
+                                    //             'Content-Type': 'application/json',
+                                    //             'Authorization': `Bearer ${accessToken}`,
+                                    //         },
+                                    //     }),
+                                    //     authenticated: true,
+                                    //     authenticated_user: u,
+                                    //     baseURL: BASE_URL,
+                                    //     autoSignOut: signOut,
+                                    //     token: tokens.idToken
+                                    // });
+
+                                    setAuthenticatedUser(u);
+
                                 }
 
-                                setAuthenticatedUser(u);
-
-                                // if (!!hasAuthClient) {
-                                //
-                                //     setState({
-                                //         apiClient: client,
-                                //         authenticated_user: u,
-                                //         baseURL: BASE_URL,
-                                //         token: tokens.idToken
-                                //     });
-                                // }
+                                updateUser(u);
                             }
-
-                            updateUser(u);
-                        }
-                    });
+                        });
+                    }
                 }
-            }
-        });
+            })
+            .catch((e: any) => {
+                console.log("API Session ERROR:", e);
+            });
     }, []);
 
     /** OLD STUFF (from BCAT and Connect Humanity)... will cleanup soon **/
