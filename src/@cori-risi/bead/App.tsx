@@ -14,6 +14,7 @@ import '@aws-amplify/ui-react/styles.css';
 import './App.css';
 import ApplicationMenu from "./components/ApplicationMenu";
 import './components/styles/ApplicationMenu.scss';
+import './components/styles/ControlPanel.css';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
@@ -136,46 +137,39 @@ function App ({ app_id, content }: { app_id: string, content: () => HTMLElement 
 
     return (
         <>
-                <Provider store={store}>
-                    {/*<Router>*/}
-                    <ApiContextProvider>
-                        <ThemeProvider theme={theme}>
-                            <Flex className="App" direction="row"
-                                  justifyContent="space-between" >
+            <Provider store={store}>
+                {/*<Router>*/}
+                <ApiContextProvider>
+                    <ThemeProvider theme={theme}>
+                        <Flex className="App" direction="row"
+                              justifyContent="space-between" >
 
-                                <Flex direction="column" flex={(controlPanelOpen)? "initial" : "auto"}>
-                                    <Interface />
-                                </Flex>
-
-                                {/*<ControlPanel*/}
-                                {/*    open={controlPanelOpen}*/}
-                                {/*    showMenuButton={showMenuButton}*/}
-                                {/*    toggleFunction={toggleControlPanel}*/}
-                                {/*    user={user} >*/}
-                                {/*    <ApplicationMenu />*/}
-                                {/*</ControlPanel>*/}
-
+                            <Flex direction="column" flex={(controlPanelOpen)? "initial" : "auto"}>
+                                <Interface />
                             </Flex>
-                        </ThemeProvider>
-                    </ApiContextProvider>
-                    {/*</Router>*/}
-                </Provider>
+
+                            {/*<ControlPanel*/}
+                            {/*    open={controlPanelOpen}*/}
+                            {/*    showMenuButton={showMenuButton}*/}
+                            {/*    toggleFunction={toggleControlPanel} >*/}
+                            {/*    <ApplicationMenu />*/}
+                            {/*</ControlPanel>*/}
+
+                        </Flex>
+                    </ThemeProvider>
+                </ApiContextProvider>
+                {/*</Router>*/}
+            </Provider>
         </>
     );
 }
-
-// export default App;
-export default withAuthenticator(App, {
-    loginMechanisms: ['username']
-});
 
 function ControlPanel (props: {
     children?: ReactElement,
     open?: boolean | true,
     showMenuButton?: boolean | null,
     toggleFunction?: Function | null,
-    signOut?: Function | null,
-    user?: Promise<User> | null
+    signOut?: Function | null
 }) {
     const authenticator: UseAuthenticator = useAuthenticator();
     const { signOut } = (props.hasOwnProperty("signOut") && props.signOut !== null) ?
@@ -194,11 +188,7 @@ function ControlPanel (props: {
             setOpen(!open);
         };
     const [ userState, setUserState ] = useState<User | null>(null);
-    const user: Promise<User> = (props.hasOwnProperty("user") && props.user !== null && !!props.user) ?
-        (props.hasOwnProperty("then")) ?
-            props.user :
-            Promise.resolve(props.user) :
-        getCurrentUser();
+    const user: Promise<User> = getCurrentUser();
 
     user.then(u => {
         if (userState === null) {
@@ -271,15 +261,17 @@ function ControlPanel (props: {
                      overflow: "hidden"
                  }}>
 
-                {(userState !== null) ? (
-                    <div><span className={"form-label"}>User</span>: { getUserLabel(userState) }</div>
-                ) : (
-                    <div style={{ display: "none" }} />
-                )}
+                {/*{(userState !== null) ? (*/}
+                {/*    <div><span className={"form-label"}>User</span>: { getUserLabel(userState) }</div>*/}
+                {/*) : (*/}
+                {/*    <div style={{ display: "none" }} />*/}
+                {/*)}*/}
 
                 <p id="info">&nbsp;</p>
 
                 { props.children }
+
+                <br />
 
                 <div id={"auth-control"} className="row show">
                     {(signOut !== null && typeof signOut === "function") ? (
@@ -296,5 +288,11 @@ function ControlPanel (props: {
 }
 
 function SignOutButton ({ signOut }: { signOut: Function }) {
-    return <Button className={"amplify-sign-out"} title="Sign Out" onClick={() => { signOut(); }}>Sign Out</Button>;
+    return <Button className={"amplify-button--primary amplify-sign-out"} title="Sign Out" onClick={() => { signOut(); }}>Sign Out</Button>;
 }
+
+// export default App;
+export default withAuthenticator(App, {
+    hideSignUp: true,
+    loginMechanisms: ['username']
+});

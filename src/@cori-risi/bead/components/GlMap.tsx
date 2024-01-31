@@ -1,26 +1,25 @@
 import React, {useState, useCallback, useEffect, useRef, useMemo, useContext} from 'react';
-import Map, { Source, Layer } from 'react-map-gl';
-import type { MapRef } from 'react-map-gl';
+import IntrinsicAttributes = React.JSX.IntrinsicAttributes;
+import { Map as MapboxMap } from 'mapbox-gl';
+import Map, { Source, Layer,  LayerProps, MapRef } from 'react-map-gl';
 import { fitBounds } from 'viewport-mercator-project';
-import "mapbox-gl/dist/mapbox-gl.css";
 
 import axios, {AxiosInstance} from "axios";
+import { ApiContext } from "../../contexts/ApiContextProvider";
 
 import { format } from 'd3-format';
 
 import style from "./styles/GlMap.module.css";
 
-import IntrinsicAttributes = React.JSX.IntrinsicAttributes;
-import { LayerProps } from "react-map-gl";
-
 import combo_dict from './../data/combo_sample2_dict.json';
 
+import "mapbox-gl/dist/mapbox-gl.css";
 import {
     bead_dev,
-    bb_tr_100_20,
+    // bb_tr_100_20,
     contourStyle
 } from '../styles';
-import {ApiContext} from "../../contexts/ApiContextProvider";
+
 
 interface ComboLookup {
     [key: string]: string;
@@ -257,6 +256,17 @@ const GlMap: React.FC < GlMapProps > = ({
         setLayerAttributes(newLayerAttributes);
 
     }, [fillColor]);
+
+    useEffect(() => {
+        setTimeout(() => {
+            // console.log("Add map to global window object:", mapRef);
+            if (mapRef !== null && mapRef.current !== null) {
+                const map: MapboxMap = mapRef.current!.getMap();
+                (map as { [key: string]: any })["map"] = map;
+                (window as { [key: string]: any })["map"] = (map as unknown) as MapRef;
+            }
+        }, 2533);
+    }, [ mapRef ])
 
     return ( /*Wait for ApiToken*/
         (apiContext.hasOwnProperty("token") && apiContext.token !== null) ? (

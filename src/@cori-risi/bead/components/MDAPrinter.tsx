@@ -234,10 +234,16 @@ export function MDAPrinter (props: {}) {
 
         map.getCanvas().toBlob(function(blob) {
 
-            const map_element: HTMLElement | null = document.getElementById(element_id) as HTMLElement;
+            const map_element: HTMLElement | null = (document.getElementById(element_id) !== null) ?
+                document.getElementById(element_id) as HTMLElement :
+                document.getElementsByClassName(element_id)[0] as HTMLElement;
             const map_container: HTMLElement | null = document.getElementsByClassName("mapboxgl-canvas-container")[0] as HTMLElement;
 
+            console.log(map_element);
+
             if (blob !== null && map_element !== null && map_container !== null) {
+
+                // console.log("Use map image in system print dialog:", blob);
 
                 const url = URL.createObjectURL(blob);
 
@@ -290,6 +296,8 @@ export function MDAPrinter (props: {}) {
             console.error('The current configuration is invalid! Please ' +
                 'correct the errors and try again.');
             return;
+        } else {
+            console.log("Proceeding to generate map...");
         }
 
         const center: LngLat = map.getCenter();
@@ -560,7 +568,7 @@ export function MDAPrinter (props: {}) {
             <button type="submit" id={"generate-btn"}
                     className={"amplify-button amplify-field-group__control amplify-button--primary amplify-button--fullwidth btn btn-primary btn-lg"}
                     onClick={() => (window.hasOwnProperty("map")) ?
-                            generatePrintMap("map", (window as { [key: string]: any })["map"] as MapRef) :
+                            generatePrintMap("mapboxgl-map", (window as { [key: string]: any })["map"] as MapRef) :
                             window.alert('This app does not have a "map" object in global scope')
                     } >
                 Print Map & Data Analysis
