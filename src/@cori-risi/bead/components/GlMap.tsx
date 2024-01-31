@@ -148,7 +148,7 @@ const GlMap: React.FC < GlMapProps > = ({
 
         if (client !== null && client.hasOwnProperty("get") && typeof client.get === "function") {
 
-            client.get("/rest/bead/isp_tech?geoid_bl=" + clickedFeature.properties.geoid_bl)
+            client.get("/rest/bead/all?geoid_bl=" + clickedFeature.properties.geoid_bl)
                 .then(result => {
 
                     onFocusBlockChange(clickedFeature.properties.geoid_bl.toString());
