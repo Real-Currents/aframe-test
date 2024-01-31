@@ -16,7 +16,12 @@ import style from "./styles/Sidebar.module.css";
 
 import { getFillColor } from './../utils/controls';
 
-import broadband_technology from './../data/broadband_technology.json';
+interface BroadbandTechnology {
+  [key: string]: string;
+}
+
+import broadband_technology_dict from './../data/broadband_technology.json';
+const broadband_technology: Record<string, string> = broadband_technology_dict;
 import isp_name from './../data/isp_name.json';
 import isp_dict from './../data/isp_sample2_dict.json';
 import county_name_geoid from './../data/geoid_co_name_crosswalk.json';
@@ -78,8 +83,7 @@ function Sidebar<T>({
     }
   };
 
-  function handleBroadbandTechnologyChange(event: any, newValue: string): void {
-    console.log("newValue is ", newValue);
+  function handleBroadbandTechnologyChange(event: any, newValue: string[]): void {
     if (Array.isArray(newValue) && newValue.every((item) => typeof item === 'string')) {
       onFilterChange({...filter, broadband_technology: newValue});
     }

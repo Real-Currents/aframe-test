@@ -15,7 +15,8 @@ import IntrinsicAttributes = React.JSX.IntrinsicAttributes;
 import { LayerProps } from "react-map-gl";
 
 import combo_dict from './../data/combo_sample2_dict.json';
-import broadband_technology from './../data/broadband_technology.json';
+import broadband_technology_dict from './../data/broadband_technology.json';
+const broadband_technology: Record<string, string> = broadband_technology_dict;
 
 import {
     bead_dev,
@@ -239,9 +240,7 @@ const GlMap: React.FC < GlMapProps > = ({
         }
 
         if (filter.broadband_technology.length !== 0) {
-            console.log("Filte BB is ", filter.broadband_technology);
             for (let i = 0; i < filter.broadband_technology.length; i++) {
-                console.log("the lookup value is :", broadband_technology[filter.broadband_technology[i]]);
                 let broadband_technology_filter = ['==', ['get', broadband_technology[filter.broadband_technology[i]]], true];
                 new_filter.push(broadband_technology_filter);
             }
