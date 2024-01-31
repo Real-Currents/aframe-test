@@ -44,7 +44,7 @@ function getUserLabel (u: User) {
 
 const theme = createTheme({
     typography: {
-        fontFamily: 'Bitter, TT Hoves, Helvetica, Arial',
+        fontFamily: 'TT Hoves, Helvetica, Arial',
     },
     palette: {
         primary: {

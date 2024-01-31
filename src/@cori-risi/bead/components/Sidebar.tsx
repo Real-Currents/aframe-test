@@ -16,6 +16,12 @@ import style from "./styles/Sidebar.module.css";
 
 import { getFillColor } from './../utils/controls';
 
+interface BroadbandTechnology {
+  [key: string]: string;
+}
+
+import broadband_technology_dict from './../data/broadband_technology.json';
+const broadband_technology: Record<string, string> = broadband_technology_dict;
 import isp_name from './../data/isp_name.json';
 import isp_dict from './../data/isp_sample2_dict.json';
 import county_name_geoid from './../data/geoid_co_name_crosswalk.json';
@@ -29,12 +35,14 @@ const isp_lookup: IspLookup = isp_dict;
 function Sidebar<T>({ 
   onFilterChange, 
   onFillColorChange, 
+  onColorVariableChange, 
   filter,
   isShowing
 }: 
   {
     onFilterChange: (newFilter: T) => void, 
     onFillColorChange: (newFillColor: any[]) => void,
+    onColorVariableChange: (newColorVariable: string) => void,
     filter: any,
     isShowing: boolean
  }) {
@@ -61,11 +69,25 @@ function Sidebar<T>({
     }
   }
 
+  function handleAwardChange(event: any) {
+
+    if (typeof event.target.checked === 'boolean') {
+      onFilterChange({...filter, has_award: {...filter.has_award, [event.target.name]: event.target.checked}});
+    }
+  }
+
   function handleFillColorChange(event: React.SyntheticEvent, newValue: string): void {
     if (typeof newValue === "string") {
       onFillColorChange(getFillColor(newValue));
+      onColorVariableChange(newValue);
     }
   };
+
+  function handleBroadbandTechnologyChange(event: any, newValue: string[]): void {
+    if (Array.isArray(newValue) && newValue.every((item) => typeof item === 'string')) {
+      onFilterChange({...filter, broadband_technology: newValue});
+    }
+  }
 
   function handleMultipleISPChange(event: any, newValue: any ): void {
 
@@ -115,8 +137,8 @@ function Sidebar<T>({
             />
           </div>
           <hr />
-          <h1>Filters</h1>
-          <h3>Broadband service level</h3>
+          <h4>Filters</h4>
+          <h5>Broadband service level</h5>
           <FormGroup row>
             <FormControlLabel
               control={
@@ -149,7 +171,30 @@ function Sidebar<T>({
               label="Unserved"
             />                    
           </FormGroup>
-          <h3>ISP Count</h3>
+          <h5>Received award?</h5>
+          <FormGroup row>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={filter.has_award.yes}
+                  onChange={handleAwardChange}
+                  name="yes"
+                />
+              }
+              label="Yes"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={filter.has_award.no}
+                  onChange={handleAwardChange}
+                  name="no"
+                />
+              }
+              label="No"
+            />                 
+          </FormGroup>          
+          <h5>Internet Service Provider Count</h5>
           <div className={style["slider"]}>
             <Slider
               getAriaLabel={() => 'ISP Count'}
@@ -160,7 +205,7 @@ function Sidebar<T>({
               max={10}
             />
           </div>
-          <h3>Total locations</h3>
+          <h5>Total locations</h5>
           <div className={style["slider"]}>
             <Slider
               getAriaLabel={() => 'Total locations'}
@@ -168,13 +213,27 @@ function Sidebar<T>({
               onChange={handleTotalLocationsChange}
               valueLabelDisplay="auto"
               min={0}
-              max={500}
+              max={1015}
             />
           </div>
-          <h3>ISPs</h3>
+          <h5>Broadband Technologies</h5>
           <Autocomplete
             multiple
-            id="tags-standard"
+            options={Object.keys(broadband_technology)}
+            defaultValue={[]}
+            onChange={handleBroadbandTechnologyChange}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                variant="standard"
+                label="Filter broadband technology"
+                placeholder="Filter broadband technology"
+              />
+            )}
+          />           
+          <h5>Internet Service Providers</h5>
+          <Autocomplete
+            multiple
             options={isp_name}
             defaultValue={[]}
             onChange={handleMultipleISPChange}
@@ -187,10 +246,9 @@ function Sidebar<T>({
               />
             )}
           />      
-          <h3>County</h3>
+          <h5>County</h5>
           <Autocomplete
             multiple
-            id="tags-standard"
             options={county_name_geoid.map(d => d.label)}
             // defaultValue={""}
             onChange={handleCountiesChange}

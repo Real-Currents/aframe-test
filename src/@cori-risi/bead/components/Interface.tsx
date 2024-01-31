@@ -17,7 +17,12 @@ export type FilterProps = {
     isp_count: number[],
     total_locations: number[],
     isp_combos: string[],
-    counties: string[]
+    counties: string[],
+    broadband_technology: string[],
+    has_award: {
+        yes: boolean,
+        no: boolean
+    }
 }
 
 const maxWidthTrigger: number = 600;
@@ -31,9 +36,14 @@ const Interface = () => {
             unserved: true
         },
         isp_count: [0, 10],
-        total_locations: [0, 500],
+        total_locations: [0, 1015],
         isp_combos: [],
-        counties: []
+        counties: [],
+        broadband_technology: [],
+        has_award: {
+            yes: true,
+            no: true
+        }
     });
 
     const [fillColor, setFillColor] = useState<any[]>(getFillColor("BEAD category"));
@@ -41,6 +51,11 @@ const Interface = () => {
     const [isDrawerShowing, setDrawerShowing] = useState<boolean>(true);
     const [focusBlock, setFocusBlock] = useState<string>("");
     const [detailedInfo, setDetailedInfo] = useState<string[]>([]);
+    const [colorVariable, setColorVariable] = useState<string>("BEAD category");
+
+    const handleColorVariableChange = (newColorVariable: string) => {
+        setColorVariable(newColorVariable);
+    }
 
     const handleDetailedInfo = (newDetailedInfo: string[]) => {
         setDetailedInfo(newDetailedInfo);
@@ -81,16 +96,18 @@ const Interface = () => {
                 <Sidebar<FilterProps> 
                     onFilterChange={handleFilterChange} 
                     onFillColorChange={handleFillColorChange} 
+                    onColorVariableChange={handleColorVariableChange}
                     filter={filter} 
                     isShowing={isDrawerShowing} 
                 />
                 <GlMap 
                     mapboxToken={MAPBOX_TOKEN} 
                     filter={filter} 
-                    fillColor={fillColor} 
+                    fillColor={fillColor}
+                    colorVariable={colorVariable}
                     onFocusBlockChange={handleFocusBlockClick}
                     onDetailedInfoChange={handleDetailedInfo}
-                />              
+                />
             </div>
             <DetailedView detailedInfo={detailedInfo} />
         </div>

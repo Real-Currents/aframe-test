@@ -9,9 +9,12 @@ import { ApiContext } from "../../contexts/ApiContextProvider";
 
 import { format } from 'd3-format';
 
+import MapLegend from './MapLegend';
 import style from "./styles/GlMap.module.css";
 
 import combo_dict from './../data/combo_sample2_dict.json';
+import broadband_technology_dict from './../data/broadband_technology.json';
+const broadband_technology: Record<string, string> = broadband_technology_dict;
 
 import "mapbox-gl/dist/mapbox-gl.css";
 import {
@@ -39,9 +42,15 @@ type GlMapProps = {
         isp_count: number[],
         total_locations: number[],
         isp_combos: string[],
-        counties: string[]
+        counties: string[],
+        broadband_technology: string[],
+        has_award: {
+            yes: boolean,
+            no: boolean
+        }
     },
     fillColor: any,
+    colorVariable: string,
     onFocusBlockChange: (newFocusBlock: string) => void,
     onDetailedInfoChange: (newDetailedInfo: string[]) => void
 };
@@ -58,6 +67,7 @@ const GlMap: React.FC < GlMapProps > = ({
   mapboxToken, 
   filter, 
   fillColor, 
+  colorVariable,
   onFocusBlockChange,
   onDetailedInfoChange
 }: GlMapProps) => {
@@ -142,7 +152,6 @@ const GlMap: React.FC < GlMapProps > = ({
                 .then(result => {
 
                     onFocusBlockChange(clickedFeature.properties.geoid_bl.toString());
-                    setClickedBlock(clickedFeature.properties.geoid_bl.toString());
 
                     console.log("result is ", result);
 
@@ -185,7 +194,7 @@ const GlMap: React.FC < GlMapProps > = ({
                         const clickedFeature = features[0]!;
 
                         console.log("Feature clicked:", clickedFeature);
-
+                        setClickedBlock(clickedFeature.properties.geoid_bl.toString());
                         getBlockInfoFromApi(clickedFeature, token);
                     }
                 }
@@ -206,7 +215,7 @@ const GlMap: React.FC < GlMapProps > = ({
 
         if (filter.bb_service.unserved === true) {
             bb_array = [...bb_array, "Unserved"];
-        }
+        }  
 
         let isp_filter: any = [
             'all',
@@ -236,6 +245,31 @@ const GlMap: React.FC < GlMapProps > = ({
                 ['literal', filter.counties]
             ];
             new_filter.push(counties_filter);
+        }
+
+        if (filter.broadband_technology.length !== 0) {
+            for (let i = 0; i < filter.broadband_technology.length; i++) {
+                let broadband_technology_filter = ['==', ['get', broadband_technology[filter.broadband_technology[i]]], true];
+                new_filter.push(broadband_technology_filter);
+            }
+        }
+
+        if (filter.has_award.yes !== filter.has_award.no) {
+
+            if (filter.has_award.yes === true) {
+                let has_award_filter = ['==', ['get', 'has_award_geoid_bl'], true];
+                new_filter.push(has_award_filter);
+            }
+            else {
+                let has_award_filter = ['==', ['get', 'has_award_geoid_bl'], false];
+                new_filter.push(has_award_filter);
+            }
+        }
+        else {
+            if (filter.has_award.yes === false) {
+                let has_award_filter = ['==', ['get', 'has_award_geoid_bl'], null];
+                new_filter.push(has_award_filter);
+            }
         }
 
         setLayerFilter(new_filter);
@@ -272,7 +306,10 @@ const GlMap: React.FC < GlMapProps > = ({
         (apiContext.hasOwnProperty("token") && apiContext.token !== null) ? (
             <div className={style["map-wrapper"]}>
                 {map_zoom < MIN_ZOOM_LEVEL && (
-                  <div className={style["zoom-message"]}>Zoom in to Vermont view data</div>
+                  <div className={style["zoom-message"]}>Zoom in to AL, HI, MA, or PR to view data</div>
+                )}
+                {map_zoom >= MIN_ZOOM_LEVEL && (
+                  <MapLegend title={colorVariable} category={fillColor} />
                 )}
                 {clickedBlock.length > 0 && (
                   <a href="#detail">
@@ -314,16 +351,73 @@ const GlMap: React.FC < GlMapProps > = ({
                         {hoverInfo && (
                           <div className="tooltip" style={{left: hoverInfo.x, top: hoverInfo.y}}>
                             <div>
-                              <p>
-                                <em>BEAD category:</em> <b>{hoverInfo.feature.properties.bead_category}</b><br />
-                                <em>Total locations:</em> <b>{hoverInfo.feature.properties.cnt_total_locations}</b><br />
-                                <em>ISP count:</em> <b>{hoverInfo.feature.properties.cnt_isp}</b><br />
-                                <em>Pct. served:</em> <b>{percentFormat(hoverInfo.feature.properties.pct_served)}</b><br />
-                                <em>Locations with 100/20 service:</em> <b>{hoverInfo.feature.properties.cnt_100_20}</b><br />
-                                <em>Locations with 25/3 service:</em> <b>{hoverInfo.feature.properties.cnt_25_3}</b><br />
-                                <em>ISPs:</em> {hoverInfo.feature.properties.combo_isp_id ? combo_lookup[hoverInfo.feature.properties.combo_isp_id]: "N/A"}<br />
-                              </p>
+                            <h5>Block ID: {hoverInfo.feature.properties.geoid_bl} | {hoverInfo.feature.properties.bead_category}</h5> 
+                            <div className="flex-container">
+                                <div>
+                                    <h6>Broadband access</h6>
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td>Total locations</td>
+                                                <td>{hoverInfo.feature.properties.cnt_total_locations}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>ISP count</td>
+                                                <td>{hoverInfo.feature.properties.cnt_isp}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Percent served</td>
+                                                <td>{percentFormat(hoverInfo.feature.properties.pct_served)}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>100/20 locations</td>
+                                                <td>{hoverInfo.feature.properties.cnt_100_20}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>25/3 locations</td>
+                                                <td>{hoverInfo.feature.properties.cnt_25_3}</td>
+                                            </tr>   
+                                        </tbody>                             
+                                    </table>
+                                </div>
+                                <div>
+                                    <h6>Broadband technologies</h6>
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td>Coaxial cable</td>
+                                                <td>{hoverInfo.feature.properties.has_coaxial_cable? "Yes": "No"}</td>
+                                            </tr>   
+                                            <tr>
+                                                <td>Copper wire</td>
+                                                <td>{hoverInfo.feature.properties.has_copperwire? "Yes": "No"}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Fiber</td>
+                                                <td>{hoverInfo.feature.properties.has_fiber? "Yes": "No"}</td>
+                                            </tr> 
+                                            <tr>
+                                                <td>LBR wireless</td>
+                                                <td>{hoverInfo.feature.properties.has_lbr_wireless? "Yes": "No"}</td>
+                                            </tr> 
+                                            <tr>
+                                                <td>Licensed wireless</td>
+                                                <td>{hoverInfo.feature.properties.has_licensed_wireless? "Yes": "No"}</td>
+                                            </tr> 
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
+                            <div>
+                                <h6>Previous grant funding? {hoverInfo.feature.properties.has_award_geoid_bl? <span>Yes</span>: <span>No</span>}</h6>
+                            </div>
+                            <div>
+                                <h6>Internet service providers</h6>
+                                <p>
+                                    {hoverInfo.feature.properties.combo_isp_id ? combo_lookup[hoverInfo.feature.properties.combo_isp_id]: "N/A"}
+                                </p>
+                            </div>
+                          </div>
                           </div>
                         )}
                     </Source>

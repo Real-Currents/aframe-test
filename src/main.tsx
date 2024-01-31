@@ -6,9 +6,10 @@ import { Amplify } from "aws-amplify";
 import aws_config from '../amplifyconfiguration.json';
 import App from './@cori-risi/bead/App.tsx';
 
-import './@cori-risi/bead/components/styles/CustomAmplifyAuthenticator.css';
-
 import mapboxgl from 'mapbox-gl';
+
+import './@cori-risi/bead/components/styles/CustomAmplifyAuthenticator.css';
+import './fonts.css';
 // import { Map } from 'mapbox-gl';
 // import { MapRef } from "react-map-gl";
 

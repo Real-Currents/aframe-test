@@ -9,7 +9,8 @@ const DetailedView: React.FC<DetailedViewProps> = ({ detailedInfo }) => {
     return (
         <>
             <div id="detail" className={style["detailed-view"]}>
-                <p>{detailedInfo.join(", ")}</p>
+                <h2>Detailed information</h2>
+                <p>{detailedInfo.length === 0? "Click a block to view detailed info" : detailedInfo.join(", ")}</p>
             </div>
         </>
     );
