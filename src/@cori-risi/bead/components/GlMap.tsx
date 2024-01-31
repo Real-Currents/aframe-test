@@ -52,7 +52,7 @@ type GlMapProps = {
     fillColor: any,
     colorVariable: string,
     onFocusBlockChange: (newFocusBlock: string) => void,
-    onDetailedInfoChange: (newDetailedInfo: string[]) => void
+    onDetailedInfoChange: (newDetailedInfo: any[]) => void
 };
 
 const USA_BOUNDS: [
@@ -156,12 +156,7 @@ const GlMap: React.FC < GlMapProps > = ({
                     console.log("result is ", result);
 
                     if (result.data) {
-                        let names: string[] = result.data.features.map((d: any) =>
-                            (d.properties.hasOwnProperty("new_alias")) ?
-                                d.properties["new_alias"]! :
-                                "N/A"
-                        );
-                        onDetailedInfoChange(names);
+                        onDetailedInfoChange(result.data.features);
                     }
                 })
                 .catch(error => {
