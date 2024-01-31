@@ -16,6 +16,7 @@ import style from "./styles/Sidebar.module.css";
 
 import { getFillColor } from './../utils/controls';
 
+import broadband_technology from './../data/broadband_technology.json';
 import isp_name from './../data/isp_name.json';
 import isp_dict from './../data/isp_sample2_dict.json';
 import county_name_geoid from './../data/geoid_co_name_crosswalk.json';
@@ -76,6 +77,13 @@ function Sidebar<T>({
       onColorVariableChange(newValue);
     }
   };
+
+  function handleBroadbandTechnologyChange(event: any, newValue: string): void {
+    console.log("newValue is ", newValue);
+    if (Array.isArray(newValue) && newValue.every((item) => typeof item === 'string')) {
+      onFilterChange({...filter, broadband_technology: newValue});
+    }
+  }
 
   function handleMultipleISPChange(event: any, newValue: any ): void {
 
@@ -182,7 +190,7 @@ function Sidebar<T>({
               label="No"
             />                 
           </FormGroup>          
-          <h5>ISP Count</h5>
+          <h5>Internet Service Provider Count</h5>
           <div className={style["slider"]}>
             <Slider
               getAriaLabel={() => 'ISP Count'}
@@ -204,10 +212,24 @@ function Sidebar<T>({
               max={1015}
             />
           </div>
-          <h5>ISPs</h5>
+          <h5>Broadband Technologies</h5>
           <Autocomplete
             multiple
-            id="tags-standard"
+            options={Object.keys(broadband_technology)}
+            defaultValue={[]}
+            onChange={handleBroadbandTechnologyChange}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                variant="standard"
+                label="Filter broadband technology"
+                placeholder="Filter broadband technology"
+              />
+            )}
+          />           
+          <h5>Internet Service Providers</h5>
+          <Autocomplete
+            multiple
             options={isp_name}
             defaultValue={[]}
             onChange={handleMultipleISPChange}
@@ -223,7 +245,6 @@ function Sidebar<T>({
           <h5>County</h5>
           <Autocomplete
             multiple
-            id="tags-standard"
             options={county_name_geoid.map(d => d.label)}
             // defaultValue={""}
             onChange={handleCountiesChange}

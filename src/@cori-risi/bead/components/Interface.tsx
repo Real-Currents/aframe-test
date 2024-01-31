@@ -18,6 +18,7 @@ export type FilterProps = {
     total_locations: number[],
     isp_combos: string[],
     counties: string[],
+    broadband_technology: string[],
     has_award: {
         yes: boolean,
         no: boolean
@@ -38,6 +39,7 @@ const Interface = () => {
         total_locations: [0, 1015],
         isp_combos: [],
         counties: [],
+        broadband_technology: [],
         has_award: {
             yes: true,
             no: true

@@ -15,6 +15,7 @@ import IntrinsicAttributes = React.JSX.IntrinsicAttributes;
 import { LayerProps } from "react-map-gl";
 
 import combo_dict from './../data/combo_sample2_dict.json';
+import broadband_technology from './../data/broadband_technology.json';
 
 import {
     bead_dev,
@@ -42,6 +43,7 @@ type GlMapProps = {
         total_locations: number[],
         isp_combos: string[],
         counties: string[],
+        broadband_technology: string[],
         has_award: {
             yes: boolean,
             no: boolean
@@ -234,6 +236,15 @@ const GlMap: React.FC < GlMapProps > = ({
                 ['literal', filter.counties]
             ];
             new_filter.push(counties_filter);
+        }
+
+        if (filter.broadband_technology.length !== 0) {
+            console.log("Filte BB is ", filter.broadband_technology);
+            for (let i = 0; i < filter.broadband_technology.length; i++) {
+                console.log("the lookup value is :", broadband_technology[filter.broadband_technology[i]]);
+                let broadband_technology_filter = ['==', ['get', broadband_technology[filter.broadband_technology[i]]], true];
+                new_filter.push(broadband_technology_filter);
+            }
         }
 
         if (filter.has_award.yes !== filter.has_award.no) {
