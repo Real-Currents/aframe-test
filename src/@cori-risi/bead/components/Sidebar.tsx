@@ -29,12 +29,14 @@ const isp_lookup: IspLookup = isp_dict;
 function Sidebar<T>({ 
   onFilterChange, 
   onFillColorChange, 
+  onColorVariableChange, 
   filter,
   isShowing
 }: 
   {
     onFilterChange: (newFilter: T) => void, 
     onFillColorChange: (newFillColor: any[]) => void,
+    onColorVariableChange: (newColorVariable: string) => void,
     filter: any,
     isShowing: boolean
  }) {
@@ -71,6 +73,7 @@ function Sidebar<T>({
   function handleFillColorChange(event: React.SyntheticEvent, newValue: string): void {
     if (typeof newValue === "string") {
       onFillColorChange(getFillColor(newValue));
+      onColorVariableChange(newValue);
     }
   };
 

@@ -49,6 +49,11 @@ const Interface = () => {
     const [isDrawerShowing, setDrawerShowing] = useState<boolean>(true);
     const [focusBlock, setFocusBlock] = useState<string>("");
     const [detailedInfo, setDetailedInfo] = useState<string[]>([]);
+    const [colorVariable, setColorVariable] = useState<string>("BEAD category");
+
+    const handleColorVariableChange = (newColorVariable: string) => {
+        setColorVariable(newColorVariable);
+    }
 
     const handleDetailedInfo = (newDetailedInfo: string[]) => {
         setDetailedInfo(newDetailedInfo);
@@ -89,16 +94,18 @@ const Interface = () => {
                 <Sidebar<FilterProps> 
                     onFilterChange={handleFilterChange} 
                     onFillColorChange={handleFillColorChange} 
+                    onColorVariableChange={handleColorVariableChange}
                     filter={filter} 
                     isShowing={isDrawerShowing} 
                 />
                 <GlMap 
                     mapboxToken={MAPBOX_TOKEN} 
                     filter={filter} 
-                    fillColor={fillColor} 
+                    fillColor={fillColor}
+                    colorVariable={colorVariable}
                     onFocusBlockChange={handleFocusBlockClick}
                     onDetailedInfoChange={handleDetailedInfo}
-                />              
+                />
             </div>
             <DetailedView detailedInfo={detailedInfo} />
         </div>

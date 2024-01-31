@@ -8,6 +8,7 @@ import axios, {AxiosInstance} from "axios";
 
 import { format } from 'd3-format';
 
+import MapLegend from './MapLegend';
 import style from "./styles/GlMap.module.css";
 
 import IntrinsicAttributes = React.JSX.IntrinsicAttributes;
@@ -47,6 +48,7 @@ type GlMapProps = {
         }
     },
     fillColor: any,
+    colorVariable: string,
     onFocusBlockChange: (newFocusBlock: string) => void,
     onDetailedInfoChange: (newDetailedInfo: string[]) => void
 };
@@ -63,6 +65,7 @@ const GlMap: React.FC < GlMapProps > = ({
   mapboxToken, 
   filter, 
   fillColor, 
+  colorVariable,
   onFocusBlockChange,
   onDetailedInfoChange
 }: GlMapProps) => {
@@ -275,6 +278,9 @@ const GlMap: React.FC < GlMapProps > = ({
             <div className={style["map-wrapper"]}>
                 {map_zoom < MIN_ZOOM_LEVEL && (
                   <div className={style["zoom-message"]}>Zoom in to AL, HI, MA, or PR to view data</div>
+                )}
+                {map_zoom >= MIN_ZOOM_LEVEL && (
+                  <MapLegend title={colorVariable} category={fillColor} />
                 )}
                 {clickedBlock.length > 0 && (
                   <a href="#detail">
