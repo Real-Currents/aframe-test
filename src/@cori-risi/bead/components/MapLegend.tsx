@@ -31,19 +31,19 @@ const MapLegend: React.FC < MapLegendProps > = ({ title, category }) => {
 
         return (
             <div className={style['interpolate-wrapper']}>
+                <p>{numberFormat(category[3])}</p>
                 <div 
                     className={style['interpolate-bar']} 
-                    style={{"background": "linear-gradient(to bottom, " + category[4] + ", " + category[category.length-1] + ")"}} >
+                    style={{"background": "linear-gradient(to right, " + category[4] + ", " + category[category.length-1] + ")"}} >
                 </div>
-                <p className={style['interpolate-top-label']}>{numberFormat(category[3])}</p>
-                <p className={style['interpolate-bottom-label']}>{numberFormat(category[category.length-2])}</p>
+                <p>{numberFormat(category[category.length-2])}</p>
             </div>
         );
     };
 
     return ( 
     <>
-        <div className={style["map-legend"]}>
+        <div style={category[0] === 'match'? {height: "170px"} : {height: "95px"}} className={style["map-legend"]}>
                 <h5>{title}</h5>
                 {category[0] === 'match' ? renderMatchLegend() : null}
                 {category[0] === 'interpolate' ? renderInterpolateLegend() : null}

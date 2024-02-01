@@ -8,9 +8,9 @@ import { LayerProps, SourceProps } from "react-map-gl";
 const colors = {
     "legend_colors": {
         "bb_bead_categories": {
-            "served_area": "rgba(19, 3, 50, 0.5)",
-            "underserved_area": "rgba(118, 88, 162, 0.75)",
-            "unserved_area": "rgba(203, 190, 220, 0.85)",
+            "served_area": "rgba(35, 79, 191, 0.5)",
+            "underserved_area": "rgba(0, 131, 93, 0.5)",
+            "unserved_area": "rgba(255, 228, 115, 0.5)",
             "not_reported": "rgba(105, 105, 105, 0)",
             "default": "rgba(105, 105, 105, 0)"
         }
@@ -32,12 +32,12 @@ export const bead_dev: MapboxSourceLayerStyles = {
     "sources": [{
         "id": "bead_dev",
         "type": "vector",
-        "url": "mapbox://ruralinno.sample2"
+        "url": "mapbox://ruralinno.bead_blocksv1"
     }],
     "layers": [{
             "id": "bead_dev.style",
             "source": "bead_dev",
-            "source-layer": "proj_beadsample2",
+            "source-layer": "proj_beadbead_blocksv1",
             "type": "fill",
             "paint": {
                 // "fill-color": "#0080ff", // blue color fill

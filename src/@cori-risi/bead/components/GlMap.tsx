@@ -8,10 +8,6 @@ import axios, {AxiosInstance} from "axios";
 import { ApiContext } from "../../contexts/ApiContextProvider";
 
 import { format } from 'd3-format';
-
-import MapLegend from './MapLegend';
-import style from "./styles/GlMap.module.css";
-
 import "mapbox-gl/dist/mapbox-gl.css";
 import {
     bead_dev,
@@ -20,9 +16,12 @@ import {
 } from '../styles';
 import { GeoJSONFeature } from "maplibre-gl";
 
-import combo_dict from './../data/combo_sample2_dict.json';
-import broadband_technology_dict from './../data/broadband_technology.json';
+import MapLegend from './MapLegend';
+import style from "./styles/GlMap.module.css";
 
+import combo_dict from './../data/combo_blocksv1_dict.json';
+
+import broadband_technology_dict from './../data/broadband_technology.json';
 const broadband_technology: Record<string, string> = broadband_technology_dict;
 
 interface ComboLookup {
