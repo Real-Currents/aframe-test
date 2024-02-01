@@ -45,14 +45,18 @@ const DetailedView: React.FC<DetailedViewProps> = ({ detailedInfo }) => {
         <>
             <div id="detail" className={style["detailed-view"]}>
                 <h2>Detailed information</h2>
+                <hr />
+                <br />
                 <h3>Internet Service Providers</h3>
                 <p>{
                     isp_names.length === 0? "Click a block to view detailed ISP info" : isp_names.join(", ")
                 }</p>
+                <br />
                 <h3>Federal Funding Awards</h3>
                 <p>{
                     award_applicants.length === 0? "Click a block to view detailed Award info" : award_applicants.join(", ")
                 }</p>
+                <br />
             </div>
         </>
     );
