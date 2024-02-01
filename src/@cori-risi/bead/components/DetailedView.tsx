@@ -13,29 +13,32 @@ const DetailedView: React.FC<DetailedViewProps> = ({ detailedInfo }) => {
     const [ award_applicants, setAwardApplicants ] = useState<string[]>([]);
 
     useEffect(() => {
-        detailedInfo
+        const block_info = detailedInfo
             .filter((d: any) => {
                 if (d.properties.hasOwnProperty("type")
                     && d.properties["type"] === "geojson"
                 ) {
-                    let props = [];
-                    if (d.properties.hasOwnProperty("geoid_bl")) {
-                        setGeoid(d.properties["geoid_bl"]);
-                        props.push("geoid_bl: " + d.properties["geoid_bl"]);
-                    }
-                    for (let p in d.properties) {
-                        if (d.properties.hasOwnProperty(p)
-                            && p !== "geoid_bl"
-                            && p !== "type"
-                        ) {
-                            props.push(p + ": " + d.properties[p]);
-                        }
-                    }
-                    console.log("Block properties detailedInfo:", props);
-                    setBlockInfo(props);
+
                     return d;
                 }
+            })
+            .map((d: any) => {
+                let props = [];
+                if (d.properties.hasOwnProperty("geoid_bl")) {
+                    setGeoid(d.properties["geoid_bl"]);
+                    props.push("geoid_bl: " + d.properties["geoid_bl"]);
+                }
+                for (let p in d.properties) {
+                    if (d.properties.hasOwnProperty(p)
+                        && p !== "geoid_bl"
+                        && p !== "type"
+                    ) {
+                        props.push(p + ": " + d.properties[p]);
+                    }
+                }
+                console.log("Block properties detailedInfo:", props);
             });
+        setBlockInfo(block_info);
 
         let names: string[] = detailedInfo
             .filter((d: any) => d.properties.hasOwnProperty("type")
@@ -70,17 +73,23 @@ const DetailedView: React.FC<DetailedViewProps> = ({ detailedInfo }) => {
             <div id="detail" className={style["detailed-view"]}>
                 <h4>Broadband Information for Census Block {geoid_bl}</h4>
                 <hr />
-                {
-                    (block_info.length === 0 )?
-                        "Click a block to view detailed block info" :
-                        block_info.map((i: string) => {
-                            console.log(i);
-                            return  (<p key={i.toString().split(":")[0]}
-                                        style={{"display": "inline-block", "margin": "0.5em 1em 0.5em 0"}} >
-                                {i}</p>)
-                        })
-                }
-                <br />
+                {/*{*/}
+                {/*    (block_info.length === 0 )?*/}
+                {/*        "Click a block to view detailed block info" :*/}
+                {/*        block_info*/}
+                {/*            .filter((b: string[]) => (!!b && b !== null))*/}
+                {/*            .map((b: string[]) => {*/}
+                {/*                if (!!b && b !== null) {*/}
+                {/*                    console.log(b);*/}
+                {/*                    return (b.map((i: string) => (*/}
+                {/*                        <p key={i.toString().split(":")[0]}*/}
+                {/*                           style={{"display": "inline-block", "margin": "0.5em 1em 0.5em 0"}}>*/}
+                {/*                            {i}</p>*/}
+                {/*                    )));*/}
+                {/*                }*/}
+                {/*            })*/}
+                {/*}*/}
+                {/*<br />*/}
                 <h5>Internet Service Providers</h5>
                 <p>{
                     (isp_names.length === 0) ? "N/A" : isp_names.join(", ")
