@@ -7,7 +7,7 @@ interface DetailedViewProps {
 
 const DetailedView: React.FC<DetailedViewProps> = ({ detailedInfo }) => {
 
-    const [ block_info, setBlockInfo ] = useState<string[]>([]);
+    const [ block_info, setBlockInfo ] = useState<string[][]>([]);
     const [ geoid_bl, setGeoid ] = useState<string>("")
     const [ isp_names, setISPNames ] = useState<string[]>([]);
     const [ award_applicants, setAwardApplicants ] = useState<string[]>([]);
