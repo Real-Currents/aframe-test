@@ -14,7 +14,7 @@ import style from "./styles/GlMap.module.css";
 import IntrinsicAttributes = React.JSX.IntrinsicAttributes;
 import { LayerProps } from "react-map-gl";
 
-import combo_dict from './../data/combo_sample2_dict.json';
+import combo_dict from './../data/combo_blocksv1_dict.json';
 import broadband_technology_dict from './../data/broadband_technology.json';
 const broadband_technology: Record<string, string> = broadband_technology_dict;
 

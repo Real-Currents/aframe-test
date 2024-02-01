@@ -23,7 +23,7 @@ interface BroadbandTechnology {
 import broadband_technology_dict from './../data/broadband_technology.json';
 const broadband_technology: Record<string, string> = broadband_technology_dict;
 import isp_name from './../data/isp_name.json';
-import isp_dict from './../data/isp_sample2_dict.json';
+import isp_dict from './../data/isp_blocksv1_dict.json';
 import county_name_geoid from './../data/geoid_co_name_crosswalk.json';
 
 interface IspLookup {
@@ -91,15 +91,18 @@ function Sidebar<T>({
 
   function handleMultipleISPChange(event: any, newValue: any ): void {
 
+    console.log("newValue is ", newValue);
     let valid_isp_combos: string[] = [];
     for (let isp of newValue) {
-      
+
       for (let key of Object.keys(isp_lookup)) {
 
         if (key.includes(isp)) {
+          console.log("ALIVE!!!");
           let combo_id: string = isp_lookup[key]
           valid_isp_combos.push(combo_id);
         }
+
       }
     }
     
