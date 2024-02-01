@@ -12,6 +12,8 @@ import Autocomplete from '@mui/material/Autocomplete';
 
 import Slider from '@mui/material/Slider';
 
+import InfoTooltip from "./InfoTooltip";
+
 import style from "./styles/Sidebar.module.css";
 
 import { getFillColor } from './../utils/controls';
@@ -141,7 +143,12 @@ function Sidebar<T>({
           </div>
           <hr />
           <h4>Filters</h4>
-          <h5>Broadband service level</h5>
+          <div className={style["filter-header"]}>
+            <h5>Broadband service level</h5>
+            <InfoTooltip text={`Unserved refers to areas where at least 80% of locations have 25/3 Mbps service. 
+            Underserved refers to areas where at least 80% of locations have 100/20 Mbps service. Served refers to 
+            areas that are neither Unserved nor Underserved.`}/>
+          </div>
           <FormGroup row>
             <FormControlLabel
               control={
@@ -174,7 +181,10 @@ function Sidebar<T>({
               label="Unserved"
             />                    
           </FormGroup>
-          <h5>Received award?</h5>
+          <div className={style["filter-header"]}>
+            <h5>Received Award</h5>
+            <InfoTooltip text={"Show blocks that have received prior federal broadband funding"}/>
+          </div>
           <FormGroup row>
             <FormControlLabel
               control={
@@ -197,7 +207,9 @@ function Sidebar<T>({
               label="No"
             />                 
           </FormGroup>          
-          <h5>Internet Service Provider Count</h5>
+          <div className={style["filter-header"]}>
+            <h5>Internet service provider count</h5>
+          </div>
           <div className={style["slider"]}>
             <Slider
               getAriaLabel={() => 'ISP Count'}
@@ -208,7 +220,9 @@ function Sidebar<T>({
               max={10}
             />
           </div>
-          <h5>Total locations</h5>
+          <div className={style["filter-header"]}>
+            <h5>Total locations</h5>
+          </div>
           <div className={style["slider"]}>
             <Slider
               getAriaLabel={() => 'Total locations'}
@@ -219,7 +233,10 @@ function Sidebar<T>({
               max={1015}
             />
           </div>
-          <h5>Broadband Technologies</h5>
+          <div className={style["filter-header"]}>
+            <h5>Broadband Technologies</h5>
+            {/*<InfoTooltip text={"Filter to blocks which have a certain broadband technology"}/>*/}
+          </div>
           <Autocomplete
             multiple
             options={Object.keys(broadband_technology)}
@@ -229,12 +246,14 @@ function Sidebar<T>({
               <TextField
                 {...params}
                 variant="standard"
-                label="Filter broadband technology"
-                placeholder="Filter broadband technology"
+                label="Filter by broadband technology"
+                placeholder="Filter by broadband technology"
               />
             )}
-          />           
-          <h5>Internet Service Providers</h5>
+          />
+          <div className={style["filter-header"]}>
+            <h5>Internet Service Providers</h5>
+          </div>
           <Autocomplete
             multiple
             options={isp_name}
@@ -244,12 +263,14 @@ function Sidebar<T>({
               <TextField
                 {...params}
                 variant="standard"
-                label="Filter ISPs"
-                placeholder="Filter ISPs"
+                label="Filter by ISP"
+                placeholder="Filter by ISP"
               />
             )}
           />      
-          <h5>County</h5>
+          <div className={style["filter-header"]}>
+            <h5>County</h5>
+          </div>
           <Autocomplete
             multiple
             options={county_name_geoid.map(d => d.label)}
@@ -259,8 +280,8 @@ function Sidebar<T>({
               <TextField
                 {...params}
                 variant="standard"
-                label="Filter counties"
-                placeholder="Filter counties"
+                label="Filter by county"
+                placeholder="Filter by county"
               />
             )}
           />    
