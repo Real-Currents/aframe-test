@@ -12,17 +12,18 @@ import { format } from 'd3-format';
 import MapLegend from './MapLegend';
 import style from "./styles/GlMap.module.css";
 
-import combo_dict from './../data/combo_sample2_dict.json';
-import broadband_technology_dict from './../data/broadband_technology.json';
-const broadband_technology: Record<string, string> = broadband_technology_dict;
-
 import "mapbox-gl/dist/mapbox-gl.css";
 import {
     bead_dev,
     // bb_tr_100_20,
     contourStyle
 } from '../styles';
+import { GeoJSONFeature } from "maplibre-gl";
 
+import combo_dict from './../data/combo_sample2_dict.json';
+import broadband_technology_dict from './../data/broadband_technology.json';
+
+const broadband_technology: Record<string, string> = broadband_technology_dict;
 
 interface ComboLookup {
     [key: string]: string;
@@ -76,6 +77,10 @@ const GlMap: React.FC < GlMapProps > = ({
 
     const mapRef = useRef < MapRef | null > (null);
 
+    const MIN_ZOOM_LEVEL = 9;
+
+    const selection_color = '#ffffff';
+
     const { longitude, latitude, zoom } = fitBounds({
         width: window.innerWidth,
         height: window.innerHeight,
@@ -83,14 +88,14 @@ const GlMap: React.FC < GlMapProps > = ({
         padding: 20 // Optional padding around the bounds
     });
 
-    const [layerAttributes, setLayerAttributes] = useState < (IntrinsicAttributes & LayerProps) > ({ ...bead_dev.layers[0] });
+    const [ layerAttributes, setLayerAttributes] = useState < (IntrinsicAttributes & LayerProps) > ({ ...bead_dev.layers[0] });
 
-    const MIN_ZOOM_LEVEL = 9;
+    const [ hoverInfo, setHoverInfo] = useState < any > (null); // Specify the type of hoverInfo if known
+    const  [layerFilter, setLayerFilter] = useState < any > (['all']); // Specify the type of layerFilter if known
+    const [ map_zoom, setMapZoom] = useState < number > (zoom);
+    const [ clickedBlock, setClickedBlock] = useState < string > ("");
 
-    const [hoverInfo, setHoverInfo] = useState < any > (null); // Specify the type of hoverInfo if known
-    const [layerFilter, setLayerFilter] = useState < any > (['all']); // Specify the type of layerFilter if known
-    const [map_zoom, setMapZoom] = useState < number > (zoom);
-    const [clickedBlock, setClickedBlock] = useState < string > ("");
+    const [ selected_features, selectFeatures ] = useState<GeoJSONFeature[]>([]);
 
     const onMove = (event: any) => { // Specify the type of event if known
         setMapZoom(event.viewState!.zoom!);
@@ -155,7 +160,32 @@ const GlMap: React.FC < GlMapProps > = ({
 
                     console.log("result is ", result);
 
-                    if (result.data) {
+                    if (result.data
+                        && result.data.hasOwnProperty("features")
+                        && result.data.features.length > 0
+                    ) {
+                        result.data.features.forEach((f: GeoJSONFeature) => {
+                            // class GeoJSONFeature {
+                            // 	type: "Feature";
+                            // 	_geometry: GeoJSON.Geometry;
+                            // 	properties: {
+                            // 		[name: string]: any;
+                            // 	};
+                            // 	id: number | string | undefined;
+                            // 	_vectorTileFeature: VectorTileFeature;
+                            // 	constructor(vectorTileFeature: VectorTileFeature, z: number, x: number, y: number, id: string | number | undefined);
+                            // 	get geometry(): GeoJSON.Geometry;
+                            // 	set geometry(g: GeoJSON.Geometry);
+                            // 	toJSON(): any;
+                            // }
+                            if (f.hasOwnProperty("properties")
+                                && f["properties"].hasOwnProperty("type")
+                                && f["properties"]["type"] === "geojson"
+                            ) {
+                                console.log("GeoJSON for this feature:", f);
+                                selectFeatures([ f ]);
+                            }
+                        });
                         onDetailedInfoChange(result.data.features);
                     }
                 })
@@ -419,6 +449,30 @@ const GlMap: React.FC < GlMapProps > = ({
                           </div>
                         )}
                     </Source>
+                    {/*{(selected_features.length > 0) ?*/}
+                        <Source type="geojson" id="bead_block" data={{
+                            "type": "FeatureCollection",
+                            "features": selected_features
+                        }} >
+                            <Layer {...{
+                                id: 'bead_block-fill',
+                                source: 'bead_block',
+                                type: 'fill',
+                                paint: {
+                                    'fill-color': selection_color,
+                                    'fill-opacity': 0.05
+                                }
+                            }}></Layer>
+                            <Layer {...{
+                                id: 'bead_block-line',
+                                source: 'bead_block',
+                                type: 'line',
+                                paint: {
+                                    'line-color': selection_color,
+                                }
+                            }}></Layer>
+                        </Source>{/*    : <></>*/}
+                    {/*}*/}
                 </Map>
             </div>
         ) :

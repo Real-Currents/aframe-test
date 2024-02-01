@@ -7,10 +7,36 @@ interface DetailedViewProps {
 
 const DetailedView: React.FC<DetailedViewProps> = ({ detailedInfo }) => {
 
+    const [ block_info, setBlockInfo ] = useState<string[]>([]);
+    const [ geoid_bl, setGeoid ] = useState<string>("")
     const [ isp_names, setISPNames ] = useState<string[]>([]);
     const [ award_applicants, setAwardApplicants ] = useState<string[]>([]);
 
     useEffect(() => {
+        detailedInfo
+            .filter((d: any) => {
+                if (d.properties.hasOwnProperty("type")
+                    && d.properties["type"] === "geojson"
+                ) {
+                    let props = [];
+                    if (d.properties.hasOwnProperty("geoid_bl")) {
+                        setGeoid(d.properties["geoid_bl"]);
+                        props.push("geoid_bl: " + d.properties["geoid_bl"]);
+                    }
+                    for (let p in d.properties) {
+                        if (d.properties.hasOwnProperty(p)
+                            && p !== "geoid_bl"
+                            && p !== "type"
+                        ) {
+                            props.push(p + ": " + d.properties[p]);
+                        }
+                    }
+                    console.log("Block properties detailedInfo:", props);
+                    setBlockInfo(props);
+                    return d;
+                }
+            });
+
         let names: string[] = detailedInfo
             .filter((d: any) => d.properties.hasOwnProperty("type")
                 && d.properties["type"] === "isp_tech"
@@ -22,6 +48,7 @@ const DetailedView: React.FC<DetailedViewProps> = ({ detailedInfo }) => {
             );
 
         console.log("ISP names in detailedInfo:", names);
+        setISPNames(names);
 
         let applicants: string[] = detailedInfo
             .filter((d: any) => d.properties.hasOwnProperty("type")
@@ -33,9 +60,6 @@ const DetailedView: React.FC<DetailedViewProps> = ({ detailedInfo }) => {
                 "N/A"
             );
 
-        console.log("ISP names in detailedInfo:", names);
-        setISPNames(names);
-
         console.log("RDOF applicants in detailedInfo:", applicants);
         setAwardApplicants(applicants);
 
@@ -44,17 +68,27 @@ const DetailedView: React.FC<DetailedViewProps> = ({ detailedInfo }) => {
     return (
         <>
             <div id="detail" className={style["detailed-view"]}>
-                <h2>Detailed information</h2>
+                <h4>Broadband Information for Census Block {geoid_bl}</h4>
                 <hr />
+                {
+                    (block_info.length === 0 )?
+                        "Click a block to view detailed block info" :
+                        block_info.map((i: string) => {
+                            console.log(i);
+                            return  (<p key={i.toString().split(":")[0]}
+                                        style={{"display": "inline-block", "margin": "0.5em 1em 0.5em 0"}} >
+                                {i}</p>)
+                        })
+                }
                 <br />
-                <h3>Internet Service Providers</h3>
+                <h5>Internet Service Providers</h5>
                 <p>{
-                    isp_names.length === 0? "Click a block to view detailed ISP info" : isp_names.join(", ")
+                    (isp_names.length === 0) ? "N/A" : isp_names.join(", ")
                 }</p>
                 <br />
-                <h3>Federal Funding Awards</h3>
+                <h5>Federal Funding Awards</h5>
                 <p>{
-                    award_applicants.length === 0? "Click a block to view detailed Award info" : award_applicants.join(", ")
+                    (award_applicants.length === 0) ? "N/A" : award_applicants.join(", ")
                 }</p>
                 <br />
             </div>
