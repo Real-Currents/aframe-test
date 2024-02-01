@@ -14,14 +14,9 @@ const DetailedView: React.FC<DetailedViewProps> = ({ detailedInfo }) => {
 
     useEffect(() => {
         const block_info = detailedInfo
-            .filter((d: any) => {
-                if (d.properties.hasOwnProperty("type")
+            .filter((d: any) => (d.properties.hasOwnProperty("type")
                     && d.properties["type"] === "geojson"
-                ) {
-
-                    return d;
-                }
-            })
+            ))
             .map((d: any) => {
                 let props = [];
                 if (d.properties.hasOwnProperty("geoid_bl")) {
@@ -37,7 +32,9 @@ const DetailedView: React.FC<DetailedViewProps> = ({ detailedInfo }) => {
                     }
                 }
                 console.log("Block properties detailedInfo:", props);
+                return props;
             });
+
         setBlockInfo(block_info);
 
         let names: string[] = detailedInfo
@@ -73,23 +70,26 @@ const DetailedView: React.FC<DetailedViewProps> = ({ detailedInfo }) => {
             <div id="detail" className={style["detailed-view"]}>
                 <h4>Broadband Information for Census Block {geoid_bl}</h4>
                 <hr />
-                {/*{*/}
-                {/*    (block_info.length === 0 )?*/}
-                {/*        "Click a block to view detailed block info" :*/}
-                {/*        block_info*/}
-                {/*            .filter((b: string[]) => (!!b && b !== null))*/}
-                {/*            .map((b: string[]) => {*/}
-                {/*                if (!!b && b !== null) {*/}
-                {/*                    console.log(b);*/}
-                {/*                    return (b.map((i: string) => (*/}
-                {/*                        <p key={i.toString().split(":")[0]}*/}
-                {/*                           style={{"display": "inline-block", "margin": "0.5em 1em 0.5em 0"}}>*/}
-                {/*                            {i}</p>*/}
-                {/*                    )));*/}
-                {/*                }*/}
-                {/*            })*/}
-                {/*}*/}
-                {/*<br />*/}
+                {
+                    (block_info.length === 0 )?
+                        "Click a block to view detailed block info" :
+                        block_info
+                            .filter((b: any) => {
+                                console.log("b: ", b);
+                                return !!b && b !== null
+                            })
+                            .map((b: string[]) => {
+                                if (!!b && b !== null) {
+                                    console.log(b);
+                                    return (b.map((i: string) => (
+                                        <p key={i.toString().split(":")[0]}
+                                           style={{"display": "inline-block", "margin": "0.5em 1em 0.5em 0"}}>
+                                            {i}</p>
+                                    )));
+                                }
+                            })
+                }
+                <br />
                 <h5>Internet Service Providers</h5>
                 <p>{
                     (isp_names.length === 0) ? "N/A" : isp_names.join(", ")
