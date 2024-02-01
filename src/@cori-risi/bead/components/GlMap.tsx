@@ -161,7 +161,10 @@ const GlMap: React.FC < GlMapProps > = ({
                 })
                 .catch(error => {
                     console.error("Error fetching data:", error);
-                    if (error.hasOwnProperty("code") && error.code! === "ERR_BAD_REQUEST") {
+                    if (error.hasOwnProperty("code") && (
+                        error.code! === "ERR_BAD_REQUEST"
+                        || error.code! === "ERR_NETWORK"
+                    )) {
                         window.alert("Please refresh session!");
                         apiContext.autoSignOut();
                     }
