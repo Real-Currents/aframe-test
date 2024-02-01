@@ -1,10 +1,11 @@
 import React, {useState, useCallback, useEffect, useRef, useMemo, useContext} from 'react';
-import Map, { Source, Layer } from 'react-map-gl';
-import type { MapRef } from 'react-map-gl';
+import IntrinsicAttributes = React.JSX.IntrinsicAttributes;
+import { Map as MapboxMap } from 'mapbox-gl';
+import Map, { Source, Layer,  LayerProps, MapRef } from 'react-map-gl';
 import { fitBounds } from 'viewport-mercator-project';
-import "mapbox-gl/dist/mapbox-gl.css";
 
 import axios, {AxiosInstance} from "axios";
+import { ApiContext } from "../../contexts/ApiContextProvider";
 
 import { format } from 'd3-format';
 
@@ -15,15 +16,17 @@ import IntrinsicAttributes = React.JSX.IntrinsicAttributes;
 import { LayerProps } from "react-map-gl";
 
 import combo_dict from './../data/combo_blocksv1_dict.json';
+
 import broadband_technology_dict from './../data/broadband_technology.json';
 const broadband_technology: Record<string, string> = broadband_technology_dict;
 
+import "mapbox-gl/dist/mapbox-gl.css";
 import {
     bead_dev,
-    bb_tr_100_20,
+    // bb_tr_100_20,
     contourStyle
 } from '../styles';
-import {ApiContext} from "../../contexts/ApiContextProvider";
+
 
 interface ComboLookup {
     [key: string]: string;
@@ -147,7 +150,7 @@ const GlMap: React.FC < GlMapProps > = ({
 
         // console.log("API Client:", client);
 
-        if (client !== null) {
+        if (client !== null && client.hasOwnProperty("get") && typeof client.get === "function") {
 
             client.get("/rest/bead/isp_tech/bl?geoid_bl=" + clickedFeature.properties.geoid_bl)
                 .then(result => {
@@ -167,7 +170,16 @@ const GlMap: React.FC < GlMapProps > = ({
                 })
                 .catch(error => {
                     console.error("Error fetching data:", error);
+                    if (error.hasOwnProperty("code") && error.code! === "ERR_BAD_REQUEST") {
+                        window.alert("Please refresh session!");
+                        apiContext.autoSignOut();
+                    }
                 });
+
+        } else {
+            console.log("API Client Error:", client);
+            window.alert("Please refresh session!");
+            apiContext.autoSignOut();
         }
     }
 
@@ -282,6 +294,17 @@ const GlMap: React.FC < GlMapProps > = ({
         setLayerAttributes(newLayerAttributes);
 
     }, [fillColor]);
+
+    useEffect(() => {
+        setTimeout(() => {
+            // console.log("Add map to global window object:", mapRef);
+            if (mapRef !== null && mapRef.current !== null) {
+                const map: MapboxMap = mapRef.current!.getMap();
+                (map as { [key: string]: any })["map"] = map;
+                (window as { [key: string]: any })["map"] = (map as unknown) as MapRef;
+            }
+        }, 2533);
+    }, [ mapRef ])
 
     return ( /*Wait for ApiToken*/
         (apiContext.hasOwnProperty("token") && apiContext.token !== null) ? (

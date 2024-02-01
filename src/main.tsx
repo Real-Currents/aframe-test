@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, {ReactElement, useEffect} from 'react';
 import ReactDOM from 'react-dom/client';
 import PropTypes from "prop-types";
 import { Amplify } from "aws-amplify";
@@ -6,10 +6,11 @@ import { Amplify } from "aws-amplify";
 import aws_config from '../amplifyconfiguration.json';
 import App from './@cori-risi/bead/App.tsx';
 
-import './fonts.css';
-
 import mapboxgl from 'mapbox-gl';
-// import {Map} from 'mapbox-gl';
+
+import './@cori-risi/bead/components/styles/CustomAmplifyAuthenticator.css';
+import './fonts.css';
+// import { Map } from 'mapbox-gl';
 // import { MapRef } from "react-map-gl";
 
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
@@ -57,9 +58,11 @@ function initMain (evt: Event) {
     root.render(
         <React.StrictMode>
             <OfflineNotification>
-                {/*<App />*/}
-                <App app_id={react_app_id}
-                     content={() => root_content} />
+                <PrivacyAuthenticator>
+                    {/*<App />*/}
+                    <App app_id={react_app_id}
+                         content={() => root_content} />
+                </PrivacyAuthenticator>
             </OfflineNotification>
         </React.StrictMode>
     );
@@ -116,5 +119,83 @@ function OfflineNotification (props: { children?: ReactElement }) {
 }
 
 OfflineNotification.propTypes = { children: PropTypes.node };
+
+function PrivacyAuthenticator (props: { children?: ReactElement }) {
+
+    useEffect(() => {
+        // Logic derived from autoSignIn function
+        console.log("Set credentials for auto sign in");
+
+        setTimeout(() => {
+            // form data-amplify-form="" data-amplify-authenticator-signin="" method="post"
+            const amplifyAuthenticatorForm: HTMLFormElement | null = document.querySelector('form[data-amplify-form]');
+            if (amplifyAuthenticatorForm !== null) {
+
+                const footerLoader: HTMLDivElement | null = document.querySelector('[data-amplify-footer]');
+                if (footerLoader !== null) {
+                    footerLoader.style.display = "none";
+                }
+
+                const signInButton: HTMLButtonElement | null = amplifyAuthenticatorForm.querySelector('.amplify-button[type="submit"]');
+                if (signInButton !== null && signInButton.innerHTML === "Sign in") {
+                    signInButton.innerHTML = "OK";
+                    signInButton.style.display = "inline-flex";
+                    signInButton.style.color = "#16343e";
+                    signInButton.style.cursor = "pointer";
+                    signInButton.style.background = "#a3e2b5";
+                    signInButton.style.borderRadius = "50px";
+                    signInButton.style.padding = "13px 50px";
+                    signInButton.style.maxHeight = "48px";
+                    signInButton.style.minHeight = "48px";
+                    signInButton.style.maxWidth = "268px";
+                    signInButton.style.minWidth = "198px";
+                    signInButton.style.textDecoration = "none";
+
+                    // align-content: center;
+                    // justify-content: center;
+                    // justify-items: center;
+                    // align-items: center;
+                    // text-align: center;
+                    // white-space: nowrap;
+
+                    const usernameInput: HTMLInputElement | null = amplifyAuthenticatorForm.querySelector('.amplify-textfield .amplify-field-group div .amplify-input[name="username"]');
+                    if (usernameInput !== null) {
+                        usernameInput.value = "cori-risi-public";
+                    }
+                    const passwordInput: HTMLInputElement | null = amplifyAuthenticatorForm.querySelector('.amplify-textfield .amplify-field-group div .amplify-input[name="password"]');
+                    if (passwordInput !== null) {
+                        passwordInput.value = "cori-risi-public";
+                    }
+
+                    if (document.getElementById("privacy-info") === null) {
+                        const privacyInformation = document.createElement("div");
+                        privacyInformation.id = "privacy-info"
+                        privacyInformation.innerHTML = `
+                    <p></p>
+                    <p>This Site uses cookies to offer you a better browsing experience and to analyze Site
+                        traffic. By continuing to access the Site, you consent to our use of cookies and storage and use of
+                        your data as provided in our <a href="http://ruralinnovation.us/privacy-policy/" target="_blank">Privacy Policy</a>.
+                    </p>
+                    <p></p>
+                    
+`
+                        console.log(amplifyAuthenticatorForm.children[0].children[0]);
+                        (amplifyAuthenticatorForm.children[0].children[0]).after(privacyInformation);
+                    }
+                }
+            }
+        }, 1533);
+    })
+
+    // if (import.meta.env.VITE_OFFLINE_NOTIFICATION !== "false") {
+        return (
+            <div className={"app-with-authenticator"}>
+                {props.children}
+            </div>
+        )
+    // } else return props.children;
+}
+
+PrivacyAuthenticator.propTypes = { children: PropTypes.node };
 
 initMain(init_event);
