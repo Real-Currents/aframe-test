@@ -7,7 +7,7 @@
 	border: 1px solid black;
 
 	width: 170px;
-	height: 170px;
+
 	background-color: white;
 
 	padding: 15px;
@@ -26,32 +26,15 @@
 }
 
 .interpolate-wrapper {
-	display: block;
+	display: flex;
 	position: relative;
 	margin-top: 10px;
 }
 
-.interpolate-top-label {
-	position: absolute;
-	top: -.25rem;
-	left: 40px;
-}
-
-.interpolate-middle-label {
-	position: absolute;
-	top: 55px;
-	left: 30px;
-}
-
-.interpolate-bottom-label {
-	position: absolute;
-	bottom: -.25rem;
-	left: 40px;
-}
-
 .interpolate-bar {
-	height: 100px;
-	width: 30px;
+	height: 1.5rem;
+	width: 100%;
+	margin: 0px 5px 0px 5px;
 }
 
 .legend-row {
