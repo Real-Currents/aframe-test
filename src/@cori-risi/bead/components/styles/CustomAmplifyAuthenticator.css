@@ -36,6 +36,12 @@
     max-width: 845px;
 }
 
+* #privacy-info p {
+    font-family: "TT Hoves Light", Montserrat, sans-serif;
+    color: #ecf5ef !important;
+}
+
+
 * #privacy-info a {
     text-decoration: underline;
 }

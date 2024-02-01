@@ -160,11 +160,11 @@ function PrivacyAuthenticator (props: { children?: ReactElement }) {
 
                     const usernameInput: HTMLInputElement | null = amplifyAuthenticatorForm.querySelector('.amplify-textfield .amplify-field-group div .amplify-input[name="username"]');
                     if (usernameInput !== null) {
-                        usernameInput.value = "cori-risi-public";
+                        usernameInput.value = import.meta.env.VITE_APP_USERNAME;
                     }
                     const passwordInput: HTMLInputElement | null = amplifyAuthenticatorForm.querySelector('.amplify-textfield .amplify-field-group div .amplify-input[name="password"]');
                     if (passwordInput !== null) {
-                        passwordInput.value = "cori-risi-public";
+                        passwordInput.value = import.meta.env.VITE_APP_PASSWORD;
                     }
 
                     if (document.getElementById("privacy-info") === null) {

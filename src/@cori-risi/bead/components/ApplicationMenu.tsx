@@ -26,7 +26,7 @@ function ApplicationMenu () {
                 console.log("authenticated_user: ", authenticated_user);
                 console.log("token: ", token);
 
-                apiClient.get("/rest/bead/isp_tech/bl?geoid_bl=010010201001003")
+                apiClient.get("/rest/bead/isp_tech?geoid_bl=010010201001003")
                     .then(response => {
                         console.log("API responds to RESTful request for all isp tech available at given block ID:", response.data);
                     })
