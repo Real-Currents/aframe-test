@@ -2,6 +2,8 @@
 
 interface ImportMetaEnv {
   readonly VITE_APP_VERSION: string
+  readonly VITE_APP_USERNAME: string
+  readonly VITE_APP_PASSWORD: string
   readonly VITE_AMP_BACKEND_API: string
   readonly VITE_MAPBOX_ACCESS_TOKEN: string
   readonly VITE_OFFLINE_NOTIFICATION: string
