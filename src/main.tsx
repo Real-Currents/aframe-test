@@ -25,6 +25,11 @@ function initMain (evt: Event) {
     react_app_container.id = 'react-app';
     const root_content: HTMLElement = document.createElement("div");
 
+
+    if (document.getElementById("loader") !== null) {
+        document.getElementById("loader")!.remove();
+    }
+
     initHeader(evt);
 
     for (const elm of react_app_container.childNodes) {
