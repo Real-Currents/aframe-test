@@ -190,18 +190,23 @@ const GlMap: React.FC < GlMapProps > = ({
                 })
                 .catch(error => {
                     console.error("Error fetching data:", error);
-                    if (error.hasOwnProperty("code") && (
-                        error.code! === "ERR_BAD_REQUEST"
-                        || error.code! === "ERR_NETWORK"
-                    )) {
-                        window.alert("Please refresh session!");
+                    if (error.hasOwnProperty("code")) {
+                        console.log("Error code:", error.code!);
+                        if (error.code! === "ERR_BAD_REQUEST"
+                            || error.code! === "ERR_NETWORK"
+                        ) {
+                            window.alert("Please refresh session by clicking your browsers reload button!");
+                            apiContext.autoSignOut();
+                        }
+                    } else {
+                        window.alert("Please refresh session by clicking your browsers reload button!");
                         apiContext.autoSignOut();
                     }
                 });
 
         } else {
             console.log("API Client Error:", client);
-            window.alert("Please refresh session!");
+            window.alert("Please refresh session by clicking your browsers reload button!");
             apiContext.autoSignOut();
         }
     }
@@ -333,7 +338,7 @@ const GlMap: React.FC < GlMapProps > = ({
         (apiContext.hasOwnProperty("token") && apiContext.token !== null) ? (
             <div className={style["map-wrapper"]}>
                 {map_zoom < MIN_ZOOM_LEVEL && (
-                  <div className={style["zoom-message"]}>Zoom in to AL, HI, MA, or PR to view data</div>
+                  <div className={style["zoom-message"]}>Zoom in to map (city/town) to view data</div>
                 )}
                 {map_zoom >= MIN_ZOOM_LEVEL && (
                   <MapLegend title={colorVariable} category={fillColor} />
