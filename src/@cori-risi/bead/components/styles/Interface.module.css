@@ -1,4 +1,29 @@
-.interface {
+.map-interface {
 	display: flex;
+	border-bottom: 2px solid black;
 }
 
+.open-button {
+	display: none;
+}
+
+@media (max-width: 600px) {
+
+	.open-button {
+
+		display: block;
+
+		position: absolute;
+		background-color: white;
+
+		border-bottom: 2px solid black;
+
+		padding: 5px 5px;
+		width: 100%;
+
+		text-align: center;
+
+		z-index: 30;
+	}
+
+}

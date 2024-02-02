@@ -1,3 +1,13 @@
+:root {
+  --sidebarWidth: 400px;
+  --sidebarHeight: 36px;
+  --maxWidthTrigger: 600px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0px;
 }

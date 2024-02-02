@@ -1,9 +1,9 @@
 const colors = {
     "legend_colors": {
         "bb_bead_categories": {
-            "served_area": "rgba(19, 3, 50, 0.5)",
-            "underserved_area": "rgba(118, 88, 162, 0.75)",
-            "unserved_area": "rgba(203, 190, 220, 0.85)",
+            "served_area": "rgba(35, 79, 191, 0.5)",
+            "underserved_area": "rgba(0, 131, 93, 0.5)",
+            "unserved_area": "rgba(255, 228, 115, 0.5)",
             "not_reported": "rgba(105, 105, 105, 0)",
             "default": "rgba(105, 105, 105, 0)"
         }
@@ -42,6 +42,19 @@ export function getFillColor(color_scheme: string): any {
             10,
             "rgba(22, 52, 62, 0.7)"
     ]
+  }
+
+  if (color_scheme === "Total locations") {
+
+    return [
+        'interpolate',
+        ['linear'],
+        ['get', 'cnt_total_locations'],
+        0, 'rgba(163, 226, 181, 0.7)',
+        1015,
+        'rgba(22, 52, 62, 0.7)'
+    ]
+
   }
 
   return "red";
