@@ -8,6 +8,13 @@ import axios, {AxiosInstance} from "axios";
 import { ApiContext } from "../../contexts/ApiContextProvider";
 
 import { format } from 'd3-format';
+import "mapbox-gl/dist/mapbox-gl.css";
+import {
+    bead_dev,
+    // bb_tr_100_20,
+    contourStyle
+} from '../styles';
+import { GeoJSONFeature } from "maplibre-gl";
 
 import MapLegend from './MapLegend';
 import style from "./styles/GlMap.module.css";
@@ -16,14 +23,6 @@ import combo_dict from './../data/combo_blocksv1_dict.json';
 
 import broadband_technology_dict from './../data/broadband_technology.json';
 const broadband_technology: Record<string, string> = broadband_technology_dict;
-
-import "mapbox-gl/dist/mapbox-gl.css";
-import {
-    bead_dev,
-    // bb_tr_100_20,
-    contourStyle
-} from '../styles';
-
 
 interface ComboLookup {
     [key: string]: string;
@@ -53,7 +52,7 @@ type GlMapProps = {
     fillColor: any,
     colorVariable: string,
     onFocusBlockChange: (newFocusBlock: string) => void,
-    onDetailedInfoChange: (newDetailedInfo: string[]) => void
+    onDetailedInfoChange: (newDetailedInfo: any[]) => void
 };
 
 const USA_BOUNDS: [
@@ -77,6 +76,10 @@ const GlMap: React.FC < GlMapProps > = ({
 
     const mapRef = useRef < MapRef | null > (null);
 
+    const MIN_ZOOM_LEVEL = 9;
+
+    const selection_color = '#ffffff';
+
     const { longitude, latitude, zoom } = fitBounds({
         width: window.innerWidth,
         height: window.innerHeight,
@@ -84,14 +87,14 @@ const GlMap: React.FC < GlMapProps > = ({
         padding: 20 // Optional padding around the bounds
     });
 
-    const [layerAttributes, setLayerAttributes] = useState < (IntrinsicAttributes & LayerProps) > ({ ...bead_dev.layers[0] });
+    const [ layerAttributes, setLayerAttributes] = useState < (IntrinsicAttributes & LayerProps) > ({ ...bead_dev.layers[0] });
 
-    const MIN_ZOOM_LEVEL = 9;
+    const [ hoverInfo, setHoverInfo] = useState < any > (null); // Specify the type of hoverInfo if known
+    const  [layerFilter, setLayerFilter] = useState < any > (['all']); // Specify the type of layerFilter if known
+    const [ map_zoom, setMapZoom] = useState < number > (zoom);
+    const [ clickedBlock, setClickedBlock] = useState < string > ("");
 
-    const [hoverInfo, setHoverInfo] = useState < any > (null); // Specify the type of hoverInfo if known
-    const [layerFilter, setLayerFilter] = useState < any > (['all']); // Specify the type of layerFilter if known
-    const [map_zoom, setMapZoom] = useState < number > (zoom);
-    const [clickedBlock, setClickedBlock] = useState < string > ("");
+    const [ selected_features, selectFeatures ] = useState<GeoJSONFeature[]>([]);
 
     const onMove = (event: any) => { // Specify the type of event if known
         setMapZoom(event.viewState!.zoom!);
@@ -149,33 +152,61 @@ const GlMap: React.FC < GlMapProps > = ({
 
         if (client !== null && client.hasOwnProperty("get") && typeof client.get === "function") {
 
-            client.get("/rest/bead/isp_tech/bl?geoid_bl=" + clickedFeature.properties.geoid_bl)
+            client.get("/rest/bead/all?geoid_bl=" + clickedFeature.properties.geoid_bl)
                 .then(result => {
 
                     onFocusBlockChange(clickedFeature.properties.geoid_bl.toString());
 
                     console.log("result is ", result);
 
-                    if (result.data) {
-                        let names: string[] = result.data.features.map((d: any) =>
-                            (d.properties.hasOwnProperty("new_alias")) ?
-                                d.properties["new_alias"]! :
-                                "N/A"
-                        );
-                        onDetailedInfoChange(names);
+                    if (result.data
+                        && result.data.hasOwnProperty("features")
+                        && result.data.features.length > 0
+                    ) {
+                        result.data.features.forEach((f: GeoJSONFeature) => {
+                            // class GeoJSONFeature {
+                            // 	type: "Feature";
+                            // 	_geometry: GeoJSON.Geometry;
+                            // 	properties: {
+                            // 		[name: string]: any;
+                            // 	};
+                            // 	id: number | string | undefined;
+                            // 	_vectorTileFeature: VectorTileFeature;
+                            // 	constructor(vectorTileFeature: VectorTileFeature, z: number, x: number, y: number, id: string | number | undefined);
+                            // 	get geometry(): GeoJSON.Geometry;
+                            // 	set geometry(g: GeoJSON.Geometry);
+                            // 	toJSON(): any;
+                            // }
+                            if (f.hasOwnProperty("properties")
+                                && f["properties"].hasOwnProperty("type")
+                                && f["properties"]["type"] === "geojson"
+                            ) {
+                                console.log("GeoJSON for this feature:", f);
+                                selectFeatures([ f ]);
+                            }
+                        });
+                        onDetailedInfoChange(result.data.features);
                     }
                 })
                 .catch(error => {
                     console.error("Error fetching data:", error);
-                    if (error.hasOwnProperty("code") && error.code! === "ERR_BAD_REQUEST") {
-                        window.alert("Please refresh session!");
+                    if (error.hasOwnProperty("code")) {
+                        console.log("Error code:", error.code!);
+                        if (error.code! === "ERR_BAD_REQUEST"
+                            || error.code! === "ERR_NETWORK"
+                        ) {
+                            window.alert("Please refresh session by clicking your browsers reload button!");
+                            apiContext.autoSignOut();
+                        }
+                    } else {
+                        window.alert("Please refresh session by clicking your browsers reload button!");
                         apiContext.autoSignOut();
                     }
                 });
 
         } else {
             console.log("API Client Error:", client);
-            window.alert("Please refresh session!");
+            window.alert("Please refresh session by clicking your browsers reload button!");
             apiContext.autoSignOut();
         }
     }
@@ -307,7 +338,7 @@ const GlMap: React.FC < GlMapProps > = ({
         (apiContext.hasOwnProperty("token") && apiContext.token !== null) ? (
             <div className={style["map-wrapper"]}>
                 {map_zoom < MIN_ZOOM_LEVEL && (
-                  <div className={style["zoom-message"]}>Zoom in to AL, HI, MA, or PR to view data</div>
+                  <div className={style["zoom-message"]}>Zoom in to map (city/town) to view data</div>
                 )}
                 {map_zoom >= MIN_ZOOM_LEVEL && (
                   <MapLegend title={colorVariable} category={fillColor} />
@@ -422,6 +453,30 @@ const GlMap: React.FC < GlMapProps > = ({
                           </div>
                         )}
                     </Source>
+                    {/*{(selected_features.length > 0) ?*/}
+                        <Source type="geojson" id="bead_block" data={{
+                            "type": "FeatureCollection",
+                            "features": selected_features
+                        }} >
+                            <Layer {...{
+                                id: 'bead_block-fill',
+                                source: 'bead_block',
+                                type: 'fill',
+                                paint: {
+                                    'fill-color': selection_color,
+                                    'fill-opacity': 0.05
+                                }
+                            }}></Layer>
+                            <Layer {...{
+                                id: 'bead_block-line',
+                                source: 'bead_block',
+                                type: 'line',
+                                paint: {
+                                    'line-color': selection_color,
+                                }
+                            }}></Layer>
+                        </Source>{/*    : <></>*/}
+                    {/*}*/}
                 </Map>
             </div>
         ) :

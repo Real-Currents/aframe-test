@@ -50,14 +50,14 @@ const Interface = () => {
     const [multipleISP, setMultipleISP] = useState<string>("");
     const [isDrawerShowing, setDrawerShowing] = useState<boolean>(true);
     const [focusBlock, setFocusBlock] = useState<string>("");
-    const [detailedInfo, setDetailedInfo] = useState<string[]>([]);
+    const [detailedInfo, setDetailedInfo] = useState<any[]>([]);
     const [colorVariable, setColorVariable] = useState<string>("BEAD category");
 
     const handleColorVariableChange = (newColorVariable: string) => {
         setColorVariable(newColorVariable);
     }
 
-    const handleDetailedInfo = (newDetailedInfo: string[]) => {
+    const handleDetailedInfo = (newDetailedInfo: any[]) => {
         setDetailedInfo(newDetailedInfo);
     }
 

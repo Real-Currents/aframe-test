@@ -25,6 +25,11 @@ function initMain (evt: Event) {
     react_app_container.id = 'react-app';
     const root_content: HTMLElement = document.createElement("div");
 
+
+    if (document.getElementById("loader") !== null) {
+        document.getElementById("loader")!.remove();
+    }
+
     initHeader(evt);
 
     for (const elm of react_app_container.childNodes) {
@@ -160,11 +165,11 @@ function PrivacyAuthenticator (props: { children?: ReactElement }) {
 
                     const usernameInput: HTMLInputElement | null = amplifyAuthenticatorForm.querySelector('.amplify-textfield .amplify-field-group div .amplify-input[name="username"]');
                     if (usernameInput !== null) {
-                        usernameInput.value = "cori-risi-public";
+                        usernameInput.value = import.meta.env.VITE_APP_USERNAME;
                     }
                     const passwordInput: HTMLInputElement | null = amplifyAuthenticatorForm.querySelector('.amplify-textfield .amplify-field-group div .amplify-input[name="password"]');
                     if (passwordInput !== null) {
-                        passwordInput.value = "cori-risi-public";
+                        passwordInput.value = import.meta.env.VITE_APP_PASSWORD;
                     }
 
                     if (document.getElementById("privacy-info") === null) {
