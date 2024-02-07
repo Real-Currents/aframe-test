@@ -464,7 +464,7 @@ const GlMap: React.FC < GlMapProps > = ({
                                 type: 'fill',
                                 paint: {
                                     'fill-color': selection_color,
-                                    'fill-opacity': 0.05
+                                    'fill-opacity': 0.25
                                 }
                             }}></Layer>
                             <Layer {...{

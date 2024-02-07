@@ -2,7 +2,7 @@
   "name": "@cori-risi/bead",
   "version": "0.0.1",
   "author": "Rural Innovation Strategies, Inc.",
-  "description": "BEAD dynamic tool",
+  "description": "Rural Broadband Map",
   "private": true,
   "type": "module",
   "dependencies": {
