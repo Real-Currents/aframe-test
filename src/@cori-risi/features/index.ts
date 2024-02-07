@@ -13,14 +13,22 @@ import userNameReducer, {
     selectUserName,
 } from "./user/userNameSlice";
 
+import userTokensReducer, {
+    updateUserTokens,
+    selectUserTokens
+} from "./user/userTokenSlice";
+
 export {
     userReducer,
     userIdReducer,
     userNameReducer,
+    userTokensReducer,
     updateUser,
     updateUserId,
     updateUserName,
+    updateUserTokens,
     selectUser,
     selectUserId,
-    selectUserName
+    selectUserName,
+    selectUserTokens
 };
