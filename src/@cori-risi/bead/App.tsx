@@ -1,7 +1,5 @@
 import React, { ReactElement, useEffect, useState } from 'react';
-import {useSelector, useDispatch, Provider} from "react-redux";
-// import { Provider } from "react-redux";
-// import { BrowserRouter as Router } from "react-router-dom";
+import { Provider  } from "react-redux";
 import { getCurrentUser } from "@aws-amplify/auth/cognito";
 import {
     Button,
@@ -11,19 +9,19 @@ import {
     UseAuthenticator
 } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
-import './App.css';
-import ApplicationMenu from "./components/ApplicationMenu";
-import './components/styles/ApplicationMenu.scss';
-import './components/styles/ControlPanel.css';
-
+import ApiContextProvider from "../contexts/ApiContextProvider";
+// import { BrowserRouter} from "react-router-dom";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
-import Interface from './components/Interface';
 
 import store from "../app/store";
 import User from '../models/User';
 
-import ApiContextProvider from "../contexts/ApiContextProvider";
+import ApplicationMenu from "./components/ApplicationMenu";
+import Interface from './components/Interface';
+
+import './App.css';
+import './components/styles/ApplicationMenu.scss';
+import './components/styles/ControlPanel.css';
 
 function getUserLabel (u: User) {
     return (u.hasOwnProperty("signInUserSession")
@@ -138,8 +136,8 @@ function App ({ app_id, content }: { app_id: string, content: () => HTMLElement 
     return (
         <>
             <Provider store={store}>
-                {/*<Router>*/}
                 <ApiContextProvider>
+                    {/*<BrowserRouter>*/}
                     <ThemeProvider theme={theme}>
                         <Flex className="App" direction="row"
                               justifyContent="space-between" >
@@ -148,17 +146,17 @@ function App ({ app_id, content }: { app_id: string, content: () => HTMLElement 
                                 <Interface />
                             </Flex>
 
-                            <ControlPanel
-                                open={controlPanelOpen}
-                                showMenuButton={showMenuButton}
-                                toggleFunction={toggleControlPanel} >
-                                <ApplicationMenu />
-                            </ControlPanel>
+                            {/*<ControlPanel*/}
+                            {/*    open={controlPanelOpen}*/}
+                            {/*    showMenuButton={showMenuButton}*/}
+                            {/*    toggleFunction={toggleControlPanel} >*/}
+                            {/*    <ApplicationMenu />*/}
+                            {/*</ControlPanel>*/}
 
                         </Flex>
                     </ThemeProvider>
+                    {/*</BrowserRouter>*/}
                 </ApiContextProvider>
-                {/*</Router>*/}
             </Provider>
         </>
     );
