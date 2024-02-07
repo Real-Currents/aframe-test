@@ -9,7 +9,7 @@ export const userIdSlice = createSlice({
     reducers: {
         updateUserId: (user_id, action) => {
             console.log("Set userId: ", action.payload);
-            if (typeof action.payload == "string") {
+            if (typeof action.payload === "string") {
                 user_id = action.payload;
             }
             return user_id;

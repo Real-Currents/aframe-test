@@ -20,10 +20,10 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import Interface from './components/Interface';
 
-import User from '../models/User';
 import store from "./app/store";
+import User from '../models/User';
 
-import ApiContextProvider from "../contexts/ApiContextProvider";
+import ApiContextProvider from "./contexts/ApiContextProvider";
 
 function getUserLabel (u: User) {
     return (u.hasOwnProperty("signInUserSession")

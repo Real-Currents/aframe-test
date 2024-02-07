@@ -1,24 +1,33 @@
 import React, {createContext, ReactElement, useEffect, useState} from "react";
 // import { AmplifyProvider } from "@aws-amplify/ui-react";
 import axios, { AxiosInstance } from 'axios';
-// import { autoSignIn } from "../utils";
 // import queryString from 'query-string';
+// import { autoSignIn } from "../utils";
 import "./styles/ApiContextProvider.css";
-import {fetchAuthSession, JWT} from "@aws-amplify/auth";
-import {getCurrentUser} from "@aws-amplify/auth/cognito";
-import {useDispatch, useSelector} from "react-redux";
+import { fetchAuthSession, JWT } from "@aws-amplify/auth";
+import { getCurrentUser } from "@aws-amplify/auth/cognito";
+import { useAuthenticator, UseAuthenticator } from "@aws-amplify/ui-react";
+import { useDispatch, useSelector } from "react-redux";
+import store from "../app/store";
 import {
     updateUserId,
     updateUserName,
+    updateUserTokens,
     selectUser
-} from "../features";
-import User from "../models/User";
-import {useAuthenticator, UseAuthenticator} from "@aws-amplify/ui-react";
+} from "../../features/index";
+import User from '../../models/User';
 
 const BASE_URL = `${import.meta.env.VITE_CORI_DATA_API}`;
 
+const apiClient: AxiosInstance = axios.create({
+    baseURL: BASE_URL,
+    headers: {
+        'Content-Type': 'application/json'
+    },
+});
+
 interface ApiContextType {
-    apiClient: AxiosInstance | null;
+    apiClient: AxiosInstance;
     authenticated: boolean;
     authenticated_user: User | null;
     autoSignOut: () => void;
@@ -27,7 +36,7 @@ interface ApiContextType {
 }
 
 export const ApiContext = createContext<ApiContextType>({
-    apiClient: null,
+    apiClient: apiClient,
     authenticated: false,
     authenticated_user: null,
     autoSignOut: () => { console.log("API Session signOut()!") },
@@ -40,22 +49,22 @@ let hasAuthUser = false;
 let hasAuthClient = false;
 
 export default function ApiContextProvider (props: { children?: ReactElement }) {
-    const [ apiClient, setApiClient ] = useState<AxiosInstance | null>(null);
-    const [ authenticated_user, setAuthenticatedUser ] = useState<User | null>(null);
-    const [ token, setToken ] = useState<JWT | null>(null);
-
-    const [ state, setState ] = useState({
-        apiClient,
-        authenticated: false,
-        authenticated_user,
-        autoSignOut: () => { console.log("API Session signOut()!") },
-        baseURL: BASE_URL,
-        token
-    });
 
     const authenticator: UseAuthenticator = useAuthenticator();
     const userState: User = useSelector(selectUser);
     const dispatch = useDispatch();
+
+    const [ authenticated_user, setAuthenticatedUser ] = useState<User>(userState);
+    const [ token, setToken ] = useState<JWT | null>(null);
+
+    const [ state, setState ] = useState({
+        apiClient: apiClient,
+        authenticated: false,
+        authenticated_user: userState,
+        autoSignOut: () => { console.log("API Session signOut()!") },
+        baseURL: BASE_URL,
+        token: token
+    });
 
     useEffect(() => {
         const session = fetchAuthSession();
@@ -95,28 +104,27 @@ export default function ApiContextProvider (props: { children?: ReactElement }) 
 
                         hasAuthClient = true;
 
-                        const accessToken = tokens.idToken.toString();
-
                         try {
 
-                            const client = axios.create({
-                                baseURL: BASE_URL,
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'Authorization': `Bearer ${accessToken}`,
+                            apiClient.interceptors.request.use(
+                                (config) => {
+                                    const accessToken = tokens.idToken!.toString();
+                                    if (accessToken) {
+                                        config.headers.Authorization = `Bearer ${accessToken}`;
+                                    }
+                                    return config;
                                 },
-                            });
+                                (error) => Promise.reject(error)
+                            );
 
                             setState({
-                                apiClient: client,
+                                apiClient: apiClient,
                                 authenticated: true,
-                                authenticated_user,
+                                authenticated_user: authenticated_user,
                                 autoSignOut: signOut,
                                 baseURL: BASE_URL,
                                 token: tokens.idToken
                             });
-
-                            setApiClient(client);
 
                         } catch (e: any) {
                             console.log("Axios Error:", e);
@@ -134,6 +142,7 @@ export default function ApiContextProvider (props: { children?: ReactElement }) 
                                 console.log("API User:", u);
 
                                 function updateUser (u: User) {
+                                    var userTokens = JSON.stringify(tokens);
 
                                     try {
                                         if (!!u.userId) {
@@ -144,6 +153,12 @@ export default function ApiContextProvider (props: { children?: ReactElement }) 
                                             console.log("Update username:", u.username);
                                             dispatch(updateUserName(u.username));
                                         }
+
+                                        if (!!tokens.idToken) {
+                                            console.log("Update user tokens:", tokens);
+                                            dispatch(updateUserTokens(userTokens));
+                                        }
+
                                     } catch (e: any) {
                                         console.error(e);
                                     }
