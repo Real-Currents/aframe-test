@@ -29,8 +29,17 @@
   font-size: 1rem;
 }
 
+.sidebar .form-control-group {
+  margin-left: 8px;
+}
+
+.sidebar .form-control-label span {
+  margin: 1px;
+  padding: 0;
+}
+
 .sidebar .filter-header {
-  margin-top: 20px;
+  margin: 20px 0 4px 0;
   display: flex;
   flex-wrap: wrap;
   justify-content: start;

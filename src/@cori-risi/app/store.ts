@@ -3,10 +3,7 @@ import {
     userIdReducer,
     userNameReducer,
     userTokensReducer
-} from "../../features";
-import {
-    counterReducer
-} from "../features";
+} from "../features/index";
 import AppState from "./AppState";
 
 const store =  configureStore({
@@ -16,8 +13,7 @@ const store =  configureStore({
             username: userNameReducer,
             tokens: userTokensReducer,
             // ...
-        }),
-        counter: counterReducer
+        })
     }
 });
 
