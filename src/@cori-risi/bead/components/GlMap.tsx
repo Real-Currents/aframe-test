@@ -44,7 +44,7 @@ type GlMapProps = {
         isp_combos: string[],
         counties: string[],
         broadband_technology: string[],
-        has_award: {
+        has_previous_funding: {
             yes: boolean,
             no: boolean
         }
@@ -265,21 +265,21 @@ const GlMap: React.FC < GlMapProps > = ({
             }
         }
 
-        if (filter.has_award.yes !== filter.has_award.no) {
+        if (filter.has_previous_funding.yes !== filter.has_previous_funding.no) {
 
-            if (filter.has_award.yes === true) {
-                let has_award_filter = ['==', ['get', 'has_award_geoid_bl'], true];
-                new_filter.push(has_award_filter);
+            if (filter.has_previous_funding.yes === true) {
+                let has_previous_funding_filter = ['==', ['get', 'has_previous_funding'], true];
+                new_filter.push(has_previous_funding_filter);
             }
             else {
-                let has_award_filter = ['==', ['get', 'has_award_geoid_bl'], false];
-                new_filter.push(has_award_filter);
+                let has_previous_funding_filter = ['==', ['get', 'has_previous_funding'], false];
+                new_filter.push(has_previous_funding_filter);
             }
         }
         else {
-            if (filter.has_award.yes === false) {
-                let has_award_filter = ['==', ['get', 'has_award_geoid_bl'], null];
-                new_filter.push(has_award_filter);
+            if (filter.has_previous_funding.yes === false) {
+                let has_previous_funding_filter = ['==', ['get', 'has_previous_funding'], null];
+                new_filter.push(has_previous_funding_filter);
             }
         }
 
@@ -420,7 +420,7 @@ const GlMap: React.FC < GlMapProps > = ({
                                 </div>
                             </div>
                             <div>
-                                <h6>Previous grant funding? {hoverInfo.feature.properties.has_award_geoid_bl? <span>Yes</span>: <span>No</span>}</h6>
+                                <h6>Previous grant funding? {hoverInfo.feature.properties.has_previous_funding? <span>Yes</span>: <span>No</span>}</h6>
                             </div>
                             <div>
                                 <h6>Internet service providers</h6>

@@ -74,7 +74,7 @@ function Sidebar<T>({
   function handleAwardChange(event: any) {
 
     if (typeof event.target.checked === 'boolean') {
-      onFilterChange({...filter, has_award: {...filter.has_award, [event.target.name]: event.target.checked}});
+      onFilterChange({...filter, has_previous_funding: {...filter.has_previous_funding, [event.target.name]: event.target.checked}});
     }
   }
 
@@ -149,8 +149,8 @@ function Sidebar<T>({
             Underserved refers to areas where at least 80% of locations have 100/20 Mbps service. Served refers to 
             areas that are neither Unserved nor Underserved.`}/>
           </div>
-          <FormGroup row>
-            <FormControlLabel
+          <FormGroup row className={style["form-control-group"]}>
+            <FormControlLabel className={style["form-control-label"]}
               control={
                 <Checkbox
                   checked={filter.bb_service.served}
@@ -160,7 +160,7 @@ function Sidebar<T>({
               }
               label="Served"
             />
-            <FormControlLabel
+            <FormControlLabel className={style["form-control-label"]}
               control={
                 <Checkbox
                   checked={filter.bb_service.underserved}
@@ -170,7 +170,7 @@ function Sidebar<T>({
               }
               label="Underserved"
             />
-            <FormControlLabel
+            <FormControlLabel className={style["form-control-label"]}
               control={
                 <Checkbox
                   checked={filter.bb_service.unserved}
@@ -182,24 +182,24 @@ function Sidebar<T>({
             />                    
           </FormGroup>
           <div className={style["filter-header"]}>
-            <h5>Received Award</h5>
+            <h5>Previously Awarded Funding</h5>
             <InfoTooltip text={"Show blocks that have received prior federal broadband funding"}/>
           </div>
-          <FormGroup row>
-            <FormControlLabel
+          <FormGroup row className={style["form-control-group"]}>
+            <FormControlLabel className={style["form-control-label"]}
               control={
                 <Checkbox
-                  checked={filter.has_award.yes}
+                  checked={filter.has_previous_funding.yes}
                   onChange={handleAwardChange}
                   name="yes"
                 />
               }
               label="Yes"
             />
-            <FormControlLabel
+            <FormControlLabel className={style["form-control-label"]}
               control={
                 <Checkbox
-                  checked={filter.has_award.no}
+                  checked={filter.has_previous_funding.no}
                   onChange={handleAwardChange}
                   name="no"
                 />
