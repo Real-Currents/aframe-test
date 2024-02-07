@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import initialState from "../../app/initialState.json";
 
-console.log("Initial state available in userSlice: ", initialState);
+// console.log("Initial state available in userSlice: ", initialState);
 
 export const userSlice = createSlice({
     initialState: initialState.user,
@@ -10,7 +10,8 @@ export const userSlice = createSlice({
         updateUser: (user_state, action) => {
             console.log("Set user:", action.payload);
             if (typeof action.payload.userId === "string"
-                && typeof action.payload.username === "string" ) {
+                && typeof action.payload.username === "string"
+                && typeof action.payload.tokens === "object" ) {
                 user_state = action.payload;
             }
             return user_state;
@@ -25,7 +26,7 @@ export const {
 } = userSlice.actions;
 
 export const selectUser = (state: (typeof initialState)) => {
-    console.log("AppState in selectUser:", state);
+    // console.log("AppState in selectUser:", state);
     console.log("Return state.user:", state.user);
     return state.user;
 }
