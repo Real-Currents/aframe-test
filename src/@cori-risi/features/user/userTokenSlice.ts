@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import initialState from "../../app/initialState.json";
 
-console.log("Initial state available in userTokensSlice: ", initialState);
+// console.log("Initial state available in userTokensSlice: ", initialState);
 
 export const userTokensSlice = createSlice({
     initialState: initialState.user.tokens,
@@ -24,13 +24,13 @@ export const {
 } = userTokensSlice.actions;
 
 export const selectUserTokens = (state: (typeof initialState)) => {
-    console.log("AppState in selectUser:", state);
+    // console.log("AppState in selectUser:", state);
     console.log("Return state.user.tokens:", state.user.tokens);
     return state.user.tokens;
 }
 
 export const selectUser = (state: (typeof initialState)) => {
-    console.log("AppState in selectUser:", state);
+    // console.log("AppState in selectUser:", state);
     console.log("Return state.user:", state.user);
     return state.user;
 }
