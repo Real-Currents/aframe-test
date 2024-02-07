@@ -5,7 +5,7 @@ import Map, { Source, Layer,  LayerProps, MapRef } from 'react-map-gl';
 import { fitBounds } from 'viewport-mercator-project';
 
 import axios, {AxiosInstance} from "axios";
-import { ApiContext } from "../contexts/ApiContextProvider";
+import { ApiContext } from "../../contexts/ApiContextProvider";
 
 import { format } from 'd3-format';
 import "mapbox-gl/dist/mapbox-gl.css";
@@ -127,28 +127,7 @@ const GlMap: React.FC < GlMapProps > = ({
         const client: AxiosInstance | null = (apiContext.hasOwnProperty("apiClient") && apiContext.apiClient !== null
             && apiContext.apiClient.hasOwnProperty("get") && typeof apiContext.apiClient.get === "function"
         ) ?
-            apiContext.apiClient: null
-            // (apiContext.hasOwnProperty("token") && apiContext.token !== null) ?
-            //     /* TODO:
-            //      * I was having an issue with passing around the initialized Axios client
-            //      * via a Context Provider so this is a fallback (i.e. recreate api client)
-            //      */
-            //     axios.create({
-            //         baseURL: apiContext.baseURL,
-            //         headers: {
-            //             'Content-Type': 'application/json',
-            //             'Authorization': `Bearer ${apiContext.token!.toString()}`,
-            //         },
-            //     }) :
-            //     axios.create({
-            //         baseURL: apiContext.baseURL,
-            //         headers: {
-            //             'Content-Type': 'application/json',
-            //             'Authorization': `Bearer ${token}`,
-            //         },
-            //     });
-
-        // console.log("API Client:", client);
+            apiContext.apiClient: null;
 
         if (client !== null && client.hasOwnProperty("get") && typeof client.get === "function") {
 

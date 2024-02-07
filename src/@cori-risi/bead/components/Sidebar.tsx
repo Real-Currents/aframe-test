@@ -16,7 +16,7 @@ import InfoTooltip from "./InfoTooltip";
 
 import style from "./styles/Sidebar.module.css";
 
-import { getFillColor } from './../utils/controls';
+import { getFillColor } from '../utils/colors';
 
 interface BroadbandTechnology {
   [key: string]: string;

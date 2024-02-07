@@ -20,10 +20,10 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import Interface from './components/Interface';
 
-import store from "./app/store";
+import store from "../app/store";
 import User from '../models/User';
 
-import ApiContextProvider from "./contexts/ApiContextProvider";
+import ApiContextProvider from "../contexts/ApiContextProvider";
 
 function getUserLabel (u: User) {
     return (u.hasOwnProperty("signInUserSession")
@@ -148,12 +148,12 @@ function App ({ app_id, content }: { app_id: string, content: () => HTMLElement 
                                 <Interface />
                             </Flex>
 
-                            {/*<ControlPanel*/}
-                            {/*    open={controlPanelOpen}*/}
-                            {/*    showMenuButton={showMenuButton}*/}
-                            {/*    toggleFunction={toggleControlPanel} >*/}
-                            {/*    <ApplicationMenu />*/}
-                            {/*</ControlPanel>*/}
+                            <ControlPanel
+                                open={controlPanelOpen}
+                                showMenuButton={showMenuButton}
+                                toggleFunction={toggleControlPanel} >
+                                <ApplicationMenu />
+                            </ControlPanel>
 
                         </Flex>
                     </ThemeProvider>

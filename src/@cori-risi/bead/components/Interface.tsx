@@ -6,7 +6,7 @@ import DetailedView from './DetailedView';
 
 import style from "./styles/Interface.module.css";
 
-import { getFillColor } from './../utils/controls';
+import { getFillColor } from '../utils/colors';
 
 export type FilterProps = {
     bb_service: {
