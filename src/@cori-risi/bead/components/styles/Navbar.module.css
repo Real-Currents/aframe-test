@@ -1,23 +1,50 @@
-.navbar {
-	border: 1px solid black;
-	background-color: #fffff9;
+.navbar-container {
+	width: 100vw;
+	position: relative;
 
-	display: flex;
+	border: none;
+	background-color: #16343E;
 
-	width: 100%;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 
 	position: fixed;
 	z-index: 21;
 }
 
-.navbar img {
+.navbar {
 
-	margin-left: 25px;
+	display: flex;
+	justify-content: space-between;
 
-	padding: 5px 0px;
+	width: 100%;
+	max-width: 1200px;
+	margin: 0 auto;
+
+	margin: 0px 50px;
+
+}
+
+.logo {
+
+	padding: 10px 0px;
 
 	z-index: 21;
 
 	width: auto;
 	height: 80px;
+
+}
+
+.navbar a {
+	display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80px; /* Or any desired height */
+}
+
+.menu {
+	width: 50px;
+	max-width: 100%;
+    max-height: 80px;
+    vertical-align: middle;
 }

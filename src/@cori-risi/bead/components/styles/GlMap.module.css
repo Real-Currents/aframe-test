@@ -1,6 +1,6 @@
 .map-wrapper {
 	width: 100vw;
-	height: 100vh;
+	height: calc(100vh - 80px);
 	position: relative;
 }
 
@@ -9,7 +9,7 @@
 	position: absolute;
 
 	top: 0px;
-	right: 0px;
+	left: 0px;
 	z-index: 10;
 
 
@@ -35,7 +35,7 @@
 
 	bottom: 5px;
 	/* 350/2 (sidebar width) - 200/2 (button width) = 75px */
-	left: calc(50% + 100px);
+	right: calc(50% + 100px);
 	z-index: 10;
 
 	width: 200px;
