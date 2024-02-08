@@ -1,8 +1,9 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 
 import GlMap from './GlMap';
 import Sidebar from './Sidebar';
 import DetailedView from './DetailedView';
+import Navbar from './Navbar';
 
 import style from "./styles/Interface.module.css";
 
@@ -29,8 +30,8 @@ const maxWidthTrigger: number = 600;
 
 const Interface = () => {
 
-    const [filter, setFilter] = useState<FilterProps>({
-        bb_service:  {
+    const [filter, setFilter] = useState < FilterProps > ({
+        bb_service: {
             served: true,
             underserved: true,
             unserved: true
@@ -46,12 +47,12 @@ const Interface = () => {
         }
     });
 
-    const [fillColor, setFillColor] = useState<any[]>(getFillColor("BEAD category"));
-    const [multipleISP, setMultipleISP] = useState<string>("");
-    const [isDrawerShowing, setDrawerShowing] = useState<boolean>(true);
-    const [focusBlock, setFocusBlock] = useState<string>("");
-    const [detailedInfo, setDetailedInfo] = useState<any[]>([]);
-    const [colorVariable, setColorVariable] = useState<string>("BEAD category");
+    const [fillColor, setFillColor] = useState < any[] > (getFillColor("BEAD category"));
+    const [multipleISP, setMultipleISP] = useState < string > ("");
+    const [isDrawerShowing, setDrawerShowing] = useState < boolean > (true);
+    const [focusBlock, setFocusBlock] = useState < string > ("");
+    const [detailedInfo, setDetailedInfo] = useState < any[] > ([]);
+    const [colorVariable, setColorVariable] = useState < string > ("BEAD category");
 
     const handleColorVariableChange = (newColorVariable: string) => {
         setColorVariable(newColorVariable);
@@ -73,22 +74,24 @@ const Interface = () => {
         setFilter(newFilter);
     };
 
-    const MAPBOX_TOKEN =  typeof process.env.MAPBOX_TOKEN === 'string'? process.env.MAPBOX_TOKEN: '';
+    const MAPBOX_TOKEN = typeof process.env.MAPBOX_TOKEN === 'string' ? process.env.MAPBOX_TOKEN : '';
 
     const handleToggleDrawer = () => {
         setDrawerShowing(!isDrawerShowing);
-    };    
+    };
 
     window.addEventListener('resize', function(event) {
 
         if (window.innerWidth > 600 && isDrawerShowing === false) {
-          setDrawerShowing(true);
+            setDrawerShowing(true);
         }
-    });    
+    });
 
-    return (
-    <>
-        <div>
+    return ( <
+        >
+        <div className={style['interface']}>
+            <Navbar />
+            <div style={{marginTop: "80px"}}>
             <button className={style["open-button"]} onClick={handleToggleDrawer}>
                 {isDrawerShowing ? "Hide filters" : "Show filters"}
             </button>
@@ -109,10 +112,12 @@ const Interface = () => {
                     onDetailedInfoChange={handleDetailedInfo}
                 />
             </div>
+            </div>
             <DetailedView detailedInfo={detailedInfo} />
         </div>
 
-        </>
+        <
+        />
     );
 
 }
