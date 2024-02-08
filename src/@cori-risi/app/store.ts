@@ -1,11 +1,9 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import {
     userIdReducer,
-    userNameReducer
-} from "../../features";
-import {
-    counterReducer
-} from "../features";
+    userNameReducer,
+    userTokensReducer
+} from "../features/index";
 import AppState from "./AppState";
 
 const store =  configureStore({
@@ -13,9 +11,9 @@ const store =  configureStore({
         user: combineReducers({
             userId: userIdReducer,
             username: userNameReducer,
+            tokens: userTokensReducer,
             // ...
-        }),
-        counter: counterReducer
+        })
     }
 });
 

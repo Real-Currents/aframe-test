@@ -7,7 +7,7 @@ import Navbar from './Navbar';
 
 import style from "./styles/Interface.module.css";
 
-import { getFillColor } from './../utils/controls';
+import { getFillColor } from '../utils/colors';
 
 export type FilterProps = {
     bb_service: {
@@ -20,7 +20,7 @@ export type FilterProps = {
     isp_combos: string[],
     counties: string[],
     broadband_technology: string[],
-    has_award: {
+    has_previous_funding: {
         yes: boolean,
         no: boolean
     }
@@ -41,7 +41,7 @@ const Interface = () => {
         isp_combos: [],
         counties: [],
         broadband_technology: [],
-        has_award: {
+        has_previous_funding: {
             yes: true,
             no: true
         }

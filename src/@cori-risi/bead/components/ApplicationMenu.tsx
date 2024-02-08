@@ -4,18 +4,24 @@ import { debounce } from "@mui/material/utils";
 import { ApiContext } from "../../contexts/ApiContextProvider";
 import { MDAPrinter } from "./MDAPrinter";
 import { MDADownloader } from "./MDADownloader";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUser } from "../../features/index";
+import User from '../../models/User';
+
 import "./styles/ApplicationMenu.scss";
 
 
 function ApplicationMenu () {
 
-    // const userState: User = useSelector(selectUser);
+    const userState: User = useSelector(selectUser);
 
     const apiContext = useContext(ApiContext);
 
     useEffect(() => {
 
-        if (apiContext.hasOwnProperty("apiClient") && apiContext.apiClient !== null) {
+        if (apiContext.hasOwnProperty("apiClient") && apiContext.apiClient !== null
+            && apiContext.hasOwnProperty("token") && apiContext.token !== null
+        ) {
             // console.log("API Context state: ", apiContext);
 
             const apiClient = apiContext.apiClient!,

@@ -44,7 +44,7 @@ type GlMapProps = {
         isp_combos: string[],
         counties: string[],
         broadband_technology: string[],
-        has_award: {
+        has_previous_funding: {
             yes: boolean,
             no: boolean
         }
@@ -127,28 +127,7 @@ const GlMap: React.FC < GlMapProps > = ({
         const client: AxiosInstance | null = (apiContext.hasOwnProperty("apiClient") && apiContext.apiClient !== null
             && apiContext.apiClient.hasOwnProperty("get") && typeof apiContext.apiClient.get === "function"
         ) ?
-            apiContext.apiClient:
-            (apiContext.hasOwnProperty("token") && apiContext.token !== null) ?
-                /* TODO:
-                 * I was having an issue with passing around the initialized Axios client
-                 * via a Context Provider so this is a fallback (i.e. recreate api client)
-                 */
-                axios.create({
-                    baseURL: apiContext.baseURL,
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${apiContext.token!.toString()}`,
-                    },
-                }) :
-                axios.create({
-                    baseURL: apiContext.baseURL,
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`,
-                    },
-                });
-
-        // console.log("API Client:", client);
+            apiContext.apiClient: null;
 
         if (client !== null && client.hasOwnProperty("get") && typeof client.get === "function") {
 
@@ -206,8 +185,8 @@ const GlMap: React.FC < GlMapProps > = ({
 
         } else {
             console.log("API Client Error:", client);
-            window.alert("Please refresh session by clicking your browsers reload button!");
-            apiContext.autoSignOut();
+            // window.alert("Please refresh session by clicking your browsers reload button!");
+            // apiContext.autoSignOut();
         }
     }
 
@@ -286,21 +265,21 @@ const GlMap: React.FC < GlMapProps > = ({
             }
         }
 
-        if (filter.has_award.yes !== filter.has_award.no) {
+        if (filter.has_previous_funding.yes !== filter.has_previous_funding.no) {
 
-            if (filter.has_award.yes === true) {
-                let has_award_filter = ['==', ['get', 'has_award_geoid_bl'], true];
-                new_filter.push(has_award_filter);
+            if (filter.has_previous_funding.yes === true) {
+                let has_previous_funding_filter = ['==', ['get', 'has_previous_funding'], true];
+                new_filter.push(has_previous_funding_filter);
             }
             else {
-                let has_award_filter = ['==', ['get', 'has_award_geoid_bl'], false];
-                new_filter.push(has_award_filter);
+                let has_previous_funding_filter = ['==', ['get', 'has_previous_funding'], false];
+                new_filter.push(has_previous_funding_filter);
             }
         }
         else {
-            if (filter.has_award.yes === false) {
-                let has_award_filter = ['==', ['get', 'has_award_geoid_bl'], null];
-                new_filter.push(has_award_filter);
+            if (filter.has_previous_funding.yes === false) {
+                let has_previous_funding_filter = ['==', ['get', 'has_previous_funding'], null];
+                new_filter.push(has_previous_funding_filter);
             }
         }
 
@@ -332,7 +311,7 @@ const GlMap: React.FC < GlMapProps > = ({
                 (window as { [key: string]: any })["map"] = (map as unknown) as MapRef;
             }
         }, 2533);
-    }, [ mapRef ])
+    }, [ mapRef ]);
 
     return ( /*Wait for ApiToken*/
         (apiContext.hasOwnProperty("token") && apiContext.token !== null) ? (
@@ -441,7 +420,7 @@ const GlMap: React.FC < GlMapProps > = ({
                                 </div>
                             </div>
                             <div>
-                                <h6>Previous grant funding? {hoverInfo.feature.properties.has_award_geoid_bl? <span>Yes</span>: <span>No</span>}</h6>
+                                <h6>Previous grant funding? {hoverInfo.feature.properties.has_previous_funding? <span>Yes</span>: <span>No</span>}</h6>
                             </div>
                             <div>
                                 <h6>Internet service providers</h6>
@@ -464,7 +443,7 @@ const GlMap: React.FC < GlMapProps > = ({
                                 type: 'fill',
                                 paint: {
                                     'fill-color': selection_color,
-                                    'fill-opacity': 0.05
+                                    'fill-opacity': 0.25
                                 }
                             }}></Layer>
                             <Layer {...{
