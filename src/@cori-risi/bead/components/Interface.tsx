@@ -91,7 +91,7 @@ const Interface = () => {
         >
         <div className={style['interface']}>
             <Navbar />
-            <div style={{marginTop: "80px"}}>
+            <div style={{marginTop: "75px"}}>
             <button className={style["open-button"]} onClick={handleToggleDrawer}>
                 {isDrawerShowing ? "Hide filters" : "Show filters"}
             </button>

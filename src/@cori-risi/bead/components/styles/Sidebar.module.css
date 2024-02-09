@@ -14,8 +14,8 @@
   position: absolute;
 /*  top: 0px;*/
   right: 0px;
-  height: calc(100vh - 80px);
-  width: 400px;
+  height: calc(100vh - 75px);
+  width: 375px;
   z-index: 20;
 
 }
@@ -59,7 +59,7 @@
   .sidebar {
 
       width: 100%;
-      top: 36px;
+      top: 110px;
       height: calc(100vh - 36px);
 
       border-right: none;
