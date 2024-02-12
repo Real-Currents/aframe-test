@@ -19,15 +19,8 @@ import { GeoJSONFeature } from "maplibre-gl";
 import MapLegend from './MapLegend';
 import style from "./styles/GlMap.module.css";
 
-import combo_dict from './../data/combo_blocksv1_dict.json';
-
 import broadband_technology_dict from './../data/broadband_technology.json';
 const broadband_technology: Record<string, string> = broadband_technology_dict;
-
-interface ComboLookup {
-    [key: string]: string;
-}
-const combo_lookup: ComboLookup = combo_dict;
 
 const percentFormat = format('.1%');
 
@@ -126,11 +119,15 @@ const GlMap: React.FC < GlMapProps > = ({
         const isp_id_array = isp_ids.substring(1, isp_ids.length - 1).split(",");
         console.log("Isp id array is ", isp_id_array);
         let isp_name_str = "";
-        for (let i in isp_id_array) {
-            console.log("isp is ", isp_id_array[i]);
+        for (let i = 0; i < isp_id_array.length; i++) {
             let isp_name = ispNameLookup[isp_id_array[i]];
-            
-            isp_name_str = isp_name_str + " " + isp_name;
+
+            if (i === 0) {
+                isp_name_str = isp_name;
+            }
+            else {
+                isp_name_str = isp_name_str + ", " + isp_name;
+            }
         }
 
         return isp_name_str;
