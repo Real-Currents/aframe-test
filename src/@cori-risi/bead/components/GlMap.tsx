@@ -110,13 +110,32 @@ const GlMap: React.FC < GlMapProps > = ({
             } = event;
             const hoveredFeature = features && features[0];
 
-            console.log("hoveredFeature is ", hoveredFeature);
+            // console.log("hoveredFeature is ", hoveredFeature);
 
             setHoverInfo(hoveredFeature && { feature: hoveredFeature, x, y });
 
         }
     }, []);
 
+
+    function parseIspId(isp_ids: string): string {
+
+        if (isp_ids === undefined) {
+            return "N/A";
+        }
+        const isp_id_array = isp_ids.substring(1, isp_ids.length - 1).split(",");
+        console.log("Isp id array is ", isp_id_array);
+        let isp_name_str = "";
+        for (let i in isp_id_array) {
+            console.log("isp is ", isp_id_array[i]);
+            let isp_name = ispNameLookup[isp_id_array[i]];
+            
+            isp_name_str = isp_name_str + " " + isp_name;
+        }
+
+        return isp_name_str;
+
+    }
 
     const getBlockInfoFromApi = (clickedFeature: {
         properties: {
@@ -427,7 +446,7 @@ const GlMap: React.FC < GlMapProps > = ({
                             <div>
                                 <h6>Internet service providers</h6>
                                 <p>
-                                    {hoverInfo.feature.properties.combo_isp_id ? combo_lookup[hoverInfo.feature.properties.combo_isp_id]: "N/A"}
+                                    {hoverInfo.feature.properties.combo_isp_id ? parseIspId(hoverInfo.feature.properties.isp_id): "N/A"}
                                 </p>
                             </div>
                           </div>

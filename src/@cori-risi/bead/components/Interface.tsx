@@ -22,6 +22,16 @@ interface IspIdLookup {
 }
 const isp_id_lookup: IspIdLookup = isp_id_dict;
 
+function swap(json: { [key: string]: string; } ): { [key: string]: string; } {
+  var ret: { [key: string]: string }  = {};
+  for(let key in json){
+    ret[json[key]] = key;
+  }
+  return ret;
+}
+
+const isp_name_lookup_rev = swap(isp_name_lookup);
+
 export type FilterProps = {
     bb_service: {
         served: boolean,
@@ -125,7 +135,7 @@ const Interface = () => {
                     colorVariable={colorVariable}
                     onFocusBlockChange={handleFocusBlockClick}
                     onDetailedInfoChange={handleDetailedInfo}
-                    ispNameLookup={isp_name_lookup}
+                    ispNameLookup={isp_name_lookup_rev}
                 />
             </div>
             </div>
