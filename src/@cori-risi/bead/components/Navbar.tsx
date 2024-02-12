@@ -1,7 +1,7 @@
 import style from "./styles/Navbar.module.css"
 import React from 'react';
 
-export default function Navbar({ text }) {
+export default function Navbar() {
 
     return ( 
     	<>

@@ -9,6 +9,19 @@ import style from "./styles/Interface.module.css";
 
 import { getFillColor } from '../utils/colors';
 
+import isp_name_dict from './../data/isp_name_lookup_rev.json';
+import isp_id_dict from './../data/isp_dict_latest.json';
+
+interface IspNameLookup {
+  [key: string]: string;
+}
+const isp_name_lookup: IspNameLookup = isp_name_dict;
+
+interface IspIdLookup {
+  [key: string]: string[];
+}
+const isp_id_lookup: IspIdLookup = isp_id_dict;
+
 export type FilterProps = {
     bb_service: {
         served: boolean,
@@ -87,8 +100,8 @@ const Interface = () => {
         }
     });
 
-    return ( <
-        >
+    return ( 
+        <>
         <div className={style['interface']}>
             <Navbar />
             <div style={{marginTop: "75px"}}>
@@ -102,6 +115,8 @@ const Interface = () => {
                     onColorVariableChange={handleColorVariableChange}
                     filter={filter} 
                     isShowing={isDrawerShowing} 
+                    ispIdLookup={isp_id_lookup}
+                    ispNameLookup={isp_name_lookup}
                 />
                 <GlMap 
                     mapboxToken={MAPBOX_TOKEN} 
@@ -110,14 +125,14 @@ const Interface = () => {
                     colorVariable={colorVariable}
                     onFocusBlockChange={handleFocusBlockClick}
                     onDetailedInfoChange={handleDetailedInfo}
+                    ispNameLookup={isp_name_lookup}
                 />
             </div>
             </div>
             <DetailedView detailedInfo={detailedInfo} />
         </div>
 
-        <
-        />
+        </>
     );
 
 }

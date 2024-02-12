@@ -52,7 +52,8 @@ type GlMapProps = {
     fillColor: any,
     colorVariable: string,
     onFocusBlockChange: (newFocusBlock: string) => void,
-    onDetailedInfoChange: (newDetailedInfo: any[]) => void
+    onDetailedInfoChange: (newDetailedInfo: any[]) => void,
+    ispNameLookup: { [key: string]: string } 
 };
 
 const USA_BOUNDS: [
@@ -69,7 +70,8 @@ const GlMap: React.FC < GlMapProps > = ({
   fillColor, 
   colorVariable,
   onFocusBlockChange,
-  onDetailedInfoChange
+  onDetailedInfoChange,
+  ispNameLookup
 }: GlMapProps) => {
 
     const apiContext = useContext(ApiContext);
@@ -108,7 +110,7 @@ const GlMap: React.FC < GlMapProps > = ({
             } = event;
             const hoveredFeature = features && features[0];
 
-            // console.log("hoveredFeature is ", hoveredFeature);
+            console.log("hoveredFeature is ", hoveredFeature);
 
             setHoverInfo(hoveredFeature && { feature: hoveredFeature, x, y });
 

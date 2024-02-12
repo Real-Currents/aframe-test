@@ -24,29 +24,33 @@ interface BroadbandTechnology {
 
 import broadband_technology_dict from './../data/broadband_technology.json';
 const broadband_technology: Record<string, string> = broadband_technology_dict;
-import isp_name from './../data/isp_name.json';
-import isp_dict from './../data/isp_blocksv1_dict.json';
 import county_name_geoid from './../data/geoid_co_name_crosswalk.json';
 
-interface IspLookup {
+interface IspNameLookup {
   [key: string]: string;
 }
 
-const isp_lookup: IspLookup = isp_dict;
+interface IspIdLookup {
+  [key: string]: string[];
+}
 
 function Sidebar<T>({ 
   onFilterChange, 
   onFillColorChange, 
   onColorVariableChange, 
   filter,
-  isShowing
+  isShowing,
+  ispIdLookup,
+  ispNameLookup
 }: 
   {
     onFilterChange: (newFilter: T) => void, 
     onFillColorChange: (newFillColor: any[]) => void,
     onColorVariableChange: (newColorVariable: string) => void,
     filter: any,
-    isShowing: boolean
+    isShowing: boolean,
+    ispIdLookup: { [key: string]: string[] },
+    ispNameLookup: { [key: string]: string } 
  }) {
 
   const props = useSpring({
@@ -93,18 +97,16 @@ function Sidebar<T>({
 
   function handleMultipleISPChange(event: any, newValue: any ): void {
 
-    console.log("newValue is ", newValue);
+    console.log("What is newValue ", newValue);
     let valid_isp_combos: string[] = [];
     for (let isp of newValue) {
 
-      for (let key of Object.keys(isp_lookup)) {
+      let isp_id = ispNameLookup[isp];
+      for (const key in ispIdLookup) {
 
-        if (key.includes(isp)) {
-          console.log("ALIVE!!!");
-          let combo_id: string = isp_lookup[key]
-          valid_isp_combos.push(combo_id);
+        if (ispIdLookup[key].includes(isp_id)) {
+          valid_isp_combos.push(key);
         }
-
       }
     }
     
@@ -256,7 +258,7 @@ function Sidebar<T>({
           </div>
           <Autocomplete
             multiple
-            options={isp_name}
+            options={Object.keys(ispNameLookup)}
             defaultValue={[]}
             onChange={handleMultipleISPChange}
             renderInput={(params) => (
