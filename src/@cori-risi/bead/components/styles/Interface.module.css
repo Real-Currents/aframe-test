@@ -18,7 +18,11 @@
 		display: block;
 
 		position: absolute;
-		background-color: white;
+		background-color: #00835D;
+		color: white;
+
+		font-family: "TT Hoves Bold", "TT Hoves", sans-serif, monospace;
+		font-weight: 700;
 
 		border-bottom: 2px solid black;
 

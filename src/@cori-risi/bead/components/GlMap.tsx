@@ -313,7 +313,7 @@ const GlMap: React.FC < GlMapProps > = ({
         (apiContext.hasOwnProperty("token") && apiContext.token !== null) ? (
             <div className={style["map-wrapper"]}>
                 {map_zoom < MIN_ZOOM_LEVEL && (
-                  <div className={style["zoom-message"]}>Zoom in to map (city/town) to view data</div>
+                  <div className={style["zoom-message"]}>Zoom in further to view data</div>
                 )}
                 {map_zoom >= MIN_ZOOM_LEVEL && (
                   <MapLegend title={colorVariable} category={fillColor} />
@@ -373,15 +373,15 @@ const GlMap: React.FC < GlMapProps > = ({
                                                 <td>{hoverInfo.feature.properties.cnt_isp}</td>
                                             </tr>
                                             <tr>
-                                                <td>Percent served</td>
+                                                <td>Pct. 25/3 service</td>
                                                 <td>{percentFormat(hoverInfo.feature.properties.pct_served)}</td>
                                             </tr>
                                             <tr>
-                                                <td>100/20 locations</td>
+                                                <td>{">=100/20 locations"}</td>
                                                 <td>{hoverInfo.feature.properties.cnt_100_20}</td>
                                             </tr>
                                             <tr>
-                                                <td>25/3 locations</td>
+                                                <td>{">=25/3 locations"}</td>
                                                 <td>{hoverInfo.feature.properties.cnt_25_3}</td>
                                             </tr>   
                                         </tbody>                             

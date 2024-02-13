@@ -7,21 +7,32 @@
   background-color: white;
   border-right: 2px solid black;
 
-  padding: 20px 15px 100px 15px;
+  padding: 20px 15px 200px 15px;
 
   overflow-y: scroll;
 
   position: absolute;
 /*  top: 0px;*/
-  right: 0px;
+  left: 0px;
   height: calc(100vh - 75px);
   width: 375px;
   z-index: 20;
 
 }
 
-.sidebar h4 {
-  margin-top: 15px;
+.sidebar .fill-selector {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.sidebar .filter-container {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.sidebar .filter-section {
+  margin-top: 10px;
+  margin-bottom: 40px;
 }
 
 .sidebar h5 {
