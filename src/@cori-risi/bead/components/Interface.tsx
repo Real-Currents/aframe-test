@@ -12,6 +12,8 @@ import { getFillColor } from '../utils/colors';
 import isp_name_dict from './../data/isp_name_lookup_rev.json';
 import isp_id_dict from './../data/isp_dict_latest.json';
 
+import { swapKeysValues } from '../utils/utils';
+
 interface IspNameLookup {
   [key: string]: string;
 }
@@ -22,15 +24,7 @@ interface IspIdLookup {
 }
 const isp_id_lookup: IspIdLookup = isp_id_dict;
 
-function swap(json: { [key: string]: string; } ): { [key: string]: string; } {
-  var ret: { [key: string]: string }  = {};
-  for(let key in json){
-    ret[json[key]] = key;
-  }
-  return ret;
-}
-
-const isp_name_lookup_rev = swap(isp_name_lookup);
+const isp_name_lookup_rev = swapKeysValues(isp_name_lookup);
 
 export type FilterProps = {
     bb_service: {

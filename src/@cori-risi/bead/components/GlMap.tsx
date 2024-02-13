@@ -7,6 +7,8 @@ import { fitBounds } from 'viewport-mercator-project';
 import axios, {AxiosInstance} from "axios";
 import { ApiContext } from "../../contexts/ApiContextProvider";
 
+import { parseIspId } from '../utils/utils';
+
 import { format } from 'd3-format';
 import "mapbox-gl/dist/mapbox-gl.css";
 import {
@@ -109,30 +111,6 @@ const GlMap: React.FC < GlMapProps > = ({
 
         }
     }, []);
-
-
-    function parseIspId(isp_ids: string): string {
-
-        if (isp_ids === undefined) {
-            return "N/A";
-        }
-        const isp_id_array = isp_ids.substring(1, isp_ids.length - 1).split(",");
-        console.log("Isp id array is ", isp_id_array);
-        let isp_name_str = "";
-        for (let i = 0; i < isp_id_array.length; i++) {
-            let isp_name = ispNameLookup[isp_id_array[i]];
-
-            if (i === 0) {
-                isp_name_str = isp_name;
-            }
-            else {
-                isp_name_str = isp_name_str + ", " + isp_name;
-            }
-        }
-
-        return isp_name_str;
-
-    }
 
     const getBlockInfoFromApi = (clickedFeature: {
         properties: {
@@ -443,7 +421,7 @@ const GlMap: React.FC < GlMapProps > = ({
                             <div>
                                 <h6>Internet service providers</h6>
                                 <p>
-                                    {hoverInfo.feature.properties.combo_isp_id ? parseIspId(hoverInfo.feature.properties.isp_id): "N/A"}
+                                    {hoverInfo.feature.properties.combo_isp_id ? parseIspId(hoverInfo.feature.properties.isp_id, ispNameLookup): "N/A"}
                                 </p>
                             </div>
                           </div>
