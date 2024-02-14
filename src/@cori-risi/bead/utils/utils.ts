@@ -1,3 +1,4 @@
+// Swap the keys and values in a dictionary
 export function swapKeysValues(json: { [key: string]: string; } ): { [key: string]: string; } {
   var ret: { [key: string]: string }  = {};
   for(let key in json){
@@ -6,6 +7,7 @@ export function swapKeysValues(json: { [key: string]: string; } ): { [key: strin
   return ret;
 }
 
+// Convert from a list of ISP ids to their plain language names
 export function parseIspId(isp_ids: string, isp_name_lookup: { [key: string]: string } ): string {
 
     if (isp_ids === undefined) {
