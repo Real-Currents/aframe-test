@@ -49,6 +49,7 @@ type GlMapProps = {
     colorVariable: string,
     onFocusBlockChange: (newFocusBlock: string) => void,
     onDetailedInfoChange: (newDetailedInfo: any[]) => void,
+    onZoomChange: (newZoom: number) => void,
     ispNameLookup: { [key: string]: string },
     isShowing: boolean
 };
@@ -68,6 +69,7 @@ const GlMap: React.FC < GlMapProps > = ({
   colorVariable,
   onFocusBlockChange,
   onDetailedInfoChange,
+  onZoomChange,
   ispNameLookup,
   isShowing
 }: GlMapProps) => {
@@ -91,7 +93,7 @@ const GlMap: React.FC < GlMapProps > = ({
 
     const [ hoverInfo, setHoverInfo] = useState < any > (null); // Specify the type of hoverInfo if known
     const  [layerFilter, setLayerFilter] = useState < any > (['all']); // Specify the type of layerFilter if known
-    const [ map_zoom, setMapZoom] = useState < number > (zoom);
+    const [ mapZoom, setMapZoom] = useState < number > (zoom);
     const [ clickedBlock, setClickedBlock] = useState < string > ("");
 
     const [ selected_features, selectFeatures ] = useState<GeoJSONFeature[]>([]);
@@ -102,6 +104,7 @@ const GlMap: React.FC < GlMapProps > = ({
 
     const onMove = (event: any) => { // Specify the type of event if known
         setMapZoom(event.viewState!.zoom!);
+        onZoomChange(event.viewState!.zoom!);
     };
 
     const onHover = useCallback((event: any) => { // Specify the type of event if known
@@ -319,10 +322,10 @@ const GlMap: React.FC < GlMapProps > = ({
     return ( /*Wait for ApiToken*/
         (apiContext.hasOwnProperty("token") && apiContext.token !== null) ? (
             <div className={style["map-wrapper"]}>
-                {map_zoom < MIN_ZOOM_LEVEL && (
+                {mapZoom < MIN_ZOOM_LEVEL && (
                   <animated.div style={props} className={style["zoom-message"]}>Zoom in further to view data</animated.div>
                 )}
-                {map_zoom >= MIN_ZOOM_LEVEL && (
+                {mapZoom >= MIN_ZOOM_LEVEL && (
                   <MapLegend title={colorVariable} category={fillColor} />
                 )}
                 {clickedBlock.length > 0 && (

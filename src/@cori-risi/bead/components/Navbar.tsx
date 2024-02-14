@@ -1,4 +1,5 @@
-import style from "./styles/Navbar.module.css"
+import style from "./styles/Navbar.module.css";
+import Button from '@mui/material/Button';
 import React from 'react';
 
 export default function Navbar(
@@ -12,21 +13,15 @@ export default function Navbar(
   }
 ) {
 
-    console.log("isDrawerShowing is ", isDrawerShowing)
-
     return ( 
     	<>
     		<div className={style['navbar-container']}>
           <div className={style['navbar']}>
             <img className={style['logo']} src='/Full-Logo_CORI_Cream.svg'/>
-{/*            <a className={style['menu']}>
-              <img src="/menu.svg" />
-            </a>*/}
             <div>
-              {/*<a className={style["about"]}>About</a>*/}
-              <button className={style["open-button"]} onClick={onToggleDrawer}>
+              <Button className={style["open-button"]} onClick={onToggleDrawer} variant="outlined">
                   {isDrawerShowing ? "Hide filters" : "Show filters"}
-              </button>
+              </Button>
             </div>
           </div>
         </div>

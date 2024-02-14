@@ -70,6 +70,11 @@ const Interface = () => {
     const [focusBlock, setFocusBlock] = useState < string > ("");
     const [detailedInfo, setDetailedInfo] = useState < any[] > ([]);
     const [colorVariable, setColorVariable] = useState < string > ("BEAD category");
+    const [mapZoom, setMapZoom] = useState<number>(3.5);
+
+    const handleZoomChange = (newZoom: number) => {
+        setMapZoom(newZoom);
+    }
 
     const handleColorVariableChange = (newColorVariable: string) => {
         setColorVariable(newColorVariable);
@@ -96,13 +101,7 @@ const Interface = () => {
     };
 
     const MAPBOX_TOKEN = typeof process.env.MAPBOX_TOKEN === 'string' ? process.env.MAPBOX_TOKEN : '';
-
-    // window.addEventListener('resize', function(event) {
-
-    //     if (window.innerWidth > 600 && isDrawerShowing === false) {
-    //         setDrawerShowing(true);
-    //     }
-    // });
+    const MIN_ZOOM_LEVEL = 9;
 
     return ( 
         <>
@@ -129,6 +128,7 @@ const Interface = () => {
                     colorVariable={colorVariable}
                     onFocusBlockChange={handleFocusBlockClick}
                     onDetailedInfoChange={handleDetailedInfo}
+                    onZoomChange={handleZoomChange}
                     ispNameLookup={isp_name_lookup_rev}
                     isShowing={isDrawerShowing}
                 />
