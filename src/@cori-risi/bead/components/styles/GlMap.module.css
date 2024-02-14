@@ -63,10 +63,6 @@
 
 @media (max-width: 600px) {
 
-	.zoom-message {
-		width: 100%;
-	}
-
 	.detail-button {
 		left: calc(50% - 100px);
 	}

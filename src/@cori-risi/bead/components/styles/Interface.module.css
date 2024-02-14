@@ -1,5 +1,7 @@
 .interface {
 	position: relative;
+
+	overflow: hidden;
 }
 
 .map-interface {
