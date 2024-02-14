@@ -11,7 +11,12 @@ export default function Navbar() {
 {/*            <a className={style['menu']}>
               <img src="/menu.svg" />
             </a>*/}
-            <a className={style["about"]}>About</a>
+            <div>
+              <a className={style["about"]}>About</a>
+              <button>
+                Hide controls
+              </button>
+            </div>
           </div>
         </div>
       </>

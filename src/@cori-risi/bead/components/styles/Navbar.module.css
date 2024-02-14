@@ -59,3 +59,21 @@
 	max-height: 100%;
 	max-width: 100%;
 }
+
+.navbar button {
+
+	background-color: white;
+	font-family: "TT Hoves Bold", monospace;
+	color: #00835D;
+
+	padding: 10px;
+
+	border-radius: 5px;
+
+	border: none;
+
+	margin-left: 20px;
+}
+
+
+
