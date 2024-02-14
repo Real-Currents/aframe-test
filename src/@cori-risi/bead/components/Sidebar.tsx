@@ -54,8 +54,6 @@ function Sidebar<T>({
  }) {
 
   const props = useSpring({
-    // display: isShowing ? "block": "none",
-    // opacity: isShowing ? 1: 0
     right: isShowing ? "0px": "-375px"
   });  
 

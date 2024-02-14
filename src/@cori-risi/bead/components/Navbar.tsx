@@ -7,7 +7,7 @@ export default function Navbar(
     isDrawerShowing
   }:
   { 
-    onToggleDrawer: (newToggle: event) => void,
+    onToggleDrawer: (event: React.SyntheticEvent) => void,
     isDrawerShowing: boolean
   }
 ) {
