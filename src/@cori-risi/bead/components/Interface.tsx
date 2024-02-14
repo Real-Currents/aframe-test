@@ -91,27 +91,27 @@ const Interface = () => {
         setFilter(newFilter);
     };
 
-    const MAPBOX_TOKEN = typeof process.env.MAPBOX_TOKEN === 'string' ? process.env.MAPBOX_TOKEN : '';
-
     const handleToggleDrawer = () => {
         setDrawerShowing(!isDrawerShowing);
     };
 
-    window.addEventListener('resize', function(event) {
+    const MAPBOX_TOKEN = typeof process.env.MAPBOX_TOKEN === 'string' ? process.env.MAPBOX_TOKEN : '';
 
-        if (window.innerWidth > 600 && isDrawerShowing === false) {
-            setDrawerShowing(true);
-        }
-    });
+    // window.addEventListener('resize', function(event) {
+
+    //     if (window.innerWidth > 600 && isDrawerShowing === false) {
+    //         setDrawerShowing(true);
+    //     }
+    // });
 
     return ( 
         <>
         <div className={style['interface']}>
-            <Navbar />
+            <Navbar 
+                onToggleDrawer={handleToggleDrawer} 
+                isDrawerShowing={isDrawerShowing}
+            />
             <div style={{marginTop: "75px"}}>
-            <button className={style["open-button"]} onClick={handleToggleDrawer}>
-                {isDrawerShowing ? "Hide filters" : "Show filters"}
-            </button>
             <div className={style["map-interface"]}>
                 <Sidebar<FilterProps> 
                     onFilterChange={handleFilterChange} 
@@ -130,6 +130,7 @@ const Interface = () => {
                     onFocusBlockChange={handleFocusBlockClick}
                     onDetailedInfoChange={handleDetailedInfo}
                     ispNameLookup={isp_name_lookup_rev}
+                    isShowing={isDrawerShowing}
                 />
             </div>
             </div>

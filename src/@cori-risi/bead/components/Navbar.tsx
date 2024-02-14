@@ -1,7 +1,18 @@
 import style from "./styles/Navbar.module.css"
 import React from 'react';
 
-export default function Navbar() {
+export default function Navbar(
+  {
+    onToggleDrawer,
+    isDrawerShowing
+  }:
+  { 
+    onToggleDrawer: (newToggle: event) => void,
+    isDrawerShowing: boolean
+  }
+) {
+
+    console.log("isDrawerShowing is ", isDrawerShowing)
 
     return ( 
     	<>
@@ -12,9 +23,9 @@ export default function Navbar() {
               <img src="/menu.svg" />
             </a>*/}
             <div>
-              <a className={style["about"]}>About</a>
-              <button>
-                Hide controls
+              {/*<a className={style["about"]}>About</a>*/}
+              <button className={style["open-button"]} onClick={onToggleDrawer}>
+                  {isDrawerShowing ? "Hide filters" : "Show filters"}
               </button>
             </div>
           </div>

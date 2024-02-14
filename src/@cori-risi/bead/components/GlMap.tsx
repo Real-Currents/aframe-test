@@ -3,6 +3,7 @@ import IntrinsicAttributes = React.JSX.IntrinsicAttributes;
 import { Map as MapboxMap } from 'mapbox-gl';
 import Map, { Source, Layer,  LayerProps, MapRef } from 'react-map-gl';
 import { fitBounds } from 'viewport-mercator-project';
+import { useSpring, animated } from "react-spring";
 
 import axios, {AxiosInstance} from "axios";
 import { ApiContext } from "../../contexts/ApiContextProvider";
@@ -48,7 +49,8 @@ type GlMapProps = {
     colorVariable: string,
     onFocusBlockChange: (newFocusBlock: string) => void,
     onDetailedInfoChange: (newDetailedInfo: any[]) => void,
-    ispNameLookup: { [key: string]: string } 
+    ispNameLookup: { [key: string]: string },
+    isShowing: boolean
 };
 
 const USA_BOUNDS: [
@@ -66,7 +68,8 @@ const GlMap: React.FC < GlMapProps > = ({
   colorVariable,
   onFocusBlockChange,
   onDetailedInfoChange,
-  ispNameLookup
+  ispNameLookup,
+  isShowing
 }: GlMapProps) => {
 
     const apiContext = useContext(ApiContext);
@@ -92,6 +95,10 @@ const GlMap: React.FC < GlMapProps > = ({
     const [ clickedBlock, setClickedBlock] = useState < string > ("");
 
     const [ selected_features, selectFeatures ] = useState<GeoJSONFeature[]>([]);
+
+    const props = useSpring({
+        width: isShowing ? window.innerWidth - 375 + "px": window.innerWidth + "px"
+    });  
 
     const onMove = (event: any) => { // Specify the type of event if known
         setMapZoom(event.viewState!.zoom!);
@@ -313,7 +320,7 @@ const GlMap: React.FC < GlMapProps > = ({
         (apiContext.hasOwnProperty("token") && apiContext.token !== null) ? (
             <div className={style["map-wrapper"]}>
                 {map_zoom < MIN_ZOOM_LEVEL && (
-                  <div className={style["zoom-message"]}>Zoom in further to view data</div>
+                  <animated.div style={props} className={style["zoom-message"]}>Zoom in further to view data</animated.div>
                 )}
                 {map_zoom >= MIN_ZOOM_LEVEL && (
                   <MapLegend title={colorVariable} category={fillColor} />

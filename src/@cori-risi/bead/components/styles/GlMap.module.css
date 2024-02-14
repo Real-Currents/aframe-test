@@ -13,7 +13,7 @@
 	z-index: 10;
 
 
-	width: calc(100% - 375px);
+/*	width: calc(100% - 375px);*/
 
 	font-size: 20px;
 	padding: 12px;
@@ -64,7 +64,6 @@
 @media (max-width: 600px) {
 
 	.zoom-message {
-		margin-top: 36px;
 		width: 100%;
 	}
 

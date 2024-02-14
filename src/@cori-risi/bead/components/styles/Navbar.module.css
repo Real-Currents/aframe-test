@@ -60,7 +60,7 @@
 	max-width: 100%;
 }
 
-.navbar button {
+.navbar .open-button {
 
 	background-color: white;
 	font-family: "TT Hoves Bold", monospace;
@@ -73,6 +73,7 @@
 	border: none;
 
 	margin-left: 20px;
+	margin-top: 15.5px;
 }
 
 
