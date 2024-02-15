@@ -27,3 +27,27 @@ export function parseIspId(isp_ids: string, isp_name_lookup: { [key: string]: st
     return isp_name_str;
 
 }
+
+export function formatBroadbandTechnology(bb_tech_presence: boolean[]): string {
+
+    let tech_list: string[] = [];
+    if (bb_tech_presence[0] === true) {
+        tech_list.push("Coaxial cable");
+    }
+    if (bb_tech_presence[1] === true) {
+        tech_list.push("Copper wire (DSL)");
+    }
+    if (bb_tech_presence[2] === true) {
+        tech_list.push("Fiber");
+    }
+    if (bb_tech_presence[3] === true || bb_tech_presence[4] === true) {
+        tech_list.push("LBR/Licensed wireless")
+    }
+
+
+    if (tech_list.length == 0) {
+        return "None";
+    }
+    return tech_list.join(", ")
+
+}

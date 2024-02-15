@@ -8,7 +8,8 @@ import { useSpring, animated } from "react-spring";
 import axios, {AxiosInstance} from "axios";
 import { ApiContext } from "../../contexts/ApiContextProvider";
 
-import { parseIspId } from '../utils/utils';
+import { parseIspId, formatBroadbandTechnology } from '../utils/utils';
+import { getBEADColor } from '../utils/colors';
 
 import { format } from 'd3-format';
 import "mapbox-gl/dist/mapbox-gl.css";
@@ -368,71 +369,50 @@ const GlMap: React.FC < GlMapProps > = ({
                         {hoverInfo && (
                           <div className="tooltip" style={{left: hoverInfo.x, top: hoverInfo.y}}>
                             <div>
-                            <h5>Block ID: {hoverInfo.feature.properties.geoid_bl} | {hoverInfo.feature.properties.bead_category}</h5> 
-                            <div className="flex-container">
+                            <h5><span>BEAD status:</span> <span className={style["bead-category"]} style={{textDecorationColor: getBEADColor(hoverInfo.feature.properties.bead_category)}}>{hoverInfo.feature.properties.bead_category}</span></h5> 
+                            <div>
                                 <div>
                                     <h6>Broadband access</h6>
                                     <table>
                                         <tbody>
                                             <tr>
-                                                <td>Total locations</td>
+                                                <td>Locations</td>
                                                 <td>{hoverInfo.feature.properties.cnt_total_locations}</td>
                                             </tr>
                                             <tr>
-                                                <td>ISP count</td>
-                                                <td>{hoverInfo.feature.properties.cnt_isp}</td>
+                                                <td>{"Pct. unserved (<25/3)"}</td>
+                                                <td>{percentFormat(1-hoverInfo.feature.properties.pct_served)}</td>
                                             </tr>
                                             <tr>
-                                                <td>Pct. 25/3 service</td>
-                                                <td>{percentFormat(hoverInfo.feature.properties.pct_served)}</td>
+                                                <td>{"Pct un- and underserved (<100/20) "}</td>
+                                                <td>{percentFormat(hoverInfo.feature.properties.cnt_25_3 / hoverInfo.feature.properties.cnt_total_locations)}</td>
                                             </tr>
                                             <tr>
-                                                <td>{">=100/20 locations"}</td>
-                                                <td>{hoverInfo.feature.properties.cnt_100_20}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>{">=25/3 locations"}</td>
-                                                <td>{hoverInfo.feature.properties.cnt_25_3}</td>
+                                                <td>{"Pct served (>100/20)"}</td>
+                                                <td>{percentFormat(hoverInfo.feature.properties.cnt_100_20 / hoverInfo.feature.properties.cnt_total_locations)}</td>
                                             </tr>   
                                         </tbody>                             
                                     </table>
                                 </div>
                                 <div>
-                                    <h6>Broadband technologies</h6>
-                                    <table>
-                                        <tbody>
-                                            <tr>
-                                                <td>Coaxial cable</td>
-                                                <td>{hoverInfo.feature.properties.has_coaxial_cable? "Yes": "No"}</td>
-                                            </tr>   
-                                            <tr>
-                                                <td>Copper wire</td>
-                                                <td>{hoverInfo.feature.properties.has_copperwire? "Yes": "No"}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Fiber</td>
-                                                <td>{hoverInfo.feature.properties.has_fiber? "Yes": "No"}</td>
-                                            </tr> 
-                                            <tr>
-                                                <td>LBR wireless</td>
-                                                <td>{hoverInfo.feature.properties.has_lbr_wireless? "Yes": "No"}</td>
-                                            </tr> 
-                                            <tr>
-                                                <td>Licensed wireless</td>
-                                                <td>{hoverInfo.feature.properties.has_licensed_wireless? "Yes": "No"}</td>
-                                            </tr> 
-                                        </tbody>
-                                    </table>
+                                    <h6>Broadband technologies: <span>
+                                        {formatBroadbandTechnology(
+                                            [
+                                                hoverInfo.feature.properties.has_coaxial_cable,
+                                                hoverInfo.feature.properties.has_copperwire,
+                                                hoverInfo.feature.properties.has_fiber,
+                                                hoverInfo.feature.properties.has_lbr_wireless,
+                                                hoverInfo.feature.properties.has_licensed_wireless
+                                            ]
+                                        )}
+                                    </span> </h6>
                                 </div>
                             </div>
                             <div>
                                 <h6>Previous grant funding? {hoverInfo.feature.properties.has_previous_funding? <span>Yes</span>: <span>No</span>}</h6>
                             </div>
                             <div>
-                                <h6>Internet service providers</h6>
-                                <p>
-                                    {hoverInfo.feature.properties.combo_isp_id ? parseIspId(hoverInfo.feature.properties.isp_id, ispNameLookup): "N/A"}
-                                </p>
+                                <h6>Internet service providers: <span>{hoverInfo.feature.properties.combo_isp_id ? parseIspId(hoverInfo.feature.properties.isp_id, ispNameLookup): "N/A"}</span></h6>
                             </div>
                           </div>
                           </div>

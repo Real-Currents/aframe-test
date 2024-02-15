@@ -10,6 +10,23 @@ const colors = {
     }
 };
 
+export function getBEADColor(bead_category: string): string {
+    
+    if (bead_category === "Served") {
+        return "rgba(35, 79, 191)";
+    }
+
+    if (bead_category === "Underserved") {
+        return "rgba(0, 131, 93)";
+    }
+
+    if (bead_category === "Unserved") {
+        return "rgba(255, 228, 115)";
+    }
+
+    return "rgba(105, 105, 105)";
+}
+
 export function getFillColor(color_scheme: string): any {  
 
   if (color_scheme === "BEAD category") {

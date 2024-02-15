@@ -8,6 +8,7 @@ import App from './@cori-risi/bead/App.tsx';
 
 import mapboxgl from 'mapbox-gl';
 
+import 'normalize.css';
 import './@cori-risi/bead/components/styles/CustomAmplifyAuthenticator.css';
 import './fonts.css';
 // import { Map } from 'mapbox-gl';

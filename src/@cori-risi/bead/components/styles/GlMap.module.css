@@ -61,6 +61,11 @@
 	fill: white;
 }
 
+.bead-category {
+	text-decoration-line: underline;
+	text-decoration-thickness: 5px;
+}
+
 @media (max-width: 600px) {
 
 	.detail-button {
