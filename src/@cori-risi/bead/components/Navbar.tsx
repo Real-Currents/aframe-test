@@ -1,6 +1,25 @@
 import style from "./styles/Navbar.module.css";
 import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
 import React from 'react';
+// import FilterAltIcon from '@mui/icons-material/FilterAlt';
+// import FilterAltOffIcon from '@mui/icons-material/FilterAltOff';
+import TuneIcon from '@mui/icons-material/Tune';
+import { styled } from '@mui/material/styles';
+
+
+const CustomButton = styled(Button)<ButtonProps>(({ theme }) => ({
+  '&:hover': {
+    backgroundColor: "#ECF5EF",
+  },
+}));
+
+const CustomIconButton = styled(IconButton)<IconButtonProps>(({ theme }) => ({
+  '&:hover': {
+    backgroundColor: "#ECF5EF",
+  },
+}));
+
 
 export default function Navbar(
   {
@@ -19,9 +38,19 @@ export default function Navbar(
           <div className={style['navbar']}>
             <img className={style['logo']} src='/Full-Logo_CORI_Cream.svg'/>
             <div>
-              <Button className={style["open-button"]} onClick={onToggleDrawer} variant="outlined">
+              <CustomButton 
+                className={style["open-button"]}
+                onClick={onToggleDrawer}
+                endIcon={ <TuneIcon /> }
+                variant="outlined">
                   {isDrawerShowing ? "Hide filters" : "Show filters"}
-              </Button>
+              </CustomButton>
+              <CustomIconButton 
+                className={style["icon-button"]}
+                onClick={onToggleDrawer}
+                >
+                <TuneIcon />
+              </CustomIconButton>
             </div>
           </div>
         </div>

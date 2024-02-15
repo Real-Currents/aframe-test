@@ -14,6 +14,7 @@
     "@cori-risi/cori.data.api": "github:ruralinnovation/cori.data.api",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.15.10",
     "@mui/material": "^5.15.3",
     "@reduxjs/toolkit": "^2.0.1",
     "aws-amplify": "^6.0.2",
