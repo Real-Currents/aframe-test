@@ -16,69 +16,6 @@
   }
 }
 
-.tooltip {
-  position: absolute;
-  margin: 8px;
-  padding: 10px;
-  width: 350px;
-  font-size: 1em;
-  z-index: 9;
-  pointer-events: none;
-
-  background-color: white;
-  border: 1px solid black;
-  border-radius: 5px;
-  color: black;
-
-  font-family: "Bitter", monospace;
-
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
-}
-
-.tooltip div {
-  margin-bottom: 5px;
-}
-
-.tooltip .flex-container {
-  display: flex;
-  justify-content: space-between;
-}
-
-.tooltip .flex-container .div {
-  width: 100%;
-}
-
-.tooltip span {
-  font-weight: normal;
-}
-
-.tooltip h5 {
-  font-weight: bold;
-  font-family: "TT Hoves Bold", sans-serif;
-  margin-bottom: 10px;
-  font-size: 1rem;
-}
-
-.tooltip h6 {
-  font-weight: 600;
-  font-family: "TT Hoves", sans-serif;
-  margin-bottom: 0px;
-  font-size: .9rem;
-}
-
-.tooltip table {
-  width: 100%;
-  margin-top: 10px;
-}
-
-.tooltip td {
-  border: .5px solid #d0d2ce;
-  min-width: 30px;
-  padding: 5px;
-  font-size: .89rem;
-}
-
-
 #map {
   position: relative;
   width: 50vw !important;

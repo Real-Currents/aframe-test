@@ -367,12 +367,11 @@ const GlMap: React.FC < GlMapProps > = ({
                           filter={layerFilter}
                         />
                         {hoverInfo && (
-                          <div className="tooltip" style={{left: hoverInfo.x, top: hoverInfo.y}}>
-                            <div>
-                            <h5><span>BEAD status:</span> <span className={style["bead-category"]} style={{textDecorationColor: getBEADColor(hoverInfo.feature.properties.bead_category)}}>{hoverInfo.feature.properties.bead_category}</span></h5> 
+                        <div className={style["tooltip"]} style={{left: hoverInfo.x, top: hoverInfo.y}}>
+                            <h5>BEAD status: <span className={style["bead-category"]} style={{textDecorationColor: getBEADColor(hoverInfo.feature.properties.bead_category)}}>{hoverInfo.feature.properties.bead_category}</span></h5> 
                             <div>
                                 <div>
-                                    <h6>Broadband access</h6>
+                                    <p><b>Broadband access</b></p>
                                     <table>
                                         <tbody>
                                             <tr>
@@ -395,8 +394,7 @@ const GlMap: React.FC < GlMapProps > = ({
                                     </table>
                                 </div>
                                 <div>
-                                    <h6>Broadband technologies: <span>
-                                        {formatBroadbandTechnology(
+                                    <p><b>Broadband technologies</b>: {formatBroadbandTechnology(
                                             [
                                                 hoverInfo.feature.properties.has_coaxial_cable,
                                                 hoverInfo.feature.properties.has_copperwire,
@@ -405,17 +403,12 @@ const GlMap: React.FC < GlMapProps > = ({
                                                 hoverInfo.feature.properties.has_licensed_wireless
                                             ]
                                         )}
-                                    </span> </h6>
-                                </div>
-                            </div>
-                            <div>
-                                <h6>Previous grant funding? {hoverInfo.feature.properties.has_previous_funding? <span>Yes</span>: <span>No</span>}</h6>
-                            </div>
-                            <div>
-                                <h6>Internet service providers: <span>{hoverInfo.feature.properties.combo_isp_id ? parseIspId(hoverInfo.feature.properties.isp_id, ispNameLookup): "N/A"}</span></h6>
+                                    </p>
+                                <p><b>Previous grant funding?</b> {hoverInfo.feature.properties.has_previous_funding? "Yes": "No"}</p>
+                                <p><b>Internet service providers:</b> {hoverInfo.feature.properties.combo_isp_id ? parseIspId(hoverInfo.feature.properties.isp_id, ispNameLookup): "N/A"}</p>
                             </div>
                           </div>
-                          </div>
+                        </div>
                         )}
                     </Source>
                     {/*{(selected_features.length > 0) ?*/}
