@@ -1,9 +1,7 @@
 import style from "./styles/Navbar.module.css";
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
+import Button, { ButtonProps }  from '@mui/material/Button';
+import IconButton, { IconButtonProps }  from '@mui/material/IconButton';
 import React from 'react';
-// import FilterAltIcon from '@mui/icons-material/FilterAlt';
-// import FilterAltOffIcon from '@mui/icons-material/FilterAltOff';
 import TuneIcon from '@mui/icons-material/Tune';
 import { styled } from '@mui/material/styles';
 

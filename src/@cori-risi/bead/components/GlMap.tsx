@@ -323,7 +323,7 @@ const GlMap: React.FC < GlMapProps > = ({
         (apiContext.hasOwnProperty("token") && apiContext.token !== null) ? (
             <div className={style["map-wrapper"]}>
                 {mapZoom < MIN_ZOOM_LEVEL && (
-                  <animated.div style={props} className={style["zoom-message"]}>Zoom in further to view data</animated.div>
+                  <animated.div style={props} className={style["zoom-message"]}>Zoom in further to view and filter data</animated.div>
                 )}
                 {mapZoom >= MIN_ZOOM_LEVEL && (
                   <MapLegend title={colorVariable} category={fillColor} />

@@ -41,7 +41,8 @@ function Sidebar<T>({
   filter,
   isShowing,
   ispIdLookup,
-  ispNameLookup
+  ispNameLookup,
+  disableSidebar
 }: 
   {
     onFilterChange: (newFilter: T) => void, 
@@ -50,7 +51,8 @@ function Sidebar<T>({
     filter: any,
     isShowing: boolean,
     ispIdLookup: { [key: string]: string[] },
-    ispNameLookup: { [key: string]: string } 
+    ispNameLookup: { [key: string]: string },
+    disableSidebar: boolean
  }) {
 
   const props = useSpring({
@@ -141,6 +143,7 @@ function Sidebar<T>({
                 sx={{ width: "100%" }}
                 renderInput={(params) => <TextField {...params} label="Color map by" />}
                 onChange={handleFillColorChange}
+                disabled={disableSidebar}
               />
             </div>
           </div>
@@ -164,6 +167,7 @@ function Sidebar<T>({
                     />
                   }
                   label="Served"
+                  disabled={disableSidebar}
                 />
                 <FormControlLabel className={style["form-control-label"]}
                   control={
@@ -174,6 +178,7 @@ function Sidebar<T>({
                     />
                   }
                   label="Underserved"
+                  disabled={disableSidebar}
                 />
                 <FormControlLabel className={style["form-control-label"]}
                   control={
@@ -184,7 +189,8 @@ function Sidebar<T>({
                     />
                   }
                   label="Unserved"
-                />                    
+                  disabled={disableSidebar}
+                />          
               </FormGroup>
             </div>
             <div className={style["filter-section"]}>
@@ -202,6 +208,7 @@ function Sidebar<T>({
                     />
                   }
                   label="Yes"
+                  disabled={disableSidebar}
                 />
                 <FormControlLabel className={style["form-control-label"]}
                   control={
@@ -212,6 +219,7 @@ function Sidebar<T>({
                     />
                   }
                   label="No"
+                  disabled={disableSidebar}
                 />                 
               </FormGroup>  
             </div>
@@ -227,6 +235,7 @@ function Sidebar<T>({
                   valueLabelDisplay="auto"
                   min={0}
                   max={10}
+                  disabled={disableSidebar}
                 />
               </div>
             </div>
@@ -242,6 +251,7 @@ function Sidebar<T>({
                   valueLabelDisplay="auto"
                   min={0}
                   max={1015}
+                  disabled={disableSidebar}
                 />
               </div>
             </div>
@@ -262,6 +272,7 @@ function Sidebar<T>({
                     placeholder="Filter by ISP"
                   />
                 )}
+                disabled={disableSidebar}
               />    
             </div>          
             <div className={style["filter-section"]}>
@@ -282,6 +293,7 @@ function Sidebar<T>({
                     placeholder="Filter by broadband technology"
                   />
                 )}
+                disabled={disableSidebar}
               />
             </div>
             <div className={style["filter-section"]}>  
@@ -301,6 +313,7 @@ function Sidebar<T>({
                     placeholder="Filter by county"
                   />
                 )}
+                disabled={disableSidebar}
               />   
             </div> 
           </div>

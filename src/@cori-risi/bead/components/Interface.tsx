@@ -120,6 +120,7 @@ const Interface = () => {
                     isShowing={isDrawerShowing} 
                     ispIdLookup={isp_id_lookup}
                     ispNameLookup={isp_name_lookup}
+                    disableSidebar={mapZoom < MIN_ZOOM_LEVEL}
                 />
                 <GlMap 
                     mapboxToken={MAPBOX_TOKEN} 
