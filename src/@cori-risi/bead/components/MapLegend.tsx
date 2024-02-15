@@ -36,7 +36,7 @@ const MapLegend: React.FC < MapLegendProps > = ({ title, category }) => {
                     className={style['interpolate-bar']} 
                     style={{"background": "linear-gradient(to right, " + category[4] + ", " + category[category.length-1] + ")"}} >
                 </div>
-                <p>{numberFormat(category[category.length-2])}</p>
+                <p>{numberFormat(category[category.length-2])}+</p>
             </div>
         );
     };

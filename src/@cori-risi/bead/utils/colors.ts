@@ -68,7 +68,7 @@ export function getFillColor(color_scheme: string): any {
         ['linear'],
         ['get', 'cnt_total_locations'],
         0, 'rgba(163, 226, 181, 0.7)',
-        1015,
+        500, // The max value is 1015, but its rare so cap the scale at 500
         'rgba(22, 52, 62, 0.7)'
     ]
 

@@ -139,7 +139,7 @@ function Sidebar<T>({
                 disableClearable
                 id="map-colors"
                 defaultValue={"BEAD category"}
-                options={["BEAD category", "ISP count", "Total locations"]}
+                options={["BEAD category", "Total locations"]}
                 sx={{ width: "100%" }}
                 renderInput={(params) => <TextField {...params} label="Color map by" />}
                 onChange={handleFillColorChange}
@@ -195,7 +195,7 @@ function Sidebar<T>({
             </div>
             <div className={style["filter-section"]}>
               <div className={style["filter-header"]}>
-                <h5>Previously Awarded Funding</h5>
+                <h5>Received federal funding?</h5>
                 <InfoTooltip text={"Show blocks that have received prior federal broadband funding"}/>
               </div>
               <FormGroup row className={style["form-control-group"]}>
