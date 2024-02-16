@@ -60,8 +60,8 @@ const USA_BOUNDS: [
     [number, number],
     [number, number]
 ] = [
-    [-125, 24], // Southwest coordinates: [Longitude, Latitude]
-    [-66, 49] // Northeast coordinates: [Longitude, Latitude]
+    [-105, 24], // Southwest coordinates: [Longitude, Latitude]
+    [-70, 49] // Northeast coordinates: [Longitude, Latitude]
 ];
 
 const GlMap: React.FC < GlMapProps > = ({
