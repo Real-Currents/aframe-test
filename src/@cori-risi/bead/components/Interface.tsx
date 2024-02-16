@@ -18,13 +18,12 @@ interface IspNameLookup {
   [key: string]: string;
 }
 const isp_name_lookup: IspNameLookup = isp_name_dict;
+const isp_name_lookup_rev = swapKeysValues(isp_name_lookup);
 
 interface IspIdLookup {
   [key: string]: string[];
 }
 const isp_id_lookup: IspIdLookup = isp_id_dict;
-
-const isp_name_lookup_rev = swapKeysValues(isp_name_lookup);
 
 export type FilterProps = {
     bb_service: {

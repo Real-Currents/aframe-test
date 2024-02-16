@@ -98,6 +98,7 @@ function Sidebar<T>({
 
   function handleMultipleISPChange(event: any, newValue: any ): void {
 
+    // Populate a list of combo ids to use when filtering
     let valid_isp_combos: string[] = [];
     for (let isp of newValue) {
 
