@@ -24,34 +24,39 @@ interface BroadbandTechnology {
 
 import broadband_technology_dict from './../data/broadband_technology.json';
 const broadband_technology: Record<string, string> = broadband_technology_dict;
-import isp_name from './../data/isp_name.json';
-import isp_dict from './../data/isp_blocksv1_dict.json';
 import county_name_geoid from './../data/geoid_co_name_crosswalk.json';
 
-interface IspLookup {
+interface IspNameLookup {
   [key: string]: string;
 }
 
-const isp_lookup: IspLookup = isp_dict;
+interface IspIdLookup {
+  [key: string]: string[];
+}
 
 function Sidebar<T>({ 
   onFilterChange, 
   onFillColorChange, 
-  onColorVariableChange, 
+  onColorVariableChange,
   filter,
-  isShowing
+  isShowing,
+  ispIdLookup,
+  ispNameLookup,
+  disableSidebar
 }: 
   {
     onFilterChange: (newFilter: T) => void, 
     onFillColorChange: (newFillColor: any[]) => void,
     onColorVariableChange: (newColorVariable: string) => void,
     filter: any,
-    isShowing: boolean
+    isShowing: boolean,
+    ispIdLookup: { [key: string]: string[] },
+    ispNameLookup: { [key: string]: string },
+    disableSidebar: boolean
  }) {
 
   const props = useSpring({
-    display: isShowing ? "block": "none",
-    opacity: isShowing ? 1: 0
+    right: isShowing ? "0px": "-375px"
   });  
 
   const handleISPChange = (event: Event, newValue: number | number[]) => {
@@ -93,18 +98,15 @@ function Sidebar<T>({
 
   function handleMultipleISPChange(event: any, newValue: any ): void {
 
-    console.log("newValue is ", newValue);
     let valid_isp_combos: string[] = [];
     for (let isp of newValue) {
 
-      for (let key of Object.keys(isp_lookup)) {
+      let isp_id = ispNameLookup[isp];
+      for (const key in ispIdLookup) {
 
-        if (key.includes(isp)) {
-          console.log("ALIVE!!!");
-          let combo_id: string = isp_lookup[key]
-          valid_isp_combos.push(combo_id);
+        if (ispIdLookup[key].includes(isp_id)) {
+          valid_isp_combos.push(key);
         }
-
       }
     }
     
@@ -129,162 +131,192 @@ function Sidebar<T>({
   return (
     <>
         <animated.div style={props} className={style["sidebar"]}>
-          <div className={style["color-dropdown"]}>
-            <Autocomplete
-              disablePortal
-              disableClearable
-              id="map-colors"
-              defaultValue={"BEAD category"}
-              options={["BEAD category", "ISP count", "Total locations"]}
-              sx={{ width: "100%" }}
-              renderInput={(params) => <TextField {...params} label="Color map by" />}
-              onChange={handleFillColorChange}
-            />
+          <h4>Map display variable</h4>
+          <div className={style['fill-selector']}>
+            <div className={style["color-dropdown"]}>
+              <Autocomplete
+                disablePortal
+                disableClearable
+                id="map-colors"
+                defaultValue={"BEAD category"}
+                options={["BEAD category", "Total locations"]}
+                sx={{ width: "100%" }}
+                renderInput={(params) => <TextField {...params} label="Color map by" />}
+                onChange={handleFillColorChange}
+                disabled={disableSidebar}
+              />
+            </div>
           </div>
           <hr />
-          <h4>Filters</h4>
-          <div className={style["filter-header"]}>
-            <h5>Broadband service level</h5>
-            <InfoTooltip text={`Unserved refers to areas where at least 80% of locations have 25/3 Mbps service. 
-            Underserved refers to areas where at least 80% of locations have 100/20 Mbps service. Served refers to 
-            areas that are neither Unserved nor Underserved.`}/>
-          </div>
-          <FormGroup row className={style["form-control-group"]}>
-            <FormControlLabel className={style["form-control-label"]}
-              control={
-                <Checkbox
-                  checked={filter.bb_service.served}
-                  onChange={handleBroadbandChange}
-                  name="served"
+          <div className={style["filter-container"]}>
+            <h4>Filters</h4>
+            <div className={style["filter-section"]}>
+              <div className={style["filter-header"]}>
+                <h5>Broadband service level</h5>
+                <InfoTooltip text={`Unserved refers to areas where at least 80% of locations do not have 25/3 Mbps service. 
+                Underserved refers to areas where at least 80% of locations do not have 100/20 Mbps service. Served refers to 
+                areas that are neither Unserved nor Underserved.`}/>
+              </div>
+              <FormGroup row className={style["form-control-group"]}>
+                <FormControlLabel className={style["form-control-label"]}
+                  control={
+                    <Checkbox
+                      checked={filter.bb_service.served}
+                      onChange={handleBroadbandChange}
+                      name="served"
+                    />
+                  }
+                  label="Served"
+                  disabled={disableSidebar}
                 />
-              }
-              label="Served"
-            />
-            <FormControlLabel className={style["form-control-label"]}
-              control={
-                <Checkbox
-                  checked={filter.bb_service.underserved}
-                  onChange={handleBroadbandChange}
-                  name="underserved"
+                <FormControlLabel className={style["form-control-label"]}
+                  control={
+                    <Checkbox
+                      checked={filter.bb_service.underserved}
+                      onChange={handleBroadbandChange}
+                      name="underserved"
+                    />
+                  }
+                  label="Underserved"
+                  disabled={disableSidebar}
                 />
-              }
-              label="Underserved"
-            />
-            <FormControlLabel className={style["form-control-label"]}
-              control={
-                <Checkbox
-                  checked={filter.bb_service.unserved}
-                  onChange={handleBroadbandChange}
-                  name="unserved"
+                <FormControlLabel className={style["form-control-label"]}
+                  control={
+                    <Checkbox
+                      checked={filter.bb_service.unserved}
+                      onChange={handleBroadbandChange}
+                      name="unserved"
+                    />
+                  }
+                  label="Unserved"
+                  disabled={disableSidebar}
+                />          
+              </FormGroup>
+            </div>
+            <div className={style["filter-section"]}>
+              <div className={style["filter-header"]}>
+                <h5>Received federal funding?</h5>
+                <InfoTooltip text={"Show blocks that have received prior federal broadband funding"}/>
+              </div>
+              <FormGroup row className={style["form-control-group"]}>
+                <FormControlLabel className={style["form-control-label"]}
+                  control={
+                    <Checkbox
+                      checked={filter.has_previous_funding.yes}
+                      onChange={handleAwardChange}
+                      name="yes"
+                    />
+                  }
+                  label="Yes"
+                  disabled={disableSidebar}
                 />
-              }
-              label="Unserved"
-            />                    
-          </FormGroup>
-          <div className={style["filter-header"]}>
-            <h5>Previously Awarded Funding</h5>
-            <InfoTooltip text={"Show blocks that have received prior federal broadband funding"}/>
-          </div>
-          <FormGroup row className={style["form-control-group"]}>
-            <FormControlLabel className={style["form-control-label"]}
-              control={
-                <Checkbox
-                  checked={filter.has_previous_funding.yes}
-                  onChange={handleAwardChange}
-                  name="yes"
+                <FormControlLabel className={style["form-control-label"]}
+                  control={
+                    <Checkbox
+                      checked={filter.has_previous_funding.no}
+                      onChange={handleAwardChange}
+                      name="no"
+                    />
+                  }
+                  label="No"
+                  disabled={disableSidebar}
+                />                 
+              </FormGroup>  
+            </div>
+            <div className={style["filter-section"]}>        
+              <div className={style["filter-header"]}>
+                <h5>Internet service provider count</h5>
+              </div>
+              <div className={style["slider"]}>
+                <Slider
+                  getAriaLabel={() => 'ISP Count'}
+                  value={filter.isp_count}
+                  onChange={handleISPChange}
+                  valueLabelDisplay="auto"
+                  min={0}
+                  max={10}
+                  disabled={disableSidebar}
                 />
-              }
-              label="Yes"
-            />
-            <FormControlLabel className={style["form-control-label"]}
-              control={
-                <Checkbox
-                  checked={filter.has_previous_funding.no}
-                  onChange={handleAwardChange}
-                  name="no"
+              </div>
+            </div>
+            <div className={style["filter-section"]}>
+              <div className={style["filter-header"]}>
+                <h5>Total locations</h5>
+              </div>
+              <div className={style["slider"]}>
+                <Slider
+                  getAriaLabel={() => 'Total locations'}
+                  value={filter.total_locations}
+                  onChange={handleTotalLocationsChange}
+                  valueLabelDisplay="auto"
+                  min={0}
+                  max={1015}
+                  disabled={disableSidebar}
                 />
-              }
-              label="No"
-            />                 
-          </FormGroup>          
-          <div className={style["filter-header"]}>
-            <h5>Internet service provider count</h5>
-          </div>
-          <div className={style["slider"]}>
-            <Slider
-              getAriaLabel={() => 'ISP Count'}
-              value={filter.isp_count}
-              onChange={handleISPChange}
-              valueLabelDisplay="auto"
-              min={0}
-              max={10}
-            />
-          </div>
-          <div className={style["filter-header"]}>
-            <h5>Total locations</h5>
-          </div>
-          <div className={style["slider"]}>
-            <Slider
-              getAriaLabel={() => 'Total locations'}
-              value={filter.total_locations}
-              onChange={handleTotalLocationsChange}
-              valueLabelDisplay="auto"
-              min={0}
-              max={1015}
-            />
-          </div>
-          <div className={style["filter-header"]}>
-            <h5>Broadband Technologies</h5>
-            {/*<InfoTooltip text={"Filter to blocks which have a certain broadband technology"}/>*/}
-          </div>
-          <Autocomplete
-            multiple
-            options={Object.keys(broadband_technology)}
-            defaultValue={[]}
-            onChange={handleBroadbandTechnologyChange}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                variant="standard"
-                label="Filter by broadband technology"
-                placeholder="Filter by broadband technology"
+              </div>
+            </div>
+            <div className={style["filter-section"]}>
+              <div className={style["filter-header"]}>
+                <h5>Internet Service Providers</h5>
+              </div>
+              <Autocomplete
+                multiple
+                options={Object.keys(ispNameLookup)}
+                defaultValue={[]}
+                onChange={handleMultipleISPChange}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="standard"
+                    label="Filter by ISP"
+                    placeholder="Filter by ISP"
+                  />
+                )}
+                disabled={disableSidebar}
+              />    
+            </div>          
+            <div className={style["filter-section"]}>
+              <div className={style["filter-header"]}>
+                <h5>Broadband Technologies</h5>
+                {/*<InfoTooltip text={"Filter to blocks which have a certain broadband technology"}/>*/}
+              </div>
+              <Autocomplete
+                multiple
+                options={Object.keys(broadband_technology)}
+                defaultValue={[]}
+                onChange={handleBroadbandTechnologyChange}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="standard"
+                    label="Filter by broadband technology"
+                    placeholder="Filter by broadband technology"
+                  />
+                )}
+                disabled={disableSidebar}
               />
-            )}
-          />
-          <div className={style["filter-header"]}>
-            <h5>Internet Service Providers</h5>
+            </div>
+            <div className={style["filter-section"]}>  
+              <div className={style["filter-header"]}>
+                <h5>County</h5>
+              </div>
+              <Autocomplete
+                multiple
+                options={county_name_geoid.map(d => d.label)}
+                // defaultValue={""}
+                onChange={handleCountiesChange}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="standard"
+                    label="Filter by county"
+                    placeholder="Filter by county"
+                  />
+                )}
+                disabled={disableSidebar}
+              />   
+            </div> 
           </div>
-          <Autocomplete
-            multiple
-            options={isp_name}
-            defaultValue={[]}
-            onChange={handleMultipleISPChange}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                variant="standard"
-                label="Filter by ISP"
-                placeholder="Filter by ISP"
-              />
-            )}
-          />      
-          <div className={style["filter-header"]}>
-            <h5>County</h5>
-          </div>
-          <Autocomplete
-            multiple
-            options={county_name_geoid.map(d => d.label)}
-            // defaultValue={""}
-            onChange={handleCountiesChange}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                variant="standard"
-                label="Filter by county"
-                placeholder="Filter by county"
-              />
-            )}
-          />    
       </animated.div>
     </>
   );

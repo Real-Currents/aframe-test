@@ -1,12 +1,12 @@
 .map-legend {
 	position: absolute;
 	top: 10px;
-	right: 10px;
+	left: 10px;
 
 	z-index: 19;
 	border: 1px solid black;
 
-	width: 170px;
+	width: 175px;
 
 	background-color: white;
 
@@ -17,6 +17,7 @@
 
 .map-legend h5 {
 	margin-bottom: 15px;
+	font-weight: 500;
 }
 
 .categorical-text-wrapper {
@@ -47,6 +48,15 @@
 	height: 1.7rem;
 	border: 1px solid black;
 	margin-right: 7.5px;
+}
+
+
+@media (max-width: 600px) {
+
+	.map-legend {
+		top: 40px;
+	}
+
 }
 
 
