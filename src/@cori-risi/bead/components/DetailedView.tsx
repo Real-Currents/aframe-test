@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import style from "./styles/DetailedView.module.css";
+import "./styles/DetailedView.scss";
+import {CustomButton, CustomIconButton} from "./CustomInputs";
+// import TuneIcon from "@mui/icons-material/Tune";
 
 interface DetailedViewProps {
     detailedInfo: any[];
@@ -67,12 +69,45 @@ const DetailedView: React.FC<DetailedViewProps> = ({ detailedInfo }) => {
 
     return (
         <>
-            <div id="detail" className={style["detailed-view"]}>
-                <h4>Broadband Information for Census Block {geoid_bl}</h4>
+            <div id="detail" className={"detailed-view"}>
+                <h4 className={"detailed-header"}>Broadband Information for Census Blocks in selection
+                    <button value={"TODO: Cancel"} />
+                    <button value={"TODO: See On Map"} />
+                    <span className={"button-group"}>
+                        <span className={"button-padding"}>
+                            <CustomButton
+                                className={"button"}
+                                onClick={(evt) => console.log("TODO: Cancel")}
+                                variant="outlined">
+                                TODO: Cancel
+                            </CustomButton>
+                            {/*<CustomIconButton*/}
+                            {/*    className={style["icon-button"]}*/}
+                            {/*    onClick={(evt) => console.log("TODO: Cancel")}*/}
+                            {/*>*/}
+                            {/*    <TuneIcon />*/}
+                            {/*</CustomIconButton>*/}
+                        </span>
+                        <span className={"button-padding"}>
+                            <CustomButton
+                                className={"affirmative button"}
+                                onClick={(evt) => console.log("TODO: See on map")}
+                                variant="outlined">
+                                TODO: See On Map
+                            </CustomButton>
+                            {/*<CustomIconButton*/}
+                            {/*    className={style["icon-button"]}*/}
+                            {/*    onClick={(evt) => console.log("TODO: See On Map")}*/}
+                            {/*>*/}
+                            {/*    <TuneIcon />*/}
+                            {/*</CustomIconButton>*/}
+                        </span>
+                    </span>
+                </h4>
                 <hr />
                 {
                     (block_info.length === 0 )?
-                        "Click a block to view detailed block info" :
+                        <p>Select a block on the map to view detailed Broadband info<br /></p> :
                         block_info
                             .filter((b: any) => {
                                 console.log("b: ", b);
@@ -81,7 +116,9 @@ const DetailedView: React.FC<DetailedViewProps> = ({ detailedInfo }) => {
                             .map((b: string[]) => {
                                 if (!!b && b !== null) {
                                     console.log(b);
+                                    // TODO <row>... in a table
                                     return (b.map((i: string) => (
+                                        // TODO <cell>... in row
                                         <p key={i.toString().split(":")[0]}
                                            style={{"display": "inline-block", "margin": "0.5em 1em 0.5em 0"}}>
                                             {i}</p>

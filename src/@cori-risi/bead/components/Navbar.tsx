@@ -1,23 +1,7 @@
 import style from "./styles/Navbar.module.css";
-import Button, { ButtonProps }  from '@mui/material/Button';
-import IconButton, { IconButtonProps }  from '@mui/material/IconButton';
 import React from 'react';
 import TuneIcon from '@mui/icons-material/Tune';
-import { styled } from '@mui/material/styles';
-
-
-const CustomButton = styled(Button)<ButtonProps>(({ theme }) => ({
-  '&:hover': {
-    backgroundColor: "#ECF5EF",
-  },
-}));
-
-const CustomIconButton = styled(IconButton)<IconButtonProps>(({ theme }) => ({
-  '&:hover': {
-    backgroundColor: "#ECF5EF",
-  },
-}));
-
+import { CustomButton, CustomIconButton } from "./CustomInputs";
 
 export default function Navbar(
   {

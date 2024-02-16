@@ -98,6 +98,7 @@ const GlMap: React.FC < GlMapProps > = ({
     const [ clickedBlock, setClickedBlock] = useState < string > ("");
 
     const [ selected_features, selectFeatures ] = useState<GeoJSONFeature[]>([]);
+    const [ selected_geoids, selectGeoIDs ] = useState<string[]>([]);
 
     const props = useSpring({
         width: isShowing ? window.innerWidth - 375 + "px": window.innerWidth + "px"
@@ -123,12 +124,7 @@ const GlMap: React.FC < GlMapProps > = ({
         }
     }, []);
 
-    const getBlockInfoFromApi = (clickedFeature: {
-        properties: {
-            [index: string]: any,
-            geoid_bl: number
-        }
-    }, token: string) => {
+    const getBlockInfoFromApi = (geoid_bl: string, token: string) => {
         // console.log("API Context state: ", apiContext);
 
         const client: AxiosInstance | null = (apiContext.hasOwnProperty("apiClient") && apiContext.apiClient !== null
@@ -138,10 +134,11 @@ const GlMap: React.FC < GlMapProps > = ({
 
         if (client !== null && client.hasOwnProperty("get") && typeof client.get === "function") {
 
-            client.get("/rest/bead/all?geoid_bl=" + clickedFeature.properties.geoid_bl)
+            client.get("/rest/bead/all?geoid_bl=" + geoid_bl)
                 .then(result => {
 
-                    onFocusBlockChange(clickedFeature.properties.geoid_bl.toString());
+                    // TODO: How is this used?
+                    // onFocusBlockChange(geoid_bl);
 
                     console.log("result is ", result);
 
@@ -149,7 +146,9 @@ const GlMap: React.FC < GlMapProps > = ({
                         && result.data.hasOwnProperty("features")
                         && result.data.features.length > 0
                     ) {
-                        result.data.features.forEach((f: GeoJSONFeature) => {
+                        onDetailedInfoChange(result.data.features);
+
+                        const block_features = result.data.features.filter((f: GeoJSONFeature) => {
                             // class GeoJSONFeature {
                             // 	type: "Feature";
                             // 	_geometry: GeoJSON.Geometry;
@@ -168,10 +167,10 @@ const GlMap: React.FC < GlMapProps > = ({
                                 && f["properties"]["type"] === "geojson"
                             ) {
                                 console.log("GeoJSON for this feature:", f);
-                                selectFeatures([ f ]);
+                                return true;
                             }
                         });
-                        onDetailedInfoChange(result.data.features);
+                        selectFeatures([ ...block_features ]);
                     }
                 })
                 .catch(error => {
@@ -210,10 +209,17 @@ const GlMap: React.FC < GlMapProps > = ({
 
                     if ((!!features && features.length > 0)) {
                         const clickedFeature = features[0]!;
+                        const clickedGeoID = clickedFeature.properties.geoid_bl.toString();
+                        const geoids = [
+                            ...selected_geoids,
+                            clickedGeoID
+                        ];
 
+                        console.log(`Feature clicked (${clickedGeoID}):`, clickedFeature);
                         console.log("Feature clicked:", clickedFeature);
-                        setClickedBlock(clickedFeature.properties.geoid_bl.toString());
-                        getBlockInfoFromApi(clickedFeature, token);
+                        setClickedBlock(clickedGeoID);
+                        selectGeoIDs(geoids);
+                        getBlockInfoFromApi(geoids.join(","), token);
                     }
                 }
             };
