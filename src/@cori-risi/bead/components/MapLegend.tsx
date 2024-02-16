@@ -1,7 +1,10 @@
 import React from 'react';
 import style from "./styles/MapLegend.module.css";
 
+import InfoTooltip from "./InfoTooltip";
+
 import { format } from 'd3-format';
+import { beadDefinitions } from '../utils/constants.ts';
 const numberFormat = format(',');
 
 interface MapLegendProps {
@@ -19,6 +22,7 @@ const MapLegend: React.FC < MapLegendProps > = ({ title, category }) => {
                 legendItems.push(
                     <div className={style["legend-row"]} key={i}>
                         <div style={{backgroundColor: category[i+1]}} className={style["legend-box"]}></div><p>{category[i]}</p>
+                        <InfoTooltip text={beadDefinitions[category[i]]}/>
                     </div>
                 );
             }

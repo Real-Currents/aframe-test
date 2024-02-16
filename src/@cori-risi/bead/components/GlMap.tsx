@@ -404,9 +404,12 @@ const GlMap: React.FC < GlMapProps > = ({
                                             ]
                                         )}
                                     </p>
-                                <p><b>Previous federal funding?</b> {hoverInfo.feature.properties.has_previous_funding? "Yes": "No"}</p>
-                                <p><b>Internet service providers:</b> {hoverInfo.feature.properties.combo_isp_id ? parseIspId(hoverInfo.feature.properties.isp_id, ispNameLookup): "N/A"}</p>
-                            </div>
+                                    <p><b>Previous federal funding?</b> {hoverInfo.feature.properties.has_previous_funding? "Yes": "No"}</p>
+                                    <p><b>Internet service providers:</b> {hoverInfo.feature.properties.combo_isp_id ? parseIspId(hoverInfo.feature.properties.isp_id, ispNameLookup): "N/A"}</p>
+                                </div>
+                                <div>
+                                    <p><em>Click to view detailed census block information</em></p>
+                                </div>
                           </div>
                         </div>
                         )}

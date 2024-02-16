@@ -258,7 +258,8 @@ function Sidebar<T>({
             </div>
             <div className={style["filter-section"]}>
               <div className={style["filter-header"]}>
-                <h5>Internet Service Providers</h5>
+                <h5>Internet service providers</h5>
+                <InfoTooltip text={"Show census blocks which include at least one of the ISPs you've selected"}/>
               </div>
               <Autocomplete
                 multiple
@@ -278,8 +279,8 @@ function Sidebar<T>({
             </div>          
             <div className={style["filter-section"]}>
               <div className={style["filter-header"]}>
-                <h5>Broadband Technologies</h5>
-                {/*<InfoTooltip text={"Filter to blocks which have a certain broadband technology"}/>*/}
+                <h5>Broadband technologies</h5>
+                <InfoTooltip text={"Show census blocks where a certain broadband technology is reported to be present"}/>
               </div>
               <Autocomplete
                 multiple
