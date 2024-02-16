@@ -2,7 +2,7 @@
 	background-color: white;
 
 	/*height: 600px;*/
-	height: 100vh;
+	height: calc(100vh - 76px);
 	width: 100%;
 	max-width: 975px;
 
