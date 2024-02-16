@@ -11,6 +11,8 @@ interface MapLegendProps {
 
 const MapLegend: React.FC < MapLegendProps > = ({ title, category }) => {
 
+    console.log("category:", category);
+
     const renderMatchLegend = () => {
         const legendItems = [];
 
@@ -34,7 +36,7 @@ const MapLegend: React.FC < MapLegendProps > = ({ title, category }) => {
                 <p>{numberFormat(category[3])}</p>
                 <div 
                     className={style['interpolate-bar']} 
-                    style={{"background": "linear-gradient(to right, " + category[4] + ", " + category[category.length-1] + ")"}} >
+                    style={{"background": "linear-gradient(to right, " + category[6] + ", " + category[category.length-1] + ")"}} >
                 </div>
                 <p>{numberFormat(category[category.length-2])}+</p>
             </div>

@@ -1,10 +1,65 @@
 import React, {useEffect, useState} from 'react';
 import "./styles/DetailedView.scss";
 import {CustomButton, CustomIconButton} from "./CustomInputs";
+import {Table, TableHead, TableBody, TableRow, TableCell} from "@aws-amplify/ui-react";
+import {Paper, TableContainer} from "@mui/material";
 // import TuneIcon from "@mui/icons-material/Tune";
 
 interface DetailedViewProps {
     detailedInfo: any[];
+}
+
+const columns = [
+    "geoid_bl",
+    "isp_id",
+    "cnt_isp",
+    "cnt_25_3",
+    "geoid_co",
+    "geoid_st",
+    "geoid_tr",
+    "has_fiber",
+    "cnt_100_20",
+    "pct_served",
+    "bl_25_3_area",
+    "combo_isp_id",
+    "bead_category",
+    "bl_100_20_area",
+    "has_copperwire",
+    "only_water_flag",
+    "has_lbr_wireless",
+    "has_coaxial_cable",
+    "cnt_total_locations",
+    "has_previous_funding",
+    "has_licensed_wireless"
+];
+
+const labels = {
+    "geoid_bl": "geoid_bl",
+    "isp_id": "isp_id",
+    "cnt_isp": "cnt_isp",
+    "cnt_25_3": "cnt_25_3",
+    "geoid_co": "geoid_co",
+    "geoid_st": "geoid_st",
+    "geoid_tr": "geoid_tr",
+    "has_fiber": "has_fiber",
+    "cnt_100_20": "cnt_100_20",
+    "pct_served": "pct_served",
+    "bl_25_3_area": "bl_25_3_area",
+    "combo_isp_id": "combo_isp_id",
+    "bead_category": "bead_category",
+    "bl_100_20_area": "bl_100_20_area",
+    "has_copperwire": "has_copperwire",
+    "only_water_flag": "only_water_flag",
+    "has_lbr_wireless": "has_lbr_wireless",
+    "has_coaxial_cable": "has_coaxial_cable",
+    "cnt_total_locations": "cnt_total_locations",
+    "has_previous_funding": "has_previous_funding",
+    "has_licensed_wireless": "has_licensed_wireless"
+};
+
+function getLabel (col: string, labels: any) {
+    return (labels.hasOwnProperty(col)) ?
+        labels[col].trim() : col.trim();
 }
 
 const DetailedView: React.FC<DetailedViewProps> = ({ detailedInfo }) => {
@@ -15,6 +70,7 @@ const DetailedView: React.FC<DetailedViewProps> = ({ detailedInfo }) => {
     const [ award_applicants, setAwardApplicants ] = useState<string[]>([]);
 
     useEffect(() => {
+
         const block_info = detailedInfo
             .filter((d: any) => (d.properties.hasOwnProperty("type")
                     && d.properties["type"] === "geojson"
@@ -45,7 +101,16 @@ const DetailedView: React.FC<DetailedViewProps> = ({ detailedInfo }) => {
                 && d.properties.hasOwnProperty("new_alias")
             )
             .map((d: any) => (d.properties.hasOwnProperty("new_alias")) ?
-                d.properties["new_alias"]! :
+                // "properties": {
+                //     "type": "isp_tech",
+                //     "isp_id": "156",
+                //     "max_up": 1,
+                //     "geoid_bl": "010539698023004",
+                //     "max_down": 10,
+                //     "new_alias": "AT&T Inc",
+                //     "technology": "71"
+                // }
+                `[${d.properties["geoid_bl"]!}] ${d.properties["new_alias"]!}: ${d.properties["max_down"]!} down / ${d.properties["max_up"]!} up (${d.properties["technology"]!})` :
                 "N/A"
             );
 
@@ -108,34 +173,57 @@ const DetailedView: React.FC<DetailedViewProps> = ({ detailedInfo }) => {
                 {
                     (block_info.length === 0 )?
                         <p>Select a block on the map to view detailed Broadband info<br /></p> :
-                        block_info
-                            .filter((b: any) => {
-                                console.log("b: ", b);
-                                return !!b && b !== null
-                            })
-                            .map((b: string[]) => {
-                                if (!!b && b !== null) {
-                                    console.log(b);
-                                    // TODO <row>... in a table
-                                    return (b.map((i: string) => (
-                                        // TODO <cell>... in row
-                                        <p key={i.toString().split(":")[0]}
-                                           style={{"display": "inline-block", "margin": "0.5em 1em 0.5em 0"}}>
-                                            {i}</p>
-                                    )));
+                        <TableContainer component={Paper}>
+                            <Table>
+                            <TableHead>
+                                <TableRow>{
+                                    columns.map((col) =>
+                                        (col.toString().match(/name/) !== null) ?
+                                            <TableCell align="left" key={col.toString()}>
+                                                <h3>{getLabel(col, labels)}</h3></TableCell> :
+                                            <TableCell key={col.toString()}>{getLabel(col, labels)}</TableCell>
+                                    )
+                                }</TableRow>
+                            </TableHead>
+                            <TableBody>
+                                { (!!block_info
+                                    && block_info.filter((b: any) =>  !!b && b !== null).length > 0
+                                ) ?
+                                    block_info
+                                        .filter((b: any) => {
+                                            // console.log("b: ", b);
+                                            return !!b && b !== null
+                                        })
+                                        .map((b: string[]) => {
+                                            // console.log(b);
+                                            const geoid = b[0].split(":")[1];
+                                            // console.log(geoid);
+                                            return <TableRow key={geoid}>{
+                                                (b.map((i: string) => {
+                                                    const tuple = i.toString().split(":");
+                                                    const key = tuple[0].trim();
+                                                    const value = tuple[1].trim();
+                                                    // console.log([ key, value ]);
+                                                    return <TableCell key={key}>{value}</TableCell>
+                                                }))
+                                            }</TableRow>
+                                        }) :
+                                    (<TableRow key={"null-row"}>&nbsp;</TableRow>)
                                 }
-                            })
+                            </TableBody>
+                            </Table>
+                        </TableContainer>
                 }
                 <br />
                 <h5>Internet Service Providers</h5>
-                <p>{
-                    (isp_names.length === 0) ? "N/A" : isp_names.join(", ")
-                }</p>
+                <div>{
+                    (isp_names.length === 0) ? "N/A" : isp_names.map((n, i) => <p key={`ISP-${i}`}>{n.toString().trim()}</p>)
+                }</div>
                 <br />
-                <h5>Federal Funding Awards</h5>
-                <p>{
-                    (award_applicants.length === 0) ? "N/A" : award_applicants.join(", ")
-                }</p>
+                <h5>Applicants Previously Awarded Federal Funding</h5>
+                <div>{
+                    (award_applicants.length === 0) ? "N/A" : award_applicants.map((a, i) => <p key={`Award-${i}`}>{a.toString().trim()}</p>)
+                }</div>
                 <br />
             </div>
         </>

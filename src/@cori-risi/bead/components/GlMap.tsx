@@ -239,7 +239,9 @@ const GlMap: React.FC < GlMapProps > = ({
 
         if (filter.bb_service.unserved === true) {
             bb_array = [...bb_array, "Unserved"];
-        }  
+        }
+
+        bb_array = [ ...bb_array, "Not Reported" ];
 
         let isp_filter: any = [
             'all',

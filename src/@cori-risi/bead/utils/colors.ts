@@ -47,6 +47,8 @@ export function getFillColor(color_scheme: string): any {
         ['linear'],
         ["get", "cnt_isp"],
             0,
+            "rgba(0, 0, 0, 0.5)",
+            1,
             "rgba(163, 226, 181, 0.7)",
             2,
             "rgba(125, 179, 149, 0.7)",
@@ -67,9 +69,14 @@ export function getFillColor(color_scheme: string): any {
         'interpolate',
         ['linear'],
         ['get', 'cnt_total_locations'],
-        0, 'rgba(163, 226, 181, 0.7)',
-        500, // The max value is 1015, but its rare so cap the scale at 500
-        'rgba(22, 52, 62, 0.7)'
+        0,
+        "rgba(0, 0, 0, 0.25)",
+        1,
+        'rgba(22, 52, 62, 0.5)',
+        25,
+        'rgba(93, 139, 122, 0.5)',
+        100, // The max value is 1015, but its rare so cap the scale at 100
+        'rgba(163, 226, 181, 0.5)'
     ]
 
   }
