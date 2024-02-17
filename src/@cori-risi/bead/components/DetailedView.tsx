@@ -4,6 +4,20 @@ import {CustomButton, CustomIconButton} from "./CustomInputs";
 import {Table, TableHead, TableBody, TableRow, TableCell} from "@aws-amplify/ui-react";
 import {Paper, TableContainer} from "@mui/material";
 // import TuneIcon from "@mui/icons-material/Tune";
+import MUIDataTable from "mui-datatables";
+
+const dt_columns = ["Name", "Company", "City", "State"];
+
+const dt_data = [
+    ["Joe James", "Test Corp", "Yonkers", "NY"],
+    ["John Walsh", "Test Corp", "Hartford", "CT"],
+    ["Bob Herm", "Test Corp", "Tampa", "FL"],
+    ["James Houston", "Test Corp", "Dallas", "TX"],
+];
+
+const dt_options = {
+    filterType: 'checkbox',
+};
 
 interface DetailedViewProps {
     detailedInfo: any[];
@@ -135,6 +149,7 @@ const DetailedView: React.FC<DetailedViewProps> = ({ detailedInfo }) => {
     return (
         <>
             <div id="detail" className={"detailed-view"}>
+
                 <h4 className={"detailed-header"}>Broadband Information for Census Blocks in selection
                     <button value={"TODO: Cancel"} />
                     <button value={"TODO: See On Map"} />
@@ -170,6 +185,14 @@ const DetailedView: React.FC<DetailedViewProps> = ({ detailedInfo }) => {
                     </span>
                 </h4>
                 <hr />
+
+                <MUIDataTable
+                    title={"Employee List"}
+                    data={dt_data}
+                    columns={dt_columns}
+                    options={dt_options}
+                />
+
                 {
                     (block_info.length === 0 )?
                         <p>Select a block on the map to view detailed Broadband info<br /></p> :
@@ -215,16 +238,19 @@ const DetailedView: React.FC<DetailedViewProps> = ({ detailedInfo }) => {
                         </TableContainer>
                 }
                 <br />
+
                 <h5>Internet Service Providers</h5>
                 <div>{
                     (isp_names.length === 0) ? "N/A" : isp_names.map((n, i) => <p key={`ISP-${i}`}>{n.toString().trim()}</p>)
                 }</div>
                 <br />
+
                 <h5>Applicants Previously Awarded Federal Funding</h5>
                 <div>{
                     (award_applicants.length === 0) ? "N/A" : award_applicants.map((a, i) => <p key={`Award-${i}`}>{a.toString().trim()}</p>)
                 }</div>
                 <br />
+
             </div>
         </>
     );
