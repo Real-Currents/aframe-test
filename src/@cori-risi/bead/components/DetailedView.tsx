@@ -6,19 +6,6 @@ import {Paper, TableContainer} from "@mui/material";
 // import TuneIcon from "@mui/icons-material/Tune";
 import MUIDataTable from "mui-datatables";
 
-const dt_columns = ["Name", "Company", "City", "State"];
-
-const dt_data = [
-    ["Joe James", "Test Corp", "Yonkers", "NY"],
-    ["John Walsh", "Test Corp", "Hartford", "CT"],
-    ["Bob Herm", "Test Corp", "Tampa", "FL"],
-    ["James Houston", "Test Corp", "Dallas", "TX"],
-];
-
-const dt_options = {
-    filterType: 'checkbox',
-};
-
 interface DetailedViewProps {
     detailedInfo: any[];
 }
@@ -70,6 +57,20 @@ const labels = {
     "has_previous_funding": "has_previous_funding",
     "has_licensed_wireless": "has_licensed_wireless"
 };
+
+const dt_columns = [
+    "Name",
+    "Company",
+    "City",
+    "State"
+];
+
+const dt_data = [
+    ["Joe James", "Test Corp", "Yonkers", "NY"],
+    ["John Walsh", "Test Corp", "Hartford", "CT"],
+    ["Bob Herm", "Test Corp", "Tampa", "FL"],
+    ["James Houston", "Test Corp", "Dallas", "TX"],
+];
 
 function getLabel (col: string, labels: any) {
     return (labels.hasOwnProperty(col)) ?
@@ -190,7 +191,9 @@ const DetailedView: React.FC<DetailedViewProps> = ({ detailedInfo }) => {
                     title={"Employee List"}
                     data={dt_data}
                     columns={dt_columns}
-                    options={dt_options}
+                    options={{
+                        "filterType": "checkbox"
+                    }}
                 />
 
                 {
