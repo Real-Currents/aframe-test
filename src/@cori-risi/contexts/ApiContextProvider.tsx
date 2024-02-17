@@ -30,6 +30,7 @@ interface ApiContextType {
     autoSignOut: () => void;
     baseURL: string;
     token: JWT | null;
+    data: any;
 }
 
 export const ApiContext = createContext<ApiContextType>({
@@ -39,6 +40,7 @@ export const ApiContext = createContext<ApiContextType>({
     autoSignOut: () => { console.log("API Session signOut()!") },
     baseURL: BASE_URL,
     token: null,
+    data: {}
 });
 
 let hasAuthSession = false;
@@ -54,13 +56,14 @@ export default function ApiContextProvider (props: { children?: ReactElement }) 
     const [ authenticated_user, setAuthenticatedUser ] = useState<User>(userState);
     const [ token, setToken ] = useState<JWT | null>(null);
 
-    const [ state, setState ] = useState({
+    const [ state, setState ] = useState<ApiContextType>({
         apiClient: apiClient,
         authenticated: false,
         authenticated_user: userState,
         autoSignOut: () => { console.log("API Session signOut()!") },
         baseURL: BASE_URL,
-        token: token
+        token: token,
+        data: {}
     });
 
     useEffect(() => {
@@ -120,8 +123,51 @@ export default function ApiContextProvider (props: { children?: ReactElement }) 
                                 authenticated_user: authenticated_user,
                                 autoSignOut: signOut,
                                 baseURL: BASE_URL,
-                                token: tokens.idToken
+                                token: tokens.idToken,
+                                data: {}
                             });
+
+                            // debounce(async () => {
+                            const remoteAPIStartTime = performance.now();
+
+                            apiClient.get("/rest/bead/isp_combo")
+                                .then(response => {
+                                    const remoteAPIEndTime = performance.now();
+
+                                    (window as any)["remoteAPIExecutionTime"] = remoteAPIEndTime - remoteAPIStartTime;
+                                    console.debug(`Remote API Call Execution took   ${(window as any)["remoteAPIExecutionTime"]} ms`);
+
+                                    console.log("ApiContextProvider made RESTful request for all ISP combo ids:", response.data);
+
+                                    setState({
+                                        apiClient: apiClient,
+                                        authenticated: true,
+                                        authenticated_user: authenticated_user,
+                                        autoSignOut: signOut,
+                                        baseURL: BASE_URL,
+                                        token: tokens.idToken!,
+                                        data: {
+                                            ...state.data,
+                                            isp_ids: {
+                                                ...response.data
+                                            }
+                                        }
+                                    });
+                                })
+                                .catch(error => {
+                                    const remoteAPIEndTime = performance.now();
+
+                                    (window as any)["remoteAPIExecutionTime"] = remoteAPIEndTime - remoteAPIStartTime;
+                                    console.debug(`Remote API Call Execution took   ${(window as any)["remoteAPIExecutionTime"]} ms`);
+
+                                    if (error.code === 'ERR_NAME_NOT_RESOLVED') {
+                                        console.error('Invalid baseURL:', apiClient.defaults.baseURL);
+                                        // Handle invalid baseURL error
+                                    } else {
+                                        console.log(error.toString());
+                                    }
+                                });
+                            // });
 
                         } catch (e: any) {
                             console.log("Axios Error:", e);
@@ -170,7 +216,10 @@ export default function ApiContextProvider (props: { children?: ReactElement }) 
                                     //     authenticated_user: u,
                                     //     baseURL: BASE_URL,
                                     //     autoSignOut: signOut,
-                                    //     token: tokens.idToken
+                                    //     token: tokens.idToken,
+                                    //     data: {
+                                    //         ...state.data,
+                                    //     }
                                     // });
 
                                     setAuthenticatedUser(u);

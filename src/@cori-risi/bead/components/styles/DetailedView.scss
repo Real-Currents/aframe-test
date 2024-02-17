@@ -1,0 +1,37 @@
+.detailed-view {
+	background-color: white;
+
+	/*height: 600px;*/
+	height: calc(100vh - 76px);
+	width: 100%;
+	max-width: 975px;
+
+	line-height: 150%;
+	margin: 0 auto;
+	padding: 20px;
+
+	overflow-y: scroll;
+}
+
+h4.detailed-header {
+	padding: 13px 0;
+}
+
+.button-group {
+	float: right;
+}
+
+.button-padding {
+	display: inline-block;
+	margin: 2px !important;
+}
+
+.button-padding .button {
+	float: right;
+	margin: 2px 0px 2px 10px !important;
+}
+
+.button-padding .affirmative.button {
+	color: #FFF;
+	background-color: #00835D;
+}

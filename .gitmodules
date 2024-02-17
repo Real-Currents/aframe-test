@@ -1,0 +1,3 @@
+[submodule "src/@cori-risi/mui-dt"]
+	path = src/@cori-risi/mui-dt
+	url = https://github.com/ruralinnovation/mui-dt.git

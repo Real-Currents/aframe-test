@@ -10,6 +10,23 @@ const colors = {
     }
 };
 
+export function getBEADColor(bead_category: string): string {
+    
+    if (bead_category === "Served") {
+        return "rgba(35, 79, 191)";
+    }
+
+    if (bead_category === "Underserved") {
+        return "rgba(0, 131, 93)";
+    }
+
+    if (bead_category === "Unserved") {
+        return "rgba(255, 228, 115)";
+    }
+
+    return "rgba(105, 105, 105)";
+}
+
 export function getFillColor(color_scheme: string): any {  
 
   if (color_scheme === "BEAD category") {
@@ -30,6 +47,8 @@ export function getFillColor(color_scheme: string): any {
         ['linear'],
         ["get", "cnt_isp"],
             0,
+            "rgba(0, 0, 0, 0.5)",
+            1,
             "rgba(163, 226, 181, 0.7)",
             2,
             "rgba(125, 179, 149, 0.7)",
@@ -50,9 +69,14 @@ export function getFillColor(color_scheme: string): any {
         'interpolate',
         ['linear'],
         ['get', 'cnt_total_locations'],
-        0, 'rgba(163, 226, 181, 0.7)',
-        1015,
-        'rgba(22, 52, 62, 0.7)'
+        0,
+        "rgba(0, 0, 0, 0.25)",
+        1,
+        'rgba(22, 52, 62, 0.5)',
+        25,
+        'rgba(93, 139, 122, 0.5)',
+        100, // The max value is 1015, but its rare so cap the scale at 100
+        'rgba(163, 226, 181, 0.5)'
     ]
 
   }
