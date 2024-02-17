@@ -133,5 +133,8 @@
     "preview": "vite preview",
     "test": "vitest",
     "type-check": "tsc --noEmit"
-  }
+  },
+  "workspaces": [
+    "src/@cori-risi/mui-dt"
+  ]
 }
