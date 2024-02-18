@@ -11,7 +11,7 @@ interface MapLegendProps {
 
 const MapLegend: React.FC < MapLegendProps > = ({ title, category }) => {
 
-    console.log("category:", category);
+    // console.log("category:", category);
 
     const renderMatchLegend = () => {
         const legendItems = [];

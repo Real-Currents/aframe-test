@@ -1,24 +1,31 @@
 import React, {useEffect, useState} from 'react';
 import "./styles/DetailedView.scss";
 import { CustomButton, CustomIconButton } from "./CustomInputs";
-import { Table, TableHead, TableBody, TableRow, TableCell } from "@aws-amplify/ui-react";
-import { Paper, TableContainer } from "@mui/material";
+// import { Table, TableHead, TableBody, TableRow, TableCell } from "@aws-amplify/ui-react";
+// import { Paper, TableContainer } from "@mui/material";
 import MUIDataTable from "mui-datatables";
+import {parseIspId, swapKeysValues} from "../utils/utils";
+import isp_name_dict from "../data/isp_name_lookup_rev.json";
 // import { CustomMUIDatatable } from "../../mui-datatables/src/components/CustomMUIDatatable";
 // import TableViewCol from "../../mui-datatables/src/components/TableViewCol";
+
+interface IspNameLookup {
+    [key: string]: string;
+}
+const isp_name_lookup: IspNameLookup = isp_name_dict;
 
 interface DetailedViewProps {
     detailedInfo: any[];
 }
 
-const columns = [
+const block_columns = [
     "geoid_bl",
-    "isp_id",
-    "cnt_isp",
-    "cnt_25_3",
+    "geoid_tr",
     "geoid_co",
     "geoid_st",
-    "geoid_tr",
+    "cnt_isp",
+    "isp_id",
+    "cnt_25_3",
     "has_fiber",
     "cnt_100_20",
     "pct_served",
@@ -35,14 +42,14 @@ const columns = [
     "has_licensed_wireless"
 ];
 
-const labels = {
-    "geoid_bl": "geoid_bl",
-    "isp_id": "isp_id",
+const block_labels = {
+    "geoid_bl": "Block ID",
+    "isp_id": "ISPs in Block",
     "cnt_isp": "cnt_isp",
     "cnt_25_3": "cnt_25_3",
-    "geoid_co": "geoid_co",
-    "geoid_st": "geoid_st",
-    "geoid_tr": "geoid_tr",
+    "geoid_co": "County ID",
+    "geoid_st": "State ID",
+    "geoid_tr": "Tract ID",
     "has_fiber": "has_fiber",
     "cnt_100_20": "cnt_100_20",
     "pct_served": "pct_served",
@@ -59,24 +66,26 @@ const labels = {
     "has_licensed_wireless": "has_licensed_wireless"
 };
 
-const dt_columns = [
-    "Name",
-    "Company",
-    "City",
-    "State"
-];
+// const dt_columns = [
+//     "Name",
+//     "Company",
+//     "City",
+//     "State"
+// ];
 
-const dt_data = [
-    ["Joe James", "Test Corp", "Yonkers", "NY"],
-    ["John Walsh", "Test Corp", "Hartford", "CT"],
-    ["Bob Herm", "Test Corp", "Tampa", "FL"],
-    ["James Houston", "Test Corp", "Dallas", "TX"],
-];
+// const dt_data = [
+//     ["Joe James", "Test Corp", "Yonkers", "NY"],
+//     ["John Walsh", "Test Corp", "Hartford", "CT"],
+//     ["Bob Herm", "Test Corp", "Tampa", "FL"],
+//     ["James Houston", "Test Corp", "Dallas", "TX"],
+// ];
 
 function getLabel (col: string, labels: any) {
     return (labels.hasOwnProperty(col)) ?
         labels[col].trim() : col.trim();
 }
+
+const isp_name_lookup_rev = swapKeysValues(isp_name_lookup);
 
 const DetailedView: React.FC<DetailedViewProps> = ({ detailedInfo }) => {
 
@@ -176,58 +185,96 @@ const DetailedView: React.FC<DetailedViewProps> = ({ detailedInfo }) => {
                 </h4>
                 <hr />
 
-                <MUIDataTable
-                    columns={dt_columns}
-                    data={dt_data}
-                    options={{
-                        "filterType": "checkbox"
-                    }}
-                    title={"Employee List"}
-                />
+                {/*<MUIDataTable*/}
+                {/*    columns={dt_columns}*/}
+                {/*    data={dt_data}*/}
+                {/*    options={{*/}
+                {/*        "filterType": "checkbox"*/}
+                {/*    }}*/}
+                {/*    title={"Employee List"}*/}
+                {/*/>*/}
 
                 {
                     (block_info.length === 0 )?
                         <p>Select a block on the map to view detailed Broadband info<br /></p> :
-                        <TableContainer component={Paper}>
-                            <Table>
-                            <TableHead>
-                                <TableRow>{
-                                    columns.map((col) =>
-                                        (col.toString().match(/name/) !== null) ?
-                                            <TableCell align="left" key={col.toString()}>
-                                                <h3>{getLabel(col, labels)}</h3></TableCell> :
-                                            <TableCell key={col.toString()}>{getLabel(col, labels)}</TableCell>
-                                    )
-                                }</TableRow>
-                            </TableHead>
-                            <TableBody>
-                                { (!!block_info
-                                    && block_info.filter((b: any) =>  !!b && b !== null).length > 0
-                                ) ?
-                                    block_info
-                                        .filter((b: any) => {
-                                            // console.log("b: ", b);
-                                            return !!b && b !== null
-                                        })
-                                        .map((b: string[]) => {
-                                            // console.log(b);
-                                            const geoid = b[0].split(":")[1];
-                                            // console.log(geoid);
-                                            return <TableRow key={geoid}>{
-                                                (b.map((i: string) => {
-                                                    const tuple = i.toString().split(":");
-                                                    const key = tuple[0].trim();
-                                                    const value = tuple[1].trim();
-                                                    // console.log([ key, value ]);
-                                                    return <TableCell key={key}>{value}</TableCell>
-                                                }))
-                                            }</TableRow>
-                                        }) :
-                                    (<TableRow key={"null-row"}>&nbsp;</TableRow>)
-                                }
-                            </TableBody>
-                            </Table>
-                        </TableContainer>
+                        // <TableContainer component={Paper}>
+                        //     <Table>
+                        //         <TableHead>
+                        //             <TableRow>{
+                        //                 block_columns.map((col) =>
+                        //                     (col.toString().match(/name/) !== null) ?
+                        //                         <TableCell align="left" key={col.toString()}>
+                        //                             <h3>{getLabel(col, labels)}</h3></TableCell> :
+                        //                         <TableCell key={col.toString()}>{getLabel(col, labels)}</TableCell>
+                        //                 )
+                        //             }</TableRow>
+                        //         </TableHead>
+                        //         <TableBody>
+                        //             { (block_info.filter((b: any) =>  !!b && b !== null).length > 0) ?
+                        //                 block_info
+                        //                     .filter((b: any) => {
+                        //                         // console.log("b: ", b);
+                        //                         return !!b && b !== null
+                        //                     })
+                        //                     .map((b: string[]) => {
+                        //                         // console.log(b);
+                        //                         const geoid = b[0].split(":")[1];
+                        //                         // console.log(geoid);
+                        //                         return <TableRow key={geoid}>{
+                        //                             (b.map((i: string) => {
+                        //                                 const tuple = i.toString().split(":");
+                        //                                 const key = tuple[0].trim();
+                        //                                 const value = tuple[1].trim();
+                        //                                 // console.log([ key, value ]);
+                        //                                 return <TableCell key={key}>{value}</TableCell>
+                        //                             }))
+                        //                         }</TableRow>
+                        //                     }) :
+                        //                 (<TableRow key={"null-row"}>&nbsp;</TableRow>)
+                        //             }
+                        //         </TableBody>
+                        //     </Table>
+                        // </TableContainer>
+                        <MUIDataTable
+                            columns={block_columns.map((col) => getLabel(col, block_labels))}
+                            data={[ ...block_info
+                                .filter((b: any) => {
+                                    // console.log("b: ", b);
+                                    return !!b && b !== null
+                                })
+                                .map((b: string[]) => {
+                                    const values: string[] = [];
+
+                                    for (let col of block_columns) {
+                                        b.map((i: string) => {
+                                            const tuple = i.toString().split(":");
+                                            const key = tuple[0].toString().trim();
+
+                                            if (col === key) {
+                                                const value = (key === "isp_id") ?
+                                                    // tuple[1].toString().trim()
+                                                    //     .replace("{", "")
+                                                    //     .replace("}", "")
+                                                    //     .split(",")
+                                                    //     .map((id) =>
+                                                            parseIspId(tuple[1].toString().trim(), isp_name_lookup_rev)
+                                                    //     )
+                                                    :
+                                                    tuple[1].trim();
+                                                console.log([key, value]);
+                                                values.push(value);
+                                            }
+                                        });
+                                    }
+
+                                    return values;
+                                })
+                            ]}
+                            options={{
+                                "filterType": "checkbox"
+                            }}
+                            title={"Census Blocks"}
+                        />
                 }
                 <br />
 

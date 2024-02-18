@@ -40,4 +40,15 @@
 	div[aria-label="Table Toolbar"] {
 		width: 100% !important;
 	}
+
+	th.MuiTableCell-root {
+		* {
+			font-weight: bolder;
+
+			button.MuiButton-root {
+				min-width: 112px;
+			}
+		}
+		padding: 0 !important;
+	}
 }
