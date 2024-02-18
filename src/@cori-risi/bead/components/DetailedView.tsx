@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import "./styles/DetailedView.scss";
-import { CustomButton, CustomIconButton} from "./CustomInputs";
+import { CustomButton, CustomIconButton } from "./CustomInputs";
 import { Table, TableHead, TableBody, TableRow, TableCell } from "@aws-amplify/ui-react";
 import { Paper, TableContainer } from "@mui/material";
-import { CustomMUIDatatable } from "./CustomMUIDatatable";
+import MUIDataTable from "mui-datatables";
+// import { CustomMUIDatatable } from "../../mui-datatables/src/components/CustomMUIDatatable";
+// import TableViewCol from "../../mui-datatables/src/components/TableViewCol";
 
 interface DetailedViewProps {
     detailedInfo: any[];
@@ -56,6 +58,20 @@ const labels = {
     "has_previous_funding": "has_previous_funding",
     "has_licensed_wireless": "has_licensed_wireless"
 };
+
+const dt_columns = [
+    "Name",
+    "Company",
+    "City",
+    "State"
+];
+
+const dt_data = [
+    ["Joe James", "Test Corp", "Yonkers", "NY"],
+    ["John Walsh", "Test Corp", "Hartford", "CT"],
+    ["Bob Herm", "Test Corp", "Tampa", "FL"],
+    ["James Houston", "Test Corp", "Dallas", "TX"],
+];
 
 function getLabel (col: string, labels: any) {
     return (labels.hasOwnProperty(col)) ?
@@ -160,8 +176,13 @@ const DetailedView: React.FC<DetailedViewProps> = ({ detailedInfo }) => {
                 </h4>
                 <hr />
 
-                <CustomMUIDatatable
-                    title={"New Employee List"}
+                <MUIDataTable
+                    columns={dt_columns}
+                    data={dt_data}
+                    options={{
+                        "filterType": "checkbox"
+                    }}
+                    title={"Employee List"}
                 />
 
                 {
