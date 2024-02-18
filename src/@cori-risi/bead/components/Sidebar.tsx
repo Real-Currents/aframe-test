@@ -131,7 +131,11 @@ function Sidebar<T>({
   return (
     <>
         <animated.div style={props} className={style["sidebar"]}>
-          <h4>Map display variable</h4>
+          <h4>Map display variable
+              {/* TODO: */}
+              {/* Add button to toggle off filtered/thematic map layers */}
+              {/* ... (leave basemap and selcted features) */}
+          </h4>
           <div className={style['fill-selector']}>
             <div className={style["color-dropdown"]}>
               <Autocomplete

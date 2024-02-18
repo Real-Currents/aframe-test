@@ -81,7 +81,7 @@ const GlMap: React.FC < GlMapProps > = ({
 
     const MIN_ZOOM_LEVEL = 9;
 
-    const selection_color = '#ffffff';
+    const selection_color = '#00835D';
 
     const { longitude, latitude, zoom } = fitBounds({
         width: window.innerWidth,
@@ -180,18 +180,18 @@ const GlMap: React.FC < GlMapProps > = ({
                         if (error.code! === "ERR_BAD_REQUEST"
                             || error.code! === "ERR_NETWORK"
                         ) {
-                            window.alert("Please refresh session by clicking your browsers reload button!");
+                            window.alert("Please refresh session by clicking the browser's reload button!");
                             apiContext.autoSignOut();
                         }
                     } else {
-                        window.alert("Please refresh session by clicking your browsers reload button!");
+                        window.alert("Please refresh session by clicking the browser's reload button!");
                         apiContext.autoSignOut();
                     }
                 });
 
         } else {
             console.log("API Client Error:", client);
-            // window.alert("Please refresh session by clicking your browsers reload button!");
+            // window.alert("Please refresh session by clicking the browser's reload button!");
             // apiContext.autoSignOut();
         }
     }
@@ -425,20 +425,20 @@ const GlMap: React.FC < GlMapProps > = ({
                             "features": selected_features
                         }} >
                             <Layer {...{
-                                id: 'bead_block-fill',
-                                source: 'bead_block',
-                                type: 'fill',
+                                id: "bead_block-fill",
+                                source: "bead_block",
+                                type: "fill",
                                 paint: {
-                                    'fill-color': selection_color,
-                                    'fill-opacity': 0.25
+                                    "fill-color": "#ffffff",
+                                    "fill-opacity": 0.25
                                 }
                             }}></Layer>
                             <Layer {...{
-                                id: 'bead_block-line',
-                                source: 'bead_block',
-                                type: 'line',
+                                id: "bead_block-line",
+                                source: "bead_block",
+                                type: "line",
                                 paint: {
-                                    'line-color': selection_color,
+                                    "line-color": selection_color,
                                 }
                             }}></Layer>
                         </Source>{/*    : <></>*/}

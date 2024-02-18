@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import "./styles/DetailedView.scss";
-import {CustomButton, CustomIconButton} from "./CustomInputs";
-import {Table, TableHead, TableBody, TableRow, TableCell} from "@aws-amplify/ui-react";
-import {Paper, TableContainer} from "@mui/material";
-// import TuneIcon from "@mui/icons-material/Tune";
-import MUIDataTable from "mui-datatables";
+import { CustomButton, CustomIconButton} from "./CustomInputs";
+import { Table, TableHead, TableBody, TableRow, TableCell } from "@aws-amplify/ui-react";
+import { Paper, TableContainer } from "@mui/material";
+import { CustomMUIDatatable } from "./CustomMUIDatatable";
 
 interface DetailedViewProps {
     detailedInfo: any[];
@@ -57,20 +56,6 @@ const labels = {
     "has_previous_funding": "has_previous_funding",
     "has_licensed_wireless": "has_licensed_wireless"
 };
-
-const dt_columns = [
-    "Name",
-    "Company",
-    "City",
-    "State"
-];
-
-const dt_data = [
-    ["Joe James", "Test Corp", "Yonkers", "NY"],
-    ["John Walsh", "Test Corp", "Hartford", "CT"],
-    ["Bob Herm", "Test Corp", "Tampa", "FL"],
-    ["James Houston", "Test Corp", "Dallas", "TX"],
-];
 
 function getLabel (col: string, labels: any) {
     return (labels.hasOwnProperty(col)) ?
@@ -162,12 +147,6 @@ const DetailedView: React.FC<DetailedViewProps> = ({ detailedInfo }) => {
                                 variant="outlined">
                                 TODO: Cancel
                             </CustomButton>
-                            {/*<CustomIconButton*/}
-                            {/*    className={style["icon-button"]}*/}
-                            {/*    onClick={(evt) => console.log("TODO: Cancel")}*/}
-                            {/*>*/}
-                            {/*    <TuneIcon />*/}
-                            {/*</CustomIconButton>*/}
                         </span>
                         <span className={"button-padding"}>
                             <CustomButton
@@ -176,24 +155,13 @@ const DetailedView: React.FC<DetailedViewProps> = ({ detailedInfo }) => {
                                 variant="outlined">
                                 TODO: See On Map
                             </CustomButton>
-                            {/*<CustomIconButton*/}
-                            {/*    className={style["icon-button"]}*/}
-                            {/*    onClick={(evt) => console.log("TODO: See On Map")}*/}
-                            {/*>*/}
-                            {/*    <TuneIcon />*/}
-                            {/*</CustomIconButton>*/}
                         </span>
                     </span>
                 </h4>
                 <hr />
 
-                <MUIDataTable
-                    title={"Employee List"}
-                    data={dt_data}
-                    columns={dt_columns}
-                    options={{
-                        "filterType": "checkbox"
-                    }}
+                <CustomMUIDatatable
+                    title={"New Employee List"}
                 />
 
                 {
