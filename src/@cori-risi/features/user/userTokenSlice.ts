@@ -25,12 +25,12 @@ export const {
 
 export const selectUserTokens = (state: (typeof initialState)) => {
     // console.log("AppState in selectUser:", state);
-    console.log("Return state.user.tokens:", state.user.tokens);
+    // console.log("Return state.user.tokens:", state.user.tokens);
     return state.user.tokens;
 }
 
 export const selectUser = (state: (typeof initialState)) => {
     // console.log("AppState in selectUser:", state);
-    console.log("Return state.user:", state.user);
+    // console.log("Return state.user:", state.user);
     return state.user;
 }
