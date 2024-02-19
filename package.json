@@ -132,6 +132,9 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "test": "vitest",
-    "type-check": "tsc --noEmit"
-  }
+    "type:check": "tsc --noEmit"
+  },
+  "workspaces": [
+    "src/@cori-risi/mui-datatables"
+  ]
 }
