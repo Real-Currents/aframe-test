@@ -66,19 +66,19 @@ const block_labels = {
     "has_licensed_wireless": "has_licensed_wireless"
 };
 
-// const dt_columns = [
-//     "Name",
-//     "Company",
-//     "City",
-//     "State"
-// ];
+const dt_columns = [
+    "Name",
+    "Company",
+    "City",
+    "State"
+];
 
-// const dt_data = [
-//     ["Joe James", "Test Corp", "Yonkers", "NY"],
-//     ["John Walsh", "Test Corp", "Hartford", "CT"],
-//     ["Bob Herm", "Test Corp", "Tampa", "FL"],
-//     ["James Houston", "Test Corp", "Dallas", "TX"],
-// ];
+const dt_data = [
+    ["Joe James", "Test Corp", "Yonkers", "NY"],
+    ["John Walsh", "Test Corp", "Hartford", "CT"],
+    ["Bob Herm", "Test Corp", "Tampa", "FL"],
+    ["James Houston", "Test Corp", "Dallas", "TX"],
+];
 
 function getLabel (col: string, labels: any) {
     return (labels.hasOwnProperty(col)) ?
@@ -185,15 +185,6 @@ const DetailedView: React.FC<DetailedViewProps> = ({ detailedInfo }) => {
                 </h4>
                 <hr />
 
-                {/*<MUIDataTable*/}
-                {/*    columns={dt_columns}*/}
-                {/*    data={dt_data}*/}
-                {/*    options={{*/}
-                {/*        "filterType": "checkbox"*/}
-                {/*    }}*/}
-                {/*    title={"Employee List"}*/}
-                {/*/>*/}
-
                 {
                     (block_info.length === 0 )?
                         <p>Select a block on the map to view detailed Broadband info<br /></p> :
@@ -289,6 +280,24 @@ const DetailedView: React.FC<DetailedViewProps> = ({ detailedInfo }) => {
                     (award_applicants.length === 0) ? "N/A" : award_applicants.map((a, i) => <p key={`Award-${i}`}>{a.toString().trim()}</p>)
                 }</div>
                 <br />
+
+                <h4 className={"detailed-header"}>Demographics for Census Tracts in selection
+                </h4>
+                <hr />
+
+                {
+                    (block_info.length === 0) ?
+                        <p>Select a block on the map to view detailed Broadband info<br/></p> :
+
+                        <MUIDataTable
+                            columns={dt_columns}
+                            data={dt_data}
+                            options={{
+                                "filterType": "checkbox"
+                            }}
+                            title={"TODO: Get ACS data for relevant Census Tract ID's"}
+                        />
+                }
 
             </div>
         </>
