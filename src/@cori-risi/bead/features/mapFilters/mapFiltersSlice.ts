@@ -6,11 +6,7 @@ console.log("Initial state available in mapFiltersSlice: ", initialState);
 const initialStateWithMapFilters = {
     ...initialState,
     user: {
-        ...initialState.user,
-        "bids": {
-            "all": [],
-            "current": null
-        }
+        ...initialState.user
     }
 }
 
@@ -19,7 +15,6 @@ export const mapFiltersSlice = createSlice({
     name: "mapFilters",
     reducers: {
         setMapFilters: (mapFilterState, action) => {
-            // console.log("Add user bid:", action.payload);
             mapFilterState = {
                 ...mapFilterState,
                 ...action.payload
