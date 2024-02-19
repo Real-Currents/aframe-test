@@ -22,9 +22,16 @@ interface BroadbandTechnology {
   [key: string]: string;
 }
 
+interface FilterState {
+    [key: string]: boolean | string;
+    disableSidebar: boolean
+}
+
 import broadband_technology_dict from './../data/broadband_technology.json';
 const broadband_technology: Record<string, string> = broadband_technology_dict;
 import county_name_geoid from './../data/geoid_co_name_crosswalk.json';
+import {useSelector} from "react-redux";
+import {selectMapFilters} from "../features/mapFilters/mapFiltersSlice";
 
 interface IspNameLookup {
   [key: string]: string;
@@ -41,8 +48,7 @@ function Sidebar<T>({
   filter,
   isShowing,
   ispIdLookup,
-  ispNameLookup,
-  disableSidebar
+  ispNameLookup
 }: 
   {
     onFilterChange: (newFilter: T) => void, 
@@ -51,9 +57,10 @@ function Sidebar<T>({
     filter: any,
     isShowing: boolean,
     ispIdLookup: { [key: string]: string[] },
-    ispNameLookup: { [key: string]: string },
-    disableSidebar: boolean
+    ispNameLookup: { [key: string]: string }
  }) {
+
+    const filterState: FilterState = useSelector(selectMapFilters);
 
   const props = useSpring({
     right: isShowing ? "0px": "-375px"
@@ -144,7 +151,7 @@ function Sidebar<T>({
                 sx={{ width: "100%" }}
                 renderInput={(params) => <TextField {...params} label="Color map by" />}
                 onChange={handleFillColorChange}
-                disabled={disableSidebar}
+                disabled={filterState.disableSidebar}
               />
             </div>
           </div>
@@ -168,7 +175,7 @@ function Sidebar<T>({
                     />
                   }
                   label="Served"
-                  disabled={disableSidebar}
+                  disabled={filterState.disableSidebar}
                 />
                 <FormControlLabel className={style["form-control-label"]}
                   control={
@@ -179,7 +186,7 @@ function Sidebar<T>({
                     />
                   }
                   label="Underserved"
-                  disabled={disableSidebar}
+                  disabled={filterState.disableSidebar}
                 />
                 <FormControlLabel className={style["form-control-label"]}
                   control={
@@ -190,7 +197,7 @@ function Sidebar<T>({
                     />
                   }
                   label="Unserved"
-                  disabled={disableSidebar}
+                  disabled={filterState.disableSidebar}
                 />          
               </FormGroup>
             </div>
@@ -209,7 +216,7 @@ function Sidebar<T>({
                     />
                   }
                   label="Yes"
-                  disabled={disableSidebar}
+                  disabled={filterState.disableSidebar}
                 />
                 <FormControlLabel className={style["form-control-label"]}
                   control={
@@ -220,7 +227,7 @@ function Sidebar<T>({
                     />
                   }
                   label="No"
-                  disabled={disableSidebar}
+                  disabled={filterState.disableSidebar}
                 />                 
               </FormGroup>  
             </div>
@@ -236,7 +243,7 @@ function Sidebar<T>({
                   valueLabelDisplay="auto"
                   min={0}
                   max={10}
-                  disabled={disableSidebar}
+                  disabled={filterState.disableSidebar}
                 />
               </div>
             </div>
@@ -252,7 +259,7 @@ function Sidebar<T>({
                   valueLabelDisplay="auto"
                   min={0}
                   max={1015}
-                  disabled={disableSidebar}
+                  disabled={filterState.disableSidebar}
                 />
               </div>
             </div>
@@ -274,7 +281,7 @@ function Sidebar<T>({
                     placeholder="Filter by ISP"
                   />
                 )}
-                disabled={disableSidebar}
+                disabled={filterState.disableSidebar}
               />    
             </div>          
             <div className={style["filter-section"]}>
@@ -295,7 +302,7 @@ function Sidebar<T>({
                     placeholder="Filter by broadband technology"
                   />
                 )}
-                disabled={disableSidebar}
+                disabled={filterState.disableSidebar}
               />
             </div>
             <div className={style["filter-section"]}>  
@@ -315,7 +322,7 @@ function Sidebar<T>({
                     placeholder="Filter by county"
                   />
                 )}
-                disabled={disableSidebar}
+                disabled={filterState.disableSidebar}
               />   
             </div> 
           </div>
