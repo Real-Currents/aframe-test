@@ -41,7 +41,7 @@ export default function Navbar(
                 onClick={onToggleDrawer}
                 endIcon={ <TuneIcon /> }
                 variant="outlined">
-                  {isDrawerShowing ? "Hide filters" : "Show filters"}
+                  {isDrawerShowing ? "Hide controls" : "Show controls"}
               </CustomButton>
               <CustomIconButton 
                 className={style["icon-button"]}

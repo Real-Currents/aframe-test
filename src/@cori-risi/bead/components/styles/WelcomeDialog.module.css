@@ -1,0 +1,23 @@
+.dialog-content {
+
+  max-width: 800px;
+  max-height: 70vh;
+
+  background-color: white;
+  border: none;
+
+  padding: 40px;
+}
+
+.dialog-content h4 {
+  margin-bottom: 10px;
+}
+
+#welcome-dialog-title {
+  font-family: "TT Hoves DemiBold", monospace;
+}
+
+.dialog-list {
+  list-style: inside;
+  margin: 10px 0px;
+}

@@ -4,6 +4,7 @@ import GlMap from './GlMap';
 import Sidebar from './Sidebar';
 import DetailedView from './DetailedView';
 import Navbar from './Navbar';
+import WelcomeDialog from './WelcomeDialog';
 
 import style from "./styles/Interface.module.css";
 
@@ -104,6 +105,7 @@ const Interface = () => {
                 isDrawerShowing={isDrawerShowing}
             />
             <div style={{marginTop: "75px"}}>
+            <WelcomeDialog />
             <div className={style["map-interface"]}>
                 <Sidebar<FilterProps> 
                     onFilterChange={handleFilterChange} 

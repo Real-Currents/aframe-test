@@ -1,9 +1,9 @@
 const colors = {
     "legend_colors": {
         "bb_bead_categories": {
-            "served_area": "rgba(35, 79, 191, 0.5)",
-            "underserved_area": "rgba(0, 131, 93, 0.5)",
-            "unserved_area": "rgba(255, 228, 115, 0.5)",
+            "served_area": "rgba(0, 131, 93, 0.4)",
+            "underserved_area": "rgba(255, 228, 115, 0.4)",
+            "unserved_area": "rgba(177, 26, 0, 0.4)",
             "not_reported": "rgba(105, 105, 105, 0)",
             "default": "rgba(105, 105, 105, 0)"
         }
@@ -13,15 +13,15 @@ const colors = {
 export function getBEADColor(bead_category: string): string {
     
     if (bead_category === "Served") {
-        return "rgba(35, 79, 191)";
-    }
-
-    if (bead_category === "Underserved") {
         return "rgba(0, 131, 93)";
     }
 
-    if (bead_category === "Unserved") {
+    if (bead_category === "Underserved") {
         return "rgba(255, 228, 115)";
+    }
+
+    if (bead_category === "Unserved") {
+        return "rgba(177, 26, 0)";
     }
 
     return "rgba(105, 105, 105)";

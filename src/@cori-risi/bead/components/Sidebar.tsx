@@ -324,7 +324,13 @@ function Sidebar<T>({
                 )}
                 disabled={filterState.disableSidebar}
               />   
-            </div> 
+            </div>
+            <hr />
+            <div className={style["link-section"]}>
+              <a href="https://ruralinnovation.us/" target="_blank">About</a>
+              <a href="https://ruralinnovation.us/about/contact-us/" target="_blank">Contact</a>
+              <a href="https://form-renderer-app.donorperfect.io/give/center-on-rural-innovation/cori-general-giving" target="_blank">Donate</a>
+            </div>
           </div>
       </animated.div>
     </>
