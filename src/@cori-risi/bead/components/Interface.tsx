@@ -18,13 +18,12 @@ interface IspNameLookup {
   [key: string]: string;
 }
 const isp_name_lookup: IspNameLookup = isp_name_dict;
+const isp_name_lookup_rev = swapKeysValues(isp_name_lookup);
 
 interface IspIdLookup {
   [key: string]: string[];
 }
 const isp_id_lookup: IspIdLookup = isp_id_dict;
-
-const isp_name_lookup_rev = swapKeysValues(isp_name_lookup);
 
 export type FilterProps = {
     bb_service: {
@@ -70,11 +69,6 @@ const Interface = () => {
     const [focusBlock, setFocusBlock] = useState < string > ("");
     const [detailedInfo, setDetailedInfo] = useState < any[] > ([]);
     const [colorVariable, setColorVariable] = useState < string > ("BEAD category");
-    const [mapZoom, setMapZoom] = useState<number>(3.5);
-
-    const handleZoomChange = (newZoom: number) => {
-        setMapZoom(newZoom);
-    }
 
     const handleColorVariableChange = (newColorVariable: string) => {
         setColorVariable(newColorVariable);
@@ -101,7 +95,6 @@ const Interface = () => {
     };
 
     const MAPBOX_TOKEN = typeof process.env.MAPBOX_TOKEN === 'string' ? process.env.MAPBOX_TOKEN : '';
-    const MIN_ZOOM_LEVEL = 9;
 
     return ( 
         <>
@@ -120,7 +113,6 @@ const Interface = () => {
                     isShowing={isDrawerShowing} 
                     ispIdLookup={isp_id_lookup}
                     ispNameLookup={isp_name_lookup}
-                    disableSidebar={mapZoom < MIN_ZOOM_LEVEL}
                 />
                 <GlMap 
                     mapboxToken={MAPBOX_TOKEN} 
@@ -129,7 +121,6 @@ const Interface = () => {
                     colorVariable={colorVariable}
                     onFocusBlockChange={handleFocusBlockClick}
                     onDetailedInfoChange={handleDetailedInfo}
-                    onZoomChange={handleZoomChange}
                     ispNameLookup={isp_name_lookup_rev}
                     isShowing={isDrawerShowing}
                 />

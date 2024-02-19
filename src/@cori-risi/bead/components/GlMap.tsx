@@ -5,7 +5,7 @@ import Map, { Source, Layer,  LayerProps, MapRef } from 'react-map-gl';
 import { fitBounds } from 'viewport-mercator-project';
 import { useSpring, animated } from "react-spring";
 
-import axios, {AxiosInstance} from "axios";
+import { AxiosInstance } from "axios";
 import { ApiContext } from "../../contexts/ApiContextProvider";
 
 import { parseIspId, formatBroadbandTechnology } from '../utils/utils';
@@ -24,6 +24,8 @@ import MapLegend from './MapLegend';
 import style from "./styles/GlMap.module.css";
 
 import broadband_technology_dict from './../data/broadband_technology.json';
+import {useDispatch} from "react-redux";
+import {setMapFilters} from "../features/index";
 const broadband_technology: Record<string, string> = broadband_technology_dict;
 
 const percentFormat = format('.1%');
@@ -50,7 +52,6 @@ type GlMapProps = {
     colorVariable: string,
     onFocusBlockChange: (newFocusBlock: string) => void,
     onDetailedInfoChange: (newDetailedInfo: any[]) => void,
-    onZoomChange: (newZoom: number) => void,
     ispNameLookup: { [key: string]: string },
     isShowing: boolean
 };
@@ -70,12 +71,13 @@ const GlMap: React.FC < GlMapProps > = ({
   colorVariable,
   onFocusBlockChange,
   onDetailedInfoChange,
-  onZoomChange,
   ispNameLookup,
   isShowing
 }: GlMapProps) => {
 
     const apiContext = useContext(ApiContext);
+
+    const dispatch = useDispatch();
 
     const mapRef = useRef < MapRef | null > (null);
 
@@ -105,8 +107,16 @@ const GlMap: React.FC < GlMapProps > = ({
     });  
 
     const onMove = (event: any) => { // Specify the type of event if known
-        setMapZoom(event.viewState!.zoom!);
-        onZoomChange(event.viewState!.zoom!);
+        if (event.hasOwnProperty("viewState") && event["viewState"].hasOwnProperty("zoom")) {
+            setMapZoom(event.viewState!.zoom!);
+
+            const mapFiltersUpdate = {
+                "disableSidebar": (event.viewState!.zoom! < MIN_ZOOM_LEVEL)
+            };
+            // console.log("Update mapFilters state:", mapFiltersUpdate);
+            dispatch(setMapFilters(mapFiltersUpdate));
+
+        }
     };
 
     const onHover = useCallback((event: any) => { // Specify the type of event if known
@@ -412,9 +422,12 @@ const GlMap: React.FC < GlMapProps > = ({
                                             ]
                                         )}
                                     </p>
-                                <p><b>Previous federal funding?</b> {hoverInfo.feature.properties.has_previous_funding? "Yes": "No"}</p>
-                                <p><b>Internet service providers:</b> {hoverInfo.feature.properties.combo_isp_id ? parseIspId(hoverInfo.feature.properties.isp_id, ispNameLookup): "N/A"}</p>
-                            </div>
+                                    <p><b>Previous federal funding?</b> {hoverInfo.feature.properties.has_previous_funding? "Yes": "No"}</p>
+                                    <p><b>Internet service providers:</b> {hoverInfo.feature.properties.combo_isp_id ? parseIspId(hoverInfo.feature.properties.isp_id, ispNameLookup): "N/A"}</p>
+                                </div>
+                                <div>
+                                    <p><em>Click to view detailed census block information</em></p>
+                                </div>
                           </div>
                         </div>
                         )}

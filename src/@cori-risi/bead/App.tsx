@@ -13,7 +13,7 @@ import ApiContextProvider from "../contexts/ApiContextProvider";
 // import { BrowserRouter} from "react-router-dom";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-import store from "../app/store";
+import store from "./app/store";
 import User from '../models/User';
 
 import ApplicationMenu from "./components/ApplicationMenu";
