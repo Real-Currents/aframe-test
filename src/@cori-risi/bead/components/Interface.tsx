@@ -1,12 +1,29 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 
 import GlMap from './GlMap';
 import Sidebar from './Sidebar';
 import DetailedView from './DetailedView';
+import Navbar from './Navbar';
 
 import style from "./styles/Interface.module.css";
 
 import { getFillColor } from '../utils/colors';
+
+import isp_name_dict from './../data/isp_name_lookup_rev.json';
+import isp_id_dict from './../data/isp_dict_latest.json';
+
+import { swapKeysValues } from '../utils/utils';
+
+interface IspNameLookup {
+  [key: string]: string;
+}
+const isp_name_lookup: IspNameLookup = isp_name_dict;
+const isp_name_lookup_rev = swapKeysValues(isp_name_lookup);
+
+interface IspIdLookup {
+  [key: string]: string[];
+}
+const isp_id_lookup: IspIdLookup = isp_id_dict;
 
 export type FilterProps = {
     bb_service: {
@@ -29,8 +46,8 @@ const maxWidthTrigger: number = 600;
 
 const Interface = () => {
 
-    const [filter, setFilter] = useState<FilterProps>({
-        bb_service:  {
+    const [filter, setFilter] = useState < FilterProps > ({
+        bb_service: {
             served: true,
             underserved: true,
             unserved: true
@@ -46,12 +63,17 @@ const Interface = () => {
         }
     });
 
-    const [fillColor, setFillColor] = useState<any[]>(getFillColor("BEAD category"));
-    const [multipleISP, setMultipleISP] = useState<string>("");
-    const [isDrawerShowing, setDrawerShowing] = useState<boolean>(true);
-    const [focusBlock, setFocusBlock] = useState<string>("");
-    const [detailedInfo, setDetailedInfo] = useState<any[]>([]);
-    const [colorVariable, setColorVariable] = useState<string>("BEAD category");
+    const [fillColor, setFillColor] = useState < any[] > (getFillColor("BEAD category"));
+    const [multipleISP, setMultipleISP] = useState < string > ("");
+    const [isDrawerShowing, setDrawerShowing] = useState < boolean > (true);
+    const [focusBlock, setFocusBlock] = useState < string > ("");
+    const [detailedInfo, setDetailedInfo] = useState < any[] > ([]);
+    const [colorVariable, setColorVariable] = useState < string > ("BEAD category");
+    const [mapZoom, setMapZoom] = useState<number>(3.5);
+
+    const handleZoomChange = (newZoom: number) => {
+        setMapZoom(newZoom);
+    }
 
     const handleColorVariableChange = (newColorVariable: string) => {
         setColorVariable(newColorVariable);
@@ -73,25 +95,21 @@ const Interface = () => {
         setFilter(newFilter);
     };
 
-    const MAPBOX_TOKEN =  typeof process.env.MAPBOX_TOKEN === 'string'? process.env.MAPBOX_TOKEN: '';
-
     const handleToggleDrawer = () => {
         setDrawerShowing(!isDrawerShowing);
-    };    
+    };
 
-    window.addEventListener('resize', function(event) {
+    const MAPBOX_TOKEN = typeof process.env.MAPBOX_TOKEN === 'string' ? process.env.MAPBOX_TOKEN : '';
+    const MIN_ZOOM_LEVEL = 9;
 
-        if (window.innerWidth > 600 && isDrawerShowing === false) {
-          setDrawerShowing(true);
-        }
-    });    
-
-    return (
-    <>
-        <div>
-            <button className={style["open-button"]} onClick={handleToggleDrawer}>
-                {isDrawerShowing ? "Hide filters" : "Show filters"}
-            </button>
+    return ( 
+        <>
+        <div className={style['interface']}>
+            <Navbar 
+                onToggleDrawer={handleToggleDrawer} 
+                isDrawerShowing={isDrawerShowing}
+            />
+            <div style={{marginTop: "75px"}}>
             <div className={style["map-interface"]}>
                 <Sidebar<FilterProps> 
                     onFilterChange={handleFilterChange} 
@@ -99,6 +117,9 @@ const Interface = () => {
                     onColorVariableChange={handleColorVariableChange}
                     filter={filter} 
                     isShowing={isDrawerShowing} 
+                    ispIdLookup={isp_id_lookup}
+                    ispNameLookup={isp_name_lookup}
+                    disableSidebar={mapZoom < MIN_ZOOM_LEVEL}
                 />
                 <GlMap 
                     mapboxToken={MAPBOX_TOKEN} 
@@ -107,7 +128,11 @@ const Interface = () => {
                     colorVariable={colorVariable}
                     onFocusBlockChange={handleFocusBlockClick}
                     onDetailedInfoChange={handleDetailedInfo}
+                    onZoomChange={handleZoomChange}
+                    ispNameLookup={isp_name_lookup_rev}
+                    isShowing={isDrawerShowing}
                 />
+            </div>
             </div>
             <DetailedView detailedInfo={detailedInfo} />
         </div>
