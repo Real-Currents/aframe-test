@@ -35,6 +35,10 @@ export default function WelcomeModal() {
 					estimates.
 				</p>
 				<p className={style["info-chunk"]}>
+					<b>Broadband service levels are determined by the Broadband Equity, Access, and Deployment (BEAD) program</b><br/>
+					Click <a href="https://broadbandusa.ntia.doc.gov/funding-programs/broadband-equity-access-and-deployment-bead-program" target="_blank">here</a> to learn more about BEAD.
+				</p>
+				<p className={style["info-chunk"]}>
 					<b>You can filter census blocks using the sidebar</b><br/>
 					Use the controls on the right to focus on specific areas.
 				</p>
