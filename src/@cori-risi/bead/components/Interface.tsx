@@ -64,12 +64,12 @@ const Interface = () => {
         }
     });
 
-    const [fillColor, setFillColor] = useState < any[] > (getFillColor("BEAD category"));
+    const [fillColor, setFillColor] = useState < any[] > (getFillColor("BEAD service level"));
     const [multipleISP, setMultipleISP] = useState < string > ("");
     const [isDrawerShowing, setDrawerShowing] = useState < boolean > (true);
     const [focusBlock, setFocusBlock] = useState < string > ("");
     const [detailedInfo, setDetailedInfo] = useState < any[] > ([]);
-    const [colorVariable, setColorVariable] = useState < string > ("BEAD category");
+    const [colorVariable, setColorVariable] = useState < string > ("BEAD service level");
 
     const handleColorVariableChange = (newColorVariable: string) => {
         setColorVariable(newColorVariable);

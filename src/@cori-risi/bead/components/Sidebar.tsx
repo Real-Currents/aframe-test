@@ -146,8 +146,8 @@ function Sidebar<T>({
                 disablePortal
                 disableClearable
                 id="map-colors"
-                defaultValue={"BEAD category"}
-                options={["BEAD category", "Total locations"]}
+                defaultValue={"BEAD service level"}
+                options={["BEAD service level", "Total locations"]}
                 sx={{ width: "100%" }}
                 renderInput={(params) => <TextField {...params} label="Color map by" />}
                 onChange={handleFillColorChange}
@@ -160,10 +160,11 @@ function Sidebar<T>({
             <h4>Filters</h4>
             <div className={style["filter-section"]}>
               <div className={style["filter-header"]}>
-                <h5>Broadband service level</h5>
+                <h5>BEAD service level</h5>
                 <InfoTooltip text={`Unserved refers to areas where at least 80% of locations do not have 25/3 Mbps service. 
                 Underserved refers to areas where at least 80% of locations do not have 100/20 Mbps service. Served refers to 
-                areas that are neither Unserved nor Underserved.`}/>
+                areas that are neither Unserved nor Underserved. BEAD is an acronym for the Broadband Equity, Access, and 
+                Deployment program, which provides funding to expand internet access.`}/>
               </div>
               <FormGroup row className={style["form-control-group"]}>
                 <FormControlLabel className={style["form-control-label"]}

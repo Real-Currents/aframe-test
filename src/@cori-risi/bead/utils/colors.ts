@@ -29,7 +29,7 @@ export function getBEADColor(bead_category: string): string {
 
 export function getFillColor(color_scheme: string): any {  
 
-  if (color_scheme === "BEAD category") {
+  if (color_scheme === "BEAD service level") {
     return [
       "match", ["get", "bead_category"],
       "Served", colors["legend_colors"]["bb_bead_categories"]["served_area"],

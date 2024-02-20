@@ -378,7 +378,7 @@ const GlMap: React.FC < GlMapProps > = ({
                         />
                         {hoverInfo && (
                         <div className={style["tooltip"]} style={{left: hoverInfo.x, top: hoverInfo.y}}>
-                            <h5>BEAD status: <span className={style["bead-category"]} style={{textDecorationColor: getBEADColor(hoverInfo.feature.properties.bead_category)}}>{hoverInfo.feature.properties.bead_category}</span></h5> 
+                            <h5>BEAD service level: <span className={style["bead-category"]} style={{textDecorationColor: getBEADColor(hoverInfo.feature.properties.bead_category)}}>{hoverInfo.feature.properties.bead_category}</span></h5> 
                             <div>
                                 <div>
                                     <p><b>Broadband access</b></p>
