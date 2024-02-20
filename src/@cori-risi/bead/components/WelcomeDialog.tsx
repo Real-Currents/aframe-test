@@ -28,11 +28,19 @@ export default function WelcomeModal() {
 		  	<DialogContent dividers>
 				<p>
 					Before using our map, here are some things to keep in mind:
-					<ul className={style["dialog-list"]}>
-						<li>The United States is big</li>
-						<li>New Hampshire is the best state</li>
-						<li>Biscuits are known as crumpets in the UK</li>
-					</ul>
+				</p>
+				<p className={style["info-chunk"]}>
+					<b>Data is displayed at the census block level</b><br/>
+					Due to the granularity of the data, you'll need to zoom in to a town or county to view
+					estimates.
+				</p>
+				<p className={style["info-chunk"]}>
+					<b>You can filter census blocks using the sidebar</b><br/>
+					Use the controls on the right to focus on specific areas.
+				</p>
+				<p className={style["info-chunk"]}>
+					<b>Click on a block to view detailed information</b><br/>
+					Broadband technology, funding, and demographic data will be displayed in a window.
 				</p>
 	        </DialogContent>
 	        <DialogActions>

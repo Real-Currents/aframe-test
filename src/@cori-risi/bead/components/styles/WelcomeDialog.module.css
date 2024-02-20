@@ -21,3 +21,8 @@
   list-style: inside;
   margin: 10px 0px;
 }
+
+.info-chunk {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
