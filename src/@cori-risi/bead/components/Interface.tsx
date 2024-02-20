@@ -65,7 +65,7 @@ const Interface = () => {
 
     const [fillColor, setFillColor] = useState < any[] > (getFillColor("BEAD category"));
     const [multipleISP, setMultipleISP] = useState < string > ("");
-    const [isDrawerShowing, setDrawerShowing] = useState < boolean > (true);
+    const [isDrawerShowing, setDrawerShowing] = useState < boolean > (false);
     const [focusBlock, setFocusBlock] = useState < string > ("");
     const [detailedInfo, setDetailedInfo] = useState < any[] > ([]);
     const [colorVariable, setColorVariable] = useState < string > ("BEAD category");

@@ -187,7 +187,7 @@ const DetailedView: React.FC<DetailedViewProps> = ({ detailedInfo }) => {
 
                 {
                     (block_info.length === 0 )?
-                        <p>Select a block on the map to view detailed Broadband info<br /></p> :
+                        <p>Select a block on the map to view Broadband info<br /></p> :
                         // <TableContainer component={Paper}>
                         //     <Table>
                         //         <TableHead>
@@ -287,7 +287,7 @@ const DetailedView: React.FC<DetailedViewProps> = ({ detailedInfo }) => {
 
                 {
                     (block_info.length === 0) ?
-                        <p>Select a block on the map to view detailed Broadband info<br/></p> :
+                        <p>Select a block on the map to view ACS data for the relevant Census Tract(s)<br/></p> :
 
                         <MUIDataTable
                             columns={dt_columns}
@@ -295,7 +295,7 @@ const DetailedView: React.FC<DetailedViewProps> = ({ detailedInfo }) => {
                             options={{
                                 "filterType": "checkbox"
                             }}
-                            title={"TODO: Get ACS data for relevant Census Tract ID's"}
+                            title={"TODO: Get ACS data for the relevant Census Tract(s)"}
                         />
                 }
 

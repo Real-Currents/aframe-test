@@ -1,4 +1,4 @@
-const colors = {
+export const colors = {
     "legend_colors": {
         "bb_bead_categories": {
             "served_area": "rgba(35, 79, 191, 0.5)",

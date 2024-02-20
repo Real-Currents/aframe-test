@@ -3,7 +3,9 @@ import IntrinsicAttributes = React.JSX.IntrinsicAttributes;
 import { Map as MapboxMap } from 'mapbox-gl';
 import Map, { Source, Layer,  LayerProps, MapRef } from 'react-map-gl';
 import { fitBounds } from 'viewport-mercator-project';
+import { useDispatch } from "react-redux";
 import { useSpring, animated } from "react-spring";
+import {setMapFilters, setMapSelection} from "../features/index";
 
 import { AxiosInstance } from "axios";
 import { ApiContext } from "../../contexts/ApiContextProvider";
@@ -24,8 +26,7 @@ import MapLegend from './MapLegend';
 import style from "./styles/GlMap.module.css";
 
 import broadband_technology_dict from './../data/broadband_technology.json';
-import {useDispatch} from "react-redux";
-import {setMapFilters} from "../features/index";
+import {mapboxStyle} from "../styles/index";
 const broadband_technology: Record<string, string> = broadband_technology_dict;
 
 const percentFormat = format('.1%');
@@ -181,6 +182,8 @@ const GlMap: React.FC < GlMapProps > = ({
                             }
                         });
                         selectFeatures([ ...block_features ]);
+
+                        dispatch(setMapSelection(block_features));
                     }
                 })
                 .catch(error => {
@@ -362,7 +365,8 @@ const GlMap: React.FC < GlMapProps > = ({
                       longitude: longitude,
                       zoom: zoom
                     }}
-                    mapStyle="mapbox://styles/mapbox/light-v9"
+                    // mapStyle="mapbox://styles/mapbox/light-v9"
+                    mapStyle={mapboxStyle}
                     mapboxAccessToken={mapboxToken}
                     interactiveLayerIds={
                         (bead_dev.layers !== null && bead_dev.layers[0].hasOwnProperty('id') ) ? [

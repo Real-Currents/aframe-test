@@ -1,26 +1,16 @@
-import MAP_STYLE from './mapbox_style.json';
 import React from "react";
+import { LayerProps, SourceProps, MapStyle } from "react-map-gl";
 import IntrinsicAttributes = React.JSX.IntrinsicAttributes;
-import { LayerProps, SourceProps } from "react-map-gl";
+import { colors } from '../utils/colors';
+// import MAP_STYLE from './mapbox_style.json';
+import MAP_STYLE from '../../mapbox/styles/ruralinno/cl010e7b7001p15pe3l0306hv/style.json';
 
 // For more information on data-driven styles, see https://www.mapbox.com/help/gl-dds-ref/
 
-const colors = {
-    "legend_colors": {
-        "bb_bead_categories": {
-            "served_area": "rgba(35, 79, 191, 0.5)",
-            "underserved_area": "rgba(0, 131, 93, 0.5)",
-            "unserved_area": "rgba(255, 228, 115, 0.5)",
-            "not_reported": "rgba(105, 105, 105, 0)",
-            "default": "rgba(105, 105, 105, 0)"
-        }
-    }
-};
-
 // Make a copy of the main basemap style
-export const mapboxStyle = {
-    ...MAP_STYLE,
-};
+export const mapboxStyle: MapStyle = ({
+    ...MAP_STYLE
+}) as MapStyle;
 
 export type MapboxSourceLayerStyles = {
     sources: [(IntrinsicAttributes & SourceProps)];

@@ -32,7 +32,7 @@
             "tileSize": 256
         },
         "composite": {
-            "url": "mapbox://mapbox.mapbox-streets-v8,mapbox.mapbox-terrain-v2,ruralinno.7stpbs93,ruralinno.3v9y79ly,ruralinno.2pv0vm2z,ruralinno.5639ssfg,ruralinno.c504wkuy",
+            "url": "mapbox://mapbox.light-v10,mapbox.mapbox-terrain-v2,ruralinno.7stpbs93,ruralinno.3v9y79ly,ruralinno.2pv0vm2z,ruralinno.5639ssfg,ruralinno.c504wkuy",
             "type": "vector"
         }
     },

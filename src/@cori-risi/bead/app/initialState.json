@@ -1,5 +1,6 @@
 {
   "mapFilters": {
     "disableSidebar": true
-  }
+  },
+  "mapSelection": {}
 }

@@ -4,10 +4,7 @@ import { initialState } from "../../app/AppState";
 console.log("Initial state available in mapFiltersSlice: ", initialState);
 
 const initialStateWithMapFilters = {
-    ...initialState,
-    user: {
-        ...initialState.user
-    }
+    ...initialState
 }
 
 export const mapFiltersSlice = createSlice({

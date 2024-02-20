@@ -1,10 +1,9 @@
 import React from 'react';
-import style from "./styles/MapLegend.module.css";
-
-import InfoTooltip from "./InfoTooltip";
-
 import { format } from 'd3-format';
+import InfoTooltip from "./InfoTooltip";
+import style from "./styles/MapLegend.module.css";
 import { beadDefinitions } from '../utils/constants.ts';
+
 const numberFormat = format(',');
 
 interface MapLegendProps {
