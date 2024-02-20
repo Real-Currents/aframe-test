@@ -293,7 +293,18 @@ const DetailedView: React.FC<DetailedViewProps> = ({ detailedInfo }) => {
                             columns={dt_columns}
                             data={dt_data}
                             options={{
-                                "filterType": "checkbox"
+                                "filterType": "checkbox",
+                                "onRowsDelete": (rowsDeleted: { data: { index: number, dataIndex: number }[], lookup: { [dataIndex: number]: boolean } }, newTableData: any[]) => {
+                                    console.log("Delete Row(s):", {
+                                        rowsDeleted: {
+                                            data: rowsDeleted.data,
+                                            lookupIndex: rowsDeleted.lookup
+                                        },
+                                        newTableData: {
+                                            ...newTableData
+                                        }
+                                    });
+                                }
                             }}
                             title={"TODO: Get ACS data for the relevant Census Tract(s)"}
                         />
