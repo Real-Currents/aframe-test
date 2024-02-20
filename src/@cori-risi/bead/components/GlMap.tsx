@@ -354,7 +354,7 @@ const GlMap: React.FC < GlMapProps > = ({
                       longitude: longitude,
                       zoom: zoom
                     }}
-                    mapStyle="mapbox://styles/mapbox/light-v9"
+                    mapStyle="mapbox://styles/ruralinno/cl010e7b7001p15pe3l0306hv"
                     mapboxAccessToken={mapboxToken}
                     interactiveLayerIds={
                         (bead_dev.layers !== null && bead_dev.layers[0].hasOwnProperty('id') ) ? [
@@ -365,12 +365,6 @@ const GlMap: React.FC < GlMapProps > = ({
                     onMove={onMove}
                     onClick={makeOnClick(apiContext.token!.toString())}
                 >
-
-                    <Source id={"mapbox-terrain"} type={"vector"} url={"mapbox://mapbox.mapbox-terrain-v2"} >
-                        <Layer {...contourStyle} >
-                        </Layer>
-                    </Source>
-
                     <Source {...bead_dev.sources[0]} >
                         <Layer
                           {...layerAttributes}
