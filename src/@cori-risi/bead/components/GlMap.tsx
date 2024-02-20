@@ -3,58 +3,68 @@ import IntrinsicAttributes = React.JSX.IntrinsicAttributes;
 import { Map as MapboxMap } from 'mapbox-gl';
 import Map, { Source, Layer,  LayerProps, MapRef } from 'react-map-gl';
 import { fitBounds } from 'viewport-mercator-project';
-import { useDispatch } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { useSpring, animated } from "react-spring";
-import {setMapFilters, setMapSelection} from "../features/index";
+import { format } from 'd3-format';
 
 import { AxiosInstance } from "axios";
 import { ApiContext } from "../../contexts/ApiContextProvider";
 
-import { parseIspId, formatBroadbandTechnology } from '../utils/utils';
-import { getBEADColor } from '../utils/colors';
-
-import { format } from 'd3-format';
+import { GeoJSONFeature } from "maplibre-gl";
+import MapLegend from './MapLegend';
+import style from "./styles/GlMap.module.css";
 import "mapbox-gl/dist/mapbox-gl.css";
 import {
     bead_dev,
     // bb_tr_100_20,
-    contourStyle
+    contourStyle,
+    mapboxStyle
 } from '../styles';
-import { GeoJSONFeature } from "maplibre-gl";
 
-import MapLegend from './MapLegend';
-import style from "./styles/GlMap.module.css";
+import {
+    selectMapFilters,
+    setMapFilters,
+    selectMapSelection,
+    setMapSelection
+} from "../features";
+import { FilterState } from "../models/index";
 
+import {getBEADColor, getFillColor} from '../utils/colors';
+import {
+    formatBroadbandTechnology,
+    parseIspId, swapKeysValues
+} from '../utils/utils';
+
+import isp_name_dict from "../data/isp_name_lookup_rev.json";
 import broadband_technology_dict from './../data/broadband_technology.json';
-import {mapboxStyle} from "../styles/index";
+import {HoverInfo} from "./HoverInfo";
+import {setMapHover} from "../features/index";
 const broadband_technology: Record<string, string> = broadband_technology_dict;
-
-const percentFormat = format('.1%');
 
 type GlMapProps = {
     mapboxToken: string,
-    filter: {
-        bb_service: {
-            served: boolean,
-            underserved: boolean,
-            unserved: boolean
-        },
-        isp_count: number[],
-        total_locations: number[],
-        isp_combos: string[],
-        counties: string[],
-        broadband_technology: string[],
-        has_previous_funding: {
-            yes: boolean,
-            no: boolean
-        }
-    },
-    fillColor: any,
-    colorVariable: string,
-    onFocusBlockChange: (newFocusBlock: string) => void,
-    onDetailedInfoChange: (newDetailedInfo: any[]) => void,
-    ispNameLookup: { [key: string]: string },
-    isShowing: boolean
+    // filter: {
+    //     bb_service: {
+    //         served: boolean,
+    //         underserved: boolean,
+    //         unserved: boolean
+    //     },
+    //     isp_count: number[],
+    //     total_locations: number[],
+    //     isp_combos: string[],
+    //     counties: string[],
+    //     broadband_technology: string[],
+    //     has_previous_funding: {
+    //         yes: boolean,
+    //         no: boolean
+    //     }
+    // },
+    // fillColor: any,
+    // colorVariable: string,
+    // onFocusBlockChange: (newFocusBlock: string) => void,
+    // onDetailedInfoChange: (newDetailedInfo: any[]) => void,
+    // ispNameLookup: { [key: string]: string },
+    // isShowing: boolean
 };
 
 const USA_BOUNDS: [
@@ -67,20 +77,27 @@ const USA_BOUNDS: [
 
 const GlMap: React.FC < GlMapProps > = ({
   mapboxToken, 
-  filter, 
-  fillColor, 
-  colorVariable,
-  onFocusBlockChange,
-  onDetailedInfoChange,
-  ispNameLookup,
-  isShowing
+  // filter,
+  // fillColor,
+  // colorVariable,
+  // onFocusBlockChange,
+  // onDetailedInfoChange,
+  // ispNameLookup,
+  // isShowing
 }: GlMapProps) => {
+
+    console.log("GITMap is re-rendering");
 
     const apiContext = useContext(ApiContext);
 
     const dispatch = useDispatch();
 
     const mapRef = useRef < MapRef | null > (null);
+
+    const filterState: FilterState = useSelector(selectMapFilters);
+    const [fillColor, setFillColor] = useState < any[] > (getFillColor("BEAD category"));
+    const [colorVariable, setColorVariable] = useState < string > ("BEAD category");
+    const isShowing = false;
 
     const MIN_ZOOM_LEVEL = 9;
 
@@ -100,6 +117,7 @@ const GlMap: React.FC < GlMapProps > = ({
     const [ mapZoom, setMapZoom] = useState < number > (zoom);
     const [ clickedBlock, setClickedBlock] = useState < string > ("");
 
+    const mapSelection = useSelector<{[index: string]: GeoJSONFeature[]}>(selectMapSelection); // { "...": GeoJSONFeature[] }
     const [ selected_features, selectFeatures ] = useState<GeoJSONFeature[]>([]);
     const [ selected_geoids, selectGeoIDs ] = useState<string[]>([]);
 
@@ -108,16 +126,19 @@ const GlMap: React.FC < GlMapProps > = ({
     });  
 
     const onMove = (event: any) => { // Specify the type of event if known
-        if (event.hasOwnProperty("viewState") && event["viewState"].hasOwnProperty("zoom")) {
-            setMapZoom(event.viewState!.zoom!);
+        // if (event.hasOwnProperty("viewState") && event["viewState"].hasOwnProperty("zoom")) {
+        //     setMapZoom(event.viewState!.zoom!);
 
             const mapFiltersUpdate = {
                 "disableSidebar": (event.viewState!.zoom! < MIN_ZOOM_LEVEL)
             };
-            // console.log("Update mapFilters state:", mapFiltersUpdate);
-            dispatch(setMapFilters(mapFiltersUpdate));
 
-        }
+            if (filterState.disableSidebar !== mapFiltersUpdate.disableSidebar) {
+                console.log("Update mapFilters state from:", filterState, "\nto:", mapFiltersUpdate);
+                dispatch(setMapFilters(mapFiltersUpdate));
+            }
+        //
+        // }
     };
 
     const onHover = useCallback((event: any) => { // Specify the type of event if known
@@ -126,11 +147,25 @@ const GlMap: React.FC < GlMapProps > = ({
                 features,
                 point: { x, y }
             } = event;
-            const hoveredFeature = features && features[0];
 
-            // console.log("hoveredFeature is ", hoveredFeature);
+            if (!!features && features.length > 0 && features[0].hasOwnProperty("properties")) {
 
-            setHoverInfo(hoveredFeature && { feature: hoveredFeature, x, y });
+                const hoveredFeature = {
+                    "x": x,
+                    "y": y,
+                    "feature": {
+                        "properties": {
+                            ...features[0].properties
+                        }
+                    }
+
+                };
+
+                // console.log("hoveredFeature is ", hoveredFeature);
+
+                // setHoverInfo(hoveredFeature && { feature: hoveredFeature, x, y });
+                dispatch(setMapHover(hoveredFeature));
+            }
 
         }
     }, []);
@@ -157,7 +192,7 @@ const GlMap: React.FC < GlMapProps > = ({
                         && result.data.hasOwnProperty("features")
                         && result.data.features.length > 0
                     ) {
-                        onDetailedInfoChange(result.data.features);
+                        // onDetailedInfoChange(result.data.features);
 
                         const block_features = result.data.features.filter((f: GeoJSONFeature) => {
                             // class GeoJSONFeature {
@@ -181,9 +216,11 @@ const GlMap: React.FC < GlMapProps > = ({
                                 return true;
                             }
                         });
-                        selectFeatures([ ...block_features ]);
+                        // selectFeatures([ ...block_features ]);
 
-                        dispatch(setMapSelection(block_features));
+                        dispatch(setMapSelection({
+                            block_features
+                        }));
                     }
                 })
                 .catch(error => {
@@ -229,7 +266,6 @@ const GlMap: React.FC < GlMapProps > = ({
                         ];
 
                         console.log(`Feature clicked (${clickedGeoID}):`, clickedFeature);
-                        console.log("Feature clicked:", clickedFeature);
                         setClickedBlock(clickedGeoID);
                         selectGeoIDs(geoids);
                         getBlockInfoFromApi(geoids.join(","), token);
@@ -239,18 +275,29 @@ const GlMap: React.FC < GlMapProps > = ({
     }
 
     useEffect(() => {
+        selectFeatures((
+            mapSelection.hasOwnProperty("block_features")
+            && mapSelection.block_features !== null
+            && mapSelection.block_features.length > 0
+        ) ?
+            mapSelection.block_features :
+            []
+        )
+    }, [ mapSelection ]);
+
+    useEffect(() => {
 
         let bb_array: any[] = [];
 
-        if (filter.bb_service.served === true) {
+        if (filterState.bb_service.served === true) {
             bb_array = [...bb_array, "Served"];
         }
 
-        if (filter.bb_service.underserved === true) {
+        if (filterState.bb_service.underserved === true) {
             bb_array = [...bb_array, "Underserved"];
         }
 
-        if (filter.bb_service.unserved === true) {
+        if (filterState.bb_service.unserved === true) {
             bb_array = [...bb_array, "Unserved"];
         }
 
@@ -258,44 +305,44 @@ const GlMap: React.FC < GlMapProps > = ({
 
         let isp_filter: any = [
             'all',
-            ['>=', ['get', 'cnt_isp'], filter.isp_count[0]],
-            ['<=', ['get', 'cnt_isp'], filter.isp_count[1]]
+            ['>=', ['get', 'cnt_isp'], filterState.isp_count[0]],
+            ['<=', ['get', 'cnt_isp'], filterState.isp_count[1]]
         ];
 
         let total_locations_filter: any = [
             'all',
-            ['>=', ['get', 'cnt_total_locations'], filter.total_locations[0]],
-            ['<=', ['get', 'cnt_total_locations'], filter.total_locations[1]]
+            ['>=', ['get', 'cnt_total_locations'], filterState.total_locations[0]],
+            ['<=', ['get', 'cnt_total_locations'], filterState.total_locations[1]]
         ];
 
         let new_filter: any = ["all", ['in', ['get', 'bead_category'],
             ['literal', bb_array]
         ], isp_filter, total_locations_filter];
 
-        if (filter.isp_combos.length !== 0) {
+        if (filterState.isp_combos.length !== 0) {
             let isp_combo_filter = ['in', ['get', 'combo_isp_id'],
-                ['literal', filter.isp_combos]
+                ['literal', filterState.isp_combos]
             ];
             new_filter.push(isp_combo_filter);
         }
 
-        if (filter.counties.length !== 0) {
+        if (filterState.counties.length !== 0) {
             let counties_filter = ['in', ['get', 'geoid_co'],
-                ['literal', filter.counties]
+                ['literal', filterState.counties]
             ];
             new_filter.push(counties_filter);
         }
 
-        if (filter.broadband_technology.length !== 0) {
-            for (let i = 0; i < filter.broadband_technology.length; i++) {
-                let broadband_technology_filter = ['==', ['get', broadband_technology[filter.broadband_technology[i]]], true];
+        if (filterState.broadband_technology.length !== 0) {
+            for (let i = 0; i < filterState.broadband_technology.length; i++) {
+                let broadband_technology_filter = ['==', ['get', broadband_technology[filterState.broadband_technology[i]]], true];
                 new_filter.push(broadband_technology_filter);
             }
         }
 
-        if (filter.has_previous_funding.yes !== filter.has_previous_funding.no) {
+        if (filterState.has_previous_funding.yes !== filterState.has_previous_funding.no) {
 
-            if (filter.has_previous_funding.yes === true) {
+            if (filterState.has_previous_funding.yes === true) {
                 let has_previous_funding_filter = ['==', ['get', 'has_previous_funding'], true];
                 new_filter.push(has_previous_funding_filter);
             }
@@ -305,7 +352,7 @@ const GlMap: React.FC < GlMapProps > = ({
             }
         }
         else {
-            if (filter.has_previous_funding.yes === false) {
+            if (filterState.has_previous_funding.yes === false) {
                 let has_previous_funding_filter = ['==', ['get', 'has_previous_funding'], null];
                 new_filter.push(has_previous_funding_filter);
             }
@@ -313,7 +360,7 @@ const GlMap: React.FC < GlMapProps > = ({
 
         setLayerFilter(new_filter);
 
-    }, [filter]);
+    }, [filterState]);
 
 
     useEffect(() => {
@@ -330,16 +377,16 @@ const GlMap: React.FC < GlMapProps > = ({
 
     }, [fillColor]);
 
-    useEffect(() => {
-        setTimeout(() => {
-            // console.log("Add map to global window object:", mapRef);
-            if (mapRef !== null && mapRef.current !== null) {
-                const map: MapboxMap = mapRef.current!.getMap();
-                (map as { [key: string]: any })["map"] = map;
-                (window as { [key: string]: any })["map"] = (map as unknown) as MapRef;
-            }
-        }, 2533);
-    }, [ mapRef ]);
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         // console.log("Add map to global window object:", mapRef);
+    //         if (mapRef !== null && mapRef.current !== null) {
+    //             const map: MapboxMap = mapRef.current!.getMap();
+    //             (map as { [key: string]: any })["map"] = map;
+    //             (window as { [key: string]: any })["map"] = (map as unknown) as MapRef;
+    //         }
+    //     }, 2533);
+    // }, [ mapRef ]);
 
     return ( /*Wait for ApiToken*/
         (apiContext.hasOwnProperty("token") && apiContext.token !== null) ? (
@@ -388,53 +435,6 @@ const GlMap: React.FC < GlMapProps > = ({
                           {...layerAttributes}
                           filter={layerFilter}
                         />
-                        {hoverInfo && (
-                        <div className={style["tooltip"]} style={{left: hoverInfo.x, top: hoverInfo.y}}>
-                            <h5>BEAD status: <span className={style["bead-category"]} style={{textDecorationColor: getBEADColor(hoverInfo.feature.properties.bead_category)}}>{hoverInfo.feature.properties.bead_category}</span></h5> 
-                            <div>
-                                <div>
-                                    <p><b>Broadband access</b></p>
-                                    <table>
-                                        <tbody>
-                                            <tr>
-                                                <td>Locations</td>
-                                                <td>{hoverInfo.feature.properties.cnt_total_locations}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>{"Pct. unserved (<25/3)"}</td>
-                                                <td>{percentFormat(1-hoverInfo.feature.properties.pct_served)}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>{"Pct un- and underserved (<100/20) "}</td>
-                                                <td>{percentFormat(hoverInfo.feature.properties.cnt_25_3 / hoverInfo.feature.properties.cnt_total_locations)}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>{"Pct served (>100/20)"}</td>
-                                                <td>{percentFormat(hoverInfo.feature.properties.cnt_100_20 / hoverInfo.feature.properties.cnt_total_locations)}</td>
-                                            </tr>   
-                                        </tbody>                             
-                                    </table>
-                                </div>
-                                <div>
-                                    <p><b>Broadband technologies</b>: {formatBroadbandTechnology(
-                                            [
-                                                hoverInfo.feature.properties.has_coaxial_cable,
-                                                hoverInfo.feature.properties.has_copperwire,
-                                                hoverInfo.feature.properties.has_fiber,
-                                                hoverInfo.feature.properties.has_lbr_wireless,
-                                                hoverInfo.feature.properties.has_licensed_wireless
-                                            ]
-                                        )}
-                                    </p>
-                                    <p><b>Previous federal funding?</b> {hoverInfo.feature.properties.has_previous_funding? "Yes": "No"}</p>
-                                    <p><b>Internet service providers:</b> {hoverInfo.feature.properties.combo_isp_id ? parseIspId(hoverInfo.feature.properties.isp_id, ispNameLookup): "N/A"}</p>
-                                </div>
-                                <div>
-                                    <p><em>Click to view detailed census block information</em></p>
-                                </div>
-                          </div>
-                        </div>
-                        )}
                     </Source>
                     {/*{(selected_features.length > 0) ?*/}
                         <Source type="geojson" id="bead_block" data={{
@@ -458,8 +458,11 @@ const GlMap: React.FC < GlMapProps > = ({
                                     "line-color": selection_color,
                                 }
                             }}></Layer>
-                        </Source>{/*    : <></>*/}
+                        </Source>{/* : <></>*/}
                     {/*}*/}
+
+                    <HoverInfo />
+
                 </Map>
             </div>
         ) :

@@ -7,7 +7,7 @@ const initialStateWithMapSelection = {
     ...initialState
 }
 
-export const mapSelectionSlice = createSlice({
+export const index = createSlice({
     initialState: initialStateWithMapSelection.mapSelection,
     name: "mapSelection",
     reducers: {
@@ -21,14 +21,14 @@ export const mapSelectionSlice = createSlice({
     }
 });
 
-export default mapSelectionSlice.reducer;
+export default index.reducer;
 
 export const {
     setMapSelection,
-} = mapSelectionSlice.actions;
+} = index.actions;
 
 export const selectMapSelection = (state: (typeof initialStateWithMapSelection)) => {
     // console.log("AppState in selectMapSelection:", state);
-    console.log("Return MapSelection:", state.mapSelection);
+    // console.log("Return MapSelection:", state.mapSelection);
     return state.mapSelection;
 }

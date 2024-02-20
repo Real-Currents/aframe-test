@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import "./styles/DetailedView.scss";
-import { CustomButton, CustomIconButton } from "./CustomInputs";
-// import { Table, TableHead, TableBody, TableRow, TableCell } from "@aws-amplify/ui-react";
-// import { Paper, TableContainer } from "@mui/material";
 import MUIDataTable from "mui-datatables";
-import {parseIspId, swapKeysValues} from "../utils/utils";
-import isp_name_dict from "../data/isp_name_lookup_rev.json";
+import { CustomButton } from "./CustomInputs";
+import { parseIspId, swapKeysValues } from "../utils/utils";
+import "./styles/DetailedView.scss";
 // import { CustomMUIDatatable } from "../../mui-datatables/src/components/CustomMUIDatatable";
 // import TableViewCol from "../../mui-datatables/src/components/TableViewCol";
+// import { Table, TableHead, TableBody, TableRow, TableCell } from "@aws-amplify/ui-react";
+// import { Paper, TableContainer } from "@mui/material";
+
+import isp_name_dict from "../data/isp_name_lookup_rev.json";
 
 interface IspNameLookup {
     [key: string]: string;

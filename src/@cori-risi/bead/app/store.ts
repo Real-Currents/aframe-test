@@ -6,6 +6,7 @@ import {
 } from "../../features";
 import {
     mapFiltersReducer,
+    mapHoverReducer,
     mapSelectionReducer
 } from "../features";
 
@@ -16,6 +17,7 @@ const store =  configureStore({
             username: userNameReducer
         }),
         mapFilters: mapFiltersReducer,
+        mapHover: mapHoverReducer,
         mapSelection: mapSelectionReducer
     }
 });

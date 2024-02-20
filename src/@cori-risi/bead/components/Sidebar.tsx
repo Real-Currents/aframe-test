@@ -1,139 +1,114 @@
-import React, { useState} from 'react';
-
+import React from 'react';
+import { useSelector } from "react-redux";
 import { useSpring, animated } from "react-spring";
 
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 import FormGroup from '@mui/material/FormGroup';
 import Checkbox from '@mui/material/Checkbox';
-
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
-
 import Slider from '@mui/material/Slider';
+
+import { getFillColor } from '../utils/colors';
 
 import InfoTooltip from "./InfoTooltip";
 
 import style from "./styles/Sidebar.module.css";
 
-import { getFillColor } from '../utils/colors';
+import { selectMapFilters } from "../features";
+import { FilterState } from "../models/index";
 
-interface BroadbandTechnology {
-  [key: string]: string;
-}
+import { swapKeysValues } from '../utils/utils';
 
-interface FilterState {
-    [key: string]: boolean | string;
-    disableSidebar: boolean
-}
+import county_name_geoid from '../data/geoid_co_name_crosswalk.json';
+import isp_name_dict from '../data/isp_name_lookup_rev.json';
 
-import broadband_technology_dict from './../data/broadband_technology.json';
+import broadband_technology_dict from '../data/broadband_technology.json';
 const broadband_technology: Record<string, string> = broadband_technology_dict;
-import county_name_geoid from './../data/geoid_co_name_crosswalk.json';
-import {useSelector} from "react-redux";
-import {selectMapFilters} from "../features/mapFilters/mapFiltersSlice";
 
 interface IspNameLookup {
-  [key: string]: string;
+    [key: string]: string;
 }
+const isp_name_lookup: IspNameLookup = isp_name_dict;
+const isp_name_lookup_rev = swapKeysValues(isp_name_lookup);
 
-interface IspIdLookup {
-  [key: string]: string[];
-}
-
-function Sidebar<T>({ 
-  onFilterChange, 
-  onFillColorChange, 
-  onColorVariableChange,
-  filter,
-  isShowing,
-  ispIdLookup,
-  ispNameLookup
-}: 
-  {
-    onFilterChange: (newFilter: T) => void, 
-    onFillColorChange: (newFillColor: any[]) => void,
-    onColorVariableChange: (newColorVariable: string) => void,
-    filter: any,
-    isShowing: boolean,
-    ispIdLookup: { [key: string]: string[] },
-    ispNameLookup: { [key: string]: string }
- }) {
+function Sidebar () {
 
     const filterState: FilterState = useSelector(selectMapFilters);
 
   const props = useSpring({
-    right: isShowing ? "0px": "-375px"
+    right: filterState.showSidebar ? "0px": "-375px"
   });  
 
   const handleISPChange = (event: Event, newValue: number | number[]) => {
-    let slider_vals: number[] = newValue as number[];
-    onFilterChange({...filter, isp_count: slider_vals});
+    // let slider_vals: number[] = newValue as number[];
+    // onFilterChange({...filter, isp_count: slider_vals});
   };
 
   const handleTotalLocationsChange = (event: Event, newValue: number | number[]) => {
-    let slider_vals: number[] = newValue as number[];
-    onFilterChange({...filter, total_locations: slider_vals});
+    // let slider_vals: number[] = newValue as number[];
+    // onFilterChange({...filter, total_locations: slider_vals});
   };
 
   function handleBroadbandChange(event: any) {
 
-    if (typeof event.target.checked === 'boolean') {
-      onFilterChange({...filter, bb_service: {...filter.bb_service, [event.target.name]: event.target.checked}});
-    }
+    // if (typeof event.target.checked === 'boolean') {
+    //   onFilterChange({...filter, bb_service: {...filter.bb_service, [event.target.name]: event.target.checked}});
+    // }
   }
 
   function handleAwardChange(event: any) {
 
-    if (typeof event.target.checked === 'boolean') {
-      onFilterChange({...filter, has_previous_funding: {...filter.has_previous_funding, [event.target.name]: event.target.checked}});
-    }
+    // if (typeof event.target.checked === 'boolean') {
+    //   onFilterChange({...filter, has_previous_funding: {...filter.has_previous_funding, [event.target.name]: event.target.checked}});
+    // }
   }
 
   function handleFillColorChange(event: React.SyntheticEvent, newValue: string): void {
-    if (typeof newValue === "string") {
-      onFillColorChange(getFillColor(newValue));
-      onColorVariableChange(newValue);
-    }
+    // if (typeof newValue === "string") {
+    //   onFillColorChange(getFillColor(newValue));
+    //   onColorVariableChange(newValue);
+    // }
   };
 
   function handleBroadbandTechnologyChange(event: any, newValue: string[]): void {
-    if (Array.isArray(newValue) && newValue.every((item) => typeof item === 'string')) {
-      onFilterChange({...filter, broadband_technology: newValue});
-    }
+    // if (Array.isArray(newValue) && newValue.every((item) => typeof item === 'string')) {
+    //   onFilterChange({...filter, broadband_technology: newValue});
+    // }
   }
 
   function handleMultipleISPChange(event: any, newValue: any ): void {
 
-    // Populate a list of combo ids to use when filtering
-    let valid_isp_combos: string[] = [];
-    for (let isp of newValue) {
-
-      let isp_id = ispNameLookup[isp];
-      for (const key in ispIdLookup) {
-
-        if (ispIdLookup[key].includes(isp_id)) {
-          valid_isp_combos.push(key);
-        }
-      }
-    }
-    
-    onFilterChange({...filter, isp_combos: valid_isp_combos});
+    // // Populate a list of combo ids to use when filtering
+    // let valid_isp_combos: string[] = [];
+    // for (let isp of newValue) {
+    //
+    //   let isp_id = ispNameLookup[isp];
+    //   for (const key in ispIdLookup) {
+    //
+    //     if (ispIdLookup[key].includes(isp_id)) {
+    //       valid_isp_combos.push(key);
+    //     }
+    //   }
+    // }
+    //
+    // onFilterChange({...filter, isp_combos: valid_isp_combos});
   }
 
   function handleCountiesChange (event: any, newValue: any): void {
 
-    let valid_geoid_co: string[] = [];
-    for (let county_name of newValue) {
-
-      let filtered_records = county_name_geoid.filter(d => d.label === county_name);
-
-      if (filtered_records.length > 0 && typeof filtered_records[0].id === 'string') {
-        valid_geoid_co.push(filtered_records[0].id);
-      }
-    }
-
-    onFilterChange({...filter, counties: valid_geoid_co});
+    // let valid_geoid_co: string[] = [];
+    // for (let county_name of newValue) {
+    //
+    //   let filtered_records = county_name_geoid.filter(d => d.label === county_name);
+    //
+    //   if (filtered_records.length > 0 && typeof filtered_records[0].id === 'string') {
+    //     valid_geoid_co.push(filtered_records[0].id);
+    //   }
+    // }
+    //
+    // onFilterChange({...filter, counties: valid_geoid_co});
   }
 
   return (
@@ -173,7 +148,7 @@ function Sidebar<T>({
                 <FormControlLabel className={style["form-control-label"]}
                   control={
                     <Checkbox
-                      checked={filter.bb_service.served}
+                      checked={filterState.bb_service.served}
                       onChange={handleBroadbandChange}
                       name="served"
                     />
@@ -184,7 +159,7 @@ function Sidebar<T>({
                 <FormControlLabel className={style["form-control-label"]}
                   control={
                     <Checkbox
-                      checked={filter.bb_service.underserved}
+                      checked={filterState.bb_service.underserved}
                       onChange={handleBroadbandChange}
                       name="underserved"
                     />
@@ -195,7 +170,7 @@ function Sidebar<T>({
                 <FormControlLabel className={style["form-control-label"]}
                   control={
                     <Checkbox
-                      checked={filter.bb_service.unserved}
+                      checked={filterState.bb_service.unserved}
                       onChange={handleBroadbandChange}
                       name="unserved"
                     />
@@ -214,7 +189,7 @@ function Sidebar<T>({
                 <FormControlLabel className={style["form-control-label"]}
                   control={
                     <Checkbox
-                      checked={filter.has_previous_funding.yes}
+                      checked={filterState.has_previous_funding.yes}
                       onChange={handleAwardChange}
                       name="yes"
                     />
@@ -225,7 +200,7 @@ function Sidebar<T>({
                 <FormControlLabel className={style["form-control-label"]}
                   control={
                     <Checkbox
-                      checked={filter.has_previous_funding.no}
+                      checked={filterState.has_previous_funding.no}
                       onChange={handleAwardChange}
                       name="no"
                     />
@@ -242,7 +217,7 @@ function Sidebar<T>({
               <div className={style["slider"]}>
                 <Slider
                   getAriaLabel={() => 'ISP Count'}
-                  value={filter.isp_count}
+                  value={filterState.isp_count}
                   onChange={handleISPChange}
                   valueLabelDisplay="auto"
                   min={0}
@@ -258,7 +233,7 @@ function Sidebar<T>({
               <div className={style["slider"]}>
                 <Slider
                   getAriaLabel={() => 'Total locations'}
-                  value={filter.total_locations}
+                  value={filterState.total_locations}
                   onChange={handleTotalLocationsChange}
                   valueLabelDisplay="auto"
                   min={0}
@@ -274,7 +249,7 @@ function Sidebar<T>({
               </div>
               <Autocomplete
                 multiple
-                options={Object.keys(ispNameLookup)}
+                options={Object.keys(isp_name_lookup_rev)}
                 defaultValue={[]}
                 onChange={handleMultipleISPChange}
                 renderInput={(params) => (
