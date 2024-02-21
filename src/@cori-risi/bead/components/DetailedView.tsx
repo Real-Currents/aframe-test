@@ -1,14 +1,13 @@
 import React, {useEffect, useState} from 'react';
+import { useSelector } from "react-redux";
 import MUIDataTable from "mui-datatables";
 import { CustomButton } from "./CustomInputs";
-import { parseIspId, swapKeysValues } from "../utils/utils";
-import "./styles/DetailedView.scss";
-// import { CustomMUIDatatable } from "../../mui-datatables/src/components/CustomMUIDatatable";
-// import TableViewCol from "../../mui-datatables/src/components/TableViewCol";
-// import { Table, TableHead, TableBody, TableRow, TableCell } from "@aws-amplify/ui-react";
-// import { Paper, TableContainer } from "@mui/material";
 
 import isp_name_dict from "../data/isp_name_lookup_rev.json";
+import { selectMapHover } from "../features";
+import { HoverInfoState } from "../models/index";
+import { parseIspId, swapKeysValues } from "../utils/utils";
+import "./styles/DetailedView.scss";
 
 interface IspNameLookup {
     [key: string]: string;
@@ -94,6 +93,8 @@ const DetailedView: React.FC<DetailedViewProps> = ({ detailedInfo }) => {
     const [ geoid_bl, setGeoid ] = useState<string>("")
     const [ isp_names, setISPNames ] = useState<string[]>([]);
     const [ award_applicants, setAwardApplicants ] = useState<string[]>([]);
+
+    const hoverInfo: HoverInfoState = useSelector(selectMapHover);
 
     useEffect(() => {
 
@@ -189,44 +190,6 @@ const DetailedView: React.FC<DetailedViewProps> = ({ detailedInfo }) => {
                 {
                     (block_info.length === 0 )?
                         <p>Select a block on the map to view Broadband info<br /></p> :
-                        // <TableContainer component={Paper}>
-                        //     <Table>
-                        //         <TableHead>
-                        //             <TableRow>{
-                        //                 block_columns.map((col) =>
-                        //                     (col.toString().match(/name/) !== null) ?
-                        //                         <TableCell align="left" key={col.toString()}>
-                        //                             <h3>{getLabel(col, labels)}</h3></TableCell> :
-                        //                         <TableCell key={col.toString()}>{getLabel(col, labels)}</TableCell>
-                        //                 )
-                        //             }</TableRow>
-                        //         </TableHead>
-                        //         <TableBody>
-                        //             { (block_info.filter((b: any) =>  !!b && b !== null).length > 0) ?
-                        //                 block_info
-                        //                     .filter((b: any) => {
-                        //                         // console.log("b: ", b);
-                        //                         return !!b && b !== null
-                        //                     })
-                        //                     .map((b: string[]) => {
-                        //                         // console.log(b);
-                        //                         const geoid = b[0].split(":")[1];
-                        //                         // console.log(geoid);
-                        //                         return <TableRow key={geoid}>{
-                        //                             (b.map((i: string) => {
-                        //                                 const tuple = i.toString().split(":");
-                        //                                 const key = tuple[0].trim();
-                        //                                 const value = tuple[1].trim();
-                        //                                 // console.log([ key, value ]);
-                        //                                 return <TableCell key={key}>{value}</TableCell>
-                        //                             }))
-                        //                         }</TableRow>
-                        //                     }) :
-                        //                 (<TableRow key={"null-row"}>&nbsp;</TableRow>)
-                        //             }
-                        //         </TableBody>
-                        //     </Table>
-                        // </TableContainer>
                         <MUIDataTable
                             columns={block_columns.map((col) => getLabel(col, block_labels))}
                             data={[ ...block_info

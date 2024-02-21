@@ -2,7 +2,8 @@ import React, {useEffect} from "react";
 import { useSelector } from "react-redux";
 import { format } from "d3-format";
 import { getBEADColor } from "../utils/colors";
-import { HoverInfoState } from "../models/index";
+import { selectMapFilters, setMapFilters } from "../features";
+import {FilterState, HoverInfoState} from "../models/index";
 import { selectMapHover } from "../features";
 import style from "./styles/GlMap.module.css";
 import {
@@ -20,6 +21,8 @@ const percentFormat = (num) => {
 }
 
 export function HoverInfo () {
+
+    const filterState: FilterState = useSelector<FilterState>(selectMapFilters);
     const hoverInfo: HoverInfoState = useSelector(selectMapHover);
     const ispNameLookup =  swapKeysValues(isp_name_dict);
 
@@ -27,8 +30,10 @@ export function HoverInfo () {
     //     console.log("Updated hoverInfo:", hoverInfo);
     // }, [ hoverInfo ]);
 
-    return <>
-        { hoverInfo
+    return <>{
+        !filterState.disableSidebar && hoverInfo
+        && hoverInfo.hasOwnProperty("x") && hoverInfo.x > 0
+        && hoverInfo.hasOwnProperty("y") && hoverInfo.y > 0
         && hoverInfo.hasOwnProperty("feature")
         && hoverInfo.feature.hasOwnProperty("properties")
         && hoverInfo.feature.properties.hasOwnProperty("bead_category")

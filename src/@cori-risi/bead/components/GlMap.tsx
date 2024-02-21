@@ -1,7 +1,16 @@
-import React, {useState, useCallback, useEffect, useRef, useMemo, useContext} from 'react';
+import React, {useState, useCallback, useEffect, useRef, useMemo, useContext, MutableRefObject} from 'react';
 import IntrinsicAttributes = React.JSX.IntrinsicAttributes;
 import { Map as MapboxMap } from 'mapbox-gl';
-import Map, { Source, Layer,  LayerProps, MapRef } from 'react-map-gl';
+import Map, {
+    Source,
+    Layer,
+    LayerProps,
+    MapRef,
+    FullscreenControl,
+    GeolocateControl,
+    NavigationControl,
+    ScaleControl
+} from 'react-map-gl';
 import { fitBounds } from 'viewport-mercator-project';
 import {useDispatch, useSelector} from "react-redux";
 import { useSpring, animated } from "react-spring";
@@ -86,13 +95,13 @@ const GlMap: React.FC < GlMapProps > = ({
   // isShowing
 }: GlMapProps) => {
 
-    console.log("GITMap is re-rendering");
+    console.log("GLMap is re-rendering");
 
     const apiContext = useContext(ApiContext);
 
     const dispatch = useDispatch();
 
-    const mapRef = useRef < MapRef | null > (null);
+    const mapRef: MutableRefObject<MapRef | null> = useRef < MapRef | null > (null);
 
     const filterState: FilterState = useSelector(selectMapFilters);
     const [fillColor, setFillColor] = useState < any[] > (getFillColor("BEAD category"));
@@ -123,52 +132,7 @@ const GlMap: React.FC < GlMapProps > = ({
 
     const props = useSpring({
         width: isShowing ? window.innerWidth - 375 + "px": window.innerWidth + "px"
-    });  
-
-    const onMove = (event: any) => { // Specify the type of event if known
-        // if (event.hasOwnProperty("viewState") && event["viewState"].hasOwnProperty("zoom")) {
-        //     setMapZoom(event.viewState!.zoom!);
-
-            const mapFiltersUpdate = {
-                "disableSidebar": (event.viewState!.zoom! < MIN_ZOOM_LEVEL)
-            };
-
-            if (filterState.disableSidebar !== mapFiltersUpdate.disableSidebar) {
-                console.log("Update mapFilters state from:", filterState, "\nto:", mapFiltersUpdate);
-                dispatch(setMapFilters(mapFiltersUpdate));
-            }
-        //
-        // }
-    };
-
-    const onHover = useCallback((event: any) => { // Specify the type of event if known
-        if (mapRef !== null && mapRef.current !== null) {
-            const {
-                features,
-                point: { x, y }
-            } = event;
-
-            if (!!features && features.length > 0 && features[0].hasOwnProperty("properties")) {
-
-                const hoveredFeature = {
-                    "x": x,
-                    "y": y,
-                    "feature": {
-                        "properties": {
-                            ...features[0].properties
-                        }
-                    }
-
-                };
-
-                // console.log("hoveredFeature is ", hoveredFeature);
-
-                // setHoverInfo(hoveredFeature && { feature: hoveredFeature, x, y });
-                dispatch(setMapHover(hoveredFeature));
-            }
-
-        }
-    }, []);
+    });
 
     const getBlockInfoFromApi = (geoid_bl: string, token: string) => {
         // console.log("API Context state: ", apiContext);
@@ -244,35 +208,80 @@ const GlMap: React.FC < GlMapProps > = ({
             // window.alert("Please refresh session by clicking the browser's reload button!");
             // apiContext.autoSignOut();
         }
-    }
+    };
 
     // const onClick =
     const makeOnClick = (token: string) => {
         // Create OnClick Callback with API token
 
         return (event: any) => {
-                console.log("Click event:", event);
-                if (mapRef !== null && mapRef.current !== null) {
-                    const {
-                        features
-                    } = event;
+            console.log("Click event:", event);
+            if (mapRef !== null && mapRef.current !== null) {
+                const {
+                    features
+                } = event;
 
-                    if ((!!features && features.length > 0)) {
-                        const clickedFeature = features[0]!;
-                        const clickedGeoID = clickedFeature.properties.geoid_bl.toString();
-                        const geoids = [
-                            ...selected_geoids,
-                            clickedGeoID
-                        ];
+                if ((!!features && features.length > 0)) {
+                    const clickedFeature = features[0]!;
+                    const clickedGeoID = clickedFeature.properties.geoid_bl.toString();
+                    const geoids = [
+                        ...selected_geoids,
+                        clickedGeoID
+                    ];
 
-                        console.log(`Feature clicked (${clickedGeoID}):`, clickedFeature);
-                        setClickedBlock(clickedGeoID);
-                        selectGeoIDs(geoids);
-                        getBlockInfoFromApi(geoids.join(","), token);
-                    }
+                    console.log(`Feature clicked (${clickedGeoID}):`, clickedFeature);
+                    setClickedBlock(clickedGeoID);
+                    selectGeoIDs(geoids);
+                    getBlockInfoFromApi(geoids.join(","), token);
                 }
+            }
+        };
+    };
+
+    const onHover = (event: any) => {
+        if (mapRef !== null && mapRef.current !== null) {
+            const {
+                features,
+                point: { x, y }
+            } = event;
+
+            if (!!features && features.length > 0 && features[0].hasOwnProperty("properties")) {
+                const hoveredFeature = {
+                    "x": x,
+                    "y": y,
+                    "feature": {
+                        "properties": {
+                            ...features[0].properties
+                        }
+                    }
+                };
+                // console.log("hoveredFeature is ", hoveredFeature);
+                // setHoverInfo(hoveredFeature && { feature: hoveredFeature, x, y });
+                dispatch(setMapHover(hoveredFeature));
+            } else {
+                dispatch(setMapHover({
+                    "x": 0,
+                    "y": 0
+                }))
+            }
+        }
+    };
+
+    const onMove = (event: any) => {
+        if (event.hasOwnProperty("viewState") && event["viewState"].hasOwnProperty("zoom")) {
+            setMapZoom(event.viewState!.zoom!);
+
+            const mapFiltersUpdate = {
+                "disableSidebar": (event.viewState!.zoom! < MIN_ZOOM_LEVEL)
             };
-    }
+
+            if (filterState.disableSidebar !== mapFiltersUpdate.disableSidebar) {
+                console.log("Update mapFilters state from:", filterState, "\nto:", mapFiltersUpdate);
+                dispatch(setMapFilters(mapFiltersUpdate));
+            }
+
+        }
+    };
 
     useEffect(() => {
         selectFeatures((
@@ -377,26 +386,20 @@ const GlMap: React.FC < GlMapProps > = ({
 
     }, [fillColor]);
 
-    // useEffect(() => {
-    //     setTimeout(() => {
-    //         // console.log("Add map to global window object:", mapRef);
-    //         if (mapRef !== null && mapRef.current !== null) {
-    //             const map: MapboxMap = mapRef.current!.getMap();
-    //             (map as { [key: string]: any })["map"] = map;
-    //             (window as { [key: string]: any })["map"] = (map as unknown) as MapRef;
-    //         }
-    //     }, 2533);
-    // }, [ mapRef ]);
+    useEffect(() => {
+        setTimeout(() => {
+            // console.log("Add map to global window object:", mapRef);
+            if (mapRef.hasOwnProperty("current") && mapRef.current !== null) {
+                const map: MapboxMap = mapRef.current!.getMap();
+                (map as { [key: string]: any })["map"] = map;
+                (window as { [key: string]: any })["map"] = (map as unknown) as MapRef;
+            }
+        }, 2533);
+    }, [ mapRef ]);
 
     return ( /*Wait for ApiToken*/
         (apiContext.hasOwnProperty("token") && apiContext.token !== null) ? (
             <div className={style["map-wrapper"]}>
-                {mapZoom < MIN_ZOOM_LEVEL && (
-                  <animated.div style={props} className={style["zoom-message"]}>Zoom in further to view and filter data</animated.div>
-                )}
-                {mapZoom >= MIN_ZOOM_LEVEL && (
-                  <MapLegend title={colorVariable} category={fillColor} />
-                )}
                 {clickedBlock.length > 0 && (
                   <a href="#detail">
                     <button className={style["detail-button"]}>
@@ -420,9 +423,9 @@ const GlMap: React.FC < GlMapProps > = ({
                             bead_dev.layers[0]['id']!
                         ] : []
                     }
+                    onClick={makeOnClick(apiContext.token!.toString())}
                     onMouseMove={onHover}
                     onMove={onMove}
-                    onClick={makeOnClick(apiContext.token!.toString())}
                 >
 
                     <Source id={"mapbox-terrain"} type={"vector"} url={"mapbox://mapbox.mapbox-terrain-v2"} >
@@ -462,6 +465,21 @@ const GlMap: React.FC < GlMapProps > = ({
                     {/*}*/}
 
                     <HoverInfo />
+
+                    <div className={"mapboxgl-ctrl-top-left"}>
+                        <NavigationControl position="top-left" />
+                        <FullscreenControl position="top-left" />
+                        <GeolocateControl position="top-left" />
+                        <ScaleControl unit="imperial" />
+                    </div>
+
+                    {mapZoom < MIN_ZOOM_LEVEL && (
+                        <animated.div style={props} className={style["zoom-message"]}>Zoom in further to view and filter data</animated.div>
+                    )}
+                    {mapZoom >= MIN_ZOOM_LEVEL && (
+                        <MapLegend title={colorVariable} category={fillColor} />
+                    )}
+
 
                 </Map>
             </div>

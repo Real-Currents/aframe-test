@@ -40,4 +40,9 @@
   right: 0px;
 }
 
+.mapboxgl-ctrl-top-left {
+  margin-top: 44px;
+  z-index: 20;
+}
+
 
