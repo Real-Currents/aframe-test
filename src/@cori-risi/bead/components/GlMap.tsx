@@ -180,7 +180,6 @@ const GlMap: React.FC < GlMapProps > = ({
                                 return true;
                             }
                         });
-                        // selectFeatures([ ...block_features ]);
 
                         dispatch(setMapSelection({
                             block_features
@@ -284,14 +283,17 @@ const GlMap: React.FC < GlMapProps > = ({
     };
 
     useEffect(() => {
-        selectFeatures((
+        if (
             mapSelection.hasOwnProperty("block_features")
             && mapSelection.block_features !== null
             && mapSelection.block_features.length > 0
-        ) ?
-            mapSelection.block_features :
-            []
-        )
+        ) {
+            selectGeoIDs(mapSelection.block_features.map((f) => f.properties.geoid_bl));
+            selectFeatures(mapSelection.block_features)
+        } else {
+            selectGeoIDs([]);
+            selectFeatures([]);
+        }
     }, [ mapSelection ]);
 
     useEffect(() => {
@@ -400,7 +402,7 @@ const GlMap: React.FC < GlMapProps > = ({
     return ( /*Wait for ApiToken*/
         (apiContext.hasOwnProperty("token") && apiContext.token !== null) ? (
             <div className={style["map-wrapper"]}>
-                {clickedBlock.length > 0 && (
+                {selected_features.length > 0 && (
                   <a href="#detail">
                     <button className={style["detail-button"]}>
                         Detailed View

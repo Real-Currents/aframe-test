@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import { useSelector } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import MUIDataTable from "mui-datatables";
 import { CustomButton } from "./CustomInputs";
 
 import isp_name_dict from "../data/isp_name_lookup_rev.json";
-import { selectMapHover } from "../features";
+import { selectMapSelection, setMapSelection } from "../features";
 import { HoverInfoState } from "../models/index";
 import { parseIspId, swapKeysValues } from "../utils/utils";
 import "./styles/DetailedView.scss";
+import GeoJSONFeature from "maplibre-gl";
 
 interface IspNameLookup {
     [key: string]: string;
@@ -89,75 +90,87 @@ const isp_name_lookup_rev = swapKeysValues(isp_name_lookup);
 
 const DetailedView: React.FC<DetailedViewProps> = ({ detailedInfo }) => {
 
-    const [ block_info, setBlockInfo ] = useState<string[][]>([]);
+    const [ block_info, setBlockInfo ] = useState<GeoJSONFeature[]>([]);
     const [ geoid_bl, setGeoid ] = useState<string>("")
     const [ isp_names, setISPNames ] = useState<string[]>([]);
     const [ award_applicants, setAwardApplicants ] = useState<string[]>([]);
 
-    const hoverInfo: HoverInfoState = useSelector(selectMapHover);
+    const dispatch = useDispatch();
+    const mapSelection = useSelector(selectMapSelection);
 
     useEffect(() => {
 
-        const block_info = detailedInfo
-            .filter((d: any) => (d.properties.hasOwnProperty("type")
+        console.log("mapSelection:", mapSelection);
+        console.log("filter function:", typeof mapSelection.block_features.filter);
+
+        if (mapSelection.hasOwnProperty("block_features")
+            && typeof mapSelection.block_features.filter === "function"
+        ) {
+
+            const block_info = mapSelection.block_features
+                .filter((d: any) => (d.hasOwnProperty("properties")
+                    && d.properties.hasOwnProperty("type")
                     && d.properties["type"] === "geojson"
-            ))
-            .map((d: any) => {
-                let props = [];
-                if (d.properties.hasOwnProperty("geoid_bl")) {
-                    setGeoid(d.properties["geoid_bl"]);
-                    props.push("geoid_bl: " + d.properties["geoid_bl"]);
-                }
-                for (let p in d.properties) {
-                    if (d.properties.hasOwnProperty(p)
-                        && p !== "geoid_bl"
-                        && p !== "type"
-                    ) {
-                        props.push(p + ": " + d.properties[p]);
-                    }
-                }
-                console.log("Block properties detailedInfo:", props);
-                return props;
-            });
+                ))
+                // .map((d: any) => {
+                //     let props = [];
+                //     if (d.properties.hasOwnProperty("geoid_bl")) {
+                //         setGeoid(d.properties["geoid_bl"]);
+                //         props.push("geoid_bl: " + d.properties["geoid_bl"]);
+                //     }
+                //     for (let p in d.properties) {
+                //         if (d.properties.hasOwnProperty(p)
+                //             && p !== "geoid_bl"
+                //             && p !== "type"
+                //         ) {
+                //             props.push(p + ": " + d.properties[p]);
+                //         }
+                //     }
+                //     console.log("Block properties detailedInfo:", props);
+                //     return props;
+                // });
 
-        setBlockInfo(block_info);
+            setBlockInfo(block_info);
+        } else {
+            setBlockInfo([]);
+        }
 
-        let names: string[] = detailedInfo
-            .filter((d: any) => d.properties.hasOwnProperty("type")
-                && d.properties["type"] === "isp_tech"
-                && d.properties.hasOwnProperty("new_alias")
-            )
-            .map((d: any) => (d.properties.hasOwnProperty("new_alias")) ?
-                // "properties": {
-                //     "type": "isp_tech",
-                //     "isp_id": "156",
-                //     "max_up": 1,
-                //     "geoid_bl": "010539698023004",
-                //     "max_down": 10,
-                //     "new_alias": "AT&T Inc",
-                //     "technology": "71"
-                // }
-                `[${d.properties["geoid_bl"]!}] ${d.properties["new_alias"]!}: ${d.properties["max_down"]!} down / ${d.properties["max_up"]!} up (${d.properties["technology"]!})` :
-                "N/A"
-            );
+        // let names: string[] = detailedInfo
+        //     .filter((d: any) => d.properties.hasOwnProperty("type")
+        //         && d.properties["type"] === "isp_tech"
+        //         && d.properties.hasOwnProperty("new_alias")
+        //     )
+        //     .map((d: any) => (d.properties.hasOwnProperty("new_alias")) ?
+        //         // "properties": {
+        //         //     "type": "isp_tech",
+        //         //     "isp_id": "156",
+        //         //     "max_up": 1,
+        //         //     "geoid_bl": "010539698023004",
+        //         //     "max_down": 10,
+        //         //     "new_alias": "AT&T Inc",
+        //         //     "technology": "71"
+        //         // }
+        //         `[${d.properties["geoid_bl"]!}] ${d.properties["new_alias"]!}: ${d.properties["max_down"]!} down / ${d.properties["max_up"]!} up (${d.properties["technology"]!})` :
+        //         "N/A"
+        //     );
+        //
+        // console.log("ISP names in detailedInfo:", names);
+        // setISPNames(names);
 
-        console.log("ISP names in detailedInfo:", names);
-        setISPNames(names);
+        // let applicants: string[] = detailedInfo
+        //     .filter((d: any) => d.properties.hasOwnProperty("type")
+        //         && d.properties["type"] === "award"
+        //         && d.properties.hasOwnProperty("applicant")
+        //     )
+        //     .map((d: any) => (d.properties.hasOwnProperty("applicant")) ?
+        //         d.properties["applicant"]! :
+        //         "N/A"
+        //     );
+        //
+        // console.log("RDOF applicants in detailedInfo:", applicants);
+        // setAwardApplicants(applicants);
 
-        let applicants: string[] = detailedInfo
-            .filter((d: any) => d.properties.hasOwnProperty("type")
-                && d.properties["type"] === "award"
-                && d.properties.hasOwnProperty("applicant")
-            )
-            .map((d: any) => (d.properties.hasOwnProperty("applicant")) ?
-                d.properties["applicant"]! :
-                "N/A"
-            );
-
-        console.log("RDOF applicants in detailedInfo:", applicants);
-        setAwardApplicants(applicants);
-
-    }, [ detailedInfo ]);
+    }, [ mapSelection ]);
 
     return (
         <>
@@ -170,9 +183,9 @@ const DetailedView: React.FC<DetailedViewProps> = ({ detailedInfo }) => {
                         <span className={"button-padding"}>
                             <CustomButton
                                 className={"button"}
-                                onClick={(evt) => console.log("TODO: Cancel")}
+                                onClick={(evt) => dispatch(setMapSelection({"block_features": []}))}
                                 variant="outlined">
-                                TODO: Cancel
+                                Cancel
                             </CustomButton>
                         </span>
                         <span className={"button-padding"}>
@@ -195,38 +208,75 @@ const DetailedView: React.FC<DetailedViewProps> = ({ detailedInfo }) => {
                             data={[ ...block_info
                                 .filter((b: any) => {
                                     // console.log("b: ", b);
-                                    return !!b && b !== null
+                                    return !!b && b !== null && b.hasOwnProperty("properties")
                                 })
-                                .map((b: string[]) => {
+                                .map((b: any) => {
                                     const values: string[] = [];
 
                                     for (let col of block_columns) {
-                                        b.map((i: string) => {
-                                            const tuple = i.toString().split(":");
-                                            const key = tuple[0].toString().trim();
-
-                                            if (col === key) {
-                                                const value = (key === "isp_id") ?
+                                        // b.map((i: string) => {
+                                        if (b.properties.hasOwnProperty(col)
+                                            && typeof b.properties[col] !== "undefined"
+                                        ) {
+                                            // const tuple = i.toString().split(":");
+                                            // const key = tuple[0].toString().trim();
+                                            // if (col === key) {
+                                                const value = (col === "isp_id") ?
                                                     // tuple[1].toString().trim()
                                                     //     .replace("{", "")
                                                     //     .replace("}", "")
                                                     //     .split(",")
                                                     //     .map((id) =>
-                                                            parseIspId(tuple[1].toString().trim(), isp_name_lookup_rev)
-                                                    //     )
+                                                    //         parseIspId(tuple[1].toString().trim(), isp_name_lookup_rev)
+                                                    //     ) :
+                                                    (!!b.properties[col]) ?
+                                                        parseIspId(b.properties[col].toString().trim(), isp_name_lookup_rev) :
+                                                        "N/A"
                                                     :
-                                                    tuple[1].trim();
-                                                console.log([key, value]);
+                                                    b.properties[col].toString().trim();
+                                                // console.log([col, value]);
                                                 values.push(value);
-                                            }
-                                        });
+                                            // }
+                                        }
+                                        // });
                                     }
 
                                     return values;
                                 })
                             ]}
                             options={{
-                                "filterType": "checkbox"
+                                "filterType": "checkbox",
+                                "onRowsDelete": (rowsDeleted: { data: { index: number, dataIndex: number }[], lookup: { [dataIndex: number]: boolean } }, newTableData: any[]) => {
+                                    console.log("Delete Row(s):", {
+                                        rowsDeleted: {
+                                            data: rowsDeleted.data,
+                                            lookupIndex: rowsDeleted.lookup
+                                        },
+                                        newTableData: {
+                                            ...newTableData
+                                        }
+                                    });
+
+                                    const block_features: any = [];
+
+                                    for (let d of newTableData) {
+                                        if (!!d[0] && d[0].toString().match(/^\d{15}/)) {
+                                            const geoid_bl = d[0].toString();
+                                            if (mapSelection.hasOwnProperty("block_features")
+                                                && typeof mapSelection.block_features.filter === "function"
+                                            ) {
+                                                mapSelection.block_features
+                                                    .filter((f) => geoid_bl === f.properties.geoid_bl)
+                                                    .map((f) => block_features.push(f));
+                                            }
+                                        }
+                                    }
+
+                                    dispatch(setMapSelection({
+                                        ...mapSelection,
+                                        block_features
+                                    }));
+                                }
                             }}
                             title={"Census Blocks"}
                         />
@@ -251,27 +301,17 @@ const DetailedView: React.FC<DetailedViewProps> = ({ detailedInfo }) => {
 
                 {
                     (block_info.length === 0) ?
-                        <p>Select a block on the map to view ACS data for the relevant Census Tract(s)<br/></p> :
-
-                        <MUIDataTable
-                            columns={dt_columns}
-                            data={dt_data}
-                            options={{
-                                "filterType": "checkbox",
-                                "onRowsDelete": (rowsDeleted: { data: { index: number, dataIndex: number }[], lookup: { [dataIndex: number]: boolean } }, newTableData: any[]) => {
-                                    console.log("Delete Row(s):", {
-                                        rowsDeleted: {
-                                            data: rowsDeleted.data,
-                                            lookupIndex: rowsDeleted.lookup
-                                        },
-                                        newTableData: {
-                                            ...newTableData
-                                        }
-                                    });
-                                }
-                            }}
-                            title={"TODO: Get ACS data for the relevant Census Tract(s)"}
-                        />
+                        <p>Select a block on the map to view ACS data for the relevant Census Tract(s)<br/></p>
+                        :
+                        <p>TODO: Get ACS data for the relevant Census Tract(s)</p>
+                        // <MUIDataTable
+                        //     columns={dt_columns}
+                        //     data={dt_data}
+                        //     options={{
+                        //         "filterType": "checkbox"
+                        //     }}
+                        //     title={"TODO: Get ACS data for the relevant Census Tract(s)"}
+                        // />
                 }
 
             </div>
