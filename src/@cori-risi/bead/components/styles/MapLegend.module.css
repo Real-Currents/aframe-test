@@ -1,18 +1,18 @@
 .map-legend {
 	position: absolute;
-	top: 10px;
-	left: 10px;
+	top: 54px;
+	left: 54px;
 
-	z-index: 19;
-	border: 1px solid black;
-
-	width: 185px;
+	width: 200px;
 
 	background-color: white;
 
-	padding: 15px;
+	padding: 12px 15px 0 15px;
 
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
+	border: transparent;
+	border-radius: 4px;
+	box-shadow: 0 0 0 2px rgba(0,0,0,.1);
+	z-index: 20;
 }
 
 .map-legend h5 {

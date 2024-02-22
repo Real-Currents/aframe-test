@@ -4,13 +4,10 @@ import { initialState } from "../../app/AppState";
 console.log("Initial state available in mapFiltersSlice: ", initialState);
 
 const initialStateWithMapFilters = {
-    ...initialState,
-    user: {
-        ...initialState.user
-    }
+    ...initialState
 }
 
-export const mapFiltersSlice = createSlice({
+export const index = createSlice({
     initialState: initialStateWithMapFilters.mapFilters,
     name: "mapFilters",
     reducers: {
@@ -24,11 +21,11 @@ export const mapFiltersSlice = createSlice({
     }
 });
 
-export default mapFiltersSlice.reducer;
+export default index.reducer;
 
 export const {
     setMapFilters,
-} = mapFiltersSlice.actions;
+} = index.actions;
 
 export const selectMapFilters = (state: (typeof initialStateWithMapFilters)) => {
     // console.log("AppState in selectMapFilters:", state);

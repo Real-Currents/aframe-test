@@ -1,10 +1,10 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import AppState from "./AppState";
 import {
     userIdReducer,
     userNameReducer,
     userTokensReducer
 } from "../features/index";
-import AppState from "./AppState";
 
 const store =  configureStore({
     reducer: {
