@@ -1,8 +1,24 @@
 import mapFiltersReducer, {
+    selectMapFilters,
     setMapFilters
-} from "./mapFilters/mapFiltersSlice";
+} from "./mapFilters";
+import mapHoverReducer, {
+    selectMapHover,
+    setMapHover
+} from "./mapHover";
+import mapSelectionReducer, {
+    selectMapSelection,
+    setMapSelection
+} from "./mapSelection";
 
 export {
     mapFiltersReducer,
-    setMapFilters
+    selectMapFilters,
+    setMapFilters,
+    mapHoverReducer,
+    selectMapHover,
+    setMapHover,
+    mapSelectionReducer,
+    selectMapSelection,
+    setMapSelection
 };

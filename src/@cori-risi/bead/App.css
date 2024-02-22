@@ -9,6 +9,10 @@
   margin-bottom: 5px;
 }
 
+hr {
+  border-color: #d0d2ce;
+}
+
 @media (max-height: 859px) {
   .amplify-sign-out {
     margin-top: -24px;
@@ -40,8 +44,7 @@
   right: 0px;
 }
 
-hr {
-  border-color: #d0d2ce;
+.mapboxgl-ctrl-top-left {
+  margin-top: 44px;
+  z-index: 20;
 }
-
-

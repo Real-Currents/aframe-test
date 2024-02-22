@@ -1,12 +1,14 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import AppState from "./AppState";
 import {
     userIdReducer,
     userNameReducer
 } from "../../features";
 import {
-    mapFiltersReducer
+    mapFiltersReducer,
+    mapHoverReducer,
+    mapSelectionReducer
 } from "../features";
-import AppState from "./AppState";
 
 const store =  configureStore({
     reducer: {
@@ -14,7 +16,9 @@ const store =  configureStore({
             userId: userIdReducer,
             username: userNameReducer
         }),
-        mapFilters: mapFiltersReducer
+        mapFilters: mapFiltersReducer,
+        mapHover: mapHoverReducer,
+        mapSelection: mapSelectionReducer
     }
 });
 
