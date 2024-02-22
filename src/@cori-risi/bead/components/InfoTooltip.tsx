@@ -2,7 +2,7 @@ import style from "./styles/InfoTooltip.module.css"
 
 import React from 'react';
 
-export default function InfoTooltip ({text}) {
+export default function InfoTooltip ({text} : { text: string }) {
 
 	return (
 			<span className={style["info-tooltip"]} >

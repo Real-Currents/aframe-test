@@ -1,127 +1,155 @@
-import React, { useState} from 'react';
-
+import React, {useContext} from 'react';
+import {useDispatch, useSelector} from "react-redux";
 import { useSpring, animated } from "react-spring";
 
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 import FormGroup from '@mui/material/FormGroup';
 import Checkbox from '@mui/material/Checkbox';
-
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
-
 import Slider from '@mui/material/Slider';
 
 import InfoTooltip from "./InfoTooltip";
 
+import {ApiContext} from "../../contexts/ApiContextProvider";
+import { selectMapFilters, setMapFilters } from "../features";
+import { FilterState } from "../models/index";
+// import { getFillColor } from '../utils/colors';
+import { swapKeysValues } from '../utils/utils';
+
 import style from "./styles/Sidebar.module.css";
 
-import { getFillColor } from '../utils/colors';
+import broadband_technology_dict from '../data/broadband_technology.json';
+import county_name_geoid from '../data/geoid_co_name_crosswalk.json';
+import isp_name_dict from '../data/isp_name_lookup_rev.json';
+import isp_id_dict from "../data/isp_dict_latest.json";
 
-interface BroadbandTechnology {
-  [key: string]: string;
-}
-
-interface FilterState {
-    [key: string]: boolean | string;
-    disableSidebar: boolean
-}
-
-import broadband_technology_dict from './../data/broadband_technology.json';
 const broadband_technology: Record<string, string> = broadband_technology_dict;
-import county_name_geoid from './../data/geoid_co_name_crosswalk.json';
-import {useSelector} from "react-redux";
-import {selectMapFilters} from "../features/mapFilters/mapFiltersSlice";
-
-interface IspNameLookup {
-  [key: string]: string;
-}
 
 interface IspIdLookup {
   [key: string]: string[];
 }
 
-function Sidebar<T>({ 
-  onFilterChange, 
-  onFillColorChange, 
-  onColorVariableChange,
-  filter,
-  isShowing,
-  ispIdLookup,
-  ispNameLookup
-}: 
-  {
-    onFilterChange: (newFilter: T) => void, 
-    onFillColorChange: (newFillColor: any[]) => void,
-    onColorVariableChange: (newColorVariable: string) => void,
-    filter: any,
-    isShowing: boolean,
-    ispIdLookup: { [key: string]: string[] },
-    ispNameLookup: { [key: string]: string }
- }) {
+interface IspNameLookup {
+  [key: string]: string;
+}
+const isp_name_lookup: IspNameLookup = isp_name_dict;
+const isp_name_lookup_rev = swapKeysValues(isp_name_lookup);
 
-    const filterState: FilterState = useSelector(selectMapFilters);
+const isp_id_lookup: IspIdLookup = isp_id_dict;
+
+function Sidebar () {
+
+  const apiContext = useContext(ApiContext);
+
+  const dispatch = useDispatch();
+
+  const filterState: FilterState = useSelector(selectMapFilters);
 
   const props = useSpring({
-    right: isShowing ? "0px": "-375px"
-  });  
+    right: filterState.showSidebar ? "0px": "-375px"
+  });
+
+  const handleFillColorChange = (event: React.SyntheticEvent, newValue: string) => {
+
+      // onFillColorChange(getFillColor(newValue));
+      // onColorVariableChange(newValue);
+
+      dispatch(setMapFilters({
+        "colorVariable": newValue
+      }));
+  };
+
+  const handleBEADFilterChange = (event: any) => {
+    if (typeof event.target.checked === 'boolean') {
+
+      // onFilterChange({
+      //   ...filter,
+      //   bb_service: {
+      //     ...filter.bb_service,
+      //     [event.target.name]: event.target.checked
+      //   }
+      // });
+
+      dispatch(setMapFilters({
+        bb_service: {
+          ...filterState.bb_service,
+          [event.target.name]: event.target.checked
+        }
+      }));
+    }
+  };
+
+  const handleAwardChange = (event: any) => {
+    if (typeof event.target.checked === 'boolean') {
+      // onFilterChange({
+      //   ...filter,
+      //   has_previous_funding: {
+      //     ...filter.has_previous_funding,
+      //     [event.target.name]: event.target.checked
+      //   }
+      // });
+
+      dispatch(setMapFilters({
+        has_previous_funding: {
+          ...filterState.has_previous_funding,
+          [event.target.name]: event.target.checked
+        }
+      }));
+    }
+  };
 
   const handleISPChange = (event: Event, newValue: number | number[]) => {
     let slider_vals: number[] = newValue as number[];
-    onFilterChange({...filter, isp_count: slider_vals});
+    // onFilterChange({...filter, isp_count: slider_vals});
+
+    dispatch(setMapFilters({
+      isp_count: slider_vals
+    }));
   };
 
   const handleTotalLocationsChange = (event: Event, newValue: number | number[]) => {
     let slider_vals: number[] = newValue as number[];
-    onFilterChange({...filter, total_locations: slider_vals});
+    // onFilterChange({...filter, total_locations: slider_vals});
+
+    dispatch(setMapFilters({
+      total_locations: slider_vals
+    }));
   };
 
-  function handleBroadbandChange(event: any) {
-
-    if (typeof event.target.checked === 'boolean') {
-      onFilterChange({...filter, bb_service: {...filter.bb_service, [event.target.name]: event.target.checked}});
-    }
-  }
-
-  function handleAwardChange(event: any) {
-
-    if (typeof event.target.checked === 'boolean') {
-      onFilterChange({...filter, has_previous_funding: {...filter.has_previous_funding, [event.target.name]: event.target.checked}});
-    }
-  }
-
-  function handleFillColorChange(event: React.SyntheticEvent, newValue: string): void {
-    if (typeof newValue === "string") {
-      onFillColorChange(getFillColor(newValue));
-      onColorVariableChange(newValue);
-    }
-  };
-
-  function handleBroadbandTechnologyChange(event: any, newValue: string[]): void {
+  const handleBroadbandTechnologyChange = (event: any, newValue: string[]) => {
     if (Array.isArray(newValue) && newValue.every((item) => typeof item === 'string')) {
-      onFilterChange({...filter, broadband_technology: newValue});
+      // onFilterChange({...filter, broadband_technology: newValue});
+
+      dispatch(setMapFilters({
+        broadband_technology: newValue
+      }));
     }
-  }
+  };
 
-  function handleMultipleISPChange(event: any, newValue: any ): void {
-
+  const handleMultipleISPChange = (event: any, newValue: any ) => {
     // Populate a list of combo ids to use when filtering
-    let valid_isp_combos: string[] = [];
+    const valid_isp_combos: string[] = [];
     for (let isp of newValue) {
 
-      let isp_id = ispNameLookup[isp];
-      for (const key in ispIdLookup) {
+      let isp_id = isp_name_lookup[isp];
+      for (const key in isp_id_lookup) {
 
-        if (ispIdLookup[key].includes(isp_id)) {
+        if (isp_id_lookup[key].includes(isp_id)) {
           valid_isp_combos.push(key);
         }
       }
     }
-    
-    onFilterChange({...filter, isp_combos: valid_isp_combos});
-  }
 
-  function handleCountiesChange (event: any, newValue: any): void {
+    // onFilterChange({...filter, isp_combos: valid_isp_combos});
+
+    dispatch(setMapFilters({
+      isp_combos: valid_isp_combos
+    }));
+  };
+
+  const handleCountiesChange = (event: any, newValue: any) => {
 
     let valid_geoid_co: string[] = [];
     for (let county_name of newValue) {
@@ -133,14 +161,21 @@ function Sidebar<T>({
       }
     }
 
-    onFilterChange({...filter, counties: valid_geoid_co});
-  }
+    // onFilterChange({...filter, counties: valid_geoid_co});
+    dispatch(setMapFilters({
+      counties: valid_geoid_co
+    }));
+  };
 
   return (
     <>
         <animated.div style={props} className={style["sidebar"]}>
           <div className={style["controls-wrapper"]}>
-            <h4>Map display variable</h4>
+            <h4>Map display variable
+                {/* TODO: */}
+                {/* Add button to toggle off filtered/thematic map layers */}
+                {/* ... (leave basemap and selcted features) */}
+            </h4>
             <div className={style['fill-selector']}>
               <div className={style["color-dropdown"]}>
                 <Autocomplete
@@ -163,16 +198,16 @@ function Sidebar<T>({
                 <div className={style["filter-header"]}>
                   <h5>BEAD service level</h5>
                   <InfoTooltip text={`Unserved refers to areas where at least 80% of locations do not have 25/3 Mbps service. 
-                  Underserved refers to areas where at least 80% of locations do not have 100/20 Mbps service. Served refers to 
-                  areas that are neither Unserved nor Underserved. BEAD is an acronym for the Broadband Equity, Access, and 
-                  Deployment program, which provides funding to expand internet access.`}/>
+                    Underserved refers to areas where at least 80% of locations do not have 100/20 Mbps service. Served refers to 
+                    areas that are neither Unserved nor Underserved. BEAD is an acronym for the Broadband Equity, Access, and 
+                    Deployment program, which provides funding to expand internet access.`}/>
                 </div>
                 <FormGroup row className={style["form-control-group"]}>
                   <FormControlLabel className={style["form-control-label"]}
                     control={
                       <Checkbox
-                        checked={filter.bb_service.served}
-                        onChange={handleBroadbandChange}
+                        checked={filterState.bb_service.served}
+                        onChange={handleBEADFilterChange}
                         name="served"
                       />
                     }
@@ -182,8 +217,8 @@ function Sidebar<T>({
                   <FormControlLabel className={style["form-control-label"]}
                     control={
                       <Checkbox
-                        checked={filter.bb_service.underserved}
-                        onChange={handleBroadbandChange}
+                        checked={filterState.bb_service.underserved}
+                        onChange={handleBEADFilterChange}
                         name="underserved"
                       />
                     }
@@ -193,14 +228,14 @@ function Sidebar<T>({
                   <FormControlLabel className={style["form-control-label"]}
                     control={
                       <Checkbox
-                        checked={filter.bb_service.unserved}
-                        onChange={handleBroadbandChange}
+                        checked={filterState.bb_service.unserved}
+                        onChange={handleBEADFilterChange}
                         name="unserved"
                       />
                     }
                     label="Unserved"
                     disabled={filterState.disableSidebar}
-                  />          
+                  />
                 </FormGroup>
               </div>
               <div className={style["filter-section"]}>
@@ -212,7 +247,7 @@ function Sidebar<T>({
                   <FormControlLabel className={style["form-control-label"]}
                     control={
                       <Checkbox
-                        checked={filter.has_previous_funding.yes}
+                        checked={filterState.has_previous_funding.yes}
                         onChange={handleAwardChange}
                         name="yes"
                       />
@@ -223,24 +258,24 @@ function Sidebar<T>({
                   <FormControlLabel className={style["form-control-label"]}
                     control={
                       <Checkbox
-                        checked={filter.has_previous_funding.no}
+                        checked={filterState.has_previous_funding.no}
                         onChange={handleAwardChange}
                         name="no"
                       />
                     }
                     label="No"
                     disabled={filterState.disableSidebar}
-                  />                 
-                </FormGroup>  
+                  />
+                </FormGroup>
               </div>
-              <div className={style["filter-section"]}>        
+              <div className={style["filter-section"]}>
                 <div className={style["filter-header"]}>
                   <h5>Internet service provider count</h5>
                 </div>
                 <div className={style["slider"]}>
                   <Slider
                     getAriaLabel={() => 'ISP Count'}
-                    value={filter.isp_count}
+                    value={filterState.isp_count}
                     onChange={handleISPChange}
                     valueLabelDisplay="auto"
                     min={0}
@@ -256,7 +291,7 @@ function Sidebar<T>({
                 <div className={style["slider"]}>
                   <Slider
                     getAriaLabel={() => 'Total locations'}
-                    value={filter.total_locations}
+                    value={filterState.total_locations}
                     onChange={handleTotalLocationsChange}
                     valueLabelDisplay="auto"
                     min={0}
@@ -267,12 +302,33 @@ function Sidebar<T>({
               </div>
               <div className={style["filter-section"]}>
                 <div className={style["filter-header"]}>
+                  <h5>Broadband technologies</h5>
+                  <InfoTooltip text={"Show census blocks where a certain broadband technology is reported to be present"}/>
+                </div>
+                <Autocomplete
+                    multiple
+                    options={Object.keys(broadband_technology)}
+                    defaultValue={[]}
+                    onChange={handleBroadbandTechnologyChange}
+                    renderInput={(params) => (
+                        <TextField
+                            {...params}
+                            variant="standard"
+                            label="Filter by broadband technology"
+                            placeholder="Filter by broadband technology"
+                        />
+                    )}
+                    disabled={filterState.disableSidebar}
+                />
+              </div>
+              <div className={style["filter-section"]}>
+                <div className={style["filter-header"]}>
                   <h5>Internet service providers</h5>
                   <InfoTooltip text={"Show census blocks which include at least one of the ISPs you've selected"}/>
                 </div>
                 <Autocomplete
                   multiple
-                  options={Object.keys(ispNameLookup)}
+                  options={Object.keys(isp_name_lookup)}
                   defaultValue={[]}
                   onChange={handleMultipleISPChange}
                   renderInput={(params) => (
@@ -284,30 +340,9 @@ function Sidebar<T>({
                     />
                   )}
                   disabled={filterState.disableSidebar}
-                />    
-              </div>          
-              <div className={style["filter-section"]}>
-                <div className={style["filter-header"]}>
-                  <h5>Broadband technologies</h5>
-                  <InfoTooltip text={"Show census blocks where a certain broadband technology is reported to be present"}/>
-                </div>
-                <Autocomplete
-                  multiple
-                  options={Object.keys(broadband_technology)}
-                  defaultValue={[]}
-                  onChange={handleBroadbandTechnologyChange}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      variant="standard"
-                      label="Filter by broadband technology"
-                      placeholder="Filter by broadband technology"
-                    />
-                  )}
-                  disabled={filterState.disableSidebar}
                 />
               </div>
-              <div className={style["filter-section"]}>  
+              <div className={style["filter-section"]}>
                 <div className={style["filter-header"]}>
                   <h5>County</h5>
                 </div>
@@ -325,13 +360,13 @@ function Sidebar<T>({
                     />
                   )}
                   disabled={filterState.disableSidebar}
-                />   
+                />
               </div>
             </div>
           </div>
           <div className={style["link-section"]}>
-            <a href="https://ruralinnovation.us/" target="_blank">About</a> | 
-            <a href="https://ruralinnovation.us/about/contact-us/" target="_blank">Contact</a> | 
+            <a href="https://ruralinnovation.us/" target="_blank">About</a> |
+            <a href="https://ruralinnovation.us/about/contact-us/" target="_blank">Contact</a> |
             <a href="https://form-renderer-app.donorperfect.io/give/center-on-rural-innovation/cori-general-giving" target="_blank">Donate</a>
           </div>
       </animated.div>

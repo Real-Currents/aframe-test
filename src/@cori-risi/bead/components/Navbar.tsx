@@ -1,34 +1,27 @@
 import style from "./styles/Navbar.module.css";
-import Button, { ButtonProps }  from '@mui/material/Button';
-import IconButton, { IconButtonProps }  from '@mui/material/IconButton';
 import React from 'react';
+import { useDispatch, useSelector } from "react-redux";
 import TuneIcon from '@mui/icons-material/Tune';
-import { styled } from '@mui/material/styles';
+import { selectMapFilters, setMapFilters } from "../features";
+import { FilterState } from "../models/index";
+import { CustomButton, CustomIconButton } from "./CustomInputs";
 
+export default function Navbar() {
 
-const CustomButton = styled(Button)<ButtonProps>(({ theme }) => ({
-  '&:hover': {
-    backgroundColor: "#ECF5EF",
-  },
-}));
+    const dispatch = useDispatch();
 
-const CustomIconButton = styled(IconButton)<IconButtonProps>(({ theme }) => ({
-  '&:hover': {
-    backgroundColor: "#ECF5EF",
-  },
-}));
+    const filterState: FilterState = useSelector(selectMapFilters);
 
+    const onToggleDrawer = (evt: any) => {
+        console.log("Toggle sidebar:", evt);
 
-export default function Navbar(
-  {
-    onToggleDrawer,
-    isDrawerShowing
-  }:
-  { 
-    onToggleDrawer: (event: React.SyntheticEvent) => void,
-    isDrawerShowing: boolean
-  }
-) {
+        const mapFiltersUpdate = {
+            "showSidebar": !filterState.showSidebar
+        };
+
+        console.log("Update mapFilters state from:", filterState, "\nto:", mapFiltersUpdate);
+        dispatch(setMapFilters(mapFiltersUpdate));
+    };
 
     return ( 
     	<>
@@ -43,7 +36,7 @@ export default function Navbar(
                 onClick={onToggleDrawer}
                 endIcon={ <TuneIcon /> }
                 variant="outlined">
-                  {isDrawerShowing ? "Hide controls" : "Show controls"}
+                  {filterState.showSidebar ? "Hide filters" : "Show filters"}
               </CustomButton>
               <CustomIconButton 
                 className={style["icon-button"]}
