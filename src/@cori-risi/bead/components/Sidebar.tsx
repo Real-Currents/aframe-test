@@ -23,19 +23,21 @@ import style from "./styles/Sidebar.module.css";
 import broadband_technology_dict from '../data/broadband_technology.json';
 import county_name_geoid from '../data/geoid_co_name_crosswalk.json';
 import isp_name_dict from '../data/isp_name_lookup_rev.json';
+import isp_id_dict from "../data/isp_dict_latest.json";
 
 const broadband_technology: Record<string, string> = broadband_technology_dict;
 
+interface IspIdLookup {
+  [key: string]: string[];
+}
+
+interface IspNameLookup {
+  [key: string]: string;
+}
 const isp_name_lookup: IspNameLookup = isp_name_dict;
 const isp_name_lookup_rev = swapKeysValues(isp_name_lookup);
 
-interface IspNameLookup {
-    [key: string]: string;
-}
-
-interface IspIdLookup {
-    [key: string]: string[];
-}
+const isp_id_lookup: IspIdLookup = isp_id_dict;
 
 function Sidebar () {
 
@@ -86,61 +88,118 @@ function Sidebar () {
     }
   };
 
+  const handleAwardChange = (event: any) => {
+    if (typeof event.target.checked === 'boolean') {
+      const mapFiltersUpdate: FilterState = {
+        has_previous_funding: {
+          ...filterState.has_previous_funding,
+          [event.target.name]: event.target.checked
+        }
+      }
+
+      console.log("Filter update:", mapFiltersUpdate);
+
+      // onFilterChange({
+      //   ...filter,
+      //   has_previous_funding: {
+      //     ...filter.has_previous_funding,
+      //     [event.target.name]: event.target.checked
+      //   }
+      // });
+
+      dispatch(setMapFilters(mapFiltersUpdate));
+    }
+  };
+
   const handleISPChange = (event: Event, newValue: number | number[]) => {
-    // let slider_vals: number[] = newValue as number[];
+    let slider_vals: number[] = newValue as number[];
+    const mapFiltersUpdate: FilterState = {
+      isp_count: slider_vals
+    }
+
+    console.log("Filter update:", mapFiltersUpdate);
+
     // onFilterChange({...filter, isp_count: slider_vals});
+
+    dispatch(setMapFilters(mapFiltersUpdate));
   };
 
   const handleTotalLocationsChange = (event: Event, newValue: number | number[]) => {
-    // let slider_vals: number[] = newValue as number[];
+    let slider_vals: number[] = newValue as number[];
+    const mapFiltersUpdate: FilterState = {
+      total_locations: slider_vals
+    }
+
+    console.log("Filter update:", mapFiltersUpdate);
+
     // onFilterChange({...filter, total_locations: slider_vals});
+
+    dispatch(setMapFilters(mapFiltersUpdate));
   };
 
-  function handleAwardChange(event: any) {
+  const handleBroadbandTechnologyChange = (event: any, newValue: string[]) => {
+    if (Array.isArray(newValue) && newValue.every((item) => typeof item === 'string')) {
+      const mapFiltersUpdate: FilterState = {
+        broadband_technology: newValue
+      }
 
-    // if (typeof event.target.checked === 'boolean') {
-    //   onFilterChange({...filter, has_previous_funding: {...filter.has_previous_funding, [event.target.name]: event.target.checked}});
-    // }
-  }
+      console.log("Filter update:", mapFiltersUpdate);
 
-  function handleBroadbandTechnologyChange(event: any, newValue: string[]): void {
-    // if (Array.isArray(newValue) && newValue.every((item) => typeof item === 'string')) {
-    //   onFilterChange({...filter, broadband_technology: newValue});
-    // }
-  }
+      // onFilterChange({...filter, broadband_technology: newValue});
 
-  function handleMultipleISPChange(event: any, newValue: any ): void {
+      dispatch(setMapFilters(mapFiltersUpdate));
+    }
+  };
 
-    // // Populate a list of combo ids to use when filtering
-    // let valid_isp_combos: string[] = [];
-    // for (let isp of newValue) {
-    //
-    //   let isp_id = ispNameLookup[isp];
-    //   for (const key in ispIdLookup) {
-    //
-    //     if (ispIdLookup[key].includes(isp_id)) {
-    //       valid_isp_combos.push(key);
-    //     }
-    //   }
-    // }
-    //
+  const handleMultipleISPChange = (event: any, newValue: any ) => {
+    console.log("isp_name_lookup_rev:", isp_name_lookup_rev);
+    console.log(Object.keys(isp_name_lookup_rev));
+
+    // Populate a list of combo ids to use when filtering
+    const valid_isp_combos: string[] = [];
+    for (let isp of newValue) {
+
+      let isp_id = isp_name_lookup[isp];
+      for (const key in isp_id_lookup) {
+
+        if (isp_id_lookup[key].includes(isp_id)) {
+          valid_isp_combos.push(key);
+        }
+      }
+    }
+
+    const mapFiltersUpdate: FilterState = {
+      isp_combos: valid_isp_combos
+    }
+
+    console.log("Filter update:", mapFiltersUpdate);
+
     // onFilterChange({...filter, isp_combos: valid_isp_combos});
-  }
 
-  function handleCountiesChange (event: any, newValue: any): void {
+    dispatch(setMapFilters(mapFiltersUpdate));
+  };
 
-    // let valid_geoid_co: string[] = [];
-    // for (let county_name of newValue) {
-    //
-    //   let filtered_records = county_name_geoid.filter(d => d.label === county_name);
-    //
-    //   if (filtered_records.length > 0 && typeof filtered_records[0].id === 'string') {
-    //     valid_geoid_co.push(filtered_records[0].id);
-    //   }
-    // }
-    //
+  const handleCountiesChange = (event: any, newValue: any) => {
+
+    let valid_geoid_co: string[] = [];
+    for (let county_name of newValue) {
+
+      let filtered_records = county_name_geoid.filter(d => d.label === county_name);
+
+      if (filtered_records.length > 0 && typeof filtered_records[0].id === 'string') {
+        valid_geoid_co.push(filtered_records[0].id);
+      }
+    }
+
+    const mapFiltersUpdate: FilterState = {
+      counties: valid_geoid_co
+    }
+
+    console.log("Filter update:", mapFiltersUpdate);
+
     // onFilterChange({...filter, counties: valid_geoid_co});
-  }
+    dispatch(setMapFilters(mapFiltersUpdate));
+  };
 
   return (
     <>
@@ -277,12 +336,33 @@ function Sidebar () {
               </div>
               <div className={style["filter-section"]}>
                 <div className={style["filter-header"]}>
+                  <h5>Broadband technologies</h5>
+                  <InfoTooltip text={"Show census blocks where a certain broadband technology is reported to be present"}/>
+                </div>
+                <Autocomplete
+                    multiple
+                    options={Object.keys(broadband_technology)}
+                    defaultValue={[]}
+                    onChange={handleBroadbandTechnologyChange}
+                    renderInput={(params) => (
+                        <TextField
+                            {...params}
+                            variant="standard"
+                            label="Filter by broadband technology"
+                            placeholder="Filter by broadband technology"
+                        />
+                    )}
+                    disabled={filterState.disableSidebar}
+                />
+              </div>
+              <div className={style["filter-section"]}>
+                <div className={style["filter-header"]}>
                   <h5>Internet service providers</h5>
                   <InfoTooltip text={"Show census blocks which include at least one of the ISPs you've selected"}/>
                 </div>
                 <Autocomplete
                   multiple
-                  options={Object.keys(isp_name_lookup_rev)}
+                  options={Object.keys(isp_name_lookup)}
                   defaultValue={[]}
                   onChange={handleMultipleISPChange}
                   renderInput={(params) => (
@@ -291,27 +371,6 @@ function Sidebar () {
                       variant="standard"
                       label="Filter by ISP"
                       placeholder="Filter by ISP"
-                    />
-                  )}
-                  disabled={filterState.disableSidebar}
-                />
-              </div>
-              <div className={style["filter-section"]}>
-                <div className={style["filter-header"]}>
-                  <h5>Broadband technologies</h5>
-                  <InfoTooltip text={"Show census blocks where a certain broadband technology is reported to be present"}/>
-                </div>
-                <Autocomplete
-                  multiple
-                  options={Object.keys(broadband_technology)}
-                  defaultValue={[]}
-                  onChange={handleBroadbandTechnologyChange}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      variant="standard"
-                      label="Filter by broadband technology"
-                      placeholder="Filter by broadband technology"
                     />
                   )}
                   disabled={filterState.disableSidebar}

@@ -38,11 +38,14 @@ import {
 import { FilterState } from "../models/index";
 import { HoverInfo } from "./HoverInfo";
 
-import { getBEADColor, getFillColor } from '../utils/colors';
 import {
-    formatBroadbandTechnology,
-    parseIspId, swapKeysValues
-} from '../utils/utils';
+    // getBEADColor,
+    getFillColor
+} from '../utils/colors';
+// import {
+//     formatBroadbandTechnology,
+//     parseIspId, swapKeysValues
+// } from '../utils/utils';
 
 import broadband_technology_dict from './../data/broadband_technology.json';
 import isp_name_dict from "../data/isp_name_lookup_rev.json";
@@ -108,7 +111,7 @@ const GlMap: React.FC < GlMapProps > = ({
     const [ selected_geoids, selectGeoIDs ] = useState<string[]>([]);
 
     const props = useSpring({
-        width: isShowing ? window.innerWidth - 375 + "px": window.innerWidth + "px"
+        width: filterState.showSidebar ? window.innerWidth - 375 + "px": window.innerWidth + "px"
     });
 
     const getBlockInfoFromApi = (geoid_bl: string, token: string) => {

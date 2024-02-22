@@ -31,7 +31,7 @@ export default function WelcomeModal() {
 				</p>
 				<p className={style["info-chunk"]}>
 					<b>Data is displayed at the Census Block level</b><br/>
-					Due to the granularity of the data, you'll need to zoom to the level of a town or city
+					Due to the granularity of the data, you'll need to zoom into a single county
 					to view aggregated <a href="https://broadbandmap.fcc.gov/data-download/nationwide-data" target="_blank">
 					Broadband data</a> per-block, as well as other info for a selection of blocks.
 				</p>

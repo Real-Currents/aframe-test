@@ -15,15 +15,16 @@ import isp_id_dict from './../data/isp_dict_latest.json';
 
 import { swapKeysValues } from '../utils/utils';
 
+interface IspIdLookup {
+    [key: string]: string[];
+}
+
 interface IspNameLookup {
   [key: string]: string;
 }
 const isp_name_lookup: IspNameLookup = isp_name_dict;
 const isp_name_lookup_rev = swapKeysValues(isp_name_lookup);
 
-interface IspIdLookup {
-  [key: string]: string[];
-}
 const isp_id_lookup: IspIdLookup = isp_id_dict;
 
 const maxWidthTrigger: number = 600;

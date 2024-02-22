@@ -22,7 +22,14 @@ const MapLegend: React.FC < MapLegendProps > = ({ title, category }) => {
             if ((i % 2) === 0) {
                 legendItems.push(
                     <div className={style["legend-row"]} key={i}>
-                        <div style={{backgroundColor: category[i+1]}} className={style["legend-box"]}></div><p>{category[i]}</p>
+                        <div className={style["legend-box"]}
+                             style={{
+                                 backgroundColor: category[i+1]
+                                     // .toString()
+                                     // .replace("rgba", "rgb")
+                                     // .replace(/,\s?[\d|\.]+\)/, ")")
+                             }} />
+                        <p>{category[i]}</p>
                         <InfoTooltip text={beadDefinitions[category[i]]}/>
                     </div>
                 );
