@@ -15,10 +15,6 @@ interface IspNameLookup {
 }
 const isp_name_lookup: IspNameLookup = isp_name_dict;
 
-interface DetailedViewProps {
-    detailedInfo: any[];
-}
-
 const block_columns = [
     "geoid_bl",
     "geoid_tr",
@@ -88,7 +84,7 @@ function getLabel (col: string, labels: any) {
 
 const isp_name_lookup_rev = swapKeysValues(isp_name_lookup);
 
-const DetailedView: React.FC<DetailedViewProps> = ({ detailedInfo }) => {
+export default function DetailedView () {
 
     const [ block_info, setBlockInfo ] = useState<GeoJSONFeature[]>([]);
     const [ geoid_bl, setGeoid ] = useState<string>("")
@@ -174,7 +170,28 @@ const DetailedView: React.FC<DetailedViewProps> = ({ detailedInfo }) => {
 
     return (
         <>
-            <div id="detail" className={"detailed-view"}>
+            <div id="detail" className={"detailed-view"}
+                 style={{ display: "none" }}>
+
+                <button className={"detail-button top"}
+                        onClick={(evt) => {
+                            window.document.getElementById("info-wrapper")
+                                .style.paddingTop = "calc(100vh - 75px)";
+                            setTimeout(() => {
+                                window.document.getElementById("detail")
+                                    .style.display = "none";
+                            }, 233);
+                        }} >
+                    {/*<a href="#main-interface">*/}
+                        <svg viewBox="0 0 22 14" aria-hidden="true">
+                            <polygon points="18.8743237 0 22 3.62676411 10.6828079 14 0 3.57495046 3.2339044 0.0505492411 10.7824379 7.41694926"></polygon>
+                        </svg>
+                        Broadband Map
+                    {/*</a>*/}
+                </button>
+                <br />
+                <br />
+                <br />
 
                 <h4 className={"detailed-header"}>Broadband Information for Census Blocks in selection
                     <button value={"TODO: Cancel"} />
@@ -318,5 +335,3 @@ const DetailedView: React.FC<DetailedViewProps> = ({ detailedInfo }) => {
         </>
     );
 }
-
-export default DetailedView;

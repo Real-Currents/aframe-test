@@ -461,11 +461,17 @@ const GlMap: React.FC < GlMapProps > = ({
                 </Map>
 
                 {selected_features.length > 0 && (
-                    <button className={style["detail-button"]}>
-                        <a href="#detail">
-                            Detailed View
+                    <button className={"detail-button bottom"}
+                            onClick={(evt) => {
+                                window.document.getElementById("detail")
+                                    .style.display = "block";
+                                window.document.getElementById("info-wrapper")
+                                    .style.paddingTop = "0px";
+                            } }>
+                        {/*<a href="#detail">*/}
+                            Detailed Info
                             <svg viewBox="0 0 22 14" aria-hidden="true"><polygon points="18.8743237 0 22 3.62676411 10.6828079 14 0 3.57495046 3.2339044 0.0505492411 10.7824379 7.41694926"></polygon></svg>
-                        </a>
+                        {/*</a>*/}
                     </button>
                 )}
 

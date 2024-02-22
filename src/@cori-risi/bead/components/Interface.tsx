@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
+import Navbar from './Navbar';
 import GlMap from './GlMap';
 import Sidebar from './Sidebar';
-import DetailedView from './DetailedView';
-import Navbar from './Navbar';
 import WelcomeDialog from './WelcomeDialog';
+import InfoPanel from "./InfoPanel";
 
 import style from "./styles/Interface.module.css";
 
@@ -61,9 +61,10 @@ const Interface = () => {
 
     return ( 
         <>
-        <div className={style['interface']}>
+        <div id="main-interface" className={style['interface']}>
             <Navbar />
-            <div className={"main-wrapper"} style={{position: "relative", top: 0, marginTop: "75px", minHeight: "calc(100vh - 75px)"}}>
+            <div className={"main-wrapper"}
+                 style={{position: "relative", top: 0, marginTop: "75px", minHeight: "calc(100vh - 75px)"}}>
                 <WelcomeDialog />
                 <div className={style["map-interface"]}>
                     <Sidebar />
@@ -79,10 +80,9 @@ const Interface = () => {
                     />
                 </div>
             </div>
-            <div className={"info-wrapper"} style={{ pointerEvents: "none", position: "absolute", top: 0, marginTop: "75px", minWidth: "100vw", minHeight: "calc(100vh - 75px)", paddingTop: "calc(100vh - 75px)",  zIndex: 100 }}>
-                {/*<div className={"info-map-viewer"} style={{ pointerEvents: "none", position: "relative", minHeight: "calc(100vh - 75px)", maxHeight: "calc(100vh - 75px)" }}>&nbsp;</div>*/}
-                <DetailedView detailedInfo={detailedInfo} />
-            </div>
+
+            <InfoPanel />
+
         </div>
 
         </>
