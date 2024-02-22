@@ -50,7 +50,7 @@ function Sidebar () {
   });
 
   const handleFillColorChange = (event: React.SyntheticEvent, newValue: string) => {
-    if (typeof newValue === "string") {
+
       const mapFiltersUpdate: FilterState = {
         "colorVariable": newValue
       }
@@ -59,6 +59,28 @@ function Sidebar () {
 
       // onFillColorChange(getFillColor(newValue));
       // onColorVariableChange(newValue);
+
+      dispatch(setMapFilters(mapFiltersUpdate));
+  };
+
+  const handleBEADFilterChange = (event: any) => {
+    if (typeof event.target.checked === 'boolean') {
+      const mapFiltersUpdate: FilterState = {
+        bb_service: {
+          ...filterState.bb_service,
+          [event.target.name]: event.target.checked
+        }
+      }
+
+      console.log("Filter update:", mapFiltersUpdate);
+
+      // onFilterChange({
+      //   ...filter,
+      //   bb_service: {
+      //     ...filter.bb_service,
+      //     [event.target.name]: event.target.checked
+      //   }
+      // });
 
       dispatch(setMapFilters(mapFiltersUpdate));
     }
@@ -73,13 +95,6 @@ function Sidebar () {
     // let slider_vals: number[] = newValue as number[];
     // onFilterChange({...filter, total_locations: slider_vals});
   };
-
-  function handleBroadbandChange(event: any) {
-
-    // if (typeof event.target.checked === 'boolean') {
-    //   onFilterChange({...filter, bb_service: {...filter.bb_service, [event.target.name]: event.target.checked}});
-    // }
-  }
 
   function handleAwardChange(event: any) {
 
@@ -167,7 +182,7 @@ function Sidebar () {
                     control={
                       <Checkbox
                         checked={filterState.bb_service.served}
-                        onChange={handleBroadbandChange}
+                        onChange={handleBEADFilterChange}
                         name="served"
                       />
                     }
@@ -178,7 +193,7 @@ function Sidebar () {
                     control={
                       <Checkbox
                         checked={filterState.bb_service.underserved}
-                        onChange={handleBroadbandChange}
+                        onChange={handleBEADFilterChange}
                         name="underserved"
                       />
                     }
@@ -189,7 +204,7 @@ function Sidebar () {
                     control={
                       <Checkbox
                         checked={filterState.bb_service.unserved}
-                        onChange={handleBroadbandChange}
+                        onChange={handleBEADFilterChange}
                         name="unserved"
                       />
                     }

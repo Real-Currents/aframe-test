@@ -232,15 +232,29 @@ const GlMap: React.FC < GlMapProps > = ({
                 if ((!!features && features.length > 0)) {
                     const clickedFeature = features[0]!;
                     const clickedGeoID = clickedFeature.properties.geoid_bl.toString();
-                    const geoids = [
-                        ...selected_geoids,
-                        clickedGeoID
-                    ];
 
                     console.log(`Feature clicked (${clickedGeoID}):`, clickedFeature);
-                    setClickedBlock(clickedGeoID);
-                    selectGeoIDs(geoids);
-                    getBlockInfoFromApi(geoids.join(","), token);
+
+                    const geoids = (selected_geoids.filter(geoid => geoid === clickedGeoID).length < 1) ?
+                        [
+                            ...selected_geoids,
+                            clickedGeoID
+                        ] :
+                        [
+                            ...selected_geoids.filter(geoid => geoid !== clickedGeoID)
+                        ];
+
+                    if (geoids.length < 1) {
+                        dispatch(setMapSelection({
+                            "block_features": [],
+                            "isp_tech_features": [],
+                            "award_features": []
+                        }));
+                    } else {
+                        setClickedBlock(clickedGeoID);
+                        selectGeoIDs(geoids);
+                        getBlockInfoFromApi(geoids.join(","), token);
+                    }
                 }
             }
         };
@@ -437,16 +451,21 @@ const GlMap: React.FC < GlMapProps > = ({
                     onMove={onMove}
                 >
 
-                    <Source id={"mapbox-terrain"} type={"vector"} url={"mapbox://mapbox.mapbox-terrain-v2"} >
-                        <Layer {...contourStyle} >
-                        </Layer>
+                    <Source id={"mapbox-terrain"}
+                            type={"vector"}
+                            url={"mapbox://mapbox.mapbox-terrain-v2"} >
+                        {mapZoom >= MIN_ZOOM_LEVEL && (
+                            <Layer {...contourStyle} />
+                        )}
                     </Source>
 
                     <Source {...bead_dev.sources[0]} >
-                        <Layer
-                          {...layerAttributes}
-                          filter={layerFilter}
-                        />
+                        {mapZoom >= MIN_ZOOM_LEVEL && (
+                            <Layer
+                              {...layerAttributes}
+                              filter={layerFilter}
+                            />
+                        )}
                     </Source>
                     {/*{(selected_features.length > 0) ?*/}
                         <Source type="geojson" id="bead_block" data={{
@@ -461,7 +480,7 @@ const GlMap: React.FC < GlMapProps > = ({
                                     "fill-color": "#ffffff",
                                     "fill-opacity": 0.25
                                 }
-                            }}></Layer>
+                            }} />
                             <Layer {...{
                                 id: "bead_block-line",
                                 source: "bead_block",
@@ -469,7 +488,7 @@ const GlMap: React.FC < GlMapProps > = ({
                                 paint: {
                                     "line-color": selection_color,
                                 }
-                            }}></Layer>
+                            }} />
                         </Source>{/* : <></>*/}
                     {/*}*/}
 

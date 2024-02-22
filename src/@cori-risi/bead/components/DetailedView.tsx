@@ -34,23 +34,23 @@ const block_columns = [
     "geoid_tr",
     "geoid_co",
     "geoid_st",
-    "cnt_isp",
-    "isp_id",
-    "cnt_25_3",
-    "has_fiber",
-    "cnt_100_20",
-    "pct_served",
-    "bl_25_3_area",
-    "combo_isp_id",
     "bead_category",
-    "bl_100_20_area",
-    "has_copperwire",
-    "only_water_flag",
-    "has_lbr_wireless",
-    "has_coaxial_cable",
+    // "bl_100_20_area",
+    // "bl_25_3_area",
     "cnt_total_locations",
+    "cnt_25_3",
+    "cnt_100_20",
+    "isp_id",
+    "cnt_isp",
+    // "combo_isp_id",
+    // "pct_served",
+    "has_fiber",
+    "has_coaxial_cable",
+    "has_copperwire",
+    "has_lbr_wireless",
+    "has_licensed_wireless",
     "has_previous_funding",
-    "has_licensed_wireless"
+    // "only_water_flag",
 ];
 
 const block_labels = {
@@ -293,24 +293,52 @@ export default function DetailedView () {
                                     });
 
                                     const block_features: any = [];
+                                    const isp_tech_features: any = [];
+                                    const award_features: any = [];
 
                                     for (let d of newTableData) {
                                         if (!!d[0] && d[0].toString().match(/^\d{15}/)) {
                                             const geoid_bl = d[0].toString();
-                                            if (mapSelection.hasOwnProperty("block_features")
-                                                && typeof mapSelection.block_features.filter === "function"
-                                            ) {
-                                                mapSelection.block_features
-                                                    .filter((f) => geoid_bl === f.properties.geoid_bl)
-                                                    .map((f) => block_features.push(f));
+                                            if (mapSelection.hasOwnProperty("block_features")) {
+                                                if (typeof mapSelection.block_features.filter === "function") {
+                                                    mapSelection.block_features
+                                                        .filter((f) => geoid_bl === f.properties.geoid_bl)
+                                                        .map((f) => {
+                                                            block_features.push(f)
+                                                        });
+                                                }
+                                                if (typeof mapSelection.isp_tech_features.filter === "function") {
+                                                    mapSelection.isp_tech_features
+                                                        .filter((f) => geoid_bl === f.properties.geoid_bl)
+                                                        .map((f) => {
+                                                            isp_tech_features.push(f)
+                                                        });
+                                                }
+                                                if (typeof mapSelection.award_features.filter === "function") {
+                                                    mapSelection.award_features
+                                                        .filter((f) => geoid_bl === f.properties.geoid_bl)
+                                                        .map((f) => {
+                                                            award_features.push(f)
+                                                        });
+                                                }
                                             }
                                         }
                                     }
 
-                                    dispatch(setMapSelection({
-                                        ...mapSelection,
-                                        block_features
-                                    }));
+                                    if (block_features.length < 1) {
+                                        dispatch(setMapSelection({
+                                            "block_features": [],
+                                            "isp_tech_features": [],
+                                            "award_features": []
+                                        }));
+                                    } else {
+                                        dispatch(setMapSelection({
+                                            ...mapSelection,
+                                            block_features,
+                                            isp_tech_features,
+                                            // award_features // <= 2020 block geoids will not match 2010 award geoids
+                                        }));
+                                    }
                                 }
                             }}
                             title={"Census Blocks"}
@@ -371,7 +399,7 @@ export default function DetailedView () {
                 }
                 <br />
 
-                <h5>Federal Funding Awards Applicant By Block</h5>
+                <h5>Federal Funding Award Applicants By Block</h5>
                 {
                     (award_info.length === 0 )?
                         <p>Select a block on the map to view Broadband info<br /></p> :
