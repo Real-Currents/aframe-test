@@ -130,16 +130,11 @@
   },
   "scripts": {
     "build": "tsc && vite build",
-    "build:datatables": "npm run build -w @cori-risi/mui-datatables",
     "dev": "vite",
-    "dev:datatables": "npm run dev -w @cori-risi/mui-datatables",
     "format": "prettier --write .",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "test": "vitest",
     "type:check": "tsc --noEmit"
-  },
-  "workspaces": [
-    "src/@cori-risi/mui-datatables"
-  ]
+  }
 }
