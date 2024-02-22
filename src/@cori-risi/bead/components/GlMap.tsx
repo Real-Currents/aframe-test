@@ -5,7 +5,7 @@ import Map, { Source, Layer,  LayerProps, MapRef } from 'react-map-gl';
 import { fitBounds } from 'viewport-mercator-project';
 import { useSpring, animated } from "react-spring";
 
-import axios, {AxiosInstance} from "axios";
+import { AxiosInstance } from "axios";
 import { ApiContext } from "../../contexts/ApiContextProvider";
 
 import { parseIspId, formatBroadbandTechnology } from '../utils/utils';
@@ -24,6 +24,8 @@ import MapLegend from './MapLegend';
 import style from "./styles/GlMap.module.css";
 
 import broadband_technology_dict from './../data/broadband_technology.json';
+import {useDispatch} from "react-redux";
+import {setMapFilters} from "../features/index";
 const broadband_technology: Record<string, string> = broadband_technology_dict;
 
 const percentFormat = format('.1%');
@@ -50,7 +52,6 @@ type GlMapProps = {
     colorVariable: string,
     onFocusBlockChange: (newFocusBlock: string) => void,
     onDetailedInfoChange: (newDetailedInfo: any[]) => void,
-    onZoomChange: (newZoom: number) => void,
     ispNameLookup: { [key: string]: string },
     isShowing: boolean
 };
@@ -70,12 +71,13 @@ const GlMap: React.FC < GlMapProps > = ({
   colorVariable,
   onFocusBlockChange,
   onDetailedInfoChange,
-  onZoomChange,
   ispNameLookup,
   isShowing
 }: GlMapProps) => {
 
     const apiContext = useContext(ApiContext);
+
+    const dispatch = useDispatch();
 
     const mapRef = useRef < MapRef | null > (null);
 
@@ -98,15 +100,22 @@ const GlMap: React.FC < GlMapProps > = ({
     const [ clickedBlock, setClickedBlock] = useState < string > ("");
 
     const [ selected_features, selectFeatures ] = useState<GeoJSONFeature[]>([]);
-    const [ selected_geoids, selectGeoIDs ] = useState<string[]>([]);
 
     const props = useSpring({
         width: isShowing ? window.innerWidth - 375 + "px": window.innerWidth + "px"
     });  
 
     const onMove = (event: any) => { // Specify the type of event if known
-        setMapZoom(event.viewState!.zoom!);
-        onZoomChange(event.viewState!.zoom!);
+        if (event.hasOwnProperty("viewState") && event["viewState"].hasOwnProperty("zoom")) {
+            setMapZoom(event.viewState!.zoom!);
+
+            const mapFiltersUpdate = {
+                "disableSidebar": (event.viewState!.zoom! < MIN_ZOOM_LEVEL)
+            };
+            // console.log("Update mapFilters state:", mapFiltersUpdate);
+            dispatch(setMapFilters(mapFiltersUpdate));
+
+        }
     };
 
     const onHover = useCallback((event: any) => { // Specify the type of event if known
@@ -124,7 +133,12 @@ const GlMap: React.FC < GlMapProps > = ({
         }
     }, []);
 
-    const getBlockInfoFromApi = (geoid_bl: string, token: string) => {
+    const getBlockInfoFromApi = (clickedFeature: {
+        properties: {
+            [index: string]: any,
+            geoid_bl: number
+        }
+    }, token: string) => {
         // console.log("API Context state: ", apiContext);
 
         const client: AxiosInstance | null = (apiContext.hasOwnProperty("apiClient") && apiContext.apiClient !== null
@@ -134,11 +148,10 @@ const GlMap: React.FC < GlMapProps > = ({
 
         if (client !== null && client.hasOwnProperty("get") && typeof client.get === "function") {
 
-            client.get("/rest/bead/all?geoid_bl=" + geoid_bl)
+            client.get("/rest/bead/all?geoid_bl=" + clickedFeature.properties.geoid_bl)
                 .then(result => {
 
-                    // TODO: How is this used?
-                    // onFocusBlockChange(geoid_bl);
+                    onFocusBlockChange(clickedFeature.properties.geoid_bl.toString());
 
                     console.log("result is ", result);
 
@@ -146,9 +159,7 @@ const GlMap: React.FC < GlMapProps > = ({
                         && result.data.hasOwnProperty("features")
                         && result.data.features.length > 0
                     ) {
-                        onDetailedInfoChange(result.data.features);
-
-                        const block_features = result.data.features.filter((f: GeoJSONFeature) => {
+                        result.data.features.forEach((f: GeoJSONFeature) => {
                             // class GeoJSONFeature {
                             // 	type: "Feature";
                             // 	_geometry: GeoJSON.Geometry;
@@ -167,10 +178,10 @@ const GlMap: React.FC < GlMapProps > = ({
                                 && f["properties"]["type"] === "geojson"
                             ) {
                                 console.log("GeoJSON for this feature:", f);
-                                return true;
+                                selectFeatures([ f ]);
                             }
                         });
-                        selectFeatures([ ...block_features ]);
+                        onDetailedInfoChange(result.data.features);
                     }
                 })
                 .catch(error => {
@@ -209,17 +220,10 @@ const GlMap: React.FC < GlMapProps > = ({
 
                     if ((!!features && features.length > 0)) {
                         const clickedFeature = features[0]!;
-                        const clickedGeoID = clickedFeature.properties.geoid_bl.toString();
-                        const geoids = [
-                            ...selected_geoids,
-                            clickedGeoID
-                        ];
 
-                        console.log(`Feature clicked (${clickedGeoID}):`, clickedFeature);
                         console.log("Feature clicked:", clickedFeature);
-                        setClickedBlock(clickedGeoID);
-                        selectGeoIDs(geoids);
-                        getBlockInfoFromApi(geoids.join(","), token);
+                        setClickedBlock(clickedFeature.properties.geoid_bl.toString());
+                        getBlockInfoFromApi(clickedFeature, token);
                     }
                 }
             };
@@ -239,9 +243,7 @@ const GlMap: React.FC < GlMapProps > = ({
 
         if (filter.bb_service.unserved === true) {
             bb_array = [...bb_array, "Unserved"];
-        }
-
-        bb_array = [ ...bb_array, "Not Reported" ];
+        }  
 
         let isp_filter: any = [
             'all',
@@ -412,9 +414,12 @@ const GlMap: React.FC < GlMapProps > = ({
                                             ]
                                         )}
                                     </p>
-                                <p><b>Previous federal funding?</b> {hoverInfo.feature.properties.has_previous_funding? "Yes": "No"}</p>
-                                <p><b>Internet service providers:</b> {hoverInfo.feature.properties.combo_isp_id ? parseIspId(hoverInfo.feature.properties.isp_id, ispNameLookup): "N/A"}</p>
-                            </div>
+                                    <p><b>Previous federal funding?</b> {hoverInfo.feature.properties.has_previous_funding? "Yes": "No"}</p>
+                                    <p><b>Internet service providers:</b> {hoverInfo.feature.properties.combo_isp_id ? parseIspId(hoverInfo.feature.properties.isp_id, ispNameLookup): "N/A"}</p>
+                                </div>
+                                <div>
+                                    <p><em>Click to view detailed census block information</em></p>
+                                </div>
                           </div>
                         </div>
                         )}

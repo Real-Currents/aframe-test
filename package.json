@@ -137,8 +137,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "test": "vitest",
-    "type:check": "tsc --noEmit",
-    "test:datatables": "npm run test -w @cori-risi/mui-datatables"
+    "type:check": "tsc --noEmit"
   },
   "workspaces": [
     "src/@cori-risi/mui-datatables"

@@ -33,7 +33,7 @@
 
 	position: absolute;
 	z-index: 1;
-	bottom: 100%;
+	top: 150%;
 	left: 50%;
 	margin-left: -125px;
 }
@@ -41,12 +41,12 @@
 .info-tooltip .info-tooltip-text::after {
   content: " ";
   position: absolute;
-  top: 100%; /* At the bottom of the tooltip */
+  top: -10px; /* At the bottom of the tooltip */
   left: 50%;
   margin-left: -5px;
   border-width: 5px;
   border-style: solid;
-  border-color: #16343E transparent transparent transparent;
+  border-color: transparent transparent #16343E transparent;
 }
 
 .info-tooltip:hover .info-tooltip-text {
