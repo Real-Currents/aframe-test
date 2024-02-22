@@ -106,7 +106,7 @@ const GlMap: React.FC < GlMapProps > = ({
     const [ mapZoom, setMapZoom] = useState < number > (zoom);
     const [ clickedBlock, setClickedBlock] = useState < string > ("");
 
-    const mapSelection = useSelector<{[index: string]: GeoJSONFeature[]}>(selectMapSelection); // { "...": GeoJSONFeature[] }
+    const mapSelection = useSelector<any>(selectMapSelection); // { "...": GeoJSONFeature[] }
     const [ selected_features, selectFeatures ] = useState<GeoJSONFeature[]>([]);
     const [ selected_geoids, selectGeoIDs ] = useState<string[]>([]);
 
@@ -296,26 +296,24 @@ const GlMap: React.FC < GlMapProps > = ({
         if (event.hasOwnProperty("viewState") && event["viewState"].hasOwnProperty("zoom")) {
             setMapZoom(event.viewState!.zoom!);
 
-            const mapFiltersUpdate: FilterState = {
-                "disableSidebar": (event.viewState!.zoom! < MIN_ZOOM_LEVEL)
-            };
-
-            if (filterState.disableSidebar !== mapFiltersUpdate.disableSidebar) {
-                console.log("Update mapFilters state from:", filterState, "\nto:", mapFiltersUpdate);
-                dispatch(setMapFilters(mapFiltersUpdate));
+            if (filterState.disableSidebar !== (event.viewState!.zoom! < MIN_ZOOM_LEVEL)) {
+                dispatch(setMapFilters({
+                    "disableSidebar": (event.viewState!.zoom! < MIN_ZOOM_LEVEL)
+                }));
             }
 
         }
     };
 
     useEffect(() => {
+        const selection = mapSelection as {[index: string]: GeoJSONFeature[]};
         if (
-            mapSelection.hasOwnProperty("block_features")
-            && mapSelection.block_features !== null
-            && mapSelection.block_features.length > 0
+            selection.hasOwnProperty("block_features")
+            && selection.block_features !== null
+            && selection.block_features.length > 0
         ) {
-            selectGeoIDs(mapSelection.block_features.map((f) => f.properties.geoid_bl));
-            selectFeatures(mapSelection.block_features)
+            selectGeoIDs(selection.block_features.map((f) => f.properties.geoid_bl));
+            selectFeatures(selection.block_features)
         } else {
             selectGeoIDs([]);
             selectFeatures([]);
@@ -457,18 +455,18 @@ const GlMap: React.FC < GlMapProps > = ({
                     <Source id={"mapbox-terrain"}
                             type={"vector"}
                             url={"mapbox://mapbox.mapbox-terrain-v2"} >
-                        {mapZoom >= MIN_ZOOM_LEVEL && (
+                        {/*{mapZoom >= MIN_ZOOM_LEVEL && (*/}
                             <Layer {...contourStyle} />
-                        )}
+                        {/*)}*/}
                     </Source>
 
                     <Source {...bead_dev.sources[0]} >
-                        {mapZoom >= MIN_ZOOM_LEVEL && (
+                        {/*{mapZoom >= MIN_ZOOM_LEVEL && (*/}
                             <Layer
                               {...layerAttributes}
                               filter={layerFilter}
                             />
-                        )}
+                        {/*)}*/}
                     </Source>
                     {/*{(selected_features.length > 0) ?*/}
                         <Source type="geojson" id="bead_block" data={{
@@ -490,6 +488,7 @@ const GlMap: React.FC < GlMapProps > = ({
                                 type: "line",
                                 paint: {
                                     "line-color": selection_color,
+                                    "line-width": 2
                                 }
                             }} />
                         </Source>{/* : <></>*/}
@@ -517,10 +516,18 @@ const GlMap: React.FC < GlMapProps > = ({
                 {selected_features.length > 0 && (
                     <button className={"detail-button bottom"}
                             onClick={(evt) => {
-                                window.document.getElementById("detail")
-                                    .style.display = "block";
-                                window.document.getElementById("info-wrapper")
-                                    .style.paddingTop = "0px";
+                                const detailPanel = window.document.getElementById("detail");
+                                if (detailPanel !== null) {
+                                    setTimeout(() => {
+                                        detailPanel
+                                            .style.display = "block";
+                                    }, 233);
+                                const infoWrapper = window.document.getElementById("info-wrapper");
+                                if (infoWrapper !== null) {
+                                    infoWrapper
+                                        .style.paddingTop = "0px";
+                                    }
+                                }
                             } }>
                         {/*<a href="#detail">*/}
                             Detailed Info

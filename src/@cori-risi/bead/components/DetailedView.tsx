@@ -29,6 +29,13 @@ const isp_name_lookup: IspNameLookup = isp_name_dict;
 //     ["James Houston", "Test Corp", "Dallas", "TX"],
 // ];
 
+interface BlockLevelFeature {
+    "properties": {
+        [key: string]: string | number | boolean;
+        "geoid_bl": string;
+    };
+}
+
 const block_columns = [
     "geoid_bl",
     "geoid_tr",
@@ -189,12 +196,18 @@ export default function DetailedView () {
 
                 <button className={"detail-button top"}
                         onClick={(evt) => {
-                            window.document.getElementById("info-wrapper")
-                                .style.paddingTop = "calc(100vh - 75px)";
-                            setTimeout(() => {
-                                window.document.getElementById("detail")
-                                    .style.display = "none";
-                            }, 233);
+                            const infoWrapper = window.document.getElementById("info-wrapper");
+                            if (infoWrapper !== null) {
+                                infoWrapper
+                                    .style.paddingTop = "calc(100vh - 75px)";
+                                const detailPanel = window.document.getElementById("detail");
+                                if (detailPanel !== null) {
+                                    setTimeout(() => {
+                                        detailPanel
+                                            .style.display = "none";
+                                    }, 233);
+                                }
+                            }
                         }} >
                     {/*<a href="#main-interface">*/}
                         <svg viewBox="0 0 22 14" aria-hidden="true">
@@ -302,21 +315,21 @@ export default function DetailedView () {
                                             if (mapSelection.hasOwnProperty("block_features")) {
                                                 if (typeof mapSelection.block_features.filter === "function") {
                                                     mapSelection.block_features
-                                                        .filter((f) => geoid_bl === f.properties.geoid_bl)
+                                                        .filter((f: BlockLevelFeature) => geoid_bl === f.properties.geoid_bl)
                                                         .map((f) => {
                                                             block_features.push(f)
                                                         });
                                                 }
                                                 if (typeof mapSelection.isp_tech_features.filter === "function") {
                                                     mapSelection.isp_tech_features
-                                                        .filter((f) => geoid_bl === f.properties.geoid_bl)
+                                                        .filter((f: BlockLevelFeature) => geoid_bl === f.properties.geoid_bl)
                                                         .map((f) => {
                                                             isp_tech_features.push(f)
                                                         });
                                                 }
                                                 if (typeof mapSelection.award_features.filter === "function") {
                                                     mapSelection.award_features
-                                                        .filter((f) => geoid_bl === f.properties.geoid_bl)
+                                                        .filter((f: BlockLevelFeature) => geoid_bl === f.properties.geoid_bl)
                                                         .map((f) => {
                                                             award_features.push(f)
                                                         });

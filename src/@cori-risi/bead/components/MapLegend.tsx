@@ -30,7 +30,7 @@ const MapLegend: React.FC < MapLegendProps > = ({ title, category }) => {
                                      // .replace(/,\s?[\d|\.]+\)/, ")")
                              }} />
                         <p>{category[i]}</p>
-                        <InfoTooltip text={beadDefinitions[category[i]]}/>
+                        <InfoTooltip text={beadDefinitions[category[i]].toString()}/>
                     </div>
                 );
             }

@@ -4,7 +4,7 @@ export interface BroadbandTechnology {
 }
 
 export interface FilterState {
-    [key: string]: boolean | string;
+    colorVariable: string;
     bb_service: {
         served: boolean;
         underserved: boolean;
@@ -24,14 +24,15 @@ export interface FilterState {
 }
 
 export interface HoverInfoState {
-    [key: string]: boolean | string;
+    x: number;
+    y: number;
     feature: any
 }
 
-interface IspNameLookup {
+export interface IspNameLookup {
     [key: string]: string;
 }
 
-interface IspIdLookup {
+export interface IspIdLookup {
     [key: string]: string[];
 }

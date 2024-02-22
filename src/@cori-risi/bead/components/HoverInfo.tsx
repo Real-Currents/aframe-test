@@ -12,9 +12,10 @@ import {
 } from "../utils/utils";
 import isp_name_dict from "../data/isp_name_lookup_rev.json";
 
-const percentFormat = (num) => {
-    if (parseInt(+num) === parseInt(+num)) {
-        return format('.1%')(num);
+const percentFormat = (num: number | string) => {
+    // console.log(parseFloat(num));
+    if (parseFloat("" + num) === parseFloat("" + num)) {
+        return format('.1%')(parseFloat("" + num));
     } else {
         return "N/A";
     }
@@ -22,9 +23,30 @@ const percentFormat = (num) => {
 
 export function HoverInfo () {
 
-    const filterState: FilterState = useSelector<FilterState>(selectMapFilters);
+    const filterState: FilterState = useSelector(selectMapFilters);
     const hoverInfo: HoverInfoState = useSelector(selectMapHover);
     const ispNameLookup =  swapKeysValues(isp_name_dict);
+
+    const getPctUnserved = (properties: any) => {
+        // console.log("pct_served:", properties.pct_served);
+        // console.log("Pct. unserved (<25/3):", (1-properties.pct_served));
+        return (!!properties.pct_served || properties.pct_served === 0) ?
+            percentFormat((1-properties.pct_served)) : "N/A";
+    };
+
+    const getPctUnderserved = (properties: any) => {
+        // console.log("cnt_25_3:", properties.cnt_25_3);
+        // console.log("cnt_total_locations:", properties.cnt_total_locations);
+        // console.log("Pct un- and underserved (<100/20):", properties.cnt_25_3 / properties.cnt_total_locations);
+        return percentFormat(properties.cnt_25_3 / properties.cnt_total_locations);
+    };
+
+    const getPctServed = (properties: any) => {
+        // console.log("cnt_100_20:", properties.cnt_100_20);
+        // console.log("cnt_total_locations:", properties.cnt_total_locations);
+        // console.log("Pct served (>100/20):", properties.cnt_100_20 / properties.cnt_total_locations);
+        return percentFormat(properties.cnt_100_20 / properties.cnt_total_locations);
+    };
 
     // useEffect(() => {
     //     console.log("Updated hoverInfo:", hoverInfo);
@@ -53,15 +75,15 @@ export function HoverInfo () {
                             </tr>
                             <tr>
                                 <td>{"Pct. unserved (<25/3)"}</td>
-                                <td>{(!!hoverInfo.feature.properties.pct_served) ? percentFormat((1-hoverInfo.feature.properties.pct_served)) : "N/A"}</td>
+                                <td>{getPctUnserved(hoverInfo.feature.properties)}</td>
                             </tr>
                             <tr>
-                                <td>{"Pct un- and underserved (<100/20) "}</td>
-                                <td>{percentFormat(hoverInfo.feature.properties.cnt_25_3 / hoverInfo.feature.properties.cnt_total_locations)}</td>
+                                <td>{"Pct un- and underserved (<100/20)"}</td>
+                                <td>{getPctUnderserved(hoverInfo.feature.properties)}</td>
                             </tr>
                             <tr>
                                 <td>{"Pct served (>100/20)"}</td>
-                                <td>{percentFormat(hoverInfo.feature.properties.cnt_100_20 / hoverInfo.feature.properties.cnt_total_locations)}</td>
+                                <td>{getPctServed(hoverInfo.feature.properties)}</td>
                             </tr>
                             </tbody>
                         </table>

@@ -10,9 +10,9 @@ export default function Navbar() {
 
     const dispatch = useDispatch();
 
-    const filterState: FilterState = useSelector<FilterState>(selectMapFilters);
+    const filterState: FilterState = useSelector(selectMapFilters);
 
-    const onToggleDrawer = (evt) => {
+    const onToggleDrawer = (evt: any) => {
         console.log("Toggle sidebar:", evt);
 
         const mapFiltersUpdate = {

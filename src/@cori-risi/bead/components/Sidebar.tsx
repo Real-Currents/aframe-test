@@ -53,28 +53,16 @@ function Sidebar () {
 
   const handleFillColorChange = (event: React.SyntheticEvent, newValue: string) => {
 
-      const mapFiltersUpdate: FilterState = {
-        "colorVariable": newValue
-      }
-
-      console.log("Filter update:", mapFiltersUpdate);
-
       // onFillColorChange(getFillColor(newValue));
       // onColorVariableChange(newValue);
 
-      dispatch(setMapFilters(mapFiltersUpdate));
+      dispatch(setMapFilters({
+        "colorVariable": newValue
+      }));
   };
 
   const handleBEADFilterChange = (event: any) => {
     if (typeof event.target.checked === 'boolean') {
-      const mapFiltersUpdate: FilterState = {
-        bb_service: {
-          ...filterState.bb_service,
-          [event.target.name]: event.target.checked
-        }
-      }
-
-      console.log("Filter update:", mapFiltersUpdate);
 
       // onFilterChange({
       //   ...filter,
@@ -84,21 +72,17 @@ function Sidebar () {
       //   }
       // });
 
-      dispatch(setMapFilters(mapFiltersUpdate));
+      dispatch(setMapFilters({
+        bb_service: {
+          ...filterState.bb_service,
+          [event.target.name]: event.target.checked
+        }
+      }));
     }
   };
 
   const handleAwardChange = (event: any) => {
     if (typeof event.target.checked === 'boolean') {
-      const mapFiltersUpdate: FilterState = {
-        has_previous_funding: {
-          ...filterState.has_previous_funding,
-          [event.target.name]: event.target.checked
-        }
-      }
-
-      console.log("Filter update:", mapFiltersUpdate);
-
       // onFilterChange({
       //   ...filter,
       //   has_previous_funding: {
@@ -107,54 +91,44 @@ function Sidebar () {
       //   }
       // });
 
-      dispatch(setMapFilters(mapFiltersUpdate));
+      dispatch(setMapFilters({
+        has_previous_funding: {
+          ...filterState.has_previous_funding,
+          [event.target.name]: event.target.checked
+        }
+      }));
     }
   };
 
   const handleISPChange = (event: Event, newValue: number | number[]) => {
     let slider_vals: number[] = newValue as number[];
-    const mapFiltersUpdate: FilterState = {
-      isp_count: slider_vals
-    }
-
-    console.log("Filter update:", mapFiltersUpdate);
-
     // onFilterChange({...filter, isp_count: slider_vals});
 
-    dispatch(setMapFilters(mapFiltersUpdate));
+    dispatch(setMapFilters({
+      isp_count: slider_vals
+    }));
   };
 
   const handleTotalLocationsChange = (event: Event, newValue: number | number[]) => {
     let slider_vals: number[] = newValue as number[];
-    const mapFiltersUpdate: FilterState = {
-      total_locations: slider_vals
-    }
-
-    console.log("Filter update:", mapFiltersUpdate);
-
     // onFilterChange({...filter, total_locations: slider_vals});
 
-    dispatch(setMapFilters(mapFiltersUpdate));
+    dispatch(setMapFilters({
+      total_locations: slider_vals
+    }));
   };
 
   const handleBroadbandTechnologyChange = (event: any, newValue: string[]) => {
     if (Array.isArray(newValue) && newValue.every((item) => typeof item === 'string')) {
-      const mapFiltersUpdate: FilterState = {
-        broadband_technology: newValue
-      }
-
-      console.log("Filter update:", mapFiltersUpdate);
-
       // onFilterChange({...filter, broadband_technology: newValue});
 
-      dispatch(setMapFilters(mapFiltersUpdate));
+      dispatch(setMapFilters({
+        broadband_technology: newValue
+      }));
     }
   };
 
   const handleMultipleISPChange = (event: any, newValue: any ) => {
-    console.log("isp_name_lookup_rev:", isp_name_lookup_rev);
-    console.log(Object.keys(isp_name_lookup_rev));
-
     // Populate a list of combo ids to use when filtering
     const valid_isp_combos: string[] = [];
     for (let isp of newValue) {
@@ -168,15 +142,11 @@ function Sidebar () {
       }
     }
 
-    const mapFiltersUpdate: FilterState = {
-      isp_combos: valid_isp_combos
-    }
-
-    console.log("Filter update:", mapFiltersUpdate);
-
     // onFilterChange({...filter, isp_combos: valid_isp_combos});
 
-    dispatch(setMapFilters(mapFiltersUpdate));
+    dispatch(setMapFilters({
+      isp_combos: valid_isp_combos
+    }));
   };
 
   const handleCountiesChange = (event: any, newValue: any) => {
@@ -191,14 +161,10 @@ function Sidebar () {
       }
     }
 
-    const mapFiltersUpdate: FilterState = {
-      counties: valid_geoid_co
-    }
-
-    console.log("Filter update:", mapFiltersUpdate);
-
     // onFilterChange({...filter, counties: valid_geoid_co});
-    dispatch(setMapFilters(mapFiltersUpdate));
+    dispatch(setMapFilters({
+      counties: valid_geoid_co
+    }));
   };
 
   return (
