@@ -10,6 +10,7 @@ frontend:
   phases:
     preBuild:
       commands:
+        - git submodule update --init --recursive
         - npm i -g @aws-amplify/cli@${VERSION_AMPLIFY} --unsafe-perm=true
         - npm ci
     build:

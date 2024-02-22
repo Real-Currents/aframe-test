@@ -14,12 +14,15 @@
     "@cori-risi/cori.data.api": "github:ruralinnovation/cori.data.api",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.15.10",
     "@mui/material": "^5.15.3",
     "@reduxjs/toolkit": "^2.0.1",
     "aws-amplify": "^6.0.2",
     "d3-format": "^3.1.0",
     "maplibre-gl": "^3.6.2",
     "mui": "^0.0.1",
+    "mui-datatables": "^4.3.0",
+    "normalize.css": "^8.0.1",
     "prop-types": "^15.8.1",
     "query-string": "^8.1.0",
     "react": "^18.2.0",
@@ -36,6 +39,7 @@
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.2.5",
     "@types/d3-format": "^3.0.4",
+    "@types/mui-datatables": "^4.3.12",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
     "@types/react-redux": "^7.1.33",
@@ -52,7 +56,8 @@
     "sass": "^1.69.7",
     "typescript": "^5.0.2",
     "vite": "^4.5.1",
-    "vitest": "^0.30.1"
+    "vitest": "^0.30.1",
+    "webpack-cli": "^5.1.4"
   },
   "jest": {
     "collectCoverageFrom": [
@@ -124,12 +129,12 @@
     "verbose": true
   },
   "scripts": {
-    "dev": "vite",
     "build": "tsc && vite build",
+    "dev": "vite",
     "format": "prettier --write .",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "test": "vitest",
-    "type-check": "tsc --noEmit"
+    "type:check": "tsc --noEmit"
   }
 }

@@ -9,75 +9,16 @@
   margin-bottom: 5px;
 }
 
+hr {
+  border-color: #d0d2ce;
+}
+
 @media (max-height: 859px) {
   .amplify-sign-out {
     margin-top: -24px;
     margin-right: 6px;
   }
 }
-
-.tooltip {
-  position: absolute;
-  margin: 8px;
-  padding: 10px;
-  width: 370px;
-  font-size: 1em;
-  z-index: 9;
-  pointer-events: none;
-
-  background-color: white;
-  border: 1px solid black;
-  border-radius: 5px;
-  color: black;
-
-  font-family: "Bitter", monospace;
-
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
-}
-
-.tooltip div {
-  margin-bottom: 5px;
-}
-
-.tooltip .flex-container {
-  display: flex;
-  justify-content: space-between;
-}
-
-.tooltip .flex-container .div {
-  width: 100%;
-}
-
-.tooltip span {
-  font-weight: normal;
-}
-
-.tooltip h5 {
-  font-weight: bold;
-  font-family: "TT Hoves Bold", sans-serif;
-  margin-bottom: 10px;
-  font-size: 1rem;
-}
-
-.tooltip h6 {
-  font-weight: 600;
-  font-family: "TT Hoves", sans-serif;
-  margin-bottom: 0px;
-  font-size: .9rem;
-}
-
-.tooltip table {
-  width: 100%;
-  margin-top: 10px;
-}
-
-.tooltip td {
-  border: .5px solid #d0d2ce;
-  min-width: 30px;
-  padding: 5px;
-  font-size: .89rem;
-}
-
 
 #map {
   position: relative;
@@ -103,4 +44,60 @@
   right: 0px;
 }
 
+.mapboxgl-ctrl-top-left {
+  margin-top: 44px;
+  z-index: 20;
+}
 
+
+
+.detail-button {
+
+  color: white;
+
+  /*right: calc(50% + 100px); !* 350/2 (sidebar width) - 200/2 (button width) = 75px *!*/
+  left: calc(50vw - 100px);
+
+  width: 200px;
+
+  font-size: 20px;
+  padding: 12px;
+
+  z-index: 20;
+
+  font-family: "Bitter", monospace;
+
+  /*background-color: #E74F2A;*/
+  background-color: #00835D;
+
+}
+
+.detail-button.bottom {
+  position: absolute;
+  bottom: 0px;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+
+.detail-button.top {
+  position: absolute;
+  top: 0px;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.detail-button a {
+  text-align: center;
+  font-weight: bold;
+}
+
+.detail-button svg {
+  width: 20px;
+  margin: 12px auto;
+  fill: white;
+}
+
+.detail-button.top svg {
+  transform: scaleY(-1);
+  -webkit-transform: scaleY(-1);
+}

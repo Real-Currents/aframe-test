@@ -1,18 +1,35 @@
-const colors = {
+export const colors = {
     "legend_colors": {
         "bb_bead_categories": {
-            "served_area": "rgba(35, 79, 191, 0.5)",
-            "underserved_area": "rgba(0, 131, 93, 0.5)",
-            "unserved_area": "rgba(255, 228, 115, 0.5)",
-            "not_reported": "rgba(105, 105, 105, 0)",
-            "default": "rgba(105, 105, 105, 0)"
+            "served_area": "rgba(0, 131, 93, 0.4)",
+            "underserved_area": "rgba(255, 228, 115, 0.4)",
+            "unserved_area": "rgba(177, 26, 0, 0.4)",
+            "not_reported": "rgba(0, 0, 0, 0.25)",
+            "default": "rgba(0, 0, 0, 0.25)"
         }
     }
 };
 
+export function getBEADColor(bead_category: string): string {
+    
+    if (bead_category === "Served") {
+        return colors["legend_colors"]["bb_bead_categories"]["served_area"];
+    }
+
+    if (bead_category === "Underserved") {
+        return colors["legend_colors"]["bb_bead_categories"]["underserved_area"];
+    }
+
+    if (bead_category === "Unserved") {
+        return colors["legend_colors"]["bb_bead_categories"]["unserved_area"];
+    }
+
+    return colors["legend_colors"]["bb_bead_categories"]["not_reported"];
+}
+
 export function getFillColor(color_scheme: string): any {  
 
-  if (color_scheme === "BEAD category") {
+  if (color_scheme === "BEAD service level") {
     return [
       "match", ["get", "bead_category"],
       "Served", colors["legend_colors"]["bb_bead_categories"]["served_area"],
@@ -30,6 +47,8 @@ export function getFillColor(color_scheme: string): any {
         ['linear'],
         ["get", "cnt_isp"],
             0,
+            "rgba(0, 0, 0, 0.25)",
+            1,
             "rgba(163, 226, 181, 0.7)",
             2,
             "rgba(125, 179, 149, 0.7)",
@@ -50,9 +69,14 @@ export function getFillColor(color_scheme: string): any {
         'interpolate',
         ['linear'],
         ['get', 'cnt_total_locations'],
-        0, 'rgba(163, 226, 181, 0.7)',
-        1015,
-        'rgba(22, 52, 62, 0.7)'
+        0,
+        "rgba(0, 0, 0, 0.25)",
+        1,
+        'rgba(22, 52, 62, 0.5)',
+        25,
+        'rgba(93, 139, 122, 0.5)',
+        100, // The max value is 1015, but its rare so cap the scale at 100
+        'rgba(163, 226, 181, 0.5)'
     ]
 
   }

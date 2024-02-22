@@ -1,27 +1,67 @@
 .sidebar {
+  position: absolute;
+  right: 0px;
+  height: calc(100vh - 75px);
+  width: 375px;
 
   margin: 0px 0px 0px 0px;
 
-  position: relative;
+  overflow-y: scroll;
+
 
   background-color: white;
-  border-right: 2px solid black;
-
-  padding: 10px 10px 100px 10px;
 
   overflow-y: scroll;
 
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  height: 100vh;
-  width: 350px;
   z-index: 20;
+
+  box-shadow: -5px 0 5px rgba(0, 0, 0, 0.1);
 
 }
 
-.sidebar h4 {
-  margin-top: 15px;
+.sidebar .controls-wrapper {
+  padding: 20px 15px 20px 15px;
+  padding-top: 20px;
+  padding-right: 15px;
+  /*padding-bottom: 200px;*/
+  padding-left: 15px;
+}
+
+.sidebar .link-section {
+
+  color: #FFFFF9;
+
+  display: flex;  
+  justify-content: space-evenly;
+  position: sticky;
+  bottom: 0px;
+
+  width: 100%;
+  background-color: #16343E;
+
+  padding: 5px 0px;
+  box-shadow: 0 -1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar .link-section a {
+  margin-right: 10px;
+  margin-left: 10px;
+  color: #FFFFF9;
+}
+
+.sidebar .fill-selector {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.sidebar .filter-container {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.sidebar .filter-section {
+  margin-top: 10px;
+  margin-bottom: 40px;
 }
 
 .sidebar h5 {
@@ -54,16 +94,10 @@
   margin: 0 auto;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 375px) {
 
   .sidebar {
-
-      width: 100%;
-      top: 36px;
-      height: calc(100vh - 36px);
-
-      border-right: none;
-
+    width: 100%;
   }
 
 }

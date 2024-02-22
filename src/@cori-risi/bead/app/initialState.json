@@ -1,0 +1,46 @@
+{
+  "mapFilters": {
+    "colorVariable": "BEAD service level",
+    "bb_service": {
+      "served": true,
+      "underserved": true,
+      "unserved": true
+    },
+    "isp_count": [ 0, 10 ],
+    "total_locations":  [ 0, 1500 ],
+    "isp_combos": [],
+    "counties": [],
+    "broadband_technology": [],
+    "has_previous_funding": {
+      "yes": true,
+      "no": true
+    },
+    "disableSidebar": true,
+    "showSidebar": false
+  },
+  "mapHover": {
+    "x": 0,
+    "y": 0,
+    "feature": {
+      "properties": {
+        "bead_category": "",
+        "cnt_total_locations": 0,
+        "pct_served": 0.0,
+        "cnt_25_3": 0,
+        "cnt_100_20": 0,
+        "has_coaxial_cable": false,
+        "has_copperwire": false,
+        "has_fiber": false,
+        "has_lbr_wireless": false,
+        "has_licensed_wireless": false,
+        "has_previous_funding": false,
+        "isp_id": ""
+      }
+    }
+  },
+  "mapSelection": {
+    "block_features": [],
+    "isp_tech_features": [],
+    "award_features": []
+  }
+}

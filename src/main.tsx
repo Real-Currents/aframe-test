@@ -8,8 +8,10 @@ import App from './@cori-risi/bead/App.tsx';
 
 import mapboxgl from 'mapbox-gl';
 
-import './@cori-risi/bead/components/styles/CustomAmplifyAuthenticator.css';
+import 'normalize.css';
 import './fonts.css';
+import './@cori-risi/bead/components/styles/images/loading.gif';
+import './@cori-risi/bead/components/styles/CustomAmplifyAuthenticator.css';
 // import { Map } from 'mapbox-gl';
 // import { MapRef } from "react-map-gl";
 

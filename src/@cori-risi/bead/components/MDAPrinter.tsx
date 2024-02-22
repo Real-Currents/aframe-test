@@ -473,7 +473,7 @@ export function MDAPrinter (props: {}) {
                                 <option value="mapbox://styles/ruralinno/cjyhquqe607y91cmjkhg30fa4">CORI Light Map</option>
                                 <option value="mapbox://styles/ruralinno/ck8gnm7b70eo21jp29fvcq1k1">CORI Monochrome Map</option>
                                 <option value="mapbox://styles/ruralinno/ckmxgvwii0tn317o6nt0reg27">CORI Satellite Fade/Zoom</option>
-                                <option value="mapbox://styles/mapbox/light-v9">Mapbox Light</option>
+                                <option value="mapbox://styles/mapbox/light-v10">Mapbox Light</option>
                                 <option value="mapbox://styles/mapbox/streets-v10">Mapbox Streets</option>
                                 {/*<option value="https://tiles.stadiamaps.com/styles/alidade_smooth.json">Stadia Maps Alidade Smooth</option>*/}
                                 {/*<option value="https://tiles.stadiamaps.com/styles/alidade_smooth_dark.json">Stadia Maps Alidade Smooth Dark</option>*/}
