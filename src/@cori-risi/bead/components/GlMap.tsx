@@ -158,8 +158,40 @@ const GlMap: React.FC < GlMapProps > = ({
                             }
                         });
 
+                        const isp_tech_features = result.data.features.filter((f: GeoJSONFeature) => {
+                            const columns = [];
+                            if (f.hasOwnProperty("properties")
+                                && f["properties"].hasOwnProperty("type")
+                                && f["properties"]["type"] === "isp_tech"
+                            ) {
+                                console.log("ISP for this feature:", f);
+                                for (let p in f["properties"]) {
+                                    columns.push(p);
+                                }
+                                console.log(columns);
+                                return true;
+                            }
+                        });
+
+                        const award_features = result.data.features.filter((f: GeoJSONFeature) => {
+                            const columns = [];
+                            if (f.hasOwnProperty("properties")
+                                && f["properties"].hasOwnProperty("type")
+                                && f["properties"]["type"] === "award"
+                            ) {
+                                console.log("Award for this feature:", f);
+                                for (let p in f["properties"]) {
+                                    columns.push(p);
+                                }
+                                console.log(columns);
+                                return true;
+                            }
+                        });
+
                         dispatch(setMapSelection({
-                            block_features
+                            block_features,
+                            isp_tech_features,
+                            award_features
                         }));
                     }
                 })

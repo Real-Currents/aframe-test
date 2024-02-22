@@ -15,6 +15,20 @@ interface IspNameLookup {
 }
 const isp_name_lookup: IspNameLookup = isp_name_dict;
 
+// const dt_columns = [
+//     "Name",
+//     "Company",
+//     "City",
+//     "State"
+// ];
+
+// const dt_data = [
+//     ["Joe James", "Test Corp", "Yonkers", "NY"],
+//     ["John Walsh", "Test Corp", "Hartford", "CT"],
+//     ["Bob Herm", "Test Corp", "Tampa", "FL"],
+//     ["James Houston", "Test Corp", "Dallas", "TX"],
+// ];
+
 const block_columns = [
     "geoid_bl",
     "geoid_tr",
@@ -63,19 +77,42 @@ const block_labels = {
     "has_licensed_wireless": "has_licensed_wireless"
 };
 
-const dt_columns = [
-    "Name",
-    "Company",
-    "City",
-    "State"
+const isp_columns = [
+    "geoid_bl",
+    "new_alias",
+    "isp_id",
+    "technology",
+    "max_down",
+    "max_up",
+    "type"
 ];
 
-const dt_data = [
-    ["Joe James", "Test Corp", "Yonkers", "NY"],
-    ["John Walsh", "Test Corp", "Hartford", "CT"],
-    ["Bob Herm", "Test Corp", "Tampa", "FL"],
-    ["James Houston", "Test Corp", "Dallas", "TX"],
+const isp_labels = {
+};
+
+const award_columns = [
+    "geoid_bl",
+    "applicant",
+    "latency",
+    "tier",
+    "authorized",
+    "default",
+    "geoid_co",
+    "county",
+    "state",
+    "da_numbers",
+    "frn",
+    "sac",
+    "winning_bi",
+    "winning_bidder",
+    "winning_bid_total_in_state",
+    "number_of_locations_in_state",
+    "type",
+    "version"
 ];
+
+const award_labels = {
+};
 
 function getLabel (col: string, labels: any) {
     return (labels.hasOwnProperty(col)) ?
@@ -86,13 +123,12 @@ const isp_name_lookup_rev = swapKeysValues(isp_name_lookup);
 
 export default function DetailedView () {
 
-    const [ block_info, setBlockInfo ] = useState<GeoJSONFeature[]>([]);
-    const [ geoid_bl, setGeoid ] = useState<string>("")
-    const [ isp_names, setISPNames ] = useState<string[]>([]);
-    const [ award_applicants, setAwardApplicants ] = useState<string[]>([]);
-
     const dispatch = useDispatch();
     const mapSelection = useSelector(selectMapSelection);
+
+    const [ block_info, setBlockInfo ] = useState<GeoJSONFeature[]>([]);
+    const [ isp_info, setISPInfo ] = useState<GeoJSONFeature[]>([]);
+    const [ award_info, setAwardInfo ] = useState<GeoJSONFeature[]>([]);
 
     useEffect(() => {
 
@@ -107,64 +143,42 @@ export default function DetailedView () {
                 .filter((d: any) => (d.hasOwnProperty("properties")
                     && d.properties.hasOwnProperty("type")
                     && d.properties["type"] === "geojson"
-                ))
-                // .map((d: any) => {
-                //     let props = [];
-                //     if (d.properties.hasOwnProperty("geoid_bl")) {
-                //         setGeoid(d.properties["geoid_bl"]);
-                //         props.push("geoid_bl: " + d.properties["geoid_bl"]);
-                //     }
-                //     for (let p in d.properties) {
-                //         if (d.properties.hasOwnProperty(p)
-                //             && p !== "geoid_bl"
-                //             && p !== "type"
-                //         ) {
-                //             props.push(p + ": " + d.properties[p]);
-                //         }
-                //     }
-                //     console.log("Block properties detailedInfo:", props);
-                //     return props;
-                // });
+                ));
 
             setBlockInfo(block_info);
         } else {
             setBlockInfo([]);
         }
 
-        // let names: string[] = detailedInfo
-        //     .filter((d: any) => d.properties.hasOwnProperty("type")
-        //         && d.properties["type"] === "isp_tech"
-        //         && d.properties.hasOwnProperty("new_alias")
-        //     )
-        //     .map((d: any) => (d.properties.hasOwnProperty("new_alias")) ?
-        //         // "properties": {
-        //         //     "type": "isp_tech",
-        //         //     "isp_id": "156",
-        //         //     "max_up": 1,
-        //         //     "geoid_bl": "010539698023004",
-        //         //     "max_down": 10,
-        //         //     "new_alias": "AT&T Inc",
-        //         //     "technology": "71"
-        //         // }
-        //         `[${d.properties["geoid_bl"]!}] ${d.properties["new_alias"]!}: ${d.properties["max_down"]!} down / ${d.properties["max_up"]!} up (${d.properties["technology"]!})` :
-        //         "N/A"
-        //     );
-        //
-        // console.log("ISP names in detailedInfo:", names);
-        // setISPNames(names);
+        if (mapSelection.hasOwnProperty("isp_tech_features")
+            && typeof mapSelection.isp_tech_features.filter === "function"
+        ) {
 
-        // let applicants: string[] = detailedInfo
-        //     .filter((d: any) => d.properties.hasOwnProperty("type")
-        //         && d.properties["type"] === "award"
-        //         && d.properties.hasOwnProperty("applicant")
-        //     )
-        //     .map((d: any) => (d.properties.hasOwnProperty("applicant")) ?
-        //         d.properties["applicant"]! :
-        //         "N/A"
-        //     );
-        //
-        // console.log("RDOF applicants in detailedInfo:", applicants);
-        // setAwardApplicants(applicants);
+            const isps = mapSelection.isp_tech_features
+                .filter((d: any) => (d.hasOwnProperty("properties")
+                    && d.properties.hasOwnProperty("type")
+                    && d.properties["type"] === "isp_tech"
+                ));
+
+            setISPInfo(isps);
+        } else {
+            setISPInfo([]);
+        }
+
+        if (mapSelection.hasOwnProperty("award_features")
+            && typeof mapSelection.award_features.filter === "function"
+        ) {
+
+            const awards = mapSelection.award_features
+                .filter((d: any) => (d.hasOwnProperty("properties")
+                    && d.properties.hasOwnProperty("type")
+                    && d.properties["type"] === "award"
+                ));
+
+            setAwardInfo(awards);
+        } else {
+            setAwardInfo([]);
+        }
 
     }, [ mapSelection ]);
 
@@ -194,13 +208,17 @@ export default function DetailedView () {
                 <br />
 
                 <h4 className={"detailed-header"}>Broadband Information for Census Blocks in selection
-                    <button value={"TODO: Cancel"} />
-                    <button value={"TODO: See On Map"} />
                     <span className={"button-group"}>
                         <span className={"button-padding"}>
                             <CustomButton
                                 className={"button"}
-                                onClick={(evt) => dispatch(setMapSelection({"block_features": []}))}
+                                onClick={(evt) => {
+                                    dispatch(setMapSelection({
+                                        "block_features": [],
+                                            "isp_tech_features": [],
+                                            "award_features": []
+                                    }));
+                                }}
                                 variant="outlined">
                                 Cancel
                             </CustomButton>
@@ -300,16 +318,110 @@ export default function DetailedView () {
                 }
                 <br />
 
-                <h5>Internet Service Providers</h5>
-                <div>{
-                    (isp_names.length === 0) ? "N/A" : isp_names.map((n, i) => <p key={`ISP-${i}`}>{n.toString().trim()}</p>)
-                }</div>
+                <h5>Internet Service Providers by Technology</h5>
+                {
+                    (isp_info.length === 0 )?
+                        <p>Select a block on the map to view Broadband info<br /></p> :
+                        <MUIDataTable
+                            columns={isp_columns.map((col) => getLabel(col, isp_labels))}
+                            data={[ ...isp_info
+                                .filter((b: any) => {
+                                    // console.log("b: ", b);
+                                    return !!b && b !== null && b.hasOwnProperty("properties")
+                                })
+                                .map((b: any) => {
+                                    const values: string[] = [];
+
+                                    for (let col of isp_columns) {
+                                        // b.map((i: string) => {
+                                        if (b.properties.hasOwnProperty(col)
+                                            && typeof b.properties[col] !== "undefined"
+                                        ) {
+                                            // const tuple = i.toString().split(":");
+                                            // const key = tuple[0].toString().trim();
+                                            // if (col === key) {
+                                            const value = (b.properties[col] !== null && typeof b.properties[col].toString !== "undefined") ?
+                                                b.properties[col].toString().trim() : "N/A";
+                                            // console.log([col, value]);
+                                            values.push(value);
+                                            // }
+                                        }
+                                        // });
+                                    }
+
+                                    return values;
+                                })
+                            ]}
+                            options={{
+                                "filterType": "checkbox",
+                                "onRowsDelete": (rowsDeleted: { data: { index: number, dataIndex: number }[], lookup: { [dataIndex: number]: boolean } }, newTableData: any[]) => {
+                                    console.log("Delete Row(s):", {
+                                        rowsDeleted: {
+                                            data: rowsDeleted.data,
+                                            lookupIndex: rowsDeleted.lookup
+                                        },
+                                        newTableData: {
+                                            ...newTableData
+                                        }
+                                    });
+                                }
+                            }}
+                            title={"Internet Service Providers"}
+                        />
+                }
                 <br />
 
-                <h5>Applicants Previously Awarded Federal Funding</h5>
-                <div>{
-                    (award_applicants.length === 0) ? "N/A" : award_applicants.map((a, i) => <p key={`Award-${i}`}>{a.toString().trim()}</p>)
-                }</div>
+                <h5>Federal Funding Awards Applicant By Block</h5>
+                {
+                    (award_info.length === 0 )?
+                        <p>Select a block on the map to view Broadband info<br /></p> :
+                        <MUIDataTable
+                            columns={award_columns.map((col) => getLabel(col, award_labels))}
+                            data={[ ...award_info
+                                .filter((b: any) => {
+                                    // console.log("b: ", b);
+                                    return !!b && b !== null && b.hasOwnProperty("properties")
+                                })
+                                .map((b: any) => {
+                                    const values: string[] = [];
+
+                                    for (let col of award_columns) {
+                                        // b.map((i: string) => {
+                                        if (b.properties.hasOwnProperty(col)
+                                            && typeof b.properties[col] !== "undefined"
+                                        ) {
+                                            // const tuple = i.toString().split(":");
+                                            // const key = tuple[0].toString().trim();
+                                            // if (col === key) {
+                                            const value = (b.properties[col] !== null && typeof b.properties[col].toString !== "undefined") ?
+                                                b.properties[col].toString().trim() : "N/A";
+                                            // console.log([col, value]);
+                                            values.push(value);
+                                            // }
+                                        }
+                                        // });
+                                    }
+
+                                    return values;
+                                })
+                            ]}
+                            options={{
+                                "filterType": "checkbox",
+                                "onRowsDelete": (rowsDeleted: { data: { index: number, dataIndex: number }[], lookup: { [dataIndex: number]: boolean } }, newTableData: any[]) => {
+                                    console.log("Delete Row(s):", {
+                                        rowsDeleted: {
+                                            data: rowsDeleted.data,
+                                            lookupIndex: rowsDeleted.lookup
+                                        },
+                                        newTableData: {
+                                            ...newTableData
+                                        }
+                                    });
+                                }
+                            }}
+                            title={"Federal Funding Applicants"}
+                        />
+                }
                 <br />
 
                 <h4 className={"detailed-header"}>Demographics for Census Tracts in selection

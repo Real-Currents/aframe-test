@@ -39,6 +39,8 @@
     }
   },
   "mapSelection": {
-    "block_features": []
+    "block_features": [],
+    "isp_tech_features": [],
+    "award_features": []
   }
 }
