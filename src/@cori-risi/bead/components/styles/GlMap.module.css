@@ -34,8 +34,8 @@
 	position: absolute;
 
 	bottom: 5px;
-	/* 350/2 (sidebar width) - 200/2 (button width) = 75px */
-	right: calc(50% + 100px);
+	/*right: calc(50% + 100px); !* 350/2 (sidebar width) - 200/2 (button width) = 75px *!*/
+	left: calc(50vw - 100px);
 	z-index: 10;
 
 	width: 200px;
@@ -49,10 +49,13 @@
 
     /*background-color: #E74F2A;*/
     background-color: #00835D;
+
+}
+
+.detail-button a {
     text-align: center;
     color: white;
-    font-weight: bold;	
-
+    font-weight: bold;
 }
 
 .detail-button svg {

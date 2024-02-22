@@ -1,5 +1,6 @@
 {
   "mapFilters": {
+    "colorVariable": "BEAD service level",
     "bb_service": {
       "served": true,
       "underserved": true,

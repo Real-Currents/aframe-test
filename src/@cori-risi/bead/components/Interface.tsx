@@ -63,23 +63,26 @@ const Interface = () => {
         <>
         <div className={style['interface']}>
             <Navbar />
-            <div style={{marginTop: "75px"}}>
-            <WelcomeDialog />
-            <div className={style["map-interface"]}>
-                <Sidebar />
-                <GlMap
-                    mapboxToken={MAPBOX_TOKEN}
-                    // filter={filter}
-                    // fillColor={fillColor}
-                    // colorVariable={colorVariable}
-                    // onFocusBlockChange={handleFocusBlockClick}
-                    // onDetailedInfoChange={handleDetailedInfo}
-                    // ispNameLookup={isp_name_lookup_rev}
-                    // isShowing={isDrawerShowing}
-                />
+            <div className={"main-wrapper"} style={{position: "relative", top: 0, marginTop: "75px", minHeight: "calc(100vh - 75px)"}}>
+                <WelcomeDialog />
+                <div className={style["map-interface"]}>
+                    <Sidebar />
+                    <GlMap
+                        mapboxToken={MAPBOX_TOKEN}
+                        // filter={filter}
+                        // fillColor={fillColor}
+                        // colorVariable={colorVariable}
+                        // onFocusBlockChange={handleFocusBlockClick}
+                        // onDetailedInfoChange={handleDetailedInfo}
+                        // ispNameLookup={isp_name_lookup_rev}
+                        // isShowing={isDrawerShowing}
+                    />
+                </div>
             </div>
+            <div className={"info-wrapper"} style={{ pointerEvents: "none", position: "absolute", top: 0, marginTop: "75px", minWidth: "100vw", minHeight: "calc(100vh - 75px)", paddingTop: "calc(100vh - 75px)",  zIndex: 100 }}>
+                {/*<div className={"info-map-viewer"} style={{ pointerEvents: "none", position: "relative", minHeight: "calc(100vh - 75px)", maxHeight: "calc(100vh - 75px)" }}>&nbsp;</div>*/}
+                <DetailedView detailedInfo={detailedInfo} />
             </div>
-            <DetailedView detailedInfo={detailedInfo} />
         </div>
 
         </>

@@ -1,5 +1,5 @@
-import React from 'react';
-import { useSelector } from "react-redux";
+import React, {useContext} from 'react';
+import {useDispatch, useSelector} from "react-redux";
 import { useSpring, animated } from "react-spring";
 
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -12,14 +12,13 @@ import Slider from '@mui/material/Slider';
 
 import InfoTooltip from "./InfoTooltip";
 
-import { selectMapFilters } from "../features";
+import {ApiContext} from "../../contexts/ApiContextProvider";
+import { selectMapFilters, setMapFilters } from "../features";
 import { FilterState } from "../models/index";
+// import { getFillColor } from '../utils/colors';
+import { swapKeysValues } from '../utils/utils';
 
 import style from "./styles/Sidebar.module.css";
-
-import { getFillColor } from '../utils/colors';
-
-import { swapKeysValues } from '../utils/utils';
 
 import broadband_technology_dict from '../data/broadband_technology.json';
 import county_name_geoid from '../data/geoid_co_name_crosswalk.json';
@@ -40,11 +39,30 @@ interface IspIdLookup {
 
 function Sidebar () {
 
-    const filterState: FilterState = useSelector(selectMapFilters);
+  const apiContext = useContext(ApiContext);
+
+  const dispatch = useDispatch();
+
+  const filterState: FilterState = useSelector(selectMapFilters);
 
   const props = useSpring({
     right: filterState.showSidebar ? "0px": "-375px"
-  });  
+  });
+
+  const handleFillColorChange = (event: React.SyntheticEvent, newValue: string) => {
+    if (typeof newValue === "string") {
+      const mapFiltersUpdate: FilterState = {
+        "colorVariable": newValue
+      }
+
+      console.log("Filter update:", mapFiltersUpdate);
+
+      // onFillColorChange(getFillColor(newValue));
+      // onColorVariableChange(newValue);
+
+      dispatch(setMapFilters(mapFiltersUpdate));
+    }
+  };
 
   const handleISPChange = (event: Event, newValue: number | number[]) => {
     // let slider_vals: number[] = newValue as number[];
@@ -69,13 +87,6 @@ function Sidebar () {
     //   onFilterChange({...filter, has_previous_funding: {...filter.has_previous_funding, [event.target.name]: event.target.checked}});
     // }
   }
-
-  function handleFillColorChange(event: React.SyntheticEvent, newValue: string): void {
-    // if (typeof newValue === "string") {
-    //   onFillColorChange(getFillColor(newValue));
-    //   onColorVariableChange(newValue);
-    // }
-  };
 
   function handleBroadbandTechnologyChange(event: any, newValue: string[]): void {
     // if (Array.isArray(newValue) && newValue.every((item) => typeof item === 'string')) {

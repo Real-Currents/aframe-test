@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { format } from "d3-format";
 import { getBEADColor } from "../utils/colors";
 import { selectMapFilters, setMapFilters } from "../features";
-import {FilterState, HoverInfoState} from "../models/index";
+import { FilterState, HoverInfoState } from "../models/index";
 import { selectMapHover } from "../features";
 import style from "./styles/GlMap.module.css";
 import {

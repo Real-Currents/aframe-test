@@ -78,15 +78,15 @@ const GlMap: React.FC < GlMapProps > = ({
 
     const dispatch = useDispatch();
 
+    const filterState: FilterState = useSelector(selectMapFilters);
+
     const mapRef: MutableRefObject<MapRef | null> = useRef < MapRef | null > (null);
 
     const MIN_ZOOM_LEVEL = 9;
 
     const selection_color = '#00835D';
 
-    const filterState: FilterState = useSelector(selectMapFilters);
-    const [fillColor, setFillColor] = useState < any[] > (getFillColor("BEAD service level"));
-    const [colorVariable, setColorVariable] = useState < string > ("BEAD service level");
+    const [fillColor, setFillColor] = useState < any[] > (getFillColor(filterState.colorVariable));
     const isShowing = false;
 
     const { longitude, latitude, zoom } = fitBounds({
@@ -247,7 +247,7 @@ const GlMap: React.FC < GlMapProps > = ({
         if (event.hasOwnProperty("viewState") && event["viewState"].hasOwnProperty("zoom")) {
             setMapZoom(event.viewState!.zoom!);
 
-            const mapFiltersUpdate = {
+            const mapFiltersUpdate: FilterState = {
                 "disableSidebar": (event.viewState!.zoom! < MIN_ZOOM_LEVEL)
             };
 
@@ -348,6 +348,10 @@ const GlMap: React.FC < GlMapProps > = ({
 
         setLayerFilter(new_filter);
 
+        if (filterState.hasOwnProperty("colorVariable")) {
+            setFillColor(getFillColor(filterState.colorVariable));
+        }
+
     }, [filterState]);
 
 
@@ -379,14 +383,7 @@ const GlMap: React.FC < GlMapProps > = ({
     return ( /*Wait for ApiToken*/
         (apiContext.hasOwnProperty("token") && apiContext.token !== null) ? (
             <div className={style["map-wrapper"]}>
-                {selected_features.length > 0 && (
-                  <a href="#detail">
-                    <button className={style["detail-button"]}>
-                        Detailed View
-                        <svg viewBox="0 0 22 14" aria-hidden="true"><polygon points="18.8743237 0 22 3.62676411 10.6828079 14 0 3.57495046 3.2339044 0.0505492411 10.7824379 7.41694926"></polygon></svg>
-                    </button>
-                  </a>
-                )}
+
                 <Map
                     ref={mapRef}
                     initialViewState={{
@@ -457,11 +454,21 @@ const GlMap: React.FC < GlMapProps > = ({
                         <animated.div style={props} className={style["zoom-message"]}>Zoom in further to view and filter data</animated.div>
                     )}
                     {mapZoom >= MIN_ZOOM_LEVEL && (
-                        <MapLegend title={colorVariable} category={fillColor} />
+                        <MapLegend title={filterState.colorVariable} category={fillColor} />
                     )}
 
 
                 </Map>
+
+                {selected_features.length > 0 && (
+                    <button className={style["detail-button"]}>
+                        <a href="#detail">
+                            Detailed View
+                            <svg viewBox="0 0 22 14" aria-hidden="true"><polygon points="18.8743237 0 22 3.62676411 10.6828079 14 0 3.57495046 3.2339044 0.0505492411 10.7824379 7.41694926"></polygon></svg>
+                        </a>
+                    </button>
+                )}
+
             </div>
         ) :
             <div className={style["map-wrapper"]}></div>
