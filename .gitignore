@@ -18,9 +18,11 @@ dist-ssr
 !.vscode/extensions.json
 .idea
 .DS_Store
+*.bak
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
 .Rproj.user
+src/@cori-risi/mui-datatables/*

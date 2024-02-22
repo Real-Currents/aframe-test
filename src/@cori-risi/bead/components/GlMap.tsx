@@ -3,7 +3,7 @@ import IntrinsicAttributes = React.JSX.IntrinsicAttributes;
 import { fitBounds } from 'viewport-mercator-project';
 import { useDispatch, useSelector } from "react-redux";
 import { useSpring, animated } from "react-spring";
-import { format } from 'd3-format';
+import { AxiosInstance } from "axios";
 import { Map as MapboxMap } from 'mapbox-gl';
 import { GeoJSONFeature } from "maplibre-gl";
 import Map, {
@@ -17,12 +17,7 @@ import Map, {
     ScaleControl
 } from 'react-map-gl';
 
-import { AxiosInstance } from "axios";
 import { ApiContext } from "../../contexts/ApiContextProvider";
-
-import { parseIspId, formatBroadbandTechnology } from '../utils/utils';
-import { getBEADColor } from '../utils/colors';
-
 import MapLegend from './MapLegend';
 import style from "./styles/GlMap.module.css";
 import "mapbox-gl/dist/mapbox-gl.css";
@@ -43,7 +38,7 @@ import {
 import { FilterState } from "../models/index";
 import { HoverInfo } from "./HoverInfo";
 
-import {getBEADColor, getFillColor} from '../utils/colors';
+import { getBEADColor, getFillColor } from '../utils/colors';
 import {
     formatBroadbandTechnology,
     parseIspId, swapKeysValues
@@ -90,8 +85,8 @@ const GlMap: React.FC < GlMapProps > = ({
     const selection_color = '#00835D';
 
     const filterState: FilterState = useSelector(selectMapFilters);
-    const [fillColor, setFillColor] = useState < any[] > (getFillColor("BEAD category"));
-    const [colorVariable, setColorVariable] = useState < string > ("BEAD category");
+    const [fillColor, setFillColor] = useState < any[] > (getFillColor("BEAD service level"));
+    const [colorVariable, setColorVariable] = useState < string > ("BEAD service level");
     const isShowing = false;
 
     const { longitude, latitude, zoom } = fitBounds({
@@ -423,53 +418,6 @@ const GlMap: React.FC < GlMapProps > = ({
                           {...layerAttributes}
                           filter={layerFilter}
                         />
-                        {hoverInfo && (
-                        <div className={style["tooltip"]} style={{left: hoverInfo.x, top: hoverInfo.y}}>
-                            <h5>BEAD service level: <span className={style["bead-category"]} style={{textDecorationColor: getBEADColor(hoverInfo.feature.properties.bead_category)}}>{hoverInfo.feature.properties.bead_category}</span></h5>
-                            <div>
-                                <div>
-                                    <p><b>Broadband access</b></p>
-                                    <table>
-                                        <tbody>
-                                            <tr>
-                                                <td>Locations</td>
-                                                <td>{hoverInfo.feature.properties.cnt_total_locations}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>{"Pct. unserved (<25/3)"}</td>
-                                                <td>{percentFormat(1-hoverInfo.feature.properties.pct_served)}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>{"Pct un- and underserved (<100/20) "}</td>
-                                                <td>{percentFormat(hoverInfo.feature.properties.cnt_25_3 / hoverInfo.feature.properties.cnt_total_locations)}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>{"Pct served (>100/20)"}</td>
-                                                <td>{percentFormat(hoverInfo.feature.properties.cnt_100_20 / hoverInfo.feature.properties.cnt_total_locations)}</td>
-                                            </tr>   
-                                        </tbody>                             
-                                    </table>
-                                </div>
-                                <div>
-                                    <p><b>Broadband technologies</b>: {formatBroadbandTechnology(
-                                            [
-                                                hoverInfo.feature.properties.has_coaxial_cable,
-                                                hoverInfo.feature.properties.has_copperwire,
-                                                hoverInfo.feature.properties.has_fiber,
-                                                hoverInfo.feature.properties.has_lbr_wireless,
-                                                hoverInfo.feature.properties.has_licensed_wireless
-                                            ]
-                                        )}
-                                    </p>
-                                    <p><b>Previous federal funding?</b> {hoverInfo.feature.properties.has_previous_funding? "Yes": "No"}</p>
-                                    <p><b>Internet service providers:</b> {hoverInfo.feature.properties.combo_isp_id ? parseIspId(hoverInfo.feature.properties.isp_id, ispNameLookup): "N/A"}</p>
-                                </div>
-                                <div>
-                                    <p><em>Click to view detailed census block information</em></p>
-                                </div>
-                          </div>
-                        </div>
-                        )}
                     </Source>
                     {/*{(selected_features.length > 0) ?*/}
                         <Source type="geojson" id="bead_block" data={{

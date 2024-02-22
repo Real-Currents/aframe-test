@@ -36,11 +36,11 @@ export default function WelcomeModal() {
 					Broadband data</a> per-block, as well as other info for a selection of blocks.
 				</p>
 				<p className={style["info-chunk"]}>
-					<b>Broadband Service level terms and criteria used here are defined by the Broadband Equity, Access, and Deployment (BEAD) program</b><br/>
+					<b>Broadband service level terms and criteria used here are defined by the Broadband Equity, Access, and Deployment (BEAD) program</b><br/>
 					Click <a href="https://broadbandusa.ntia.doc.gov/funding-programs/broadband-equity-access-and-deployment-bead-program" target="_blank">here</a> to learn more about BEAD.
 				</p>
 				<p className={style["info-chunk"]}>
-					<b>You can filter census blocks using the sidebar</b><br/>
+					<b>You can filter Census Blocks using the sidebar</b><br/>
 					Use the controls on the right to focus on specific areas.
 				</p>
 				<p className={style["info-chunk"]}>
