@@ -2,22 +2,44 @@
 
   margin: 0px 0px 0px 0px;
 
-  position: relative;
-
   background-color: white;
-  border-right: 2px solid black;
-
-  padding: 20px 15px 200px 15px;
 
   overflow-y: scroll;
 
   position: absolute;
-/*  top: 0px;*/
   right: 0px;
   height: calc(100vh - 75px);
   width: 375px;
   z-index: 20;
 
+  box-shadow: -5px 0 5px rgba(0, 0, 0, 0.1);
+
+}
+
+.sidebar .controls-wrapper {
+  padding: 20px 15px 20px 15px;
+}
+
+.sidebar .link-section {
+
+  color: #FFFFF9;
+
+  display: flex;  
+  justify-content: space-evenly;
+  position: sticky;
+  bottom: 0px;
+
+  width: 100%;
+  background-color: #16343E;
+
+  padding: 5px 0px;
+  box-shadow: 0 -1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar .link-section a {
+  margin-right: 10px;
+  margin-left: 10px;
+  color: #FFFFF9;
 }
 
 .sidebar .fill-selector {

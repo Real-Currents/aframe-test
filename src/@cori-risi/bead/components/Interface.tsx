@@ -4,6 +4,7 @@ import GlMap from './GlMap';
 import Sidebar from './Sidebar';
 import DetailedView from './DetailedView';
 import Navbar from './Navbar';
+import WelcomeDialog from './WelcomeDialog';
 
 import style from "./styles/Interface.module.css";
 
@@ -63,12 +64,12 @@ const Interface = () => {
         }
     });
 
-    const [fillColor, setFillColor] = useState < any[] > (getFillColor("BEAD category"));
+    const [fillColor, setFillColor] = useState < any[] > (getFillColor("BEAD service level"));
     const [multipleISP, setMultipleISP] = useState < string > ("");
     const [isDrawerShowing, setDrawerShowing] = useState < boolean > (true);
     const [focusBlock, setFocusBlock] = useState < string > ("");
     const [detailedInfo, setDetailedInfo] = useState < any[] > ([]);
-    const [colorVariable, setColorVariable] = useState < string > ("BEAD category");
+    const [colorVariable, setColorVariable] = useState < string > ("BEAD service level");
 
     const handleColorVariableChange = (newColorVariable: string) => {
         setColorVariable(newColorVariable);
@@ -104,6 +105,7 @@ const Interface = () => {
                 isDrawerShowing={isDrawerShowing}
             />
             <div style={{marginTop: "75px"}}>
+            <WelcomeDialog />
             <div className={style["map-interface"]}>
                 <Sidebar<FilterProps> 
                     onFilterChange={handleFilterChange} 
