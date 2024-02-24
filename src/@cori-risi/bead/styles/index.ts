@@ -180,10 +180,10 @@ export const contourStyle: IntrinsicAttributes & LayerProps = {
             ],
             0,
             0,
-            7,
+            11,
             0.05,
             22,
-            0.5
+            0.25
         ],
         "line-width": 1
     }
