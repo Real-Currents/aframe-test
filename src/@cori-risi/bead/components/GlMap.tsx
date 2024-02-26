@@ -438,9 +438,8 @@ const GlMap: React.FC < GlMapProps > = ({
                       longitude: longitude,
                       zoom: zoom
                     }}
-                    // mapStyle={mapboxStyle}
-                    // mapStyle="mapbox://styles/mapbox/light-v9"
-                    mapStyle="mapbox://styles/ruralinno/cl010e7b7001p15pe3l0306hv"
+                    // mapStyle="mapbox://styles/ruralinno/cl010e7b7001p15pe3l0306hv"
+                    mapStyle={mapboxStyle}
                     mapboxAccessToken={mapboxToken}
                     interactiveLayerIds={
                         (bead_dev.layers !== null && bead_dev.layers[0].hasOwnProperty('id') ) ? [
@@ -468,6 +467,7 @@ const GlMap: React.FC < GlMapProps > = ({
                             />
                         {/*)}*/}
                     </Source>
+
                     {/*{(selected_features.length > 0) ?*/}
                         <Source type="geojson" id="bead_block" data={{
                             "type": "FeatureCollection",
@@ -479,7 +479,37 @@ const GlMap: React.FC < GlMapProps > = ({
                                 type: "fill",
                                 paint: {
                                     "fill-color": "#ffffff",
-                                    "fill-opacity": 0.25
+                                    "fill-opacity": 0.05
+                                }
+                            }} />
+                            <Layer {...{
+                                id: "bead_block-fill-pattern",
+                                // source: "bead_block",
+                                "type": "fill",
+                                "source": "composite",
+                                "minzoom": 5,
+                                "paint": {
+                                    // "fill-color": "hsla(303, 73%, 74%, 0.66)",
+                                    "fill-color": "#FFFFFF",
+                                    "fill-opacity": 0.25,
+                                    // "fill-pattern": "circle-1"
+                                    "fill-pattern": [
+                                        "step",
+                                        // ["get","cnt_isp"],
+                                        ['zoom'],
+                                        "circle-4", 5,
+                                        "circle-3", 6,
+                                        "circle-3", 7,
+                                        "circle-3", 8,
+                                        "circle-3", 9,
+                                        "circle-2", 10,
+                                        "circle-2", 11,
+                                        "circle-2", 12,
+                                        "circle-2", 13,
+                                        "circle-2", 14,
+                                        "circle-2", 15,
+                                        "circle-1"
+                                    ]
                                 }
                             }} />
                             <Layer {...{
