@@ -1,8 +1,7 @@
 import React from "react";
-import { LayerProps, SourceProps, MapStyle } from "react-map-gl";
 import IntrinsicAttributes = React.JSX.IntrinsicAttributes;
+import { LayerProps, SourceProps, MapStyle } from "react-map-gl";
 import { colors } from '../utils/colors';
-// import MAP_STYLE from './mapbox_style.json';
 import MAP_STYLE from '../../mapbox/styles/ruralinno/cl010e7b7001p15pe3l0306hv/style.json';
 
 // For more information on data-driven styles, see https://www.mapbox.com/help/gl-dds-ref/
@@ -67,12 +66,15 @@ export const bead_dev: MapboxSourceLayerStyles = {
                     ["zoom"],
                     0, 0,
                     8, 0.01,
-                    9, 0.25,
+                    9, 0.05,
+                    9.01, 0.25,
                     10, 0.5,
                     11, 0.75,
-                    12, 1.0,
-                    17, 1.0,
-                    18, 0.05
+                    12, 0.75,
+                    17, 0.75,
+                    18, 0.5,
+                    19, 0.25,
+                    20, 0.05
                 ]
             },
         },
@@ -93,6 +95,76 @@ bead_dev.layers.push({
  });
 //   "Property 'generateId' does not exist on type 'IntrinsicAttributes & SourceProps'."
 (bead_dev.sources[0] as any) !["generateId"] = true;
+
+export const bead_merged_tr: MapboxSourceLayerStyles = {
+    "sources": [{
+        "id": "bead_merged_tr",
+        "type": "vector",
+        "url": "mapbox://ruralinno.new_england_eligibility_tr"
+    }],
+    "layers": [{
+        "id": "bead_merged_tr.style",
+        "source": "bead_merged_tr",
+        "source-layer": "proj_beadnew_england_eligibility_tr",
+        "type": "fill",
+        "paint": {
+            // "fill-color": "#0080ff", // blue color fill
+            "fill-color": [
+                'case',
+                ['boolean', ['feature-state', 'hover'], false],
+                'rgba(255, 255, 255, 0.5)',
+                [
+                    "match", ["get", "bead_category"], // "bl_100_20_area"],
+                    // "Served", "rgba(19, 3, 50, 0.5)",
+                    // "Underserved", "rgba(118, 88, 162, 0.75)",
+                    // "Unserved", "rgba(203, 190, 220, 0.85)",
+                    // "Not Reported", "rgba(105, 105, 105, 0)",
+                    ...((obj) => {
+                        const array = [];
+                        for (let k in obj) {
+                            if (obj.hasOwnProperty(k)) {
+                                let category = "Not Reported";
+                                if (k === "served_area") {
+                                    category = ("Served");
+                                } else if (k === "underserved_area") {
+                                    category = ("Underserved");
+                                } else if (k === "unserved_area") {
+                                    category = ("Unserved");
+                                } else if (k === "not_reported") {
+                                    category = ("Not Reported");
+                                } else break;
+                                array.push(category);
+                                array.push(obj[k]);
+                                console.log(`${category}:  ${obj[k]}`);
+                            }
+                        }
+                        return array;
+                    })(colors["legend_colors"]["bb_bead_categories"]),
+                    // "rgba(105, 105, 105, 0)",
+                    colors["legend_colors"]["bb_bead_categories"]["default"]
+                ]
+            ],
+            // "fill-opacity": 1.0,
+            "fill-opacity": [
+                "interpolate", ["linear"],
+                ["zoom"],
+                0, 0.0,
+                3, 0.0,
+                4, 0.05,
+                5, 0.5,
+                7, 0.75,
+                9, 0.75,
+                9.01, 0.05,
+                10, 0.0,
+            ]
+        },
+    }]
+};
+
+// Work-around:
+//   "Property 'generateId' does not exist on type 'IntrinsicAttributes & SourceProps'."
+(bead_merged_tr.sources[0] as any) !["generateId"] = true;
+
 
 export const bb_tr_100_20: MapboxSourceLayerStyles = {
     "sources": [{

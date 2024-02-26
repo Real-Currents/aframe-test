@@ -23,7 +23,7 @@ import style from "./styles/GlMap.module.css";
 import "mapbox-gl/dist/mapbox-gl.css";
 import {
     bead_dev,
-    // bb_tr_100_20,
+    bead_merged_tr,
     contourStyle,
     mapboxStyle
 } from '../styles';
@@ -51,6 +51,10 @@ import broadband_technology_dict from './../data/broadband_technology.json';
 import isp_name_dict from "../data/isp_name_lookup_rev.json";
 
 const broadband_technology: Record<string, string> = broadband_technology_dict;
+
+const bead_merged_tr_layer = {
+    ...bead_merged_tr.layers[0]
+};
 
 type GlMapProps = {
     mapboxToken: string
@@ -424,7 +428,7 @@ const GlMap: React.FC < GlMapProps > = ({
             ...layerAttributes
         };
 
-        (newLayerAttributes as any) !["paint"] = {
+        (newLayerAttributes as any)!["paint"] = {
             "fill-color": fillColor
         };
 
@@ -482,6 +486,10 @@ const GlMap: React.FC < GlMapProps > = ({
                               filter={layerFilter}
                             />
                         {/*)}*/}
+                    </Source>
+
+                    <Source {...bead_merged_tr.sources[0]} >
+                        <Layer {...bead_merged_tr_layer} />
                     </Source>
 
                     {/*{(selected_features.length > 0) ?*/}
@@ -552,9 +560,10 @@ const GlMap: React.FC < GlMapProps > = ({
                     {mapZoom < MIN_ZOOM_LEVEL && (
                         <animated.div style={props} className={style["zoom-message"]}>Zoom in further to view and filter data</animated.div>
                     )}
-                    {mapZoom >= MIN_ZOOM_LEVEL && (
+
+                    {/*{mapZoom >= MIN_ZOOM_LEVEL && (*/}
                         <MapLegend title={filterState.colorVariable} category={fillColor} />
-                    )}
+                    {/*)}*/}
 
 
                 </Map>
