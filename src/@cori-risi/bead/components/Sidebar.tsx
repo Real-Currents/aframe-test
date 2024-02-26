@@ -9,6 +9,8 @@ import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import Slider from '@mui/material/Slider';
+import Switch from '@mui/material/Switch';
+import Typography from '@mui/material/Typography';
 
 import InfoTooltip from "./InfoTooltip";
 
@@ -167,6 +169,11 @@ function Sidebar () {
     }));
   };
 
+  const handleExcludeDSLChange = () => {
+    const newExcludeDSL = !filterState.excludeDSL;
+    dispatch(setMapFilters({ excludeDSL: newExcludeDSL }));
+  };
+
   return (
     <>
         <animated.div style={props} className={style["sidebar"]}>
@@ -237,6 +244,20 @@ function Sidebar () {
                     disabled={filterState.disableSidebar}
                   />
                 </FormGroup>
+              </div>
+              <div className={style["filter-section"]}>
+                <div className={style["filter-header"]}>
+                  <h5>Exclude DSL</h5>
+                </div>
+                <div className={style["switch"]}>
+                  <Typography>Off</Typography>
+                  <Switch 
+                    checked={filterState.excludeDSL}
+                    onChange={handleExcludeDSLChange}
+                    inputProps={{ 'aria-label': 'DSL toggle' }} 
+                  />
+                  <Typography>On</Typography>
+                </div>
               </div>
               <div className={style["filter-section"]}>
                 <div className={style["filter-header"]}>

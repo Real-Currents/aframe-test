@@ -16,7 +16,8 @@
       "no": true
     },
     "disableSidebar": true,
-    "showSidebar": false
+    "showSidebar": false,
+    "excludeDSL": false
   },
   "mapHover": {
     "x": 0,

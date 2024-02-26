@@ -94,6 +94,14 @@
   margin: 0 auto;
 }
 
+.sidebar .switch {
+  display: flex;
+}
+
+.sidebar .switch p {
+  line-height: 38px;
+}
+
 @media (max-width: 375px) {
 
   .sidebar {

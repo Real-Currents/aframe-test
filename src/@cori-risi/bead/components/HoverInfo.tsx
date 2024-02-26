@@ -27,25 +27,24 @@ export function HoverInfo () {
     const hoverInfo: HoverInfoState = useSelector(selectMapHover);
     const ispNameLookup =  swapKeysValues(isp_name_dict);
 
-    const getPctUnserved = (properties: any) => {
-        // console.log("pct_served:", properties.pct_served);
-        // console.log("Pct. unserved (<25/3):", (1-properties.pct_served));
-        return (!!properties.pct_served || properties.pct_served === 0) ?
-            percentFormat((1-properties.pct_served)) : "N/A";
+    // NOTE: I need to double-check all this logic
+    const getPctUnserved = (properties: any, excludeDSL: boolean) => {
+        let numerator: number = excludeDSL? properties.cnt_100_20_dsl_excluded: properties.cnt_100_20;
+        // Take the inverse of the Percent Served
+        let formatted_text: string = percentFormat(1 - (numerator / properties.cnt_total_locations));
+        return formatted_text;
     };
 
-    const getPctUnderserved = (properties: any) => {
-        // console.log("cnt_25_3:", properties.cnt_25_3);
-        // console.log("cnt_total_locations:", properties.cnt_total_locations);
-        // console.log("Pct un- and underserved (<100/20):", properties.cnt_25_3 / properties.cnt_total_locations);
-        return percentFormat(properties.cnt_25_3 / properties.cnt_total_locations);
+    const getPctUnAndUnderserved = (properties: any, excludeDSL: boolean) => {
+        let numerator: number = excludeDSL? properties.cnt_underserved_dsl_excluded: properties.cnt_underserved;
+        let formatted_text: string = percentFormat(numerator / properties.cnt_total_locations);
+        return formatted_text;
     };
 
-    const getPctServed = (properties: any) => {
-        // console.log("cnt_100_20:", properties.cnt_100_20);
-        // console.log("cnt_total_locations:", properties.cnt_total_locations);
-        // console.log("Pct served (>100/20):", properties.cnt_100_20 / properties.cnt_total_locations);
-        return percentFormat(properties.cnt_100_20 / properties.cnt_total_locations);
+    const getPctServed = (properties: any, excludeDSL: boolean) => {
+        let numerator: number = excludeDSL? properties.cnt_100_20_dsl_excluded: properties.cnt_100_20;
+        let formatted_text: string = percentFormat(numerator / properties.cnt_total_locations);
+        return formatted_text;
     };
 
     // useEffect(() => {
@@ -66,7 +65,7 @@ export function HoverInfo () {
                 <p><span>Census Block ID</span>: {hoverInfo.feature.properties.geoid_bl}</p>
                 <div>
                     <div>
-                        <p><b>Broadband access</b></p>
+                        <p><b>Broadband access</b> {filterState.excludeDSL? <em>(excluding DSL)</em>: ""}</p>
                         <table>
                             <tbody>
                             <tr>
@@ -75,15 +74,15 @@ export function HoverInfo () {
                             </tr>
                             <tr>
                                 <td>{"Pct. unserved (<25/3)"}</td>
-                                <td>{getPctUnserved(hoverInfo.feature.properties)}</td>
+                                <td>{getPctUnserved(hoverInfo.feature.properties, filterState.excludeDSL)}</td>
                             </tr>
                             <tr>
                                 <td>{"Pct un- and underserved (<100/20)"}</td>
-                                <td>{getPctUnderserved(hoverInfo.feature.properties)}</td>
+                                <td>{getPctUnAndUnderserved(hoverInfo.feature.properties, filterState.excludeDSL)}</td>
                             </tr>
                             <tr>
                                 <td>{"Pct served (>100/20)"}</td>
-                                <td>{getPctServed(hoverInfo.feature.properties)}</td>
+                                <td>{getPctServed(hoverInfo.feature.properties, filterState.excludeDSL)}</td>
                             </tr>
                             </tbody>
                         </table>

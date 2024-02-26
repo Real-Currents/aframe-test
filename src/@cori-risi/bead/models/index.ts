@@ -21,6 +21,7 @@ export interface FilterState {
     };
     disableSidebar: boolean;
     showSidebar: boolean;
+    excludeDSL: boolean;
 }
 
 export interface HoverInfoState {
