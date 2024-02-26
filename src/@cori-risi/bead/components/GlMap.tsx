@@ -89,7 +89,7 @@ const GlMap: React.FC < GlMapProps > = ({
 
     const selection_color = '#00835D';
 
-    const [fillColor, setFillColor] = useState < any[] > (getFillColor(filterState.colorVariable));
+    const [fillColor, setFillColor] = useState < any[] > (getFillColor(filterState.colorVariable, filterState.excludeDSL));
     const isShowing = false;
 
     const { longitude, latitude, zoom } = fitBounds({
@@ -396,7 +396,7 @@ const GlMap: React.FC < GlMapProps > = ({
         setLayerFilter(new_filter);
 
         if (filterState.hasOwnProperty("colorVariable")) {
-            setFillColor(getFillColor(filterState.colorVariable));
+            setFillColor(getFillColor(filterState.colorVariable, filterState.excludeDSL));
         }
 
     }, [filterState]);
