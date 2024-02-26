@@ -41,6 +41,7 @@
   "mapSelection": {
     "block_features": [],
     "isp_tech_features": [],
-    "award_features": []
+    "award_features": [],
+    "acs_features": []
   }
 }
