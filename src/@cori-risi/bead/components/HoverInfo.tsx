@@ -27,7 +27,7 @@ export function HoverInfo () {
     const hoverInfo: HoverInfoState = useSelector(selectMapHover);
     const ispNameLookup =  swapKeysValues(isp_name_dict);
 
-    const getPctUnserved = (properties: any, excludeDSL: boolean) => {
+    const getPctUnserved = (properties: any) => {
         let formatted_text: string = percentFormat(1 - (properties.cnt_25_3 / properties.cnt_total_locations));
         return formatted_text;
     };
@@ -71,7 +71,7 @@ export function HoverInfo () {
                             </tr>
                             <tr>
                                 <td>{"Pct. unserved (<25/3)"}</td>
-                                <td>{getPctUnserved(hoverInfo.feature.properties, filterState.excludeDSL)}</td>
+                                <td>{getPctUnserved(hoverInfo.feature.properties)}</td>
                             </tr>
                             <tr>
                                 <td>{"Pct un- and underserved (<100/20)"}</td>
