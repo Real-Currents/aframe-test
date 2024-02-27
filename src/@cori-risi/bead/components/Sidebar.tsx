@@ -153,12 +153,19 @@ function Sidebar () {
 
   const handleISPFootprintChange = (event: any, newValue: string): void => {
 
+    if (newValue === null) {
+      dispatch(setMapFilters({
+        isp_footprint: ""
+      }));
+    }
+
     let isp_id = isp_name_lookup[newValue];
     if (typeof isp_id === "string") {
       dispatch(setMapFilters({
         isp_footprint: isp_id
       }));
     }
+
   };
 
   const handleCountiesChange = (event: any, newValue: any) => {
