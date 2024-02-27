@@ -22,6 +22,7 @@ export interface FilterState {
     disableSidebar: boolean;
     showSidebar: boolean;
     excludeDSL: boolean;
+    isp_footprint: string
 }
 
 export interface HoverInfoState {

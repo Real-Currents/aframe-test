@@ -151,6 +151,16 @@ function Sidebar () {
     }));
   };
 
+  const handleISPFootprintChange = (event: any, newValue: string): void => {
+
+    let isp_id = isp_name_lookup[newValue];
+    if (typeof isp_id === "string") {
+      dispatch(setMapFilters({
+        isp_footprint: isp_id
+      }));
+    }
+  };
+
   const handleCountiesChange = (event: any, newValue: any) => {
 
     let valid_geoid_co: string[] = [];
@@ -200,7 +210,7 @@ function Sidebar () {
             </div>
             <hr />
             <div className={style["filter-container"]}>
-              <h4>Filters</h4>
+              <h4>Controls</h4>
               <div className={style["filter-section"]}>
                 <div className={style["filter-header"]}>
                   <h5>BEAD service level</h5>
@@ -358,6 +368,25 @@ function Sidebar () {
                       variant="standard"
                       label="Filter by ISP"
                       placeholder="Filter by ISP"
+                    />
+                  )}
+                  disabled={filterState.disableSidebar}
+                />
+              </div>
+              <div className={style["filter-section"]}>
+                <div className={style["filter-header"]}>
+                  <h5>Internet service provider footprint</h5>
+                  <InfoTooltip text={"Show the footprint for a given ISP"}/>
+                </div>
+                <Autocomplete
+                  options={Object.keys(isp_name_lookup)}
+                  onChange={handleISPFootprintChange}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      variant="standard"
+                      label="Display ISP footprint"
+                      placeholder="Display ISP footprint"
                     />
                   )}
                   disabled={filterState.disableSidebar}

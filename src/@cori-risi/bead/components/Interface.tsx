@@ -31,12 +31,12 @@ const maxWidthTrigger: number = 600;
 
 const Interface = () => {
 
-    const [fillColor, setFillColor] = useState < any[] > (getFillColor("BEAD service level"));
     const [multipleISP, setMultipleISP] = useState < string > ("");
     const [isDrawerShowing, setDrawerShowing] = useState < boolean > (false);
     const [focusBlock, setFocusBlock] = useState < string > ("");
     const [detailedInfo, setDetailedInfo] = useState < any[] > ([]);
     const [colorVariable, setColorVariable] = useState < string > ("BEAD service level");
+    const [fillColor, setFillColor] = useState < any[] > (getFillColor("BEAD service level", false));
 
     const handleColorVariableChange = (newColorVariable: string) => {
         setColorVariable(newColorVariable);
