@@ -17,6 +17,23 @@ export type MapboxSourceLayerStyles = {
     layers: [(IntrinsicAttributes & LayerProps)];
 };
 
+export const isp_footprint: MapboxSourceLayerStyles = {
+    "sources": [{
+        "id": "isp_footprint",
+        "type": "vector",
+        "url": "mapbox://ruralinno.new_england_isp"
+    }],
+    "layers": [{
+        "id": "isp_footprint.style",
+        "source": "proj_beadnew_england_isp",
+        "source-layer": "proj_beadnew_england_isp",
+        "type": "line",
+        "paint": {
+            "line-color": "#234FBF",
+            "line-width": 3
+        }
+    }]
+};
 
 export const bead_dev: MapboxSourceLayerStyles = {
     "sources": [{

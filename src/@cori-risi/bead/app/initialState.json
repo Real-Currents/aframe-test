@@ -17,7 +17,8 @@
     },
     "disableSidebar": true,
     "showSidebar": false,
-    "excludeDSL": false
+    "excludeDSL": false,
+    "isp_footprint": ""
   },
   "mapHover": {
     "x": 0,

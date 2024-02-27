@@ -27,16 +27,13 @@ export function HoverInfo () {
     const hoverInfo: HoverInfoState = useSelector(selectMapHover);
     const ispNameLookup =  swapKeysValues(isp_name_dict);
 
-    // NOTE: I need to double-check all this logic
-    const getPctUnserved = (properties: any, excludeDSL: boolean) => {
-        let numerator: number = excludeDSL? properties.cnt_100_20_dsl_excluded: properties.cnt_100_20;
-        // Take the inverse of the Percent Served
-        let formatted_text: string = percentFormat(1 - (numerator / properties.cnt_total_locations));
+    const getPctUnserved = (properties: any) => {
+        let formatted_text: string = percentFormat(1 - (properties.cnt_25_3 / properties.cnt_total_locations));
         return formatted_text;
     };
 
     const getPctUnAndUnderserved = (properties: any, excludeDSL: boolean) => {
-        let numerator: number = excludeDSL? properties.cnt_underserved_dsl_excluded: properties.cnt_underserved;
+        let numerator: number = excludeDSL? ( (properties.cnt_total_locations - properties.cnt_25_3) + properties.cnt_underserved_dsl_excluded): ((properties.cnt_total_locations - properties.cnt_25_3) + properties.cnt_underserved);
         let formatted_text: string = percentFormat(numerator / properties.cnt_total_locations);
         return formatted_text;
     };
@@ -61,7 +58,7 @@ export function HoverInfo () {
         && !!hoverInfo.feature.properties.bead_category
         && (
             <div className={style["tooltip"]} style={{left: hoverInfo.x, top: hoverInfo.y}}>
-                <h5><span>BEAD status</span>: <span className={style["bead-category"]} style={{textDecorationColor: getBEADColor(hoverInfo.feature.properties.bead_category)}}>{hoverInfo.feature.properties.bead_category}</span></h5>
+                <h5><span>BEAD status</span>: <span className={style["bead-category"]} style={{textDecorationColor: getBEADColor(hoverInfo.feature.properties.bead_category)}}>{filterState.excludeDSL? hoverInfo.feature.properties.bead_category_dsl_excluded: hoverInfo.feature.properties.bead_category}</span></h5>
                 <p><span>Census Block ID</span>: {hoverInfo.feature.properties.geoid_bl}</p>
                 <div>
                     <div>
@@ -74,7 +71,7 @@ export function HoverInfo () {
                             </tr>
                             <tr>
                                 <td>{"Pct. unserved (<25/3)"}</td>
-                                <td>{getPctUnserved(hoverInfo.feature.properties, filterState.excludeDSL)}</td>
+                                <td>{getPctUnserved(hoverInfo.feature.properties)}</td>
                             </tr>
                             <tr>
                                 <td>{"Pct un- and underserved (<100/20)"}</td>
