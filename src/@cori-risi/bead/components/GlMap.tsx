@@ -103,6 +103,7 @@ const GlMap: React.FC < GlMapProps > = ({
 
     const [ hoverInfo, setHoverInfo] = useState < any > (null); // Specify the type of hoverInfo if known
     const  [layerFilter, setLayerFilter] = useState < any > (['all']); // Specify the type of layerFilter if known
+    const [footprintFilter, setFootprintFilter] = useState < any > (["all"]);
     const [ mapZoom, setMapZoom] = useState < number > (zoom);
     const [ clickedBlock, setClickedBlock] = useState < string > ("");
 
@@ -395,6 +396,9 @@ const GlMap: React.FC < GlMapProps > = ({
 
         setLayerFilter(new_filter);
 
+        let footprint_filter = ['==', ['get', 'isp_id'], filterState.isp_footprint]
+        setFootprintFilter(footprint_filter);
+
         if (filterState.hasOwnProperty("colorVariable")) {
             setFillColor(getFillColor(filterState.colorVariable, filterState.excludeDSL));
         }
@@ -471,6 +475,7 @@ const GlMap: React.FC < GlMapProps > = ({
                     <Source {...isp_footprint.sources[0]} >
                         <Layer
                             { ...isp_footprint.layers[0] }
+                            filter={footprintFilter}
                         />
                     </Source>
 

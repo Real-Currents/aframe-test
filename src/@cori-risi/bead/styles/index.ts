@@ -29,8 +29,8 @@ export const isp_footprint: MapboxSourceLayerStyles = {
         "source-layer": "proj_beadnew_england_isp",
         "type": "line",
         "paint": {
-            "line-color": "blue",
-            "line-width": 0
+            "line-color": "#234FBF",
+            "line-width": 3
         }
     }]
 };

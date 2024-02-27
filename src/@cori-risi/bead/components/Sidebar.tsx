@@ -151,10 +151,14 @@ function Sidebar () {
     }));
   };
 
-  const handleISPFootprintChange = (event: any, newValue: string | null): void => {
-    dispatch(setMapFilters({
-      isp_footpring: newValue
-    }));
+  const handleISPFootprintChange = (event: any, newValue: string): void => {
+
+    let isp_id = isp_name_lookup[newValue];
+    if (typeof isp_id === "string") {
+      dispatch(setMapFilters({
+        isp_footprint: isp_id
+      }));
+    }
   };
 
   const handleCountiesChange = (event: any, newValue: any) => {
