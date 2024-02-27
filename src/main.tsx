@@ -138,32 +138,27 @@ function PrivacyAuthenticator (props: { children?: ReactElement }) {
             const amplifyAuthenticatorForm: HTMLFormElement | null = document.querySelector('form[data-amplify-form]');
             if (amplifyAuthenticatorForm !== null) {
 
-                const footerLoader: HTMLDivElement | null = document.querySelector('[data-amplify-footer]');
-                if (footerLoader !== null) {
-                    footerLoader.style.display = "none";
-                }
-
                 const signInButton: HTMLButtonElement | null = amplifyAuthenticatorForm.querySelector('.amplify-button[type="submit"]');
                 if (signInButton !== null && signInButton.innerHTML === "Sign in") {
-                    signInButton.innerHTML = "OK";
-                    signInButton.style.display = "inline-flex";
-                    signInButton.style.color = "#16343e";
-                    signInButton.style.cursor = "pointer";
-                    signInButton.style.background = "#a3e2b5";
-                    signInButton.style.borderRadius = "50px";
-                    signInButton.style.padding = "13px 50px";
-                    signInButton.style.maxHeight = "48px";
-                    signInButton.style.minHeight = "48px";
-                    signInButton.style.maxWidth = "268px";
-                    signInButton.style.minWidth = "198px";
-                    signInButton.style.textDecoration = "none";
-
-                    // align-content: center;
-                    // justify-content: center;
-                    // justify-items: center;
-                    // align-items: center;
-                    // text-align: center;
-                    // white-space: nowrap;
+//                     signInButton.innerHTML = "OK";
+//                     signInButton.style.display = "inline-flex";
+//                     signInButton.style.color = "#16343e";
+//                     signInButton.style.cursor = "pointer";
+//                     signInButton.style.background = "#a3e2b5";
+//                     signInButton.style.borderRadius = "50px";
+//                     signInButton.style.padding = "13px 50px";
+//                     signInButton.style.maxHeight = "48px";
+//                     signInButton.style.minHeight = "48px";
+//                     signInButton.style.maxWidth = "268px";
+//                     signInButton.style.minWidth = "198px";
+//                     signInButton.style.textDecoration = "none";
+//
+//                     // align-content: center;
+//                     // justify-content: center;
+//                     // justify-items: center;
+//                     // align-items: center;
+//                     // text-align: center;
+//                     // white-space: nowrap;
 
                     const usernameInput: HTMLInputElement | null = amplifyAuthenticatorForm.querySelector('.amplify-textfield .amplify-field-group div .amplify-input[name="username"]');
                     if (usernameInput !== null) {
@@ -184,10 +179,16 @@ function PrivacyAuthenticator (props: { children?: ReactElement }) {
                         your data as provided in our <a href="http://ruralinnovation.us/privacy-policy/" target="_blank">Privacy Policy</a>.
                     </p>
                     <p></p>
-                    
 `
-                        console.log(amplifyAuthenticatorForm.children[0].children[0]);
-                        (amplifyAuthenticatorForm.children[0].children[0]).after(privacyInformation);
+
+                        const footerLoader: HTMLDivElement | null = document.querySelector('[data-amplify-footer]');
+                        if (footerLoader !== null) {
+                            footerLoader.style.background = "none";
+                            (footerLoader).after(privacyInformation);
+                        // } else {
+                        //     // console.log(amplifyAuthenticatorForm.children[0].children[0]);
+                        //     // (amplifyAuthenticatorForm.children[0].children[0]).after(privacyInformation);
+                        }
                     }
                 }
             }
