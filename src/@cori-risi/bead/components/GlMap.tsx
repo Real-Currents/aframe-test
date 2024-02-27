@@ -23,7 +23,7 @@ import style from "./styles/GlMap.module.css";
 import "mapbox-gl/dist/mapbox-gl.css";
 import {
     bead_dev,
-    // bb_tr_100_20,
+    isp_footprint,
     contourStyle,
     mapboxStyle
 } from '../styles';
@@ -466,6 +466,12 @@ const GlMap: React.FC < GlMapProps > = ({
                               filter={layerFilter}
                             />
                         {/*)}*/}
+                    </Source>
+
+                    <Source {...isp_footprint.sources[0]} >
+                        <Layer
+                            { ...isp_footprint.layers[0] }
+                        />
                     </Source>
 
                     {/*{(selected_features.length > 0) ?*/}
