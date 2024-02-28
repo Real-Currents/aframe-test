@@ -1,9 +1,10 @@
 import React, {ReactElement, useEffect} from 'react';
 import ReactDOM from 'react-dom/client';
 import PropTypes from "prop-types";
-import { Amplify } from "aws-amplify";
+import {Amplify, ResourcesConfig} from "aws-amplify";
 
-import aws_config from '../amplifyconfiguration.json';
+import amplifyconfig from './amplifyconfiguration.json';
+import aws_config from './aws-config';
 import App from './@cori-risi/bead/App.tsx';
 
 import mapboxgl from 'mapbox-gl';
@@ -17,7 +18,44 @@ import './@cori-risi/bead/components/styles/CustomAmplifyAuthenticator.css';
 
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
-Amplify.configure(aws_config);
+Amplify.configure(amplifyconfig);
+
+// const update_config: ResourcesConfig = {
+Amplify.configure({
+    // TODO: Why is this so ridiculous and how can these options be
+    //       specified exclusively in amplifyconfiguration.json ???
+    ...Amplify.getConfig(),
+    Auth: {
+        ...Amplify.getConfig().Auth!,
+        Cognito: {
+            ...Amplify.getConfig().Auth!.Cognito!,
+            ...aws_config.Auth,
+            loginWith: {
+                ...Amplify.getConfig().Auth!.Cognito!.loginWith!,
+                oauth: {
+                    ...Amplify.getConfig().Auth!.Cognito!.loginWith!.oauth!,
+                    ...aws_config.Auth.oauth,
+                    redirectSignIn: [
+                        aws_config.Auth.oauth.redirectSignIn
+                    ],
+                    redirectSignOut: [
+                        aws_config.Auth.oauth.redirectSignOut
+                    ],
+                    responseType: (aws_config.Auth.oauth.responseType as "code"),
+                    scopes: [
+                        ...aws_config.Auth.oauth.scope
+                    ]
+                },
+                username: true,
+            },
+            userPoolClientId: aws_config.Auth.clientId
+        }
+    }
+});
+// };
+// console.log(update_config);
+// Amplify.configure(update_config);
+
 
 const init_event = new Event("Initialize frontend app!");
 
