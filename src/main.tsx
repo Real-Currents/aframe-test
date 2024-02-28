@@ -176,9 +176,23 @@ function PrivacyAuthenticator (props: { children?: ReactElement }) {
             const amplifyAuthenticatorForm: HTMLFormElement | null = document.querySelector('form[data-amplify-form]');
             if (amplifyAuthenticatorForm !== null) {
 
+                const brandingInformation = (document.getElementById("branding-info") === null) ?
+                    document.createElement("div") : document.getElementById("branding-info");
+
+                brandingInformation!.id = "branding-info"
+                brandingInformation!.innerHTML = `            
+  <span class="cori-logo"><img src="/Full-Logo_CORI_Dark-Teal.svg" /></span>
+  <p></p>
+  <br />
+  <h4>Rural Broadband Map</h4>
+  <p>Login below to start mapping</p>
+`;
+                console.log(amplifyAuthenticatorForm);
+                (amplifyAuthenticatorForm).before(brandingInformation!);
+
                 const signInButton: HTMLButtonElement | null = amplifyAuthenticatorForm.querySelector('.amplify-button[type="submit"]');
                 if (signInButton !== null && signInButton.innerHTML === "Sign in") {
-//                     signInButton.innerHTML = "OK";
+                    signInButton.innerHTML = "Continue";
 //                     signInButton.style.display = "inline-flex";
 //                     signInButton.style.color = "#16343e";
 //                     signInButton.style.cursor = "pointer";
@@ -207,38 +221,36 @@ function PrivacyAuthenticator (props: { children?: ReactElement }) {
                         passwordInput.value = import.meta.env.VITE_APP_PASSWORD;
                     }
 
-                    if (document.getElementById("privacy-info") === null) {
-                        const privacyInformation = document.createElement("div");
-                        privacyInformation.id = "privacy-info"
-                        privacyInformation.innerHTML = `
+                    const privacyInformation = (document.getElementById("privacy-info") === null) ?
+                        document.createElement("div") :
+                        document.getElementById("privacy-info");
+                    privacyInformation!.id = "privacy-info"
+                    privacyInformation!.innerHTML = `
                     <p></p>
                     <p>This Site uses cookies to offer you a better browsing experience and to analyze Site
                         traffic. By continuing to access the Site, you consent to our use of cookies and storage and use of
                         your data as provided in our <a href="http://ruralinnovation.us/privacy-policy/" target="_blank">Privacy Policy</a>.
                     </p>
                     <p></p>
-`
+`;
 
-                        const footerLoader: HTMLDivElement | null = document.querySelector('[data-amplify-footer]');
-                        if (footerLoader !== null) {
-                            footerLoader.style.background = "none";
-                            (footerLoader).after(privacyInformation);
-                        // } else {
-                        //     // console.log(amplifyAuthenticatorForm.children[0].children[0]);
-                        //     // (amplifyAuthenticatorForm.children[0].children[0]).after(privacyInformation);
-                        }
+                    const footerLoader: HTMLDivElement | null = document.querySelector('[data-amplify-footer]');
+                    if (footerLoader !== null) {
+                        footerLoader.style.background = "none";
+                        // (footerLoader).after(privacyInformation!);
+                        (footerLoader).before(privacyInformation!);
                     }
                 }
             }
         }, 1533);
-    })
+    });
 
     // if (import.meta.env.VITE_OFFLINE_NOTIFICATION !== "false") {
         return (
             <div className={"app-with-authenticator"}>
                 {props.children}
             </div>
-        )
+        );
     // } else return props.children;
 }
 

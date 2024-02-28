@@ -2,6 +2,15 @@
 /*    min-height: calc(100vh - 260px) !important;*/
 /*}*/
 
+[data-amplify-authenticator] [data-amplify-container] {
+    border-radius: 6px !important;
+    border: 3px solid white;
+}
+
+[data-amplify-authenticator] [data-amplify-container] [data-amplify-router] {
+    border: transparent;
+}
+
 /*[data-amplify-authenticator] [data-amplify-container],*/
 /*[data-amplify-authenticator] [data-amplify-container] [data-amplify-router] {*/
 /*    width: 100%;*/
@@ -37,6 +46,23 @@
 /*[data-amplify-authenticator] * .amplify-button.amplify-field-group__control.amplify-button--primary.amplify-button--fullwidth {*/
 /*    display: none;*/
 /*}*/
+
+* #branding-info {
+    font-family: 'TT Hoves Bold';
+    padding: 32px;
+    text-align: center;
+}
+
+* #branding-info h4 {
+    font-family: 'TT Hoves Bold';
+    font-size: 1.25em;
+}
+
+* #branding-info .cori-logo {
+    display: inline-block;
+    width: 50%;
+    text-align: center;
+}
 
 [data-amplify-authenticator] * .amplify-flex.amplify-field.amplify-textfield {
     display: none;
@@ -84,6 +110,7 @@
 
 * #privacy-info p {
     font-family: "TT Hoves Light", Montserrat, sans-serif;
+    font-size: 0.72em;
     color: #777;
 }
 
