@@ -52,8 +52,12 @@ import isp_name_dict from "../data/isp_name_lookup_rev.json";
 
 const broadband_technology: Record<string, string> = broadband_technology_dict;
 
-const bead_merged_tr_layer = {
-    ...bead_merged_tr.layers[0]
+const bead_merged_tr_bead_colors = {
+    ...(bead_merged_tr.layers as any[])[0]
+};
+
+const bead_merged_tr_location_colors = {
+    ...(bead_merged_tr.layers as any[])[1]
 };
 
 type GlMapProps = {
@@ -103,12 +107,12 @@ const GlMap: React.FC < GlMapProps > = ({
         padding: 20 // Optional padding around the bounds
     });
 
-    const [ layerAttributes, setLayerAttributes] = useState < (IntrinsicAttributes & LayerProps) > ({ ...bead_dev.layers[0] });
+    const [ layerAttributes, setLayerAttributes ] = useState < (IntrinsicAttributes & LayerProps) > ({ ...bead_dev.layers[0] });
 
-    const [ hoverInfo, setHoverInfo] = useState < any > (null); // Specify the type of hoverInfo if known
-    const  [layerFilter, setLayerFilter] = useState < any > (['all']); // Specify the type of layerFilter if known
-    const [ mapZoom, setMapZoom] = useState < number > (zoom);
-    const [ clickedBlock, setClickedBlock] = useState < string > ("");
+    const [ hoverInfo, setHoverInfo ] = useState < any > (null); // Specify the type of hoverInfo if known
+    const [ layerFilter, setLayerFilter ] = useState < any > (['all']); // Specify the type of layerFilter if known
+    const [ mapZoom, setMapZoom ] = useState < number > (zoom);
+    const [ clickedBlock, setClickedBlock ] = useState < string > ("");
 
     const mapSelection = useSelector<any>(selectMapSelection); // { "...": GeoJSONFeature[] }
     const [ selected_features, selectFeatures ] = useState<GeoJSONFeature[]>([]);
@@ -489,7 +493,11 @@ const GlMap: React.FC < GlMapProps > = ({
                     </Source>
 
                     <Source {...bead_merged_tr.sources[0]} >
-                        <Layer {...bead_merged_tr_layer} />
+                        <Layer {...(
+                            (filterState.colorVariable === "BEAD service level") ?
+                                bead_merged_tr_bead_colors :
+                                bead_merged_tr_location_colors
+                        )} />
                     </Source>
 
                     {/*{(selected_features.length > 0) ?*/}

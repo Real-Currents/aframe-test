@@ -81,9 +81,9 @@ export const bead_dev: MapboxSourceLayerStyles = {
     ]
 };
 
-// Work-around:
+// Work-around for "layers":
 //   Source has 2 element(s) but target allows only 1.
-bead_dev.layers.push({
+(bead_dev.layers as any[]).push({
      "id": "bead_dev.style_line",
      "source": "bead_dev",
      "source-layer": "proj_beadvt_test3",
@@ -100,12 +100,12 @@ export const bead_merged_tr: MapboxSourceLayerStyles = {
     "sources": [{
         "id": "bead_merged_tr",
         "type": "vector",
-        "url": "mapbox://ruralinno.new_england_eligibility_tr"
+        "url": "mapbox://ruralinno.eligibility_tr"
     }],
     "layers": [{
         "id": "bead_merged_tr.style",
         "source": "bead_merged_tr",
-        "source-layer": "proj_beadnew_england_eligibility_tr",
+        "source-layer": "proj_beadeligibility_tr",
         "type": "fill",
         "paint": {
             // "fill-color": "#0080ff", // blue color fill
@@ -114,11 +114,7 @@ export const bead_merged_tr: MapboxSourceLayerStyles = {
                 ['boolean', ['feature-state', 'hover'], false],
                 'rgba(255, 255, 255, 0.5)',
                 [
-                    "match", ["get", "bead_category"], // "bl_100_20_area"],
-                    // "Served", "rgba(19, 3, 50, 0.5)",
-                    // "Underserved", "rgba(118, 88, 162, 0.75)",
-                    // "Unserved", "rgba(203, 190, 220, 0.85)",
-                    // "Not Reported", "rgba(105, 105, 105, 0)",
+                    "match", ["get", "bead_category"],
                     ...((obj) => {
                         const array = [];
                         for (let k in obj) {
@@ -162,6 +158,47 @@ export const bead_merged_tr: MapboxSourceLayerStyles = {
 };
 
 // Work-around:
+//   Source has 2 element(s) but target allows only 1.
+(bead_merged_tr.layers as any[]).push({
+    "id": "bead_merged_tr.style",
+    "source": "bead_merged_tr",
+    "source-layer": "proj_beadeligibility_tr",
+    "type": "fill",
+    "paint": {
+        // "fill-color": "#0080ff", // blue color fill
+        "fill-color": [
+            'case',
+            ['boolean', ['feature-state', 'hover'], false],
+            'rgba(255, 255, 255, 0.5)',
+            [
+                'interpolate',
+                ['linear'],
+                ['get', 'cnt_total_locations'],
+                0,
+                "rgba(0, 0, 0, 0.25)",
+                1,
+                'rgba(22, 52, 62, 0.5)',
+                100,
+                'rgba(93, 139, 122, 0.5)',
+                1000,
+                'rgba(163, 226, 181, 0.5)'
+            ]
+        ],
+        // "fill-opacity": 1.0,
+        "fill-opacity": [
+            "interpolate", ["linear"],
+            ["zoom"],
+            0, 0.0,
+            3, 0.0,
+            4, 0.05,
+            5, 0.5,
+            7, 0.75,
+            9, 0.75,
+            9.01, 0.05,
+            10, 0.0,
+        ]
+    },
+});
 //   "Property 'generateId' does not exist on type 'IntrinsicAttributes & SourceProps'."
 (bead_merged_tr.sources[0] as any) !["generateId"] = true;
 
@@ -227,7 +264,7 @@ export const bb_tr_100_20: MapboxSourceLayerStyles = {
                 // 15, 1.0,
                 // 18, 0.05
             ]
-        },
+        }
     }]
 };
 
