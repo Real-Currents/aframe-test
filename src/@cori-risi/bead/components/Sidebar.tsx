@@ -9,6 +9,8 @@ import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import Slider from '@mui/material/Slider';
+import Switch from '@mui/material/Switch';
+import Typography from '@mui/material/Typography';
 
 import InfoTooltip from "./InfoTooltip";
 
@@ -129,6 +131,7 @@ function Sidebar () {
   };
 
   const handleMultipleISPChange = (event: any, newValue: any ) => {
+    
     // Populate a list of combo ids to use when filtering
     const valid_isp_combos: string[] = [];
     for (let isp of newValue) {
@@ -149,6 +152,24 @@ function Sidebar () {
     }));
   };
 
+  const handleISPFootprintChange = (event: any, newValue: string | null): void => {
+
+    if (newValue === null) {
+      dispatch(setMapFilters({
+        isp_footprint: ""
+      }));
+    }
+    else {
+      let isp_id = isp_name_lookup[newValue];
+      if (typeof isp_id === "string") {
+        dispatch(setMapFilters({
+          isp_footprint: isp_id
+        }));
+      }
+    }
+
+  };
+
   const handleCountiesChange = (event: any, newValue: any) => {
 
     let valid_geoid_co: string[] = [];
@@ -167,11 +188,16 @@ function Sidebar () {
     }));
   };
 
+  const handleExcludeDSLChange = () => {
+    const newExcludeDSL = !filterState.excludeDSL;
+    dispatch(setMapFilters({ excludeDSL: newExcludeDSL }));
+  };
+
   return (
     <>
         <animated.div style={props} className={style["sidebar"]}>
           <div className={style["controls-wrapper"]}>
-            <h4>Map display variable
+            <h4>Map display variables
                 {/* TODO: */}
                 {/* Add button to toggle off filtered/thematic map layers */}
                 {/* ... (leave basemap and selcted features) */}
@@ -189,6 +215,40 @@ function Sidebar () {
                   onChange={handleFillColorChange}
                   disabled={filterState.disableSidebar}
                 />
+              </div>
+            </div>
+            <div className={style["filter-section"]}>
+              <div className={style["filter-header"]}>
+                <h5>Internet service provider footprint</h5>
+                <InfoTooltip text={"Show the footprint for a given ISP"}/>
+              </div>
+              <Autocomplete
+                options={Object.keys(isp_name_lookup)}
+                onChange={handleISPFootprintChange}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="standard"
+                    label="Display ISP footprint"
+                    placeholder="Display ISP footprint"
+                  />
+                )}
+                disabled={filterState.disableSidebar}
+              />
+            </div>            
+            <div className={style["filter-section"]}>
+              <div className={style["filter-header"]}>
+                <h5>Exclude DSL</h5>
+              </div>
+              <div className={style["switch"]}>
+                <Typography>Off</Typography>
+                <Switch 
+                  checked={filterState.excludeDSL}
+                  onChange={handleExcludeDSLChange}
+                  inputProps={{ 'aria-label': 'DSL toggle' }} 
+                  disabled={filterState.disableSidebar}
+                />
+                <Typography>On</Typography>
               </div>
             </div>
             <hr />

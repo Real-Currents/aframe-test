@@ -24,6 +24,8 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import {
     bead_dev,
     bead_merged_tr,
+    isp_footprint_line,
+    isp_footprint_fill,
     contourStyle,
     mapboxStyle
 } from '../styles';
@@ -97,7 +99,7 @@ const GlMap: React.FC < GlMapProps > = ({
 
     const selection_color = '#00835D';
 
-    const [fillColor, setFillColor] = useState < any[] > (getFillColor(filterState.colorVariable));
+    const [fillColor, setFillColor] = useState < any[] > (getFillColor(filterState.colorVariable, filterState.excludeDSL));
     const isShowing = false;
 
     const { longitude, latitude, zoom } = fitBounds({
@@ -111,6 +113,7 @@ const GlMap: React.FC < GlMapProps > = ({
 
     const [ hoverInfo, setHoverInfo ] = useState < any > (null); // Specify the type of hoverInfo if known
     const [ layerFilter, setLayerFilter ] = useState < any > (['all']); // Specify the type of layerFilter if known
+    const [ footprintFilter, setFootprintFilter ] = useState < any > (["all"]);
     const [ mapZoom, setMapZoom ] = useState < number > (zoom);
     const [ clickedBlock, setClickedBlock ] = useState < string > ("");
 
@@ -419,8 +422,11 @@ const GlMap: React.FC < GlMapProps > = ({
 
         setLayerFilter(new_filter);
 
+        let footprint_filter = ['==', ['get', 'isp_id'], filterState.isp_footprint]
+        setFootprintFilter(footprint_filter);
+
         if (filterState.hasOwnProperty("colorVariable")) {
-            setFillColor(getFillColor(filterState.colorVariable));
+            setFillColor(getFillColor(filterState.colorVariable, filterState.excludeDSL));
         }
 
     }, [filterState]);
@@ -498,6 +504,20 @@ const GlMap: React.FC < GlMapProps > = ({
                                 bead_merged_tr_bead_colors :
                                 bead_merged_tr_location_colors
                         )} />
+                    </Source>
+
+                    <Source {...isp_footprint_fill.sources[0]} >
+                        <Layer
+                            { ...isp_footprint_fill.layers[0] }
+                            filter={footprintFilter}
+                        />
+                    </Source>
+
+                    <Source {...isp_footprint_line.sources[0]} >
+                        <Layer
+                            { ...isp_footprint_line.layers[0] }
+                            filter={footprintFilter}
+                        />
                     </Source>
 
                     {/*{(selected_features.length > 0) ?*/}

@@ -1,4 +1,7 @@
 import React from 'react';
+import { useSelector } from "react-redux";
+import { FilterState, HoverInfoState } from "../models/index";
+import { selectMapFilters, setMapFilters } from "../features";
 import { format } from 'd3-format';
 import InfoTooltip from "./InfoTooltip";
 import style from "./styles/MapLegend.module.css";
@@ -13,7 +16,7 @@ interface MapLegendProps {
 
 const MapLegend: React.FC < MapLegendProps > = ({ title, category }) => {
 
-    // console.log("category:", category);
+    const filterState: FilterState = useSelector(selectMapFilters);
 
     const renderMatchLegend = () => {
         const legendItems = [];
@@ -55,10 +58,13 @@ const MapLegend: React.FC < MapLegendProps > = ({ title, category }) => {
 
     return ( 
     <>
-        <div style={category[0] === 'match'? {height: "205px"} : {height: "95px"}} className={style["map-legend"]}>
-                <h5>{title}</h5>
+        <div style={category[0] === 'match'? {height: "auto"} : {height: "95px"}} className={style["map-legend"]}>
+                <h5>{title}{filterState.excludeDSL && category[0] === 'match'? "*" :  ""}</h5>
                 {category[0] === 'match' ? renderMatchLegend() : null}
                 {category[0] === 'interpolate' ? renderInterpolateLegend() : null}
+                <div>
+                    {filterState.excludeDSL && category[0] === 'match'? <span>*Excluding DSL</span> :  <></>}
+                </div>
             </div> 
     </>
     );

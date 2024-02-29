@@ -10,6 +10,19 @@ export const colors = {
     }
 };
 
+export const colors_excludeDSL = {
+  "legend_colors": {
+    "bb_bead_categories": {
+      "served_area": "rgba(9, 99, 73, 0.4)",
+      "underserved_area": "rgba(217, 178, 17, 0.4)",
+      "unserved_area": "rgba(231, 79, 42, 0.4)",
+      "not_reported": "rgba(0, 0, 0, 0.25)",
+      "default": "rgba(0, 0, 0, 0.25)"
+    }
+  }
+};
+
+
 export function getBEADColor(bead_category: string): string {
     
     if (bead_category === "Served") {
@@ -27,17 +40,25 @@ export function getBEADColor(bead_category: string): string {
     return colors["legend_colors"]["bb_bead_categories"]["not_reported"];
 }
 
-export function getFillColor(color_scheme: string): any {  
+export function getFillColor(color_scheme: string, excludeDSL: boolean): any {  
 
   if (color_scheme === "BEAD service level") {
+
+    let color_palette = colors;
+    let category_variable = "bead_category";
+    if (excludeDSL === true) {
+      color_palette = colors_excludeDSL;
+      category_variable = "bead_category_dsl_excluded";
+    }
+
     return [
-      "match", ["get", "bead_category"],
-      "Served", colors["legend_colors"]["bb_bead_categories"]["served_area"],
-      "Underserved", colors["legend_colors"]["bb_bead_categories"]["underserved_area"],
-      "Unserved", colors["legend_colors"]["bb_bead_categories"]["unserved_area"],
-      "Not Reported", colors["legend_colors"]["bb_bead_categories"]["not_reported"],
-      colors["legend_colors"]["bb_bead_categories"]["default"]
-    ]
+      "match", ["get", category_variable],
+      "Served", color_palette["legend_colors"]["bb_bead_categories"]["served_area"],
+      "Underserved", color_palette["legend_colors"]["bb_bead_categories"]["underserved_area"],
+      "Unserved", color_palette["legend_colors"]["bb_bead_categories"]["unserved_area"],
+      "Not Reported", color_palette["legend_colors"]["bb_bead_categories"]["not_reported"],
+      color_palette["legend_colors"]["bb_bead_categories"]["default"]
+    ];
   }
 
   if (color_scheme === "ISP count") {
