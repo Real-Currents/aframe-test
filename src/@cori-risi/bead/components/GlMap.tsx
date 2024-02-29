@@ -191,10 +191,26 @@ const GlMap: React.FC < GlMapProps > = ({
                             }
                         });
 
+                        const acs_features = result.data.features.filter((f: GeoJSONFeature) => {
+                            const columns = [];
+                            if (f.hasOwnProperty("properties")
+                                && f["properties"].hasOwnProperty("type")
+                                && f["properties"]["type"] === "acs"
+                            ) {
+                                console.log("Tract ACS for this feature:", f);
+                                for (let p in f["properties"]) {
+                                    columns.push(p);
+                                }
+                                console.log(columns);
+                                return true;
+                            }
+                        });
+
                         dispatch(setMapSelection({
                             block_features,
                             isp_tech_features,
-                            award_features
+                            award_features,
+                            acs_features
                         }));
                     }
                 })

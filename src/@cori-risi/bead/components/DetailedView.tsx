@@ -54,34 +54,34 @@ const block_columns = [
     "has_fiber",
     "has_coaxial_cable",
     "has_copperwire",
-    "has_lbr_wireless",
-    "has_licensed_wireless",
+    "has_wireless",
+    // "has_lbr_wireless",
+    // "has_licensed_wireless",
     "has_previous_funding",
     // "only_water_flag",
 ];
 
 const block_labels = {
     "geoid_bl": "Block ID",
-    "isp_id": "ISPs in Block",
-    "cnt_isp": "cnt_isp",
-    "cnt_25_3": "cnt_25_3",
     "geoid_co": "County ID",
     "geoid_st": "State ID",
     "geoid_tr": "Tract ID",
-    "has_fiber": "has_fiber",
+    "isp_id": "ISPs in Block",
+    "cnt_isp": "cnt_isp",
+    "cnt_total_locations": "cnt_total_locations",
     "cnt_100_20": "cnt_100_20",
+    "cnt_25_3": "cnt_25_3",
     "pct_served": "pct_served",
+    "bl_100_20_area": "bl_100_20_area",
     "bl_25_3_area": "bl_25_3_area",
     "combo_isp_id": "combo_isp_id",
     "bead_category": "bead_category",
-    "bl_100_20_area": "bl_100_20_area",
-    "has_copperwire": "has_copperwire",
-    "only_water_flag": "only_water_flag",
-    "has_lbr_wireless": "has_lbr_wireless",
+    "has_fiber": "has_fiber",
     "has_coaxial_cable": "has_coaxial_cable",
-    "cnt_total_locations": "cnt_total_locations",
+    "has_copperwire": "has_copperwire",
     "has_previous_funding": "has_previous_funding",
-    "has_licensed_wireless": "has_licensed_wireless"
+    "has_wireless": "has_lbr_wireless",
+    "only_water_flag": "only_water_flag"
 };
 
 const isp_columns = [
@@ -121,6 +121,40 @@ const award_columns = [
 const award_labels = {
 };
 
+const acs_columns = [
+    "geoid_tr",
+    // "geoid_bl",
+    "year",
+    "total_population",
+    "total_households",
+    "total_housing_units",
+    "broadband_usage",
+    "hh_using_broadband",
+    "hh_w_computer",
+    "share_w_computer",
+    "hh_w_smartphone_only",
+    "share_w_smartphone_only",
+    "hh_wo_device",
+    "share_wo_device",
+];
+
+const acs_labels = {
+    "geoid_tr": "Tract ID",
+    // "geoid_bl": "Block ID(s)",
+    "year": "ACS Year",
+    "total_population": "total_population",
+    "total_households": "total_households",
+    "total_housing_units": "total_housing_units",
+    "broadband_usage": "broadband_usage",
+    "hh_using_broadband": "hh_using_broadband",
+    "hh_w_computer": "hh_w_computer",
+    "share_w_computer": "share_w_computer",
+    "hh_w_smartphone_only": "hh_w_smartphone_only",
+    "share_w_smartphone_only": "share_w_smartphone_only",
+    "hh_wo_device": "hh_wo_device",
+    "share_wo_device": "share_wo_device",
+};
+
 function getLabel (col: string, labels: any) {
     return (labels.hasOwnProperty(col)) ?
         labels[col].trim() : col.trim();
@@ -136,6 +170,7 @@ export default function DetailedView () {
     const [ block_info, setBlockInfo ] = useState<GeoJSONFeature[]>([]);
     const [ isp_info, setISPInfo ] = useState<GeoJSONFeature[]>([]);
     const [ award_info, setAwardInfo ] = useState<GeoJSONFeature[]>([]);
+    const [ acs_info, setACSInfo ] = useState<GeoJSONFeature[]>([]);
 
     useEffect(() => {
 
@@ -187,6 +222,21 @@ export default function DetailedView () {
             setAwardInfo([]);
         }
 
+        if (mapSelection.hasOwnProperty("acs_features")
+            && typeof mapSelection.acs_features.filter === "function"
+        ) {
+
+            const acs = mapSelection.acs_features
+                .filter((d: any) => (d.hasOwnProperty("properties")
+                    && d.properties.hasOwnProperty("type")
+                    && d.properties["type"] === "acs"
+                ));
+
+            setACSInfo(acs);
+        } else {
+            setACSInfo([]);
+        }
+
     }, [ mapSelection ]);
 
     return (
@@ -228,8 +278,9 @@ export default function DetailedView () {
                                 onClick={(evt) => {
                                     dispatch(setMapSelection({
                                         "block_features": [],
-                                            "isp_tech_features": [],
-                                            "award_features": []
+                                        "isp_tech_features": [],
+                                        "award_features": [],
+                                        "acs_features": []
                                     }));
                                 }}
                                 variant="outlined">
@@ -249,7 +300,7 @@ export default function DetailedView () {
                 <hr />
 
                 {
-                    (block_info.length === 0 )?
+                    (!(block_info.length > 0))?
                         <p>Select a block on the map to view Broadband info<br /></p> :
                         <MUIDataTable
                             columns={block_columns.map((col) => getLabel(col, block_labels))}
@@ -308,10 +359,13 @@ export default function DetailedView () {
                                     const block_features: any = [];
                                     const isp_tech_features: any = [];
                                     const award_features: any = [];
+                                    const acs_features: any = [];
 
                                     for (let d of newTableData) {
+                                        console.log("Still selected:", d);
                                         if (!!d[0] && d[0].toString().match(/^\d{15}/)) {
                                             const geoid_bl = d[0].toString();
+                                            const geoid_tr = d[1].toString();
                                             if (mapSelection.hasOwnProperty("block_features")) {
                                                 if (typeof mapSelection.block_features.filter === "function") {
                                                     mapSelection.block_features
@@ -334,6 +388,13 @@ export default function DetailedView () {
                                                             award_features.push(f)
                                                         });
                                                 }
+                                                if (typeof mapSelection.acs_features.filter === "function") {
+                                                    mapSelection.acs_features
+                                                        .filter((f: BlockLevelFeature) => geoid_tr === f.properties.geoid_tr)
+                                                        .map((f) => {
+                                                            acs_features.push(f)
+                                                        });
+                                                }
                                             }
                                         }
                                     }
@@ -342,26 +403,30 @@ export default function DetailedView () {
                                         dispatch(setMapSelection({
                                             "block_features": [],
                                             "isp_tech_features": [],
-                                            "award_features": []
+                                            "award_features": [],
+                                            "acs_features": []
                                         }));
                                     } else {
                                         dispatch(setMapSelection({
                                             ...mapSelection,
                                             block_features,
                                             isp_tech_features,
-                                            // award_features // <= 2020 block geoids will not match 2010 award geoids
+                                            // award_features, // <= 2020 block geoids will not match 2010 award geoids
+                                            acs_features
                                         }));
                                     }
-                                }
+                                },
+                                "rowsPerPage": 5,
+                                "rowsPerPageOptions": [ 5, 10, 25, 50]
                             }}
-                            title={"Census Blocks"}
+                            title={"Census Blocks (BB)"}
                         />
                 }
                 <br />
 
                 <h5>Internet Service Providers by Technology</h5>
                 {
-                    (isp_info.length === 0 )?
+                    (!(isp_info.length > 0))?
                         <p>Select a block on the map to view Broadband info<br /></p> :
                         <MUIDataTable
                             columns={isp_columns.map((col) => getLabel(col, isp_labels))}
@@ -405,7 +470,9 @@ export default function DetailedView () {
                                             ...newTableData
                                         }
                                     });
-                                }
+                                },
+                                "rowsPerPage": 5,
+                                "rowsPerPageOptions": [ 5, 10, 25, 50]
                             }}
                             title={"Internet Service Providers"}
                         />
@@ -414,7 +481,7 @@ export default function DetailedView () {
 
                 <h5>Federal Funding Award Applicants By Block</h5>
                 {
-                    (award_info.length === 0 )?
+                    (!(award_info.length > 0))?
                         <p>Select a block on the map to view Broadband info<br /></p> :
                         <MUIDataTable
                             columns={award_columns.map((col) => getLabel(col, award_labels))}
@@ -458,7 +525,9 @@ export default function DetailedView () {
                                             ...newTableData
                                         }
                                     });
-                                }
+                                },
+                                "rowsPerPage": 5,
+                                "rowsPerPageOptions": [ 5, 10, 25, 50]
                             }}
                             title={"Federal Funding Applicants"}
                         />
@@ -470,18 +539,56 @@ export default function DetailedView () {
                 <hr />
 
                 {
-                    (block_info.length === 0) ?
-                        <p>Select a block on the map to view ACS data for the relevant Census Tract(s)<br/></p>
-                        :
-                        <p>TODO: Get ACS data for the relevant Census Tract(s)</p>
-                        // <MUIDataTable
-                        //     columns={dt_columns}
-                        //     data={dt_data}
-                        //     options={{
-                        //         "filterType": "checkbox"
-                        //     }}
-                        //     title={"TODO: Get ACS data for the relevant Census Tract(s)"}
-                        // />
+                    (!(block_info.length > 0)) ?
+                        <p>Select a block on the map to view ACS data for the relevant Census Tract(s)<br/></p> :
+                        <MUIDataTable
+                            columns={acs_columns.map((col) => getLabel(col, acs_labels))}
+                            data={[ ...acs_info
+                                .filter((b: any) => {
+                                    // console.log("b: ", b);
+                                    return !!b && b !== null && b.hasOwnProperty("properties")
+                                })
+                                .map((b: any) => {
+                                    const values: string[] = [];
+
+                                    for (let col of acs_columns) {
+                                        // b.map((i: string) => {
+                                        if (b.properties.hasOwnProperty(col)
+                                            && typeof b.properties[col] !== "undefined"
+                                        ) {
+                                            // const tuple = i.toString().split(":");
+                                            // const key = tuple[0].toString().trim();
+                                            // if (col === key) {
+                                            const value = (b.properties[col] !== null && typeof b.properties[col].toString !== "undefined") ?
+                                                b.properties[col].toString().trim() : "N/A";
+                                            // console.log([col, value]);
+                                            values.push(value);
+                                            // }
+                                        }
+                                        // });
+                                    }
+
+                                    return values;
+                                })
+                            ]}
+                            options={{
+                                "filterType": "checkbox",
+                                "onRowsDelete": (rowsDeleted: { data: { index: number, dataIndex: number }[], lookup: { [dataIndex: number]: boolean } }, newTableData: any[]) => {
+                                    console.log("Delete Row(s):", {
+                                        rowsDeleted: {
+                                            data: rowsDeleted.data,
+                                            lookupIndex: rowsDeleted.lookup
+                                        },
+                                        newTableData: {
+                                            ...newTableData
+                                        }
+                                    });
+                                },
+                                "rowsPerPage": 5,
+                                "rowsPerPageOptions": [ 5, 10, 25, 50]
+                            }}
+                            title={"Census Tracts (ACS)"}
+                        />
                 }
 
             </div>

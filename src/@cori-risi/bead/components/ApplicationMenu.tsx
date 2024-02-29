@@ -13,9 +13,25 @@ import "./styles/ApplicationMenu.scss";
 
 function ApplicationMenu () {
 
-    const userState: User = useSelector(selectUser);
-
     const apiContext = useContext(ApiContext);
+    const userState: User | null = useSelector(selectUser);
+
+    function getUserLabel (u: User) {
+        return (u.hasOwnProperty("signInUserSession")
+            && !!u.signInUserSession
+            && u.signInUserSession.hasOwnProperty("idToken")
+            && u.signInUserSession?.idToken.hasOwnProperty("payload")
+        ) ? (
+                (u.signInUserSession?.idToken.payload.hasOwnProperty("name") && !!u.signInUserSession?.idToken.payload.name) ?
+                    u.signInUserSession?.idToken.payload.name :
+                    (u.signInUserSession?.idToken.payload.hasOwnProperty("email") && !!u.signInUserSession?.idToken.payload.email) ?
+                        u.signInUserSession?.idToken.payload.email :
+                        u.username
+            ) :
+            (u.hasOwnProperty("email") && !!u.email) ?
+                u.email :
+                u.username
+    }
 
     useEffect(() => {
 
@@ -51,6 +67,12 @@ function ApplicationMenu () {
 
             return (
         <Card id={"application-menu"} style={{ minWidth: "254px" }}>
+
+            {(userState !== null) ? (
+                <div><span className={"form-label"}>User</span>: { getUserLabel(userState) }</div>
+            ) : (
+                <div style={{ display: "none" }} />
+            )}
 
             <h4>MDA (Map & Data Analysis) Options</h4>
 
