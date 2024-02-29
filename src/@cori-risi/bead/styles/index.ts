@@ -17,20 +17,38 @@ export type MapboxSourceLayerStyles = {
     layers: [(IntrinsicAttributes & LayerProps)];
 };
 
-export const isp_footprint: MapboxSourceLayerStyles = {
+export const isp_footprint_fill: MapboxSourceLayerStyles = {
     "sources": [{
         "id": "isp_footprint",
         "type": "vector",
-        "url": "mapbox://ruralinno.new_england_isp"
+        "url": "mapbox://ruralinno.isp_states"
     }],
     "layers": [{
-        "id": "isp_footprint.style",
-        "source": "proj_beadnew_england_isp",
-        "source-layer": "proj_beadnew_england_isp",
+        "id": "isp_footprint.style_fill",
+        "source": "proj_beadisp_states",
+        "source-layer": "proj_beadisp_states",
+        "type": "fill",
+        "paint": {
+            "fill-color": "black",
+            "fill-opacity": .3
+        }
+    }]
+};
+
+export const isp_footprint_line: MapboxSourceLayerStyles = {
+    "sources": [{
+        "id": "isp_footprint",
+        "type": "vector",
+        "url": "mapbox://ruralinno.isp_states"
+    }],
+    "layers": [{
+        "id": "isp_footprint.style_line",
+        "source": "proj_beadisp_states",
+        "source-layer": "proj_beadisp_states",
         "type": "line",
         "paint": {
-            "line-color": "#234FBF",
-            "line-width": 3
+            "line-color": "black",
+            "line-width": 1
         }
     }]
 };
