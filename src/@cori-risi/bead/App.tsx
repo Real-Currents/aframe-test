@@ -6,7 +6,7 @@ import {
     Flex,
     withAuthenticator,
     useAuthenticator,
-    UseAuthenticator
+    UseAuthenticator, useTheme, Heading
 } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import ApiContextProvider from "../contexts/ApiContextProvider";
@@ -22,23 +22,6 @@ import Interface from './components/Interface';
 import './App.css';
 import './components/styles/ApplicationMenu.scss';
 import './components/styles/ControlPanel.css';
-
-function getUserLabel (u: User) {
-    return (u.hasOwnProperty("signInUserSession")
-        && !!u.signInUserSession
-        && u.signInUserSession.hasOwnProperty("idToken")
-        && u.signInUserSession?.idToken.hasOwnProperty("payload")
-    ) ? (
-            (u.signInUserSession?.idToken.payload.hasOwnProperty("name") && !!u.signInUserSession?.idToken.payload.name) ?
-                u.signInUserSession?.idToken.payload.name :
-                (u.signInUserSession?.idToken.payload.hasOwnProperty("email") && !!u.signInUserSession?.idToken.payload.email) ?
-                    u.signInUserSession?.idToken.payload.email :
-                    u.username
-        ) :
-        (u.hasOwnProperty("email") && !!u.email) ?
-            u.email :
-            u.username
-}
 
 const theme = createTheme({
     typography: {
@@ -259,12 +242,6 @@ function ControlPanel (props: {
                      overflow: "hidden"
                  }}>
 
-                {/*{(userState !== null) ? (*/}
-                {/*    <div><span className={"form-label"}>User</span>: { getUserLabel(userState) }</div>*/}
-                {/*) : (*/}
-                {/*    <div style={{ display: "none" }} />*/}
-                {/*)}*/}
-
                 <p id="info">&nbsp;</p>
 
                 { props.children }
@@ -289,8 +266,62 @@ function SignOutButton ({ signOut }: { signOut: Function }) {
     return <Button className={"amplify-button--primary amplify-sign-out"} title="Sign Out" onClick={() => { signOut(); }}>Sign Out</Button>;
 }
 
+const formFields = {
+    signIn: {
+        username: {
+            placeholder: 'Enter your cool email',
+        },
+    },
+    confirmVerifyUser: {
+        confirmation_code: {
+            label: 'New Label',
+            placeholder: 'Enter your Confirmation Code:',
+            isRequired: false,
+        },
+    },
+};
+
+const components = {
+    VerifyUser: {
+        Header() {
+            const { tokens } = useTheme();
+            return (
+                <Heading
+                    padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
+                    level={3}
+                >
+                    Enter Information:
+                </Heading>
+            );
+        },
+        Footer() {
+            return (<p>Footer Information</p>);
+        },
+    },
+
+    ConfirmVerifyUser: {
+        Header() {
+            const { tokens } = useTheme();
+            return (
+                <Heading
+                    padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
+                    level={3}
+                >
+                    Enter Information:
+                </Heading>
+            );
+        },
+        Footer() {
+            return (<p>Footer Information</p>);
+        },
+    },
+};
+
 // export default App;
 export default withAuthenticator(App, {
+    formFields: formFields,
+    components: components,
     hideSignUp: true,
-    loginMechanisms: ['username']
+    loginMechanisms: ['username'],
+    socialProviders: ['google']
 });
