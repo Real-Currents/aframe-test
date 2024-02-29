@@ -30,7 +30,15 @@ export const isp_footprint_fill: MapboxSourceLayerStyles = {
         "type": "fill",
         "paint": {
             "fill-color": "black",
-            "fill-opacity": .3
+            "fill-opacity": [
+                "interpolate", ["linear"],
+                ["zoom"],
+                0, 0.2,
+                8, 0.2,
+                9, 0.1,
+                10, 0.1,
+                18, 0.05
+            ]
         }
     }]
 };
@@ -48,7 +56,16 @@ export const isp_footprint_line: MapboxSourceLayerStyles = {
         "type": "line",
         "paint": {
             "line-color": "black",
-            "line-width": 1
+            "line-width": 1,
+            "line-opacity": [
+                "interpolate", ["linear"],
+                ["zoom"],
+                0, 1,
+                8, 1,
+                9, 0.5,
+                10, 0.3,
+                18, 0.1
+            ]
         }
     }]
 };
@@ -57,12 +74,12 @@ export const bead_dev: MapboxSourceLayerStyles = {
     "sources": [{
         "id": "bead_dev",
         "type": "vector",
-        "url": "mapbox://ruralinno.new_england_v1b"
+        "url": "mapbox://ruralinno.bead_blockv1b"
     }],
     "layers": [{
             "id": "bead_dev.style",
             "source": "bead_dev",
-            "source-layer": "proj_beadnew_england_v1b",
+            "source-layer": "proj_beadbead_blockv1b",
             "type": "fill",
             "paint": {
                 // "fill-color": "#0080ff", // blue color fill

@@ -45,12 +45,14 @@ export function getFillColor(color_scheme: string, excludeDSL: boolean): any {
   if (color_scheme === "BEAD service level") {
 
     let color_palette = colors;
+    let category_variable = "bead_category";
     if (excludeDSL === true) {
       color_palette = colors_excludeDSL;
+      category_variable = "bead_category_dsl_excluded";
     }
 
     return [
-      "match", ["get", "bead_category"],
+      "match", ["get", category_variable],
       "Served", color_palette["legend_colors"]["bb_bead_categories"]["served_area"],
       "Underserved", color_palette["legend_colors"]["bb_bead_categories"]["underserved_area"],
       "Unserved", color_palette["legend_colors"]["bb_bead_categories"]["unserved_area"],
