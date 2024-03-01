@@ -43,6 +43,10 @@
 	margin-bottom: 10px;
 }
 
+.legend-row p {
+	line-height: 2.3;
+}
+
 .legend-box {
 	width: 1.7rem;
 	height: 1.7rem;

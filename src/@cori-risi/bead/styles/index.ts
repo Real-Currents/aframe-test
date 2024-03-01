@@ -70,6 +70,27 @@ export const isp_footprint_line: MapboxSourceLayerStyles = {
     }]
 };
 
+export const not_reported_layer: MapboxSourceLayerStyles = {
+    "sources": [{
+        "id": "not_reported_layer",
+        "type": "vector",
+        "url": "mapbox://ruralinno.bead_blockv1b"
+    }],
+    "layers": [{
+            "id": "not_reported_layer.style",
+            "source": "bead_dev",
+            "source-layer": "proj_beadbead_blockv1b",
+            "type": "fill",
+            "paint": {
+                "fill-color": "red",
+                "fill-opacity": 1,
+                "fill-pattern": "circle-1"
+            },
+            "filter": ['==', ['get', 'bead_category'], "Not Reported"]
+        },
+    ]
+};
+
 export const bead_dev: MapboxSourceLayerStyles = {
     "sources": [{
         "id": "bead_dev",
@@ -125,8 +146,7 @@ export const bead_dev: MapboxSourceLayerStyles = {
                     12, 1.0,
                     17, 1.0,
                     18, 0.05
-                ],
-                "fill-pattern": "circle-1"
+                ]
             },
         },
     ]
