@@ -1,7 +1,7 @@
 export const colors = {
     "legend_colors": {
         "bb_bead_categories": {
-            "served_area": "rgba(0, 131, 93, 0.4)",
+            "served_area": "rgba(6, 171, 123, 0.4)",
             "underserved_area": "rgba(255, 228, 115, 0.4)",
             "unserved_area": "rgba(177, 26, 0, 0.4)",
             "not_reported": "rgba(0, 0, 0, 0.25)",
