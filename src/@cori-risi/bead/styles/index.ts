@@ -125,7 +125,8 @@ export const bead_dev: MapboxSourceLayerStyles = {
                     12, 1.0,
                     17, 1.0,
                     18, 0.05
-                ]
+                ],
+                "fill-pattern": "circle-1"
             },
         },
     ]
