@@ -490,20 +490,24 @@ const GlMap: React.FC < GlMapProps > = ({
                     </Source>
 
                     <Source {...bead_dev.sources[0]} >
-                        {/*{mapZoom >= MIN_ZOOM_LEVEL && (*/}
+                        {(!!filterState.displayDataLayers) ?
                             <Layer
                               {...layerAttributes}
                               filter={layerFilter}
-                            />
-                        {/*)}*/}
+                            /> :
+                            <></>
+                        }
                     </Source>
 
                     <Source {...bead_merged_tr.sources[0]} >
-                        <Layer {...(
-                            (filterState.colorVariable === "BEAD service level") ?
-                                bead_merged_tr_bead_colors :
-                                bead_merged_tr_location_colors
-                        )} />
+                        {(!!filterState.displayDataLayers) ?
+                            <Layer {...(
+                                (filterState.colorVariable === "BEAD service level") ?
+                                    bead_merged_tr_bead_colors :
+                                    bead_merged_tr_location_colors
+                            )} /> :
+                            <></>
+                        }
                     </Source>
 
                     <Source {...isp_footprint_fill.sources[0]} >
@@ -520,7 +524,6 @@ const GlMap: React.FC < GlMapProps > = ({
                         />
                     </Source>
 
-                    {/*{(selected_features.length > 0) ?*/}
                         <Source type="geojson" id="bead_block" data={{
                             "type": "FeatureCollection",
                             "features": selected_features
@@ -573,8 +576,7 @@ const GlMap: React.FC < GlMapProps > = ({
                                     "line-width": 2
                                 }
                             }} />
-                        </Source>{/* : <></>*/}
-                    {/*}*/}
+                        </Source>
 
                     <HoverInfo />
 

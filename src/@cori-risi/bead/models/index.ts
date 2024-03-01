@@ -4,6 +4,7 @@ export interface BroadbandTechnology {
 }
 
 export interface FilterState {
+    displayDataLayers: boolean;
     colorVariable: string;
     bb_service: {
         served: boolean;
