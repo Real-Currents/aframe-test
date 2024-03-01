@@ -193,6 +193,10 @@ function Sidebar () {
     dispatch(setMapFilters({ excludeDSL: newExcludeDSL }));
   };
 
+  const toggleDataLayers = () => {
+    dispatch(setMapFilters({ displayDataLayers: !filterState.displayDataLayers }));
+  };
+
   return (
     <>
         <animated.div style={props} className={style["sidebar"]}>
@@ -203,6 +207,15 @@ function Sidebar () {
                 {/* ... (leave basemap and selcted features) */}
             </h4>
             <div className={style['fill-selector']}>
+              <div className={style["switch"]} style={{ float: "right" }}>
+                {/*<Typography>Off</Typography>*/}
+                <Switch
+                    checked={filterState.displayDataLayers}
+                    onChange={toggleDataLayers}
+                    inputProps={{ 'aria-label': 'Toggle Broadband Data Layers' }}
+                />
+                {/*<Typography>On</Typography>*/}
+              </div>
               <div className={style["color-dropdown"]}>
                 <Autocomplete
                   disablePortal

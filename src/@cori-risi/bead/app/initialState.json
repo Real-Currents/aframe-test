@@ -1,24 +1,25 @@
 {
   "mapFilters": {
     "colorVariable": "BEAD service level",
+    "displayDataLayers": true,
+    "isp_footprint": "",
+    "excludeDSL": false,
     "bb_service": {
       "served": true,
       "underserved": true,
       "unserved": true
     },
-    "isp_count": [ 0, 10 ],
-    "total_locations":  [ 0, 1500 ],
-    "isp_combos": [],
-    "counties": [],
-    "broadband_technology": [],
     "has_previous_funding": {
       "yes": true,
       "no": true
     },
+    "isp_count": [ 0, 10 ],
+    "total_locations":  [ 0, 1500 ],
+    "broadband_technology": [],
+    "isp_combos": [],
+    "counties": [],
     "disableSidebar": true,
-    "showSidebar": false,
-    "excludeDSL": false,
-    "isp_footprint": ""
+    "showSidebar": false
   },
   "mapHover": {
     "x": 0,

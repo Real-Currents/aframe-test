@@ -100,13 +100,13 @@ const GlMap: React.FC < GlMapProps > = ({
         padding: 20 // Optional padding around the bounds
     });
 
-    const [ layerAttributes, setLayerAttributes] = useState < (IntrinsicAttributes & LayerProps) > ({ ...bead_dev.layers[0] });
+    const [ layerAttributes, setLayerAttributes ] = useState < (IntrinsicAttributes & LayerProps) > ({ ...bead_dev.layers[0] });
 
-    const [ hoverInfo, setHoverInfo] = useState < any > (null); // Specify the type of hoverInfo if known
-    const  [layerFilter, setLayerFilter] = useState < any > (['all']); // Specify the type of layerFilter if known
-    const [footprintFilter, setFootprintFilter] = useState < any > (["all"]);
-    const [ mapZoom, setMapZoom] = useState < number > (zoom);
-    const [ clickedBlock, setClickedBlock] = useState < string > ("");
+    const [ hoverInfo, setHoverInfo ] = useState < any > (null); // Specify the type of hoverInfo if known
+    const [ layerFilter, setLayerFilter ] = useState < any > (['all']); // Specify the type of layerFilter if known
+    const [ footprintFilter, setFootprintFilter ] = useState < any > (["all"]);
+    const [ mapZoom, setMapZoom ] = useState < number > (zoom);
+    const [ clickedBlock, setClickedBlock ] = useState < string > ("");
 
     const mapSelection = useSelector<any>(selectMapSelection); // { "...": GeoJSONFeature[] }
     const [ selected_features, selectFeatures ] = useState<GeoJSONFeature[]>([]);
@@ -429,7 +429,7 @@ const GlMap: React.FC < GlMapProps > = ({
             ...layerAttributes
         };
 
-        (newLayerAttributes as any) !["paint"] = {
+        (newLayerAttributes as any)!["paint"] = {
             "fill-color": fillColor
         };
 
@@ -481,12 +481,13 @@ const GlMap: React.FC < GlMapProps > = ({
                     </Source>
 
                     <Source {...bead_dev.sources[0]} >
-                        {/*{mapZoom >= MIN_ZOOM_LEVEL && (*/}
+                        {(!!filterState.displayDataLayers) ?
                             <Layer
                               {...layerAttributes}
                               filter={layerFilter}
-                            />
-                        {/*)}*/}
+                            /> :
+                            <></>
+                        }
                     </Source>
 
                     <Source {...isp_footprint_fill.sources[0]} >
@@ -503,7 +504,6 @@ const GlMap: React.FC < GlMapProps > = ({
                         />
                     </Source>
 
-                    {/*{(selected_features.length > 0) ?*/}
                         <Source type="geojson" id="bead_block" data={{
                             "type": "FeatureCollection",
                             "features": selected_features
@@ -556,8 +556,7 @@ const GlMap: React.FC < GlMapProps > = ({
                                     "line-width": 2
                                 }
                             }} />
-                        </Source>{/* : <></>*/}
-                    {/*}*/}
+                        </Source>
 
                     <HoverInfo />
 
