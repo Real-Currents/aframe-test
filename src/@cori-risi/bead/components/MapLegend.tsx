@@ -16,8 +16,6 @@ interface MapLegendProps {
 
 const MapLegend: React.FC < MapLegendProps > = ({ title, category }) => {
 
-    console.log(category);
-
     const filterState: FilterState = useSelector(selectMapFilters);
 
     const continuous_legend_length = 5;
