@@ -33,7 +33,10 @@ const MapLegend: React.FC < MapLegendProps > = ({ title, category }) => {
                                      // .toString()
                                      // .replace("rgba", "rgb")
                                      // .replace(/,\s?[\d|\.]+\)/, ")")
-                             }} />
+                             }} >
+                            {category[i] === "Not Reported"? <div className={style["overlay-content"]}></div>: <></>}
+                        </div>
+            
                         <p>{category[i]}</p>
                         <InfoTooltip text={beadDefinitions[category[i]].toString()}/>
                     </div>
