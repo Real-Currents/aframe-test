@@ -70,12 +70,12 @@ export function HoverInfo () {
                                 <td>{hoverInfo.feature.properties["bead_category"] === "Not Reported"? "N/A": hoverInfo.feature.properties.cnt_total_locations}</td>
                             </tr>
                             <tr>
-                                <td>{"Pct. unserved (<25/3)"}</td>
+                                <td>{"Pct served (>100/20)"}</td>
                                 <td>
-                                    {
+                                    {   
                                         hoverInfo.feature.properties["bead_category"] === "Not Reported"?
                                         "N/A":
-                                        getPctUnserved(hoverInfo.feature.properties)
+                                        getPctServed(hoverInfo.feature.properties, filterState.excludeDSL)
                                     }</td>
                             </tr>
                             <tr>
@@ -88,12 +88,12 @@ export function HoverInfo () {
                                     }</td>
                             </tr>
                             <tr>
-                                <td>{"Pct served (>100/20)"}</td>
+                                <td>{"Pct. unserved (<25/3)"}</td>
                                 <td>
-                                    {   
+                                    {
                                         hoverInfo.feature.properties["bead_category"] === "Not Reported"?
                                         "N/A":
-                                        getPctServed(hoverInfo.feature.properties, filterState.excludeDSL)
+                                        getPctUnserved(hoverInfo.feature.properties)
                                     }</td>
                             </tr>
                             </tbody>
