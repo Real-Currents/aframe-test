@@ -16,6 +16,7 @@ export default function WelcomeModal() {
 
 	return (
 		<Dialog
+		  container={() => document.getElementById('overlay')}
 		  open={open}
 		  onClose={handleClose}
 		  aria-labelledby="modal-modal-title"

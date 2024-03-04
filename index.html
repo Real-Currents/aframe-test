@@ -1,62 +1,109 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="theme-color" content="#07353F" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="manifest" href="/manifest.json" />
-    <link rel="shortcut icon" href="/favicon.ico" />
-    <link href="src/preflight.css"  rel="stylesheet" type="text/css" />
-    <!--<link href="src/bundle.css"  rel="stylesheet" type="text/css" />-->
-    <link href="src/styles.css"  rel="stylesheet" type="text/css" />
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="description" content="Hello, World! • A-Frame">
 
-    <title>Rural Broadband Map</title>
-    <script>
-      window.global = window;
-      window.process = {
-        env: { DEBUG: undefined },
-      };
-      const exports = {};
-    </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <title>Rural Broadband Map</title>
+  <meta name="theme-color" content="#07353F" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link href="src/preflight.css"  rel="stylesheet" type="text/css" />
+  <!--<link href="src/bundle.css"  rel="stylesheet" type="text/css" />-->
+  <link href="src/styles.css"  rel="stylesheet" type="text/css" />
 
-<!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-PDCW9T5B');</script>
-    <!-- End Google Tag Manager -->
+  <script src="aframe/aframe-master.js"></script>
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-59VT4EZDX1"></script>
-    <script>
+  <script>
+    window.global = window;
+    window.process = {
+      env: { DEBUG: undefined },
+    };
+    const exports = {};
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-PDCW9T5B');</script>
+  <!-- End Google Tag Manager -->
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-59VT4EZDX1"></script>
+  <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
 
     gtag('config', 'G-59VT4EZDX1');
-    </script>
+  </script>
 
-  </head>
-  <body>
+  <style>
+    /* By default, hide the DOM Overlay element. */
+    #overlay {
+      display: initial;
+      padding: 0;
+    }
+    /* Show the DOM Overlay element while active (:xr-overlay pseudoclass) */
+    #overlay:xr-overlay {
+      display: initial;
+    }
+    #greeting {
+      background-color: rgba(1, 1, 1, 0.25);
+      margin: 10px;
+    }
+    #exit-ar {
+      position: absolute;
+      right: 40px;
+      bottom: 40px;
+      background: rgba(127,127,127,0.25);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.25);
+      padding: 6px 8px;
+      font-weight: bold;
+    }
+  </style>
+  <script>
+    AFRAME.registerComponent('exit-ar-button', {
+      schema: {
+        element: {type: 'selector'}
+      },
+      init: function () {
+        this.data.element.addEventListener('click', ev => {
+          this.el.sceneEl.renderer.xr.getSession().end();
+        });
+      }
+    });
+  </script>
+</head>
+<body>
+
+  <div id="overlay">
 
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PDCW9T5B"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+                      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
+    <div id="react-app"><img id="loader" src="images/loading.gif" style="position: absolute; width: 5%; top: 47.5%; bottom: auto; left: 47.5%; right: auto;" /><!--<div id="map"></div>--></div>
+    <button id="exit-ar">Exit AR</button>
+  </div>
+  <a-scene background="color: #ECECEC"
+           webxr="optionalFeatures: dom-overlay; overlayElement: #overlay"
+           xr-mode-ui="XRMode: xr">
+    <a-entity exit-ar-button="element: #exit-ar"></a-entity>
+    <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9" shadow></a-box>
+    <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E" shadow></a-sphere>
+    <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D" shadow></a-cylinder>
+    <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4" shadow></a-plane>
+  </a-scene>
 
-    <!-- <div id="risi-header" light_on_dark="true" title="Rural Broadband Map"></div> -->
-
-    <!--<div class="dashboard flex flex-wrap">-->
-      <div id="react-app"><img id="loader" src="images/loading.gif" style="position: absolute; width: 5%; top: 47.5%; bottom: auto; left: 47.5%; right: auto;" /><!--<div id="map"></div>--></div>
-
-    <!--</div>-->
-    <!--<div id="sidebar"><div id="about" class="modal-content prose max-w-none row"><div style="overflow-y: scroll"><b>About the Tool</b><p>...</p></div></div>-->
-    <!--<script src="src/bundle.js" type="module"></script>-->
-    <script src="src/main.tsx" type="module"></script>
+  <script src="src/main.tsx" type="module"></script>
 
   </body>
 </html>

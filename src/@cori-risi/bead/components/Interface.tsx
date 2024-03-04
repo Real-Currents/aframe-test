@@ -58,7 +58,7 @@ const Interface = () => {
         setDrawerShowing(!isDrawerShowing);
     };
 
-    const MAPBOX_TOKEN = typeof process.env.MAPBOX_TOKEN === 'string' ? process.env.MAPBOX_TOKEN : '';
+    const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
     return ( 
         <>
