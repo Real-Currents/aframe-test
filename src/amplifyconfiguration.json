@@ -1,4 +1,9 @@
 {
+  "Auth": {
+    "oauth": {
+      "domain": "authcori.auth.us-east-1.amazoncognito.com"
+    }
+  },
   "aws_project_region": "us-east-1",
   "aws_user_pools_id": "us-east-1_QeA4600FA",
   "aws_user_pools_web_client_id": "5eusi16g0o2q1g1rr5ehgudodm",

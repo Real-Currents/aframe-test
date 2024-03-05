@@ -1,9 +1,10 @@
 import React, {ReactElement, useEffect} from 'react';
 import ReactDOM from 'react-dom/client';
 import PropTypes from "prop-types";
-import { Amplify } from "aws-amplify";
+import {Amplify, ResourcesConfig} from "aws-amplify";
 
-import aws_config from '../amplifyconfiguration.json';
+import amplifyconfig from './amplifyconfiguration.json';
+import aws_config from './aws-config';
 import App from './@cori-risi/bead/App.tsx';
 
 import mapboxgl from 'mapbox-gl';
@@ -17,7 +18,44 @@ import './@cori-risi/bead/components/styles/CustomAmplifyAuthenticator.css';
 
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
-Amplify.configure(aws_config);
+Amplify.configure(amplifyconfig);
+
+// const update_config: ResourcesConfig = {
+Amplify.configure({
+    // TODO: Why is this so ridiculous and how can these options be
+    //       specified exclusively in amplifyconfiguration.json ???
+    ...Amplify.getConfig(),
+    Auth: {
+        ...Amplify.getConfig().Auth!,
+        Cognito: {
+            ...Amplify.getConfig().Auth!.Cognito!,
+            ...aws_config.Auth,
+            loginWith: {
+                ...Amplify.getConfig().Auth!.Cognito!.loginWith!,
+                oauth: {
+                    ...Amplify.getConfig().Auth!.Cognito!.loginWith!.oauth!,
+                    ...aws_config.Auth.oauth,
+                    redirectSignIn: [
+                        aws_config.Auth.oauth.redirectSignIn
+                    ],
+                    redirectSignOut: [
+                        aws_config.Auth.oauth.redirectSignOut
+                    ],
+                    responseType: (aws_config.Auth.oauth.responseType as "code"),
+                    scopes: [
+                        ...aws_config.Auth.oauth.scope
+                    ]
+                },
+                username: true,
+            },
+            userPoolClientId: aws_config.Auth.clientId
+        }
+    }
+});
+// };
+// console.log(update_config);
+// Amplify.configure(update_config);
+
 
 const init_event = new Event("Initialize frontend app!");
 
@@ -138,32 +176,41 @@ function PrivacyAuthenticator (props: { children?: ReactElement }) {
             const amplifyAuthenticatorForm: HTMLFormElement | null = document.querySelector('form[data-amplify-form]');
             if (amplifyAuthenticatorForm !== null) {
 
-                const footerLoader: HTMLDivElement | null = document.querySelector('[data-amplify-footer]');
-                if (footerLoader !== null) {
-                    footerLoader.style.display = "none";
-                }
+                const brandingInformation = (document.getElementById("branding-info") === null) ?
+                    document.createElement("div") : document.getElementById("branding-info");
+
+                brandingInformation!.id = "branding-info"
+                brandingInformation!.innerHTML = `            
+  <span class="cori-logo"><img src="/Full-Logo_CORI_Dark-Teal.svg" /></span>
+  <p></p>
+  <br />
+  <h4>Rural Broadband Map</h4>
+  <p>Login below to start mapping</p>
+`;
+                console.log(amplifyAuthenticatorForm);
+                (amplifyAuthenticatorForm).before(brandingInformation!);
 
                 const signInButton: HTMLButtonElement | null = amplifyAuthenticatorForm.querySelector('.amplify-button[type="submit"]');
                 if (signInButton !== null && signInButton.innerHTML === "Sign in") {
-                    signInButton.innerHTML = "OK";
-                    signInButton.style.display = "inline-flex";
-                    signInButton.style.color = "#16343e";
-                    signInButton.style.cursor = "pointer";
-                    signInButton.style.background = "#a3e2b5";
-                    signInButton.style.borderRadius = "50px";
-                    signInButton.style.padding = "13px 50px";
-                    signInButton.style.maxHeight = "48px";
-                    signInButton.style.minHeight = "48px";
-                    signInButton.style.maxWidth = "268px";
-                    signInButton.style.minWidth = "198px";
-                    signInButton.style.textDecoration = "none";
-
-                    // align-content: center;
-                    // justify-content: center;
-                    // justify-items: center;
-                    // align-items: center;
-                    // text-align: center;
-                    // white-space: nowrap;
+                    signInButton.innerHTML = "Continue";
+//                     signInButton.style.display = "inline-flex";
+//                     signInButton.style.color = "#16343e";
+//                     signInButton.style.cursor = "pointer";
+//                     signInButton.style.background = "#a3e2b5";
+//                     signInButton.style.borderRadius = "50px";
+//                     signInButton.style.padding = "13px 50px";
+//                     signInButton.style.maxHeight = "48px";
+//                     signInButton.style.minHeight = "48px";
+//                     signInButton.style.maxWidth = "268px";
+//                     signInButton.style.minWidth = "198px";
+//                     signInButton.style.textDecoration = "none";
+//
+//                     // align-content: center;
+//                     // justify-content: center;
+//                     // justify-items: center;
+//                     // align-items: center;
+//                     // text-align: center;
+//                     // white-space: nowrap;
 
                     const usernameInput: HTMLInputElement | null = amplifyAuthenticatorForm.querySelector('.amplify-textfield .amplify-field-group div .amplify-input[name="username"]');
                     if (usernameInput !== null) {
@@ -174,32 +221,36 @@ function PrivacyAuthenticator (props: { children?: ReactElement }) {
                         passwordInput.value = import.meta.env.VITE_APP_PASSWORD;
                     }
 
-                    if (document.getElementById("privacy-info") === null) {
-                        const privacyInformation = document.createElement("div");
-                        privacyInformation.id = "privacy-info"
-                        privacyInformation.innerHTML = `
+                    const privacyInformation = (document.getElementById("privacy-info") === null) ?
+                        document.createElement("div") :
+                        document.getElementById("privacy-info");
+                    privacyInformation!.id = "privacy-info"
+                    privacyInformation!.innerHTML = `
                     <p></p>
                     <p>This Site uses cookies to offer you a better browsing experience and to analyze Site
                         traffic. By continuing to access the Site, you consent to our use of cookies and storage and use of
                         your data as provided in our <a href="http://ruralinnovation.us/privacy-policy/" target="_blank">Privacy Policy</a>.
                     </p>
                     <p></p>
-                    
-`
-                        console.log(amplifyAuthenticatorForm.children[0].children[0]);
-                        (amplifyAuthenticatorForm.children[0].children[0]).after(privacyInformation);
+`;
+
+                    const footerLoader: HTMLDivElement | null = document.querySelector('[data-amplify-footer]');
+                    if (footerLoader !== null) {
+                        footerLoader.style.background = "none";
+                        // (footerLoader).after(privacyInformation!);
+                        (footerLoader).before(privacyInformation!);
                     }
                 }
             }
         }, 1533);
-    })
+    });
 
     // if (import.meta.env.VITE_OFFLINE_NOTIFICATION !== "false") {
         return (
             <div className={"app-with-authenticator"}>
                 {props.children}
             </div>
-        )
+        );
     // } else return props.children;
 }
 
