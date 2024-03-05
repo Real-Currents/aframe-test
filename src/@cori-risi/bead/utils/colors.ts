@@ -4,7 +4,7 @@ export const colors = {
             "served_area": "rgba(6, 171, 123, 0.4)",
             "underserved_area": "rgba(255, 228, 115, 0.4)",
             "unserved_area": "rgba(177, 26, 0, 0.4)",
-            "not_reported": "rgba(0, 0, 0, 0.25)",
+            "not_reported": "rgba(0, 0, 0, 0)",
             "default": "rgba(0, 0, 0, 0.25)"
         }
     }
@@ -16,7 +16,7 @@ export const colors_excludeDSL = {
       "served_area": "rgba(9, 99, 73, 0.4)",
       "underserved_area": "rgba(217, 178, 17, 0.4)",
       "unserved_area": "rgba(231, 79, 42, 0.4)",
-      "not_reported": "rgba(0, 0, 0, 0.25)",
+      "not_reported": "rgba(0, 0, 0, 0)",
       "default": "rgba(0, 0, 0, 0.25)"
     }
   }

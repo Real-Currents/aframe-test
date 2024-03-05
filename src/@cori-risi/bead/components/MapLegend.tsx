@@ -29,10 +29,7 @@ const MapLegend: React.FC < MapLegendProps > = ({ title, category }) => {
                     <div className={style["legend-row"]} key={i}>
                         <div className={style["legend-box"]}
                              style={{
-                                 backgroundColor: category[i+1]
-                                     // .toString()
-                                     // .replace("rgba", "rgb")
-                                     // .replace(/,\s?[\d|\.]+\)/, ")")
+                                 backgroundColor: category[i] === "Not Reported" ? "rgba(0, 0, 0, 0.25)" : category[i+1]
                              }} >
                             {category[i] === "Not Reported"? <div className={style["overlay-content"]}></div>: <></>}
                         </div>
