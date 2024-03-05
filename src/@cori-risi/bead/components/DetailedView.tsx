@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import MUIDataTable from "mui-datatables";
+import bbox from '@turf/bbox';
+import { Feature, FeatureCollection } from "geojson";
 import { CustomButton } from "./CustomInputs";
 
 import isp_name_dict from "../data/isp_name_lookup_rev.json";
@@ -9,6 +11,8 @@ import { HoverInfoState } from "../models/index";
 import { parseIspId, swapKeysValues } from "../utils/utils";
 import "./styles/DetailedView.scss";
 import GeoJSONFeature from "maplibre-gl";
+import {MapRef} from "react-map-gl";
+import { jumpMapToFeature } from '../utils/mapUtils';
 
 interface IspNameLookup {
     [key: string]: string;
@@ -239,26 +243,34 @@ export default function DetailedView () {
 
     }, [ mapSelection ]);
 
+    function showMap (evt: any) {
+        const infoWrapper = window.document.getElementById("info-wrapper");
+        if (infoWrapper !== null) {
+            infoWrapper
+                .style.paddingTop = "calc(100vh - 75px)";
+            const detailPanel = window.document.getElementById("detail");
+            if (detailPanel !== null) {
+                setTimeout(() => {
+                    detailPanel
+                        .style.display = "none";
+                }, 233);
+            }
+        }
+    }
+
+    function goToFeatures(features: FeatureCollection<any>, map: MapRef) {
+        console.log("Call jumpMapToFeature");
+
+        jumpMapToFeature(map, features, null);
+    }
+
     return (
         <>
             <div id="detail" className={"detailed-view"}
                  style={{ display: "none" }}>
 
                 <button className={"detail-button top"}
-                        onClick={(evt) => {
-                            const infoWrapper = window.document.getElementById("info-wrapper");
-                            if (infoWrapper !== null) {
-                                infoWrapper
-                                    .style.paddingTop = "calc(100vh - 75px)";
-                                const detailPanel = window.document.getElementById("detail");
-                                if (detailPanel !== null) {
-                                    setTimeout(() => {
-                                        detailPanel
-                                            .style.display = "none";
-                                    }, 233);
-                                }
-                            }
-                        }} >
+                        onClick={showMap} >
                     {/*<a href="#main-interface">*/}
                         <svg viewBox="0 0 22 14" aria-hidden="true">
                             <polygon points="18.8743237 0 22 3.62676411 10.6828079 14 0 3.57495046 3.2339044 0.0505492411 10.7824379 7.41694926"></polygon>
@@ -290,9 +302,22 @@ export default function DetailedView () {
                         <span className={"button-padding"}>
                             <CustomButton
                                 className={"affirmative button"}
-                                onClick={(evt) => console.log("TODO: See on map")}
+                                onClick={(evt) => {
+                                    console.log(block_info.length);
+                                    if (block_info.length > 0) {
+                                        const featureCollection = {
+                                            "type": "FeatureCollection",
+                                            "features": [
+                                                ...block_info
+                                            ]
+                                        };
+                                        goToFeatures((featureCollection as FeatureCollection<any>), (window as { [key: string]: any })["map"] as MapRef);
+                                    }
+
+                                    showMap(evt);
+                                }}
                                 variant="outlined">
-                                TODO: See On Map
+                                See All On Map
                             </CustomButton>
                         </span>
                     </span>
