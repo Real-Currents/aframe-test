@@ -425,7 +425,7 @@ function Sidebar () {
             </div>
           </div>
           <div className={style["link-section"]}>
-            <a href="https://ruralinnovation.us/" target="_blank">About</a> |
+            <a href="https://ruralinnovation.us/resources/mapping-and-data-analytics/interactive-rural-broadband-service-map/" target="_blank">About</a> |
             <a href="https://ruralinnovation.us/about/contact-us/" target="_blank">Contact</a> |
             <a href="https://form-renderer-app.donorperfect.io/give/center-on-rural-innovation/cori-general-giving" target="_blank">Donate</a>
           </div>
