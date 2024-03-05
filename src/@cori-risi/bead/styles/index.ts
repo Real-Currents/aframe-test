@@ -82,9 +82,8 @@ export const not_reported_layer: MapboxSourceLayerStyles = {
             "source-layer": "proj_beadbead_blockv1b",
             "type": "fill",
             "paint": {
-                "fill-color": "red",
-                "fill-opacity": 1,
-                "fill-pattern": "circle-1"
+                "fill-opacity": .5,
+                "fill-pattern": "stripe-5"
             },
             "filter": ['==', ['get', 'bead_category'], "Not Reported"]
         },
