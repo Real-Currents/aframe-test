@@ -119,6 +119,16 @@ const GlMap: React.FC < GlMapProps > = ({
     const getBlockInfoFromApi = (geoid_bl: string, token: string) => {
         // console.log("API Context state: ", apiContext);
 
+        const infoWrapper = window.document.getElementById("info-wrapper");
+        if (infoWrapper !== null) {
+            // infoWrapper
+            //     .style.opacity = "0.5";
+            infoWrapper
+                .style.background = "rgba(46, 60, 67, 0.5) url('images/loading.gif') no-repeat fixed center";
+            infoWrapper
+                .style.backgroundSize = "20px";
+        }
+
         const client: AxiosInstance | null = (apiContext.hasOwnProperty("apiClient") && apiContext.apiClient !== null
             && apiContext.apiClient.hasOwnProperty("get") && typeof apiContext.apiClient.get === "function"
         ) ?
@@ -133,6 +143,15 @@ const GlMap: React.FC < GlMapProps > = ({
                     // onFocusBlockChange(geoid_bl);
 
                     console.log("result is ", result);
+
+                    if (infoWrapper !== null) {
+                        // infoWrapper
+                        //     .style.opacity = "0.0";
+                        infoWrapper
+                            .style.pointerEvents = "none";
+                        infoWrapper
+                            .style.background = "transparent";
+                    }
 
                     if (result.data
                         && result.data.hasOwnProperty("features")
@@ -217,7 +236,14 @@ const GlMap: React.FC < GlMapProps > = ({
                     }
                 })
                 .catch(error => {
+
                     console.error("Error fetching data:", error);
+
+                    if (infoWrapper !== null) {
+                        infoWrapper
+                            .style.opacity = "0.0";
+                    }
+
                     if (error.hasOwnProperty("code")) {
                         console.log("Error code:", error.code!);
                         if (error.code! === "ERR_BAD_REQUEST"
