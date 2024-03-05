@@ -64,6 +64,11 @@
     background: url("stripe-5.svg") repeat top left;
 }
 
+.map-legend .dsl-note {
+	font-size: .8em;
+	line-height: 1.1em;
+	margin: 0px;
+}
 
 @media (max-width: 600px) {
 

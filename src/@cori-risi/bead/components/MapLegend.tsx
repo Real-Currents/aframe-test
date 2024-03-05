@@ -68,7 +68,7 @@ const MapLegend: React.FC < MapLegendProps > = ({ title, category }) => {
                 {category.length > continuous_legend_length ? renderMatchLegend() : null}
                 {category.length <= continuous_legend_length ? renderInterpolateLegend() : null}
                 <div>
-                    {filterState.excludeDSL && category.length > continuous_legend_length? <span>*Excluding DSL</span> :  <></>}
+                    {filterState.excludeDSL && category.length > continuous_legend_length? <div className={style["dsl-note"]}>*Counting all DSL-only locations as Underserved</div> :  <></>}
                 </div>
             </div> 
     </>

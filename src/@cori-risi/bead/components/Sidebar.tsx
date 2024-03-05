@@ -238,7 +238,7 @@ function Sidebar () {
             </div>            
             <div className={style["filter-section"]}>
               <div className={style["filter-header"]}>
-                <h5>Exclude DSL</h5>
+                <h5>Count all DSL-only locations as Underserved</h5>
               </div>
               <div className={style["switch"]}>
                 <Typography>Off</Typography>

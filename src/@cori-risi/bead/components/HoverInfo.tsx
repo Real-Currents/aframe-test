@@ -62,7 +62,7 @@ export function HoverInfo () {
                 <p><span>Census Block ID</span>: {hoverInfo.feature.properties.geoid_bl}</p>
                 <div>
                     <div>
-                        <p><b>Broadband access</b> {filterState.excludeDSL? <em>(excluding DSL)</em>: ""}</p>
+                        <p><b>Broadband access</b> {filterState.excludeDSL? <em>(Counting all DSL-only locations as Underserved)</em>: ""}</p>
                         <table>
                             <tbody>
                             <tr>
