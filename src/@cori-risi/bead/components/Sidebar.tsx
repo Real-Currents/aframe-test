@@ -9,6 +9,8 @@ import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import Slider from '@mui/material/Slider';
+import Switch from '@mui/material/Switch';
+import Typography from '@mui/material/Typography';
 
 import InfoTooltip from "./InfoTooltip";
 
@@ -129,6 +131,7 @@ function Sidebar () {
   };
 
   const handleMultipleISPChange = (event: any, newValue: any ) => {
+    
     // Populate a list of combo ids to use when filtering
     const valid_isp_combos: string[] = [];
     for (let isp of newValue) {
@@ -149,6 +152,24 @@ function Sidebar () {
     }));
   };
 
+  const handleISPFootprintChange = (event: any, newValue: string | null): void => {
+
+    if (newValue === null) {
+      dispatch(setMapFilters({
+        isp_footprint: ""
+      }));
+    }
+    else {
+      let isp_id = isp_name_lookup[newValue];
+      if (typeof isp_id === "string") {
+        dispatch(setMapFilters({
+          isp_footprint: isp_id
+        }));
+      }
+    }
+
+  };
+
   const handleCountiesChange = (event: any, newValue: any) => {
 
     let valid_geoid_co: string[] = [];
@@ -167,16 +188,34 @@ function Sidebar () {
     }));
   };
 
+  const handleExcludeDSLChange = () => {
+    const newExcludeDSL = !filterState.excludeDSL;
+    dispatch(setMapFilters({ excludeDSL: newExcludeDSL }));
+  };
+
+  const toggleDataLayers = () => {
+    dispatch(setMapFilters({ displayDataLayers: !filterState.displayDataLayers }));
+  };
+
   return (
     <>
         <animated.div style={props} className={style["sidebar"]}>
           <div className={style["controls-wrapper"]}>
-            <h4>Map display variable
+            <h4>Map display variables
                 {/* TODO: */}
                 {/* Add button to toggle off filtered/thematic map layers */}
                 {/* ... (leave basemap and selcted features) */}
             </h4>
             <div className={style['fill-selector']}>
+              <div className={style["switch"]} style={{ float: "right" }}>
+                {/*<Typography>Off</Typography>*/}
+                <Switch
+                    checked={filterState.displayDataLayers}
+                    onChange={toggleDataLayers}
+                    inputProps={{ 'aria-label': 'Toggle Broadband Data Layers' }}
+                />
+                {/*<Typography>On</Typography>*/}
+              </div>
               <div className={style["color-dropdown"]}>
                 <Autocomplete
                   disablePortal
@@ -189,6 +228,40 @@ function Sidebar () {
                   onChange={handleFillColorChange}
                   disabled={filterState.disableSidebar}
                 />
+              </div>
+            </div>
+            <div className={style["filter-section"]}>
+              <div className={style["filter-header"]}>
+                <h5>Internet service provider footprint</h5>
+                <InfoTooltip text={"Show the footprint for a given ISP"}/>
+              </div>
+              <Autocomplete
+                options={Object.keys(isp_name_lookup)}
+                onChange={handleISPFootprintChange}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="standard"
+                    label="Display ISP footprint"
+                    placeholder="Display ISP footprint"
+                  />
+                )}
+                disabled={filterState.disableSidebar}
+              />
+            </div>            
+            <div className={style["filter-section"]}>
+              <div className={style["filter-header"]}>
+                <h5>Count all DSL-only locations as Underserved</h5>
+              </div>
+              <div className={style["switch"]}>
+                <Typography>Off</Typography>
+                <Switch 
+                  checked={filterState.excludeDSL}
+                  onChange={handleExcludeDSLChange}
+                  inputProps={{ 'aria-label': 'DSL toggle' }} 
+                  disabled={filterState.disableSidebar}
+                />
+                <Typography>On</Typography>
               </div>
             </div>
             <hr />
@@ -240,8 +313,11 @@ function Sidebar () {
               </div>
               <div className={style["filter-section"]}>
                 <div className={style["filter-header"]}>
-                  <h5>Received federal funding?</h5>
-                  <InfoTooltip text={"Show blocks that have received prior federal broadband funding"}/>
+                  <h5>Awarded federal funding</h5>
+                  <InfoTooltip text={(`
+Census blocks in areas where previous winning applicants for an Auction 904 RDOF bid have been authorized to recieve funds.
+This filter maps the current 2020 Census blocks to the corresponding 2010 Census block(s) that  originally received the award.
+`)}/>
                 </div>
                 <FormGroup row className={style["form-control-group"]}>
                   <FormControlLabel className={style["form-control-label"]}
@@ -365,7 +441,7 @@ function Sidebar () {
             </div>
           </div>
           <div className={style["link-section"]}>
-            <a href="https://ruralinnovation.us/" target="_blank">About</a> |
+            <a href="https://ruralinnovation.us/resources/mapping-and-data-analytics/interactive-rural-broadband-service-map/" target="_blank">About</a> |
             <a href="https://ruralinnovation.us/about/contact-us/" target="_blank">Contact</a> |
             <a href="https://form-renderer-app.donorperfect.io/give/center-on-rural-innovation/cori-general-giving" target="_blank">Donate</a>
           </div>

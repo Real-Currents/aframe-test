@@ -11,7 +11,7 @@ export function swapKeysValues(json: { [key: string]: string; } ): { [key: strin
 export function parseIspId(isp_ids: string, isp_name_lookup: { [key: string]: string } ): string {
 
     if (isp_ids === undefined) {
-        return "N/A";
+        return "None";
     }
     const isp_id_array = isp_ids.substring(1, isp_ids.length - 1).split(",");
     let isp_name_str = "";

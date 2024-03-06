@@ -20,10 +20,10 @@
             "ios": "4.10.0"
         },
         "mapbox:uiParadigm": "layers",
-        "mapbox:thumb": "data:image/webp;base64,UklGRnoFAABXRUJQVlA4TG0FAAAvO8AOAL/ioI0kR/IwOf4QY136x+CgbSRJcpFZ/vDu7Tho20iQXCLHH+Pd/2T+f+BQrYikIkhQCiLCV4L8kZEI8e0YBjNgxrRz3hGCGVSCYXGIxHAUJBFMTphgKkpL/xTkvHQnrK/X2RHb51Msz2M2xhh41LbNbdts24buPpOTOSlDhgxlaIIacJLcFQJc0nvvCZFZ/1UhrgEBL0FE/x26bVtHDeC7815Or066XwAAEjNjZ65TroripEJRFSpuqQIexxNWuAIHVEbCx6ioUp5WRqVUorLISqpGBSWVxjtlyMLcqcJLlFwPPA2WY0aSFXYcx0YlFsX/synK5kg6M21SQEDNosIB9Qn3qKHKSAj4GjXlERkZEBgkb4TtR61pEwBczoftRHISAE6fSZIdul8aDh49wgkjAuTRIKDDFzisNzU69jyMisia0YjrGFOKy+j3J5YBeXYNaYQePboRXiMiokODMUVE9PgBnVKNnh+yRcsoBXRGXM+2SN0y2E7NqQBKwnkahxn0AQ06fIOY00ZRUo2MxkiTS+A5MbGyAJjLJ6acYs+czpJsoJz+JnXrjO6Y0T1bdmhpYBGd/pkAERJppleSSFFHHKd8NBieReaW3bbkusBRWx5Z6kgWMnbjtQbp6OG/99wMqI0xPSqsS2yNhPq5p0p41vT0qMijvFHkUSl5AAfMj/8CACbuhjMh9niNlqXHh+aPaRHtmuzQ48X2VukG/Qlb9YhkQIsOLXrETYpYboYJH2JGtOi/u53phRb9v0Yv2PTYI5D7zAu3aDZqAP93sWBRTgLmwYehs16I+ZrcmdR79NuoVBu6QTcNLRopLKQ/wMJoc+9/iHjeC/3/uvUEtGjICe9nNH4CwLnmXwoNDgj+O88uK6w15M2dDjhsAzceDRqriPQIpsI2CIWlf/79z4Jz1/OCIKUCBcLxx285ICGhQAI3mYTi/wW5GQVYRaQRZoQM0uBxQpa/8j9zPOi31oNGjfUgPK5htKZUE4u66G7Rj5TS3hT8cosOATdosId8VjLj84YbbxZoPd6ArNHk5XQY4j3rsNmgJSDpGSOCyuoEN9gj5LBHRBxenIfsRgd2QxEdAMz+RDpidiid4upej6jyjAfr3IP8Zm2831oPTnph+GR3jM7de0QAeKMXUsPxOEhP3ZV7Zr3fTPSjLPVbfLXe1EZAsFAbYZ0+Sa+L1LqVc+4xZsRmiRkoG+lqdeUuOWzRIhjobd//w9TZH2gLrlG0txDV6kO1Q+rurlbuLknk+FlNgvzLiNhNK+JbuQilE0r33X0HroUCyeC3n/K3wuNX47T3znrwwkgr0zEN0nDhnjjPokLM9kh9qerLX1Gbqfuc1hhTdWOPGlFRIW2COwXOxxBh49XMM5NIkrp277rJftSbfmS6zusTfrNOAS9Mz5jqR3rND9kXqR2BS3YrM4GU+frMXa86llP96DDVB3t8o7TP6vNt5gX1fM0XiEXqnHOrJfDenO+DSEvz5AR34DDDg41J86vcgyHvR/3QsmXPLqU40o/eAA3mnlciCUiUTrT7j7nM0C1i1o8yyOioDzVepp6tWvRsk6HdXS5owJreA4qQROZSLt1T9wTFjFoXTPofDbbWca9OQdorMPLEY691vXInvDvtNEyK+GegVSKQ+SMh0eR/x91xq9VDYj1iPnIZ6bkZAiFemKPmEjsu3IV7Z3VvQDBtpoa37wveTF29U4U9bkZFqqkaNf/NetQleufcskt258oUAVHI4unplMvVw7cfznpf6NDsJutVkGpENjiMQqTgslgteUWafkmYbt544i7dxer+Y/cuJ/YM17gxDahB+Jem9wwywmwR2qTaTcSDN71bIQkA"
+        "mapbox:thumb": "data:image/webp;base64,UklGRiQAAABXRUJQVlA4TBcAAAAvO8AOAAfQ//73v/8BICH8f69F9D/1AgA="
     },
-    "center": [-72.2706939185042, 43.44154356266026],
-    "zoom": 12.292498239356892,
+    "center": [-72.37907502907474, 43.42718313116728],
+    "zoom": 20.946546625802945,
     "bearing": 0,
     "pitch": 0,
     "sources": {
@@ -32,7 +32,7 @@
             "type": "vector"
         }
     },
-    "sprite": "mapbox://sprites/ruralinno/cl010e7b7001p15pe3l0306hv/184gwaneoyp2tbs2nn7qe6hns",
+    "sprite": "mapbox://sprites/ruralinno/cl010e7b7001p15pe3l0306hv/68n9slz9mfbus83an19oqbf32",
     "glyphs": "mapbox://fonts/ruralinno/{fontstack}/{range}.pbf",
     "layers": [
         {
@@ -3720,12 +3720,12 @@
             "layout": {"visibility": "none"},
             "paint": {
                 "fill-color": "hsla(303, 73%, 74%, 0.66)",
-                "fill-pattern": "circle-1"
+                "fill-pattern": "stripe-4"
             }
         }
     ],
     "created": "2022-02-24T13:16:14.872Z",
-    "modified": "2024-02-24T15:50:30.440Z",
+    "modified": "2024-03-05T19:41:14.872Z",
     "id": "cl010e7b7001p15pe3l0306hv",
     "owner": "ruralinno",
     "visibility": "private",

@@ -4,6 +4,7 @@ export interface BroadbandTechnology {
 }
 
 export interface FilterState {
+    displayDataLayers: boolean;
     colorVariable: string;
     bb_service: {
         served: boolean;
@@ -21,6 +22,8 @@ export interface FilterState {
     };
     disableSidebar: boolean;
     showSidebar: boolean;
+    excludeDSL: boolean;
+    isp_footprint: string
 }
 
 export interface HoverInfoState {

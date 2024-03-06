@@ -1,4 +1,7 @@
 import React from 'react';
+import { useSelector } from "react-redux";
+import { FilterState, HoverInfoState } from "../models/index";
+import { selectMapFilters, setMapFilters } from "../features";
 import { format } from 'd3-format';
 import InfoTooltip from "./InfoTooltip";
 import style from "./styles/MapLegend.module.css";
@@ -13,7 +16,9 @@ interface MapLegendProps {
 
 const MapLegend: React.FC < MapLegendProps > = ({ title, category }) => {
 
-    // console.log("category:", category);
+    const filterState: FilterState = useSelector(selectMapFilters);
+
+    const continuous_legend_length = 5;
 
     const renderMatchLegend = () => {
         const legendItems = [];
@@ -24,11 +29,11 @@ const MapLegend: React.FC < MapLegendProps > = ({ title, category }) => {
                     <div className={style["legend-row"]} key={i}>
                         <div className={style["legend-box"]}
                              style={{
-                                 backgroundColor: category[i+1]
-                                     // .toString()
-                                     // .replace("rgba", "rgb")
-                                     // .replace(/,\s?[\d|\.]+\)/, ")")
-                             }} />
+                                 backgroundColor: category[i] === "Not Reported" ? "rgba(0, 0, 0, 0.25)" : category[i+1]
+                             }} >
+                            {category[i] === "Not Reported"? <div className={style["overlay-content"]}></div>: <></>}
+                        </div>
+            
                         <p>{category[i]}</p>
                         <InfoTooltip text={beadDefinitions[category[i]].toString()}/>
                     </div>
@@ -43,22 +48,25 @@ const MapLegend: React.FC < MapLegendProps > = ({ title, category }) => {
 
         return (
             <div className={style['interpolate-wrapper']}>
-                <p>{numberFormat(category[3])}</p>
+                <p>{numberFormat(category[4][3])}</p>
                 <div 
                     className={style['interpolate-bar']} 
-                    style={{"background": "linear-gradient(to right, " + category[6] + ", " + category[category.length-1] + ")"}} >
+                    style={{"background": "linear-gradient(to right, " + category[4][4] + ", " + category[4][category[4].length-1] + ")"}} >
                 </div>
-                <p>{numberFormat(category[category.length-2])}+</p>
+                <p>{numberFormat(category[4][category[4].length-2])}+</p>
             </div>
         );
     };
 
     return ( 
     <>
-        <div style={category[0] === 'match'? {height: "205px"} : {height: "95px"}} className={style["map-legend"]}>
-                <h5>{title}</h5>
-                {category[0] === 'match' ? renderMatchLegend() : null}
-                {category[0] === 'interpolate' ? renderInterpolateLegend() : null}
+        <div style={category.length > continuous_legend_length? {height: "auto"} : {height: "95px"}} className={style["map-legend"]}>
+                <h5>{title}{filterState.excludeDSL && category[0] === 'match'? "*" :  ""}</h5>
+                {category.length > continuous_legend_length ? renderMatchLegend() : null}
+                {category.length <= continuous_legend_length ? renderInterpolateLegend() : null}
+                <div>
+                    {filterState.excludeDSL && category.length > continuous_legend_length? <div className={style["dsl-note"]}>*Counting all DSL-only locations as Underserved</div> :  <></>}
+                </div>
             </div> 
     </>
     );

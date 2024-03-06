@@ -23,7 +23,10 @@ import style from "./styles/GlMap.module.css";
 import "mapbox-gl/dist/mapbox-gl.css";
 import {
     bead_dev,
-    // bb_tr_100_20,
+    isp_footprint_line,
+    isp_footprint_fill,
+    not_reported_fill_layer,
+    not_reported_pattern_layer,
     contourStyle,
     mapboxStyle
 } from '../styles';
@@ -89,7 +92,7 @@ const GlMap: React.FC < GlMapProps > = ({
 
     const selection_color = '#00835D';
 
-    const [fillColor, setFillColor] = useState < any[] > (getFillColor(filterState.colorVariable));
+    const [fillColor, setFillColor] = useState < any[] > (getFillColor(filterState.colorVariable, filterState.excludeDSL));
     const isShowing = false;
 
     const { longitude, latitude, zoom } = fitBounds({
@@ -99,12 +102,13 @@ const GlMap: React.FC < GlMapProps > = ({
         padding: 20 // Optional padding around the bounds
     });
 
-    const [ layerAttributes, setLayerAttributes] = useState < (IntrinsicAttributes & LayerProps) > ({ ...bead_dev.layers[0] });
+    const [ layerAttributes, setLayerAttributes ] = useState < (IntrinsicAttributes & LayerProps) > ({ ...bead_dev.layers[0] });
 
-    const [ hoverInfo, setHoverInfo] = useState < any > (null); // Specify the type of hoverInfo if known
-    const  [layerFilter, setLayerFilter] = useState < any > (['all']); // Specify the type of layerFilter if known
-    const [ mapZoom, setMapZoom] = useState < number > (zoom);
-    const [ clickedBlock, setClickedBlock] = useState < string > ("");
+    const [ hoverInfo, setHoverInfo ] = useState < any > (null); // Specify the type of hoverInfo if known
+    const [ layerFilter, setLayerFilter ] = useState < any > (['all']); // Specify the type of layerFilter if known
+    const [ footprintFilter, setFootprintFilter ] = useState < any > (["all"]);
+    const [ mapZoom, setMapZoom ] = useState < number > (zoom);
+    const [ clickedBlock, setClickedBlock ] = useState < string > ("");
 
     const mapSelection = useSelector<any>(selectMapSelection); // { "...": GeoJSONFeature[] }
     const [ selected_features, selectFeatures ] = useState<GeoJSONFeature[]>([]);
@@ -116,6 +120,16 @@ const GlMap: React.FC < GlMapProps > = ({
 
     const getBlockInfoFromApi = (geoid_bl: string, token: string) => {
         // console.log("API Context state: ", apiContext);
+
+        const infoWrapper = window.document.getElementById("info-wrapper");
+        if (infoWrapper !== null) {
+            // infoWrapper
+            //     .style.opacity = "0.5";
+            infoWrapper
+                .style.background = "rgba(46, 60, 67, 0.5) url('images/loading.gif') no-repeat fixed center";
+            infoWrapper
+                .style.backgroundSize = "20px";
+        }
 
         const client: AxiosInstance | null = (apiContext.hasOwnProperty("apiClient") && apiContext.apiClient !== null
             && apiContext.apiClient.hasOwnProperty("get") && typeof apiContext.apiClient.get === "function"
@@ -131,6 +145,15 @@ const GlMap: React.FC < GlMapProps > = ({
                     // onFocusBlockChange(geoid_bl);
 
                     console.log("result is ", result);
+
+                    if (infoWrapper !== null) {
+                        // infoWrapper
+                        //     .style.opacity = "0.0";
+                        infoWrapper
+                            .style.pointerEvents = "none";
+                        infoWrapper
+                            .style.background = "transparent";
+                    }
 
                     if (result.data
                         && result.data.hasOwnProperty("features")
@@ -215,7 +238,14 @@ const GlMap: React.FC < GlMapProps > = ({
                     }
                 })
                 .catch(error => {
+
                     console.error("Error fetching data:", error);
+
+                    if (infoWrapper !== null) {
+                        infoWrapper
+                            .style.opacity = "0.0";
+                    }
+
                     if (error.hasOwnProperty("code")) {
                         console.log("Error code:", error.code!);
                         if (error.code! === "ERR_BAD_REQUEST"
@@ -411,8 +441,11 @@ const GlMap: React.FC < GlMapProps > = ({
 
         setLayerFilter(new_filter);
 
+        let footprint_filter = ['==', ['get', 'isp_id'], filterState.isp_footprint]
+        setFootprintFilter(footprint_filter);
+
         if (filterState.hasOwnProperty("colorVariable")) {
-            setFillColor(getFillColor(filterState.colorVariable));
+            setFillColor(getFillColor(filterState.colorVariable, filterState.excludeDSL));
         }
 
     }, [filterState]);
@@ -424,7 +457,7 @@ const GlMap: React.FC < GlMapProps > = ({
             ...layerAttributes
         };
 
-        (newLayerAttributes as any) !["paint"] = {
+        (newLayerAttributes as any)!["paint"] = {
             "fill-color": fillColor
         };
 
@@ -476,15 +509,41 @@ const GlMap: React.FC < GlMapProps > = ({
                     </Source>
 
                     <Source {...bead_dev.sources[0]} >
-                        {/*{mapZoom >= MIN_ZOOM_LEVEL && (*/}
+                        {(!!filterState.displayDataLayers) ?
                             <Layer
                               {...layerAttributes}
                               filter={layerFilter}
-                            />
-                        {/*)}*/}
+                            /> :
+                            <></>
+                        }
                     </Source>
 
-                    {/*{(selected_features.length > 0) ?*/}
+                    <Source {...not_reported_fill_layer.sources[0]} >
+                        <Layer
+                            { ...not_reported_fill_layer.layers[0] }
+                        />
+                    </Source>
+
+                    <Source {...not_reported_pattern_layer.sources[0]} >
+                        <Layer
+                            { ...not_reported_pattern_layer.layers[0] }
+                        />
+                    </Source>
+
+                    <Source {...isp_footprint_fill.sources[0]} >
+                        <Layer
+                            { ...isp_footprint_fill.layers[0] }
+                            filter={footprintFilter}
+                        />
+                    </Source>
+
+                    <Source {...isp_footprint_line.sources[0]} >
+                        <Layer
+                            { ...isp_footprint_line.layers[0] }
+                            filter={footprintFilter}
+                        />
+                    </Source>
+
                         <Source type="geojson" id="bead_block" data={{
                             "type": "FeatureCollection",
                             "features": selected_features
@@ -537,8 +596,7 @@ const GlMap: React.FC < GlMapProps > = ({
                                     "line-width": 2
                                 }
                             }} />
-                        </Source>{/* : <></>*/}
-                    {/*}*/}
+                        </Source>
 
                     <HoverInfo />
 

@@ -28,24 +28,20 @@ export function HoverInfo () {
     const ispNameLookup =  swapKeysValues(isp_name_dict);
 
     const getPctUnserved = (properties: any) => {
-        // console.log("pct_served:", properties.pct_served);
-        // console.log("Pct. unserved (<25/3):", (1-properties.pct_served));
-        return (!!properties.pct_served || properties.pct_served === 0) ?
-            percentFormat((1-properties.pct_served)) : "N/A";
+        let formatted_text: string = percentFormat(1 - (properties.cnt_25_3 / properties.cnt_total_locations));
+        return formatted_text;
     };
 
-    const getPctUnderserved = (properties: any) => {
-        // console.log("cnt_25_3:", properties.cnt_25_3);
-        // console.log("cnt_total_locations:", properties.cnt_total_locations);
-        // console.log("Pct un- and underserved (<100/20):", properties.cnt_25_3 / properties.cnt_total_locations);
-        return percentFormat(properties.cnt_25_3 / properties.cnt_total_locations);
+    const getPctUnAndUnderserved = (properties: any, excludeDSL: boolean) => {
+        let numerator: number = excludeDSL? ( (properties.cnt_total_locations - properties.cnt_25_3) + properties.cnt_underserved_dsl_excluded): ((properties.cnt_total_locations - properties.cnt_25_3) + properties.cnt_underserved);
+        let formatted_text: string = percentFormat(numerator / properties.cnt_total_locations);
+        return formatted_text;
     };
 
-    const getPctServed = (properties: any) => {
-        // console.log("cnt_100_20:", properties.cnt_100_20);
-        // console.log("cnt_total_locations:", properties.cnt_total_locations);
-        // console.log("Pct served (>100/20):", properties.cnt_100_20 / properties.cnt_total_locations);
-        return percentFormat(properties.cnt_100_20 / properties.cnt_total_locations);
+    const getPctServed = (properties: any, excludeDSL: boolean) => {
+        let numerator: number = excludeDSL? properties.cnt_100_20_dsl_excluded: properties.cnt_100_20;
+        let formatted_text: string = percentFormat(numerator / properties.cnt_total_locations);
+        return formatted_text;
     };
 
     // useEffect(() => {
@@ -62,45 +58,72 @@ export function HoverInfo () {
         && !!hoverInfo.feature.properties.bead_category
         && (
             <div className={style["tooltip"]} style={{left: hoverInfo.x, top: hoverInfo.y}}>
-                <h5><span>BEAD status</span>: <span className={style["bead-category"]} style={{textDecorationColor: getBEADColor(hoverInfo.feature.properties.bead_category)}}>{hoverInfo.feature.properties.bead_category}</span></h5>
+                <h5><span>BEAD status</span>: <span className={style["bead-category"]} style={{textDecorationColor: getBEADColor(hoverInfo.feature.properties.bead_category)}}>{filterState.excludeDSL? hoverInfo.feature.properties.bead_category_dsl_excluded: hoverInfo.feature.properties.bead_category}</span></h5>
                 <p><span>Census Block ID</span>: {hoverInfo.feature.properties.geoid_bl}</p>
                 <div>
                     <div>
-                        <p><b>Broadband access</b></p>
+                        <p><b>Broadband access</b> {filterState.excludeDSL? <em>(Counting all DSL-only locations as Underserved)</em>: ""}</p>
                         <table>
                             <tbody>
                             <tr>
                                 <td>Locations</td>
-                                <td>{hoverInfo.feature.properties.cnt_total_locations}</td>
-                            </tr>
-                            <tr>
-                                <td>{"Pct. unserved (<25/3)"}</td>
-                                <td>{getPctUnserved(hoverInfo.feature.properties)}</td>
-                            </tr>
-                            <tr>
-                                <td>{"Pct un- and underserved (<100/20)"}</td>
-                                <td>{getPctUnderserved(hoverInfo.feature.properties)}</td>
+                                <td>{hoverInfo.feature.properties["bead_category"] === "Not Reported"? "N/A": hoverInfo.feature.properties.cnt_total_locations}</td>
                             </tr>
                             <tr>
                                 <td>{"Pct served (>100/20)"}</td>
-                                <td>{getPctServed(hoverInfo.feature.properties)}</td>
+                                <td>
+                                    {   
+                                        hoverInfo.feature.properties["bead_category"] === "Not Reported"?
+                                        "N/A":
+                                        getPctServed(hoverInfo.feature.properties, filterState.excludeDSL)
+                                    }</td>
+                            </tr>
+                            <tr>
+                                <td>{"Pct un- and underserved (<100/20)"}</td>
+                                <td>
+                                    {   
+                                        hoverInfo.feature.properties["bead_category"] === "Not Reported"?
+                                        "N/A":
+                                        getPctUnAndUnderserved(hoverInfo.feature.properties, filterState.excludeDSL)
+                                    }</td>
+                            </tr>
+                            <tr>
+                                <td>{"Pct. unserved (<25/3)"}</td>
+                                <td>
+                                    {
+                                        hoverInfo.feature.properties["bead_category"] === "Not Reported"?
+                                        "N/A":
+                                        getPctUnserved(hoverInfo.feature.properties)
+                                    }</td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
                     <div>
-                        <p><b>Broadband technologies</b>: {formatBroadbandTechnology(
-                            [
-                                hoverInfo.feature.properties.has_coaxial_cable,
-                                hoverInfo.feature.properties.has_copperwire,
-                                hoverInfo.feature.properties.has_fiber,
-                                hoverInfo.feature.properties.has_lbr_wireless,
-                                hoverInfo.feature.properties.has_licensed_wireless
-                            ]
-                        )}
+                        <p><b>Broadband technologies</b>: {
+                            hoverInfo.feature.properties["bead_category"] === "Not Reported"? 
+                            "N/A":
+                            formatBroadbandTechnology(
+                                [
+                                    hoverInfo.feature.properties.has_coaxial_cable,
+                                    hoverInfo.feature.properties.has_copperwire,
+                                    hoverInfo.feature.properties.has_fiber,
+                                    hoverInfo.feature.properties.has_lbr_wireless,
+                                    hoverInfo.feature.properties.has_licensed_wireless
+                                ]
+                            )
+                        }
                         </p>
-                        <p><b>Previous federal funding?</b> {hoverInfo.feature.properties.has_previous_funding? "Yes": "No"}</p>
-                        <p><b>Internet service providers:</b> {hoverInfo.feature.properties.combo_isp_id ? parseIspId(hoverInfo.feature.properties.isp_id, ispNameLookup): "N/A"}</p>
+                        <p><b>Previous federal funding?</b> {
+                            hoverInfo.feature.properties["bead_category"] === "Not Reported"?
+                            "N/A":
+                            (hoverInfo.feature.properties.has_previous_funding? "Yes": "No")
+                        }</p>
+                        <p><b>Internet service providers:</b> {
+                            hoverInfo.feature.properties["bead_category"] === "Not Reported"?
+                            "N/A":
+                            (hoverInfo.feature.properties.combo_isp_id ? parseIspId(hoverInfo.feature.properties.isp_id, ispNameLookup): "None")
+                        }</p>
                     </div>
                     <div>
                         <p><em>Click to view detailed census block information</em></p>
