@@ -6,6 +6,7 @@ import { format } from 'd3-format';
 import InfoTooltip from "./InfoTooltip";
 import style from "./styles/MapLegend.module.css";
 import { beadDefinitions } from '../utils/constants.ts';
+import stripe_svg from "./../assets/stripe-5.svg";
 
 const numberFormat = format(',');
 
@@ -31,7 +32,14 @@ const MapLegend: React.FC < MapLegendProps > = ({ title, category }) => {
                              style={{
                                  backgroundColor: category[i] === "Not Reported" ? "rgba(0, 0, 0, 0.25)" : category[i+1]
                              }} >
-                            {category[i] === "Not Reported"? <div className={style["overlay-content"]}></div>: <></>}
+                            {
+                                category[i] === "Not Reported"? 
+                                <div
+                                    className={style["overlay-content"]}
+                                    style={{background: "url(" + stripe_svg + ") repeat top left"}}
+                                ></div>
+                                : <></>
+                            }
                         </div>
             
                         <p>{category[i]}</p>
