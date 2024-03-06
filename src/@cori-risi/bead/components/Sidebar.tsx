@@ -251,7 +251,7 @@ function Sidebar () {
             </div>            
             <div className={style["filter-section"]}>
               <div className={style["filter-header"]}>
-                <h5>Exclude DSL</h5>
+                <h5>Count all DSL-only locations as Underserved</h5>
               </div>
               <div className={style["switch"]}>
                 <Typography>Off</Typography>
@@ -313,8 +313,11 @@ function Sidebar () {
               </div>
               <div className={style["filter-section"]}>
                 <div className={style["filter-header"]}>
-                  <h5>Received federal funding?</h5>
-                  <InfoTooltip text={"Show blocks that have received prior federal broadband funding"}/>
+                  <h5>Awarded federal funding</h5>
+                  <InfoTooltip text={(`
+Census blocks in areas where previous winning applicants for an Auction 904 RDOF bid have been authorized to recieve funds.
+This filter maps the current 2020 Census blocks to the corresponding 2010 Census block(s) that  originally received the award.
+`)}/>
                 </div>
                 <FormGroup row className={style["form-control-group"]}>
                   <FormControlLabel className={style["form-control-label"]}
@@ -438,7 +441,7 @@ function Sidebar () {
             </div>
           </div>
           <div className={style["link-section"]}>
-            <a href="https://ruralinnovation.us/" target="_blank">About</a> |
+            <a href="https://ruralinnovation.us/resources/mapping-and-data-analytics/interactive-rural-broadband-service-map/" target="_blank">About</a> |
             <a href="https://ruralinnovation.us/about/contact-us/" target="_blank">Contact</a> |
             <a href="https://form-renderer-app.donorperfect.io/give/center-on-rural-innovation/cori-general-giving" target="_blank">Donate</a>
           </div>
