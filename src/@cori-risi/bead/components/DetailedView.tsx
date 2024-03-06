@@ -19,6 +19,10 @@ interface IspNameLookup {
 }
 const isp_name_lookup: IspNameLookup = isp_name_dict;
 
+import broadband_technology_dict from '../data/broadband_technology.json';
+
+const broadband_technology: Record<string, string> = broadband_technology_dict;
+
 // const dt_columns = [
 //     "Name",
 //     "Company",
@@ -44,7 +48,7 @@ const block_columns = [
     "geoid_bl",
     "geoid_tr",
     "geoid_co",
-    "geoid_st",
+    // "geoid_st",
     "bead_category",
     // "bl_100_20_area",
     // "bl_25_3_area",
@@ -68,37 +72,42 @@ const block_columns = [
 const block_labels = {
     "geoid_bl": "Block ID",
     "geoid_co": "County ID",
-    "geoid_st": "State ID",
+    // "geoid_st": "State ID",
     "geoid_tr": "Tract ID",
-    "isp_id": "ISPs in Block",
-    "cnt_isp": "cnt_isp",
-    "cnt_total_locations": "cnt_total_locations",
-    "cnt_100_20": "cnt_100_20",
-    "cnt_25_3": "cnt_25_3",
-    "pct_served": "pct_served",
-    "bl_100_20_area": "bl_100_20_area",
-    "bl_25_3_area": "bl_25_3_area",
+    "isp_id": "Internet service providers",
+    "cnt_isp": "Number of ISPs",
+    "cnt_total_locations": "Locations",
+    "cnt_100_20": "Locations with 100/20 service",
+    "cnt_25_3": "Locations with 25/3 service",
+    // "pct_served": "Percent served",
+    // "bl_100_20_area": "bl_100_20_area",
+    // "bl_25_3_area": "bl_25_3_area",
     "combo_isp_id": "combo_isp_id",
-    "bead_category": "bead_category",
-    "has_fiber": "has_fiber",
-    "has_coaxial_cable": "has_coaxial_cable",
-    "has_copperwire": "has_copperwire",
-    "has_previous_funding": "has_previous_funding",
-    "has_wireless": "has_lbr_wireless",
+    "bead_category": "BEAD service level",
+    "has_fiber": "Fiber service",
+    "has_coaxial_cable": "Coaxial cable service",
+    "has_copperwire": "DSL service",
+    "has_previous_funding": "Previous federal funding",
+    "has_wireless": "Wireless service",
     "only_water_flag": "only_water_flag"
 };
 
 const isp_columns = [
     "geoid_bl",
     "new_alias",
-    "isp_id",
+    // "isp_id",
     "technology",
     "max_down",
     "max_up",
-    "type"
+    // "type"
 ];
 
 const isp_labels = {
+    "geoid_bl": "Block ID",
+    "new_alias": "Internet service provider",
+    "technology": "Broadband technology",
+    "max_down": "Max download speed (Mbps)",
+    "max_up": "Max upload speed (Mbps)"
 };
 
 const award_columns = [
@@ -111,18 +120,36 @@ const award_columns = [
     "geoid_co",
     "county",
     "state",
-    "da_numbers",
-    "frn",
-    "sac",
-    "winning_bi",
-    "winning_bidder",
-    "winning_bid_total_in_state",
-    "number_of_locations_in_state",
-    "type",
-    "version"
+    // "da_numbers",
+    // "frn",
+    // "sac",
+    // "winning_bi",
+    // "winning_bidder",
+    // "winning_bid_total_in_state",
+    // "number_of_locations_in_state",
+    // "type",
+    // "version"
 ];
 
 const award_labels = {
+    "geoid_bl": "Block ID",
+    "applicant": "Applicant",
+    "latency": "Latency",
+    "tier": "Tier",
+    "authorized": "Authorized",
+    "default": "Default",
+    "geoid_co": "County ID",
+    "county": "County",
+    "state": "State",
+    // "da_numbers",
+    // "frn",
+    // "sac",
+    // "winning_bi",
+    // "winning_bidder",
+    // "winning_bid_total_in_state",
+    // "number_of_locations_in_state",
+    // "type",
+    // "version"
 };
 
 const acs_columns = [
@@ -132,31 +159,31 @@ const acs_columns = [
     "total_population",
     "total_households",
     "total_housing_units",
-    "broadband_usage",
+    // "broadband_usage",
     "hh_using_broadband",
     "hh_w_computer",
-    "share_w_computer",
+    // "share_w_computer",
     "hh_w_smartphone_only",
-    "share_w_smartphone_only",
+    // "share_w_smartphone_only",
     "hh_wo_device",
-    "share_wo_device",
+    // "share_wo_device",
 ];
 
 const acs_labels = {
     "geoid_tr": "Tract ID",
     // "geoid_bl": "Block ID(s)",
     "year": "ACS Year",
-    "total_population": "total_population",
-    "total_households": "total_households",
-    "total_housing_units": "total_housing_units",
-    "broadband_usage": "broadband_usage",
-    "hh_using_broadband": "hh_using_broadband",
-    "hh_w_computer": "hh_w_computer",
-    "share_w_computer": "share_w_computer",
-    "hh_w_smartphone_only": "hh_w_smartphone_only",
-    "share_w_smartphone_only": "share_w_smartphone_only",
-    "hh_wo_device": "hh_wo_device",
-    "share_wo_device": "share_wo_device",
+    "total_population": "Population",
+    "total_households": "Households",
+    "total_housing_units": "Housing units",
+    "broadband_usage": "Broadband Usage",
+    "hh_using_broadband": "Households with a broadband subscription",
+    "hh_w_computer": "Households with a computer",
+    "share_w_computer": "Pct. households with a computer",
+    "hh_w_smartphone_only": "Households with only a smartphone",
+    "share_w_smartphone_only": "Pct. households with only a smartphone",
+    "hh_wo_device": "Households with no device",
+    "share_wo_device": "Pct. households with no device",
 };
 
 function getLabel (col: string, labels: any) {
@@ -275,14 +302,14 @@ export default function DetailedView () {
                         <svg viewBox="0 0 22 14" aria-hidden="true">
                             <polygon points="18.8743237 0 22 3.62676411 10.6828079 14 0 3.57495046 3.2339044 0.0505492411 10.7824379 7.41694926"></polygon>
                         </svg>
-                        Broadband Map
+                        Broadband map
                     {/*</a>*/}
                 </button>
                 <br />
                 <br />
                 <br />
 
-                <h4 className={"detailed-header"}>Broadband Information for Census Blocks in selection
+                <h4 className={"detailed-header"}>Broadband service, technology, and funding information for selected census blocks
                     <span className={"button-group"}>
                         <span className={"button-padding"}>
                             <CustomButton
@@ -296,10 +323,10 @@ export default function DetailedView () {
                                     }));
                                 }}
                                 variant="outlined">
-                                Cancel
+                                Clear selection
                             </CustomButton>
                         </span>
-                        <span className={"button-padding"}>
+                        {/* <span className={"button-padding"}>
                             <CustomButton
                                 className={"affirmative button"}
                                 onClick={(evt) => {
@@ -319,14 +346,14 @@ export default function DetailedView () {
                                 variant="outlined">
                                 See All On Map
                             </CustomButton>
-                        </span>
+                        </span> */}
                     </span>
                 </h4>
                 <hr />
 
                 {
                     (!(block_info.length > 0))?
-                        <p>Select a block on the map to view Broadband info<br /></p> :
+                        <p>Select a block on the map to view broadband service data<br /></p> :
                         <MUIDataTable
                             columns={block_columns.map((col) => getLabel(col, block_labels))}
                             data={[ ...block_info
@@ -444,15 +471,14 @@ export default function DetailedView () {
                                 "rowsPerPage": 5,
                                 "rowsPerPageOptions": [ 5, 10, 25, 50]
                             }}
-                            title={"Census Blocks (BB)"}
+                            title={"Broadband service"}
                         />
                 }
                 <br />
 
-                <h5>Internet Service Providers by Technology</h5>
                 {
                     (!(isp_info.length > 0))?
-                        <p>Select a block on the map to view Broadband info<br /></p> :
+                        <p>Select a block on the map to view broadband technology data<br /></p> :
                         <MUIDataTable
                             columns={isp_columns.map((col) => getLabel(col, isp_labels))}
                             data={[ ...isp_info
@@ -471,9 +497,38 @@ export default function DetailedView () {
                                             // const tuple = i.toString().split(":");
                                             // const key = tuple[0].toString().trim();
                                             // if (col === key) {
-                                            const value = (b.properties[col] !== null && typeof b.properties[col].toString !== "undefined") ?
+                                            let value = (b.properties[col] !== null && typeof b.properties[col].toString !== "undefined") ?
                                                 b.properties[col].toString().trim() : "N/A";
-                                            // console.log([col, value]);
+                                            
+                                            if (col === "technology") {
+                                                if (value === "10") {
+                                                    value = "Copper wire (DSL)";
+                                                }
+                                                if (value === "40") {
+                                                    value = "Coaxial cable/HFC";
+                                                }
+                                                if (value === "50") {
+                                                    value = "Optical Carrier/Fiber to the Premises";
+                                                }
+                                                if (value === "60") {
+                                                    value = "Geostationary Satellite";
+                                                }
+                                                if (value === "61") {
+                                                    value = "Non-geostationary Satellite";
+                                                }
+                                                if (value === "70") {
+                                                    value = "Unlicensed Terrestrial Fixed Wireless";
+                                                }
+                                                if (value === "71") {
+                                                    value = "Licensed Terrestrial Fixed Wireless";
+                                                }
+                                                if (value === "72") {
+                                                    value = "Licensed-by-Rule Terrestrial Fixed Wireless";
+                                                }
+                                                if (value === "0") {
+                                                    value = "Other technology";
+                                                }
+                                            }
                                             values.push(value);
                                             // }
                                         }
@@ -499,15 +554,14 @@ export default function DetailedView () {
                                 "rowsPerPage": 5,
                                 "rowsPerPageOptions": [ 5, 10, 25, 50]
                             }}
-                            title={"Internet Service Providers"}
+                            title={"Internet service providers by technology"}
                         />
                 }
                 <br />
 
-                <h5>Federal Funding Award Applicants By Block</h5>
                 {
                     (!(award_info.length > 0))?
-                        <p>Select a block on the map to view Broadband info<br /></p> :
+                        <p>Select a block on the map which has received prior federal funding to view detailed award data<br /></p> :
                         <MUIDataTable
                             columns={award_columns.map((col) => getLabel(col, award_labels))}
                             data={[ ...award_info
@@ -554,18 +608,18 @@ export default function DetailedView () {
                                 "rowsPerPage": 5,
                                 "rowsPerPageOptions": [ 5, 10, 25, 50]
                             }}
-                            title={"Federal Funding Applicants"}
+                            title={"Federal funding award applicants by block"}
                         />
                 }
                 <br />
 
-                <h4 className={"detailed-header"}>Demographics for Census Tracts in selection
+                <h4 className={"detailed-header"}>Demographics
                 </h4>
                 <hr />
 
                 {
                     (!(block_info.length > 0)) ?
-                        <p>Select a block on the map to view ACS data for the relevant Census Tract(s)<br/></p> :
+                        <p>Select a block on the map to view ACS data for the relevant census tract(s)<br/></p> :
                         <MUIDataTable
                             columns={acs_columns.map((col) => getLabel(col, acs_labels))}
                             data={[ ...acs_info
@@ -612,7 +666,7 @@ export default function DetailedView () {
                                 "rowsPerPage": 5,
                                 "rowsPerPageOptions": [ 5, 10, 25, 50]
                             }}
-                            title={"Census Tracts (ACS)"}
+                            title={"Data for census tracts that include any selected census block"}
                         />
                 }
 

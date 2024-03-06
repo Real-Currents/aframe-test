@@ -70,6 +70,46 @@ export const isp_footprint_line: MapboxSourceLayerStyles = {
     }]
 };
 
+export const not_reported_fill_layer: MapboxSourceLayerStyles = {
+    "sources": [{
+        "id": "not_reported_fill_layer",
+        "type": "vector",
+        "url": "mapbox://ruralinno.bead_blockv1b"
+    }],
+    "layers": [{
+            "id": "not_reported_fill_layer.style",
+            "source": "bead_dev",
+            "source-layer": "proj_beadbead_blockv1b",
+            "type": "fill",
+            "paint": {
+                "fill-opacity": .2,
+                "fill-color": "black"
+            },
+            "filter": ['==', ['get', 'bead_category'], "Not Reported"]
+        },
+    ]
+};
+
+export const not_reported_pattern_layer: MapboxSourceLayerStyles = {
+    "sources": [{
+        "id": "not_reported_pattern_layer",
+        "type": "vector",
+        "url": "mapbox://ruralinno.bead_blockv1b"
+    }],
+    "layers": [{
+            "id": "not_reported_pattern_layer.style",
+            "source": "bead_dev",
+            "source-layer": "proj_beadbead_blockv1b",
+            "type": "fill",
+            "paint": {
+                "fill-opacity": .5,
+                "fill-pattern": "stripe-5"
+            },
+            "filter": ['==', ['get', 'bead_category'], "Not Reported"]
+        },
+    ]
+};
+
 export const bead_dev: MapboxSourceLayerStyles = {
     "sources": [{
         "id": "bead_dev",

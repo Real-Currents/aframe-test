@@ -25,6 +25,8 @@ import {
     bead_dev,
     isp_footprint_line,
     isp_footprint_fill,
+    not_reported_fill_layer,
+    not_reported_pattern_layer,
     contourStyle,
     mapboxStyle
 } from '../styles';
@@ -514,6 +516,18 @@ const GlMap: React.FC < GlMapProps > = ({
                             /> :
                             <></>
                         }
+                    </Source>
+
+                    <Source {...not_reported_fill_layer.sources[0]} >
+                        <Layer
+                            { ...not_reported_fill_layer.layers[0] }
+                        />
+                    </Source>
+
+                    <Source {...not_reported_pattern_layer.sources[0]} >
+                        <Layer
+                            { ...not_reported_pattern_layer.layers[0] }
+                        />
                     </Source>
 
                     <Source {...isp_footprint_fill.sources[0]} >

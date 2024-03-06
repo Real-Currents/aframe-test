@@ -251,7 +251,7 @@ function Sidebar () {
             </div>            
             <div className={style["filter-section"]}>
               <div className={style["filter-header"]}>
-                <h5>Exclude DSL</h5>
+                <h5>Count all DSL-only locations as Underserved</h5>
               </div>
               <div className={style["switch"]}>
                 <Typography>Off</Typography>
@@ -441,7 +441,7 @@ This filter maps the current 2020 Census blocks to the corresponding 2010 Census
             </div>
           </div>
           <div className={style["link-section"]}>
-            <a href="https://ruralinnovation.us/" target="_blank">About</a> |
+            <a href="https://ruralinnovation.us/resources/mapping-and-data-analytics/interactive-rural-broadband-service-map/" target="_blank">About</a> |
             <a href="https://ruralinnovation.us/about/contact-us/" target="_blank">Contact</a> |
             <a href="https://form-renderer-app.donorperfect.io/give/center-on-rural-innovation/cori-general-giving" target="_blank">Donate</a>
           </div>

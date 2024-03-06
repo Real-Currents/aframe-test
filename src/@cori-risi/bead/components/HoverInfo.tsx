@@ -62,41 +62,68 @@ export function HoverInfo () {
                 <p><span>Census Block ID</span>: {hoverInfo.feature.properties.geoid_bl}</p>
                 <div>
                     <div>
-                        <p><b>Broadband access</b> {filterState.excludeDSL? <em>(excluding DSL)</em>: ""}</p>
+                        <p><b>Broadband access</b> {filterState.excludeDSL? <em>(Counting all DSL-only locations as Underserved)</em>: ""}</p>
                         <table>
                             <tbody>
                             <tr>
                                 <td>Locations</td>
-                                <td>{hoverInfo.feature.properties.cnt_total_locations}</td>
-                            </tr>
-                            <tr>
-                                <td>{"Pct. unserved (<25/3)"}</td>
-                                <td>{getPctUnserved(hoverInfo.feature.properties)}</td>
-                            </tr>
-                            <tr>
-                                <td>{"Pct un- and underserved (<100/20)"}</td>
-                                <td>{getPctUnAndUnderserved(hoverInfo.feature.properties, filterState.excludeDSL)}</td>
+                                <td>{hoverInfo.feature.properties["bead_category"] === "Not Reported"? "N/A": hoverInfo.feature.properties.cnt_total_locations}</td>
                             </tr>
                             <tr>
                                 <td>{"Pct served (>100/20)"}</td>
-                                <td>{getPctServed(hoverInfo.feature.properties, filterState.excludeDSL)}</td>
+                                <td>
+                                    {   
+                                        hoverInfo.feature.properties["bead_category"] === "Not Reported"?
+                                        "N/A":
+                                        getPctServed(hoverInfo.feature.properties, filterState.excludeDSL)
+                                    }</td>
+                            </tr>
+                            <tr>
+                                <td>{"Pct un- and underserved (<100/20)"}</td>
+                                <td>
+                                    {   
+                                        hoverInfo.feature.properties["bead_category"] === "Not Reported"?
+                                        "N/A":
+                                        getPctUnAndUnderserved(hoverInfo.feature.properties, filterState.excludeDSL)
+                                    }</td>
+                            </tr>
+                            <tr>
+                                <td>{"Pct. unserved (<25/3)"}</td>
+                                <td>
+                                    {
+                                        hoverInfo.feature.properties["bead_category"] === "Not Reported"?
+                                        "N/A":
+                                        getPctUnserved(hoverInfo.feature.properties)
+                                    }</td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
                     <div>
-                        <p><b>Broadband technologies</b>: {formatBroadbandTechnology(
-                            [
-                                hoverInfo.feature.properties.has_coaxial_cable,
-                                hoverInfo.feature.properties.has_copperwire,
-                                hoverInfo.feature.properties.has_fiber,
-                                hoverInfo.feature.properties.has_lbr_wireless,
-                                hoverInfo.feature.properties.has_licensed_wireless
-                            ]
-                        )}
+                        <p><b>Broadband technologies</b>: {
+                            hoverInfo.feature.properties["bead_category"] === "Not Reported"? 
+                            "N/A":
+                            formatBroadbandTechnology(
+                                [
+                                    hoverInfo.feature.properties.has_coaxial_cable,
+                                    hoverInfo.feature.properties.has_copperwire,
+                                    hoverInfo.feature.properties.has_fiber,
+                                    hoverInfo.feature.properties.has_lbr_wireless,
+                                    hoverInfo.feature.properties.has_licensed_wireless
+                                ]
+                            )
+                        }
                         </p>
-                        <p><b>Previous federal funding?</b> {hoverInfo.feature.properties.has_previous_funding? "Yes": "No"}</p>
-                        <p><b>Internet service providers:</b> {hoverInfo.feature.properties.combo_isp_id ? parseIspId(hoverInfo.feature.properties.isp_id, ispNameLookup): "N/A"}</p>
+                        <p><b>Previous federal funding?</b> {
+                            hoverInfo.feature.properties["bead_category"] === "Not Reported"?
+                            "N/A":
+                            (hoverInfo.feature.properties.has_previous_funding? "Yes": "No")
+                        }</p>
+                        <p><b>Internet service providers:</b> {
+                            hoverInfo.feature.properties["bead_category"] === "Not Reported"?
+                            "N/A":
+                            (hoverInfo.feature.properties.combo_isp_id ? parseIspId(hoverInfo.feature.properties.isp_id, ispNameLookup): "None")
+                        }</p>
                     </div>
                     <div>
                         <p><em>Click to view detailed census block information</em></p>
