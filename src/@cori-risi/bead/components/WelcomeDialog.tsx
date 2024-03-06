@@ -26,25 +26,18 @@ export default function WelcomeModal() {
 	          {"Welcome to the Interactive Rural Broadband Map"}
 	        </DialogTitle>
 		  	<DialogContent dividers>
-				<p>
-					Important context about this tool:
+				<p className={style["info-chunk"]}>
+					<b>Data is displayed at the census block level.</b> Zoom in to a county to see 
+					granular <a href="https://broadbandmap.fcc.gov/data-download/nationwide-data?version=jun2023" target="_blank">broadband</a> and other data for a single or multiple blocks.
 				</p>
 				<p className={style["info-chunk"]}>
-					<b>Data is displayed at the census block level.</b><br/>
-					Due to the granularity of the data, you'll need to zoom into a single county to view 
-					aggregated <a href="https://broadbandmap.fcc.gov/data-download/nationwide-data?version=jun2023" target="_blank">broadband data</a> per 
-					block, as well as other info for a selection of blocks.
+					<b>The BEAD service level terms and criteria are defined by the Broadband Equity, Access, and Deployment (BEAD) program.</b> Click <a href="https://broadbandusa.ntia.doc.gov/funding-programs/broadband-equity-access-and-deployment-bead-program" target="_blank">here</a> to learn more.
 				</p>
 				<p className={style["info-chunk"]}>
-					<b>The broadband service level terms and criteria used here are defined by the Broadband Equity, Access, and Deployment (BEAD) program.</b><br/>
-					Click <a href="https://broadbandusa.ntia.doc.gov/funding-programs/broadband-equity-access-and-deployment-bead-program" target="_blank">here</a> to learn more about BEAD.
+					<b>Click the "show filters" button</b> on the header bar to filter census blocks by ISP, technology presence, and BEAD eligibility.<br/>
 				</p>
 				<p className={style["info-chunk"]}>
-					<b>Users can filter census blocks by ISP, technology presence, and BEAD eligibility, using the controls on the sidebar.</b><br/>
-				</p>
-				<p className={style["info-chunk"]}>
-					<b>Click on areas of interest to view detailed information.</b><br/>
-					Broadband technology, funding, and demographic data for the selected census block(s) are displayed in a separate panel.
+					<b>Select a block and click the "display info" button</b> to display a panel with detailed information.<br/>
 				</p>
 	        </DialogContent>
 	        <DialogActions>
