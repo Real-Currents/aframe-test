@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import MUIDataTable from "mui-datatables";
+import bbox from '@turf/bbox';
+import { Feature, FeatureCollection } from "geojson";
 import { CustomButton } from "./CustomInputs";
 
 import isp_name_dict from "../data/isp_name_lookup_rev.json";
@@ -9,6 +11,8 @@ import { HoverInfoState } from "../models/index";
 import { parseIspId, swapKeysValues } from "../utils/utils";
 import "./styles/DetailedView.scss";
 import GeoJSONFeature from "maplibre-gl";
+import {MapRef} from "react-map-gl";
+import { jumpMapToFeature } from '../utils/mapUtils';
 
 interface IspNameLookup {
     [key: string]: string;
@@ -108,6 +112,7 @@ const isp_labels = {
 
 const award_columns = [
     "geoid_bl",
+    "geoid_bl_2010",
     "applicant",
     "latency",
     "tier",
@@ -128,7 +133,8 @@ const award_columns = [
 ];
 
 const award_labels = {
-    "geoid_bl": "Block ID",
+    "geoid_bl": "Block ID (2020 Census)",
+    "geoid_bl_2010": "Block ID (2010 Census)",
     "applicant": "Applicant",
     "latency": "Latency",
     "tier": "Tier",
@@ -157,12 +163,12 @@ const acs_columns = [
     "total_housing_units",
     // "broadband_usage",
     "hh_using_broadband",
-    "hh_w_computer",
     // "share_w_computer",
-    "hh_w_smartphone_only",
+    "hh_w_computer",
     // "share_w_smartphone_only",
-    "hh_wo_device",
+    "hh_w_smartphone_only",
     // "share_wo_device",
+    "hh_wo_device",
 ];
 
 const acs_labels = {
@@ -174,12 +180,12 @@ const acs_labels = {
     "total_housing_units": "Housing units",
     "broadband_usage": "Broadband Usage",
     "hh_using_broadband": "Households with a broadband subscription",
-    "hh_w_computer": "Households with a computer",
     "share_w_computer": "Pct. households with a computer",
-    "hh_w_smartphone_only": "Households with only a smartphone",
+    "hh_w_computer": "Households with a computer",
     "share_w_smartphone_only": "Pct. households with only a smartphone",
-    "hh_wo_device": "Households with no device",
+    "hh_w_smartphone_only": "Households with only a smartphone",
     "share_wo_device": "Pct. households with no device",
+    "hh_wo_device": "Households with no device",
 };
 
 function getLabel (col: string, labels: any) {
@@ -266,26 +272,34 @@ export default function DetailedView () {
 
     }, [ mapSelection ]);
 
+    function showMap (evt: any) {
+        const infoWrapper = window.document.getElementById("info-wrapper");
+        if (infoWrapper !== null) {
+            infoWrapper
+                .style.paddingTop = "calc(100vh - 75px)";
+            const detailPanel = window.document.getElementById("detail");
+            if (detailPanel !== null) {
+                setTimeout(() => {
+                    detailPanel
+                        .style.display = "none";
+                }, 233);
+            }
+        }
+    }
+
+    function goToFeatures(features: FeatureCollection<any>, map: MapRef) {
+        console.log("Call jumpMapToFeature");
+
+        jumpMapToFeature(map, features, null);
+    }
+
     return (
         <>
             <div id="detail" className={"detailed-view"}
                  style={{ display: "none" }}>
 
                 <button className={"detail-button top"}
-                        onClick={(evt) => {
-                            const infoWrapper = window.document.getElementById("info-wrapper");
-                            if (infoWrapper !== null) {
-                                infoWrapper
-                                    .style.paddingTop = "calc(100vh - 75px)";
-                                const detailPanel = window.document.getElementById("detail");
-                                if (detailPanel !== null) {
-                                    setTimeout(() => {
-                                        detailPanel
-                                            .style.display = "none";
-                                    }, 233);
-                                }
-                            }
-                        }} >
+                        onClick={showMap} >
                     {/*<a href="#main-interface">*/}
                         <svg viewBox="0 0 22 14" aria-hidden="true">
                             <polygon points="18.8743237 0 22 3.62676411 10.6828079 14 0 3.57495046 3.2339044 0.0505492411 10.7824379 7.41694926"></polygon>
@@ -297,7 +311,9 @@ export default function DetailedView () {
                 <br />
                 <br />
 
-                <h4 className={"detailed-header"}>Broadband service, technology, and funding information for selected census blocks
+                <h4 className={"detailed-header"}>
+                    Broadband service, technology, and funding information <br />
+                    for selected census blocks<a href="#fcc-bdc-footnote" style={{textDecoration: "none"}}><sup>&dagger;</sup></a>
                     <span className={"button-group"}>
                         <span className={"button-padding"}>
                             <CustomButton
@@ -314,21 +330,34 @@ export default function DetailedView () {
                                 Clear selection
                             </CustomButton>
                         </span>
-                        {/* <span className={"button-padding"}>
+                        <span className={"button-padding"}>
                             <CustomButton
                                 className={"affirmative button"}
-                                onClick={(evt) => console.log("TODO: See on map")}
+                                onClick={(evt) => {
+                                    console.log(block_info.length);
+                                    if (block_info.length > 0) {
+                                        const featureCollection = {
+                                            "type": "FeatureCollection",
+                                            "features": [
+                                                ...block_info
+                                            ]
+                                        };
+                                        goToFeatures((featureCollection as FeatureCollection<any>), (window as { [key: string]: any })["map"] as MapRef);
+                                    }
+
+                                    showMap(evt);
+                                }}
                                 variant="outlined">
-                                TODO: See On Map
+                                See All On Map
                             </CustomButton>
-                        </span> */}
+                        </span>
                     </span>
                 </h4>
                 <hr />
 
                 {
                     (!(block_info.length > 0))?
-                        <p>Select a block on the map to view broadband service data<br /></p> :
+                        <p>Select blocks on the map to view reported broadband service data<a href="#fcc-bdc-footnote" style={{textDecoration: "none"}}><sup>&dagger;</sup></a><br /></p> :
                         <MUIDataTable
                             columns={block_columns.map((col) => getLabel(col, block_labels))}
                             data={[ ...block_info
@@ -446,14 +475,14 @@ export default function DetailedView () {
                                 "rowsPerPage": 5,
                                 "rowsPerPageOptions": [ 5, 10, 25, 50]
                             }}
-                            title={"Broadband service"}
+                            title={`Broadband service`}
                         />
                 }
                 <br />
 
                 {
                     (!(isp_info.length > 0))?
-                        <p>Select a block on the map to view broadband technology data<br /></p> :
+                        <p>Select blocks on the map to view reported broadband technology data<a href="#fcc-bdc-footnote" style={{textDecoration: "none"}}><sup>&dagger;</sup></a><br /></p> :
                         <MUIDataTable
                             columns={isp_columns.map((col) => getLabel(col, isp_labels))}
                             data={[ ...isp_info
@@ -536,7 +565,7 @@ export default function DetailedView () {
 
                 {
                     (!(award_info.length > 0))?
-                        <p>Select a block on the map which has received prior federal funding to view detailed award data<br /></p> :
+                        <p>Select blocks on the map which have received prior federal funding to view detailed award data<br /></p> :
                         <MUIDataTable
                             columns={award_columns.map((col) => getLabel(col, award_labels))}
                             data={[ ...award_info
@@ -588,13 +617,22 @@ export default function DetailedView () {
                 }
                 <br />
 
-                <h4 className={"detailed-header"}>Demographics
+                <div style={{ padding: "10px" }}>
+                    <p id="fcc-bdc-footnote">
+                        &dagger; Based on analysis of Broadband Serviceable Locations (BSL) as reported to the Federal Communications Commission (FCC).<br />
+                        The FCC has publicly released this data as <a href={"https://broadbandmap.fcc.gov/data-download/nationwide-data"} target={"_blank"}>BDC (Broadband Data Collection) Public Data</a>.
+                    </p>
+                </div>
+
+                <br />
+
+                <h4 className={"detailed-header"}>Demographics<a href="#acs-footnote" style={{textDecoration: "none"}}><sup>&Dagger;</sup></a>
                 </h4>
                 <hr />
 
                 {
                     (!(block_info.length > 0)) ?
-                        <p>Select a block on the map to view ACS data for the relevant census tract(s)<br/></p> :
+                        <p>Select blocks on the map to view ACS data for the relevant census tract(s)<a href="#acs-footnote" style={{textDecoration: "none"}}><sup>&Dagger;</sup></a><br/></p> :
                         <MUIDataTable
                             columns={acs_columns.map((col) => getLabel(col, acs_labels))}
                             data={[ ...acs_info
@@ -644,6 +682,12 @@ export default function DetailedView () {
                             title={"Data for census tracts that include any selected census block"}
                         />
                 }
+
+                <div style={{ padding: "10px" }}>
+                    <p id="acs-footnote">
+                        &Dagger; Based on analysis of <a href={"https://www.census.gov/programs-surveys/acs"} target={"_blank"}>American Community Survey (ACS) data</a>.
+                    </p>
+                </div>
 
             </div>
         </>

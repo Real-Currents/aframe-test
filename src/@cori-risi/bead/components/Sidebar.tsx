@@ -193,6 +193,10 @@ function Sidebar () {
     dispatch(setMapFilters({ excludeDSL: newExcludeDSL }));
   };
 
+  const toggleDataLayers = () => {
+    dispatch(setMapFilters({ displayDataLayers: !filterState.displayDataLayers }));
+  };
+
   return (
     <>
         <animated.div style={props} className={style["sidebar"]}>
@@ -203,6 +207,15 @@ function Sidebar () {
                 {/* ... (leave basemap and selcted features) */}
             </h4>
             <div className={style['fill-selector']}>
+              <div className={style["switch"]} style={{ float: "right" }}>
+                {/*<Typography>Off</Typography>*/}
+                <Switch
+                    checked={filterState.displayDataLayers}
+                    onChange={toggleDataLayers}
+                    inputProps={{ 'aria-label': 'Toggle Broadband Data Layers' }}
+                />
+                {/*<Typography>On</Typography>*/}
+              </div>
               <div className={style["color-dropdown"]}>
                 <Autocomplete
                   disablePortal
@@ -300,8 +313,11 @@ function Sidebar () {
               </div>
               <div className={style["filter-section"]}>
                 <div className={style["filter-header"]}>
-                  <h5>Received federal funding?</h5>
-                  <InfoTooltip text={"Show blocks that have received prior federal broadband funding"}/>
+                  <h5>Awarded federal funding</h5>
+                  <InfoTooltip text={(`
+Census blocks in areas where previous winning applicants for an Auction 904 RDOF bid have been authorized to recieve funds.
+This filter maps the current 2020 Census blocks to the corresponding 2010 Census block(s) that  originally received the award.
+`)}/>
                 </div>
                 <FormGroup row className={style["form-control-group"]}>
                   <FormControlLabel className={style["form-control-label"]}
