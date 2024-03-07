@@ -10,7 +10,7 @@ export const colors = {
     }
 };
 
-export const colors_excludeDSL = {
+export const colors_excludeDSL: typeof colors = {
   "legend_colors": {
     "bb_bead_categories": {
       "served_area": "rgba(9, 99, 73, 0.4)",

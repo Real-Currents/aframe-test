@@ -23,6 +23,7 @@ import style from "./styles/GlMap.module.css";
 import "mapbox-gl/dist/mapbox-gl.css";
 import {
     bead_dev,
+    bead_merged_tr,
     isp_footprint_line,
     isp_footprint_fill,
     not_reported_fill_layer,
@@ -54,6 +55,18 @@ import broadband_technology_dict from './../data/broadband_technology.json';
 import isp_name_dict from "../data/isp_name_lookup_rev.json";
 
 const broadband_technology: Record<string, string> = broadband_technology_dict;
+
+const bead_merged_tr_bead_colors = {
+    ...(bead_merged_tr.layers as any[])[0]
+};
+
+const bead_merged_tr_bead_x_dsl_colors = {
+    ...(bead_merged_tr.layers as any[])[1]
+};
+
+const bead_merged_tr_loc_counts_colors = {
+    ...(bead_merged_tr.layers as any[])[2]
+};
 
 type GlMapProps = {
     mapboxToken: string
@@ -518,6 +531,19 @@ const GlMap: React.FC < GlMapProps > = ({
                         }
                     </Source>
 
+                    <Source {...bead_merged_tr.sources[0]} >
+                        {(!!filterState.displayDataLayers) ?
+                            <Layer {...(
+                                (filterState.colorVariable === "BEAD service level") ?
+                                    (!filterState.excludeDSL) ?
+                                        bead_merged_tr_bead_colors :
+                                        bead_merged_tr_bead_x_dsl_colors :
+                                    bead_merged_tr_loc_counts_colors
+                            )} /> :
+                            <></>
+                        }
+                    </Source>
+
                     <Source {...not_reported_fill_layer.sources[0]} >
                         <Layer
                             { ...not_reported_fill_layer.layers[0] }
@@ -608,11 +634,12 @@ const GlMap: React.FC < GlMapProps > = ({
                     </div>
 
                     {mapZoom < MIN_ZOOM_LEVEL && (
-                        <animated.div style={props} className={style["zoom-message"]}>Zoom in further to view and filter data</animated.div>
+                        <animated.div style={props} className={style["zoom-message"]}>Zoom in further to filter and select data</animated.div>
                     )}
-                    {mapZoom >= MIN_ZOOM_LEVEL && (
+
+                    {/*{mapZoom >= MIN_ZOOM_LEVEL && (*/}
                         <MapLegend title={filterState.colorVariable} category={fillColor} />
-                    )}
+                    {/*)}*/}
 
 
                 </Map>
