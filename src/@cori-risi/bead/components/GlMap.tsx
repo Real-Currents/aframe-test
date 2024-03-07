@@ -60,8 +60,12 @@ const bead_merged_tr_bead_colors = {
     ...(bead_merged_tr.layers as any[])[0]
 };
 
-const bead_merged_tr_location_colors = {
+const bead_merged_tr_bead_x_dsl_colors = {
     ...(bead_merged_tr.layers as any[])[1]
+};
+
+const bead_merged_tr_loc_counts_colors = {
+    ...(bead_merged_tr.layers as any[])[2]
 };
 
 type GlMapProps = {
@@ -531,8 +535,10 @@ const GlMap: React.FC < GlMapProps > = ({
                         {(!!filterState.displayDataLayers) ?
                             <Layer {...(
                                 (filterState.colorVariable === "BEAD service level") ?
-                                    bead_merged_tr_bead_colors :
-                                    bead_merged_tr_location_colors
+                                    (!filterState.excludeDSL) ?
+                                        bead_merged_tr_bead_colors :
+                                        bead_merged_tr_bead_x_dsl_colors :
+                                    bead_merged_tr_loc_counts_colors
                             )} /> :
                             <></>
                         }
@@ -628,7 +634,7 @@ const GlMap: React.FC < GlMapProps > = ({
                     </div>
 
                     {mapZoom < MIN_ZOOM_LEVEL && (
-                        <animated.div style={props} className={style["zoom-message"]}>Zoom in further to view and filter data</animated.div>
+                        <animated.div style={props} className={style["zoom-message"]}>Zoom in further to filter and select data</animated.div>
                     )}
 
                     {/*{mapZoom >= MIN_ZOOM_LEVEL && (*/}
