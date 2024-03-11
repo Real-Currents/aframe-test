@@ -11,6 +11,7 @@ import {
     parseIspId, swapKeysValues
 } from "../utils/utils";
 import isp_name_dict from "../data/isp_name_lookup_rev.json";
+import county_name_geoid from "../data/geoid_co_name_crosswalk.json";
 
 const percentFormat = (num: number | string) => {
     // console.log(parseFloat(num));
@@ -60,6 +61,10 @@ export function HoverInfo () {
             <div className={style["tooltip"]} style={{left: hoverInfo.x, top: hoverInfo.y}}>
                 <h5><span>BEAD status</span>: <span className={style["bead-category"]} style={{textDecorationColor: getBEADColor(hoverInfo.feature.properties.bead_category)}}>{filterState.excludeDSL? hoverInfo.feature.properties.bead_category_dsl_excluded: hoverInfo.feature.properties.bead_category}</span></h5>
                 <p><span>Census Block ID</span>: {hoverInfo.feature.properties.geoid_bl}</p>
+                <p><span>{county_name_geoid
+                    .filter(d => d.id == hoverInfo.feature.properties.geoid_co)
+                    .map(d => d.label)
+                }</span></p>
                 <div>
                     <div>
                         <p><b>Broadband access</b> {filterState.excludeDSL? <em>(Counting all DSL-only locations as Underserved)</em>: ""}</p>

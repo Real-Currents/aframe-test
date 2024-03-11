@@ -40,6 +40,8 @@ const bead_style_function = (obj: typeof colors.legend_colors.bb_bead_categories
     return array;
 };
 
+const total_locations_colors = getFillColor("Total locations", false);
+
 export const isp_footprint_fill: MapboxSourceLayerStyles = {
     "sources": [{
         "id": "isp_footprint",
@@ -271,21 +273,21 @@ export const bead_merged_tr: MapboxSourceLayerStyles = {
             ['boolean', ['feature-state', 'hover'], false],
             'rgba(255, 255, 255, 0.5)',
             [
-                (getFillColor("Total locations", false)[0]),
-                (getFillColor("Total locations", false)[1]),
-                (getFillColor("Total locations", false)[2]),
-                (getFillColor("Total locations", false)[3]),
+                (total_locations_colors[0]),
+                (total_locations_colors[1]),
+                (total_locations_colors[2]),
+                (total_locations_colors[3]),
                 [
-                    (getFillColor("Total locations", false)[4][0]),
-                    (getFillColor("Total locations", false)[4][1]),
-                    (getFillColor("Total locations", false)[4][2]),
+                    (total_locations_colors[4][0]),
+                    (total_locations_colors[4][1]),
+                    (total_locations_colors[4][2]),
                     0,
-                    (getFillColor("Total locations", false)[4][4]),
+                    (total_locations_colors[4][4]),
                     2500,
-                    (getFillColor("Total locations", false)[4][6]),
-                    5000,
-                    (getFillColor("Total locations", false)[4][8]),
-                    10000,
+                    (total_locations_colors[4][6]),
+                    7500,
+                    (total_locations_colors[4][8]),
+                    25000,
                     'rgba(22, 52, 62, 0.5)'
                 ]
             ]
@@ -297,9 +299,9 @@ export const bead_merged_tr: MapboxSourceLayerStyles = {
             0, 0.0,
             3, 0.0,
             4, 0.05,
-            5, 0.5,
-            7, 0.75,
-            9, 0.75,
+            5, 0.75,
+            7, 0.85,
+            9, 0.95,
             9.01, 0.05,
             10, 0.0,
         ]
