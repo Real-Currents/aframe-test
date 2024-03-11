@@ -1,41 +1,19 @@
-import React, {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from "react-redux";
 import MUIDataTable from "mui-datatables";
-import bbox from '@turf/bbox';
-import { Feature, FeatureCollection } from "geojson";
+import { FeatureCollection } from "geojson";
+import GeoJSONFeature from "maplibre-gl";
+import { MapRef } from "react-map-gl";
 import { CustomButton } from "./CustomInputs";
-
-import isp_name_dict from "../data/isp_name_lookup_rev.json";
 import { selectMapSelection, setMapSelection } from "../features";
-import { HoverInfoState } from "../app/models";
+import { IspNameLookup } from "../app/models";
 import { parseIspId, swapKeysValues } from "../utils/utils";
 import "./styles/DetailedView.scss";
-import GeoJSONFeature from "maplibre-gl";
-import {MapRef} from "react-map-gl";
 import { jumpMapToFeature } from '../utils/mapUtils';
 
-interface IspNameLookup {
-    [key: string]: string;
-}
+import isp_name_dict from "../data/isp_name_lookup_rev.json";
+
 const isp_name_lookup: IspNameLookup = isp_name_dict;
-
-import broadband_technology_dict from '../data/broadband_technology.json';
-
-const broadband_technology: Record<string, string> = broadband_technology_dict;
-
-// const dt_columns = [
-//     "Name",
-//     "Company",
-//     "City",
-//     "State"
-// ];
-
-// const dt_data = [
-//     ["Joe James", "Test Corp", "Yonkers", "NY"],
-//     ["John Walsh", "Test Corp", "Hartford", "CT"],
-//     ["Bob Herm", "Test Corp", "Tampa", "FL"],
-//     ["James Houston", "Test Corp", "Dallas", "TX"],
-// ];
 
 interface BlockLevelFeature {
     "properties": {

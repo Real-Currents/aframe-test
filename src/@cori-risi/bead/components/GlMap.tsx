@@ -1,4 +1,10 @@
-import React, {useState, useCallback, useEffect, useRef, useMemo, useContext, MutableRefObject} from 'react';
+import React, {
+    MutableRefObject,
+    useContext,
+    useEffect,
+    useRef,
+    useState
+} from 'react';
 import IntrinsicAttributes = React.JSX.IntrinsicAttributes;
 import { fitBounds } from 'viewport-mercator-project';
 import { useDispatch, useSelector } from "react-redux";
@@ -46,13 +52,8 @@ import {
     // getBEADColor,
     getFillColor
 } from '../utils/colors';
-// import {
-//     formatBroadbandTechnology,
-//     parseIspId, swapKeysValues
-// } from '../utils/utils';
 
 import broadband_technology_dict from './../data/broadband_technology.json';
-import isp_name_dict from "../data/isp_name_lookup_rev.json";
 
 const broadband_technology: Record<string, string> = broadband_technology_dict;
 
