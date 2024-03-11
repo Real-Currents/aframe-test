@@ -7,7 +7,7 @@ import { CustomButton } from "./CustomInputs";
 
 import isp_name_dict from "../data/isp_name_lookup_rev.json";
 import { selectMapSelection, setMapSelection } from "../features";
-import { HoverInfoState } from "../models/index";
+import { HoverInfoState } from "../app/models";
 import { parseIspId, swapKeysValues } from "../utils/utils";
 import "./styles/DetailedView.scss";
 import GeoJSONFeature from "maplibre-gl";
@@ -617,15 +617,6 @@ export default function DetailedView () {
                 }
                 <br />
 
-                <div style={{ padding: "10px" }}>
-                    <p id="fcc-bdc-footnote">
-                        &dagger; Based on analysis of Broadband Serviceable Locations (BSL) as reported to the Federal Communications Commission (FCC).<br />
-                        The FCC has publicly released this data as <a href={"https://broadbandmap.fcc.gov/data-download/nationwide-data"} target={"_blank"}>BDC (Broadband Data Collection) Public Data</a>.
-                    </p>
-                </div>
-
-                <br />
-
                 <h4 className={"detailed-header"}>Demographics<a href="#acs-footnote" style={{textDecoration: "none"}}><sup>&Dagger;</sup></a>
                 </h4>
                 <hr />
@@ -682,6 +673,14 @@ export default function DetailedView () {
                             title={"Data for census tracts that include any selected census block"}
                         />
                 }
+                <br />
+
+                <div style={{ padding: "10px" }}>
+                    <p id="fcc-bdc-footnote">
+                        &dagger; Based on analysis of Broadband Serviceable Locations (BSL) by census block, as reported to the Federal Communications Commission (FCC).<br />
+                        The FCC has publicly released this data as <a href={"https://broadbandmap.fcc.gov/data-download/nationwide-data"} target={"_blank"}>BDC (Broadband Data Collection) Public Data</a>.
+                    </p>
+                </div>
 
                 <div style={{ padding: "10px" }}>
                     <p id="acs-footnote">

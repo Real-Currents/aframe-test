@@ -26,6 +26,7 @@ frontend:
         - echo "VITE_COGNITO_REDIRECT_SIGNIN=${COGNITO_REDIRECT_SIGNIN}" >> .env
         - echo "VITE_COGNITO_REDIRECT_SIGNOUT=${COGNITO_REDIRECT_SIGNOUT}" >> .env
         - npm run build
+        - npm
   artifacts:
     baseDirectory: build
     files:

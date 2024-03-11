@@ -13,6 +13,8 @@ export interface FilterState {
     };
     isp_count: number[];
     total_locations: number[];
+    locations_100_20: number[];
+    locations_25_3: number[];
     isp_combos: string[];
     counties: string[];
     broadband_technology: string[];

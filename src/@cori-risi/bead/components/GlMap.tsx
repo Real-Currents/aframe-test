@@ -39,7 +39,7 @@ import {
     selectMapSelection,
     setMapSelection
 } from "../features";
-import { FilterState } from "../models/index";
+import { FilterState } from "../app/models";
 import { HoverInfo } from "./HoverInfo";
 
 import {
@@ -397,6 +397,12 @@ const GlMap: React.FC < GlMapProps > = ({
 
         bb_array = [ ...bb_array, "Not Reported" ];
 
+        let bead_filter = [
+            'in',
+            ['get', 'bead_category'],
+            ['literal', bb_array]
+        ];
+
         let isp_filter: any = [
             'all',
             ['>=', ['get', 'cnt_isp'], filterState.isp_count[0]],
@@ -409,9 +415,30 @@ const GlMap: React.FC < GlMapProps > = ({
             ['<=', ['get', 'cnt_total_locations'], filterState.total_locations[1]]
         ];
 
-        let new_filter: any = ["all", ['in', ['get', 'bead_category'],
-            ['literal', bb_array]
-        ], isp_filter, total_locations_filter];
+        let locations_100_20_filter: any = (!filterState.excludeDSL) ? [
+            'all',
+            ['>=', ['get', 'cnt_100_20'], filterState.locations_100_20[0]],
+            ['<=', ['get', 'cnt_100_20'], filterState.locations_100_20[1]]
+        ] : [
+            'all',
+            ['>=', ['get', 'cnt_100_20_dsl_excluded'], filterState.locations_100_20[0]],
+            ['<=', ['get', 'cnt_100_20_dsl_excluded'], filterState.locations_100_20[1]]
+        ];
+
+        let locations_25_3_filter: any = [
+            'all',
+            ['>=', ['get', 'cnt_25_3'], filterState.locations_25_3[0]],
+            ['<=', ['get', 'cnt_25_3'], filterState.locations_25_3[1]]
+        ];
+
+        let new_filter: any = [
+            "all",
+            bead_filter,
+            isp_filter,
+            total_locations_filter,
+            locations_100_20_filter,
+            locations_25_3_filter
+        ];
 
         if (filterState.isp_combos.length !== 0) {
             let isp_combo_filter = ['in', ['get', 'combo_isp_id'],
