@@ -3,7 +3,7 @@ import React from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import TuneIcon from '@mui/icons-material/Tune';
 import { selectMapFilters, setMapFilters } from "../features";
-import { FilterState } from "../models/index";
+import { FilterState } from "../app/models";
 import { CustomButton, CustomIconButton } from "./CustomInputs";
 
 export default function Navbar() {

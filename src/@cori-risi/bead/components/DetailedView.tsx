@@ -1,41 +1,19 @@
-import React, {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from "react-redux";
 import MUIDataTable from "mui-datatables";
-import bbox from '@turf/bbox';
-import { Feature, FeatureCollection } from "geojson";
+import { FeatureCollection } from "geojson";
+import GeoJSONFeature from "maplibre-gl";
+import { MapRef } from "react-map-gl";
 import { CustomButton } from "./CustomInputs";
-
-import isp_name_dict from "../data/isp_name_lookup_rev.json";
 import { selectMapSelection, setMapSelection } from "../features";
-import { HoverInfoState } from "../models/index";
+import { IspNameLookup } from "../app/models";
 import { parseIspId, swapKeysValues } from "../utils/utils";
 import "./styles/DetailedView.scss";
-import GeoJSONFeature from "maplibre-gl";
-import {MapRef} from "react-map-gl";
 import { jumpMapToFeature } from '../utils/mapUtils';
 
-interface IspNameLookup {
-    [key: string]: string;
-}
+import isp_name_dict from "../data/isp_name_lookup_rev.json";
+
 const isp_name_lookup: IspNameLookup = isp_name_dict;
-
-import broadband_technology_dict from '../data/broadband_technology.json';
-
-const broadband_technology: Record<string, string> = broadband_technology_dict;
-
-// const dt_columns = [
-//     "Name",
-//     "Company",
-//     "City",
-//     "State"
-// ];
-
-// const dt_data = [
-//     ["Joe James", "Test Corp", "Yonkers", "NY"],
-//     ["John Walsh", "Test Corp", "Hartford", "CT"],
-//     ["Bob Herm", "Test Corp", "Tampa", "FL"],
-//     ["James Houston", "Test Corp", "Dallas", "TX"],
-// ];
 
 interface BlockLevelFeature {
     "properties": {
@@ -617,15 +595,6 @@ export default function DetailedView () {
                 }
                 <br />
 
-                <div style={{ padding: "10px" }}>
-                    <p id="fcc-bdc-footnote">
-                        &dagger; Based on analysis of Broadband Serviceable Locations (BSL) as reported to the Federal Communications Commission (FCC).<br />
-                        The FCC has publicly released this data as <a href={"https://broadbandmap.fcc.gov/data-download/nationwide-data"} target={"_blank"}>BDC (Broadband Data Collection) Public Data</a>.
-                    </p>
-                </div>
-
-                <br />
-
                 <h4 className={"detailed-header"}>Demographics<a href="#acs-footnote" style={{textDecoration: "none"}}><sup>&Dagger;</sup></a>
                 </h4>
                 <hr />
@@ -682,6 +651,14 @@ export default function DetailedView () {
                             title={"Data for census tracts that include any selected census block"}
                         />
                 }
+                <br />
+
+                <div style={{ padding: "10px" }}>
+                    <p id="fcc-bdc-footnote">
+                        &dagger; Based on analysis of Broadband Serviceable Locations (BSL) by census block, as reported to the Federal Communications Commission (FCC).<br />
+                        The FCC has publicly released this data as <a href={"https://broadbandmap.fcc.gov/data-download/nationwide-data"} target={"_blank"}>BDC (Broadband Data Collection) Public Data</a>.
+                    </p>
+                </div>
 
                 <div style={{ padding: "10px" }}>
                     <p id="acs-footnote">
