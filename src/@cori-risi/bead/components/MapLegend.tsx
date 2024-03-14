@@ -12,7 +12,7 @@ const numberFormat = format(',');
 
 interface MapLegendProps {
     title: string,
-        category: any
+    category: any
 }
 
 const MapLegend: React.FC < MapLegendProps > = ({ title, category }) => {

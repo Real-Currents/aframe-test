@@ -92,7 +92,7 @@ const GlMap: React.FC < GlMapProps > = ({
   // isShowing
 }: GlMapProps) => {
 
-    console.log("GLMap is re-rendering");
+    // console.log("GLMap is re-rendering");
 
     const apiContext = useContext(ApiContext);
 

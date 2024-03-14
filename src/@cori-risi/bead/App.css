@@ -55,7 +55,6 @@ hr {
 
   color: white;
 
-  /*right: calc(50% + 100px); !* 350/2 (sidebar width) - 200/2 (button width) = 75px *!*/
   left: calc(50vw - 100px);
 
   width: 200px;
@@ -67,7 +66,6 @@ hr {
 
   font-family: "Bitter", monospace;
 
-  /*background-color: #E74F2A;*/
   background-color: #00835D;
 
 }
@@ -93,7 +91,7 @@ hr {
 
 .detail-button svg {
   width: 20px;
-  margin: 12px auto;
+  margin: 5px auto;
   fill: white;
 }
 

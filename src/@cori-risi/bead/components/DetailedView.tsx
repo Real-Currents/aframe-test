@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import MUIDataTable from "mui-datatables";
 import { FeatureCollection } from "geojson";
@@ -11,8 +11,9 @@ import { parseIspId, swapKeysValues } from "../utils/utils";
 import "./styles/DetailedView.scss";
 import { jumpMapToFeature } from '../utils/mapUtils';
 
-import isp_name_dict from "../data/isp_name_lookup_rev.json";
+import PrettyTable from './PrettyTable';
 
+import isp_name_dict from "../data/isp_name_lookup_rev.json";
 const isp_name_lookup: IspNameLookup = isp_name_dict;
 
 interface BlockLevelFeature {
@@ -276,18 +277,27 @@ export default function DetailedView () {
             <div id="detail" className={"detailed-view"}
                  style={{ display: "none" }}>
 
-                <button className={"detail-button top"}
-                        onClick={showMap} >
-                    {/*<a href="#main-interface">*/}
-                        <svg viewBox="0 0 22 14" aria-hidden="true">
-                            <polygon points="18.8743237 0 22 3.62676411 10.6828079 14 0 3.57495046 3.2339044 0.0505492411 10.7824379 7.41694926"></polygon>
-                        </svg>
-                        Broadband map
-                    {/*</a>*/}
+                <button 
+                    className={"detail-button top"}
+                    onClick={showMap} 
+                >
+                    <svg viewBox="0 0 22 14" aria-hidden="true">
+                        <polygon points="18.8743237 0 22 3.62676411 10.6828079 14 0 3.57495046 3.2339044 0.0505492411 10.7824379 7.41694926"></polygon>
+                    </svg>
+                    Broadband map
                 </button>
                 <br />
                 <br />
                 <br />
+
+
+                {
+                    (
+                        block_info.length > 0? 
+                            <PrettyTable data={block_info} />: 
+                            <></>
+                    )
+                }
 
                 <h4 className={"detailed-header"}>
                     Broadband service, technology, and funding information <br />
