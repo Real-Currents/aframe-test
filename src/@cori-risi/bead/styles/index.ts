@@ -60,8 +60,8 @@ export const isp_footprint_fill: MapboxSourceLayerStyles = {
                 ["zoom"],
                 0, 0.2,
                 8, 0.2,
-                9, 0.1,
-                10, 0.1,
+                9, 0.2,
+                10, 0.2,
                 18, 0.05
             ]
         }
@@ -107,7 +107,7 @@ export const not_reported_fill_layer: MapboxSourceLayerStyles = {
             "source-layer": "proj_beadbead_blockv1b",
             "type": "fill",
             "paint": {
-                "fill-opacity": .2,
+                "fill-opacity": .05,
                 "fill-color": "black"
             },
             "filter": ['==', ['get', 'bead_category'], "Not Reported"]
@@ -127,7 +127,7 @@ export const not_reported_pattern_layer: MapboxSourceLayerStyles = {
             "source-layer": "proj_beadbead_blockv1b",
             "type": "fill",
             "paint": {
-                "fill-opacity": .25,
+                "fill-opacity": .1,
                 "fill-pattern": "stripe-5"
             },
             "filter": ['==', ['get', 'bead_category'], "Not Reported"]
