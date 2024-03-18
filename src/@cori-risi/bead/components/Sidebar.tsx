@@ -17,7 +17,7 @@ import InfoTooltip from "./InfoTooltip";
 import {ApiContext} from "../../contexts/ApiContextProvider";
 import { selectMapFilters, setMapFilters } from "../features";
 import {FilterState, IspIdLookup, IspNameLookup} from "../app/models";
-// import { getFillColor } from '../../utils/colors';
+// import { getFillColor } from '../utils/colors';
 import { swapKeysValues } from '../../utils/utils';
 
 import style from "./styles/Sidebar.module.css";
@@ -137,6 +137,24 @@ function Sidebar () {
 
     dispatch(setMapFilters({
       total_locations: slider_vals
+    }));
+  };
+
+  const handle10020LocationsChange = (event: Event, newValue: number | number[]) => {
+    let slider_vals: number[] = newValue as number[];
+    // onFilterChange({...filter, total_locations: slider_vals});
+
+    dispatch(setMapFilters({
+      locations_100_20: slider_vals
+    }));
+  };
+
+  const handle253LocationsChange = (event: Event, newValue: number | number[]) => {
+    let slider_vals: number[] = newValue as number[];
+    // onFilterChange({...filter, total_locations: slider_vals});
+
+    dispatch(setMapFilters({
+      locations_25_3: slider_vals
     }));
   };
 
@@ -328,30 +346,10 @@ function Sidebar () {
               </div>
               <div className={style["filter-section"]}>
                 <div className={style["filter-header"]}>
-                  <h5>County</h5>
-                </div>
-                <Autocomplete
-                    multiple
-                    options={county_name_geoid.map(d => d.label)}
-                    // defaultValue={""}
-                    onChange={handleCountiesChange}
-                    renderInput={(params) => (
-                        <TextField
-                            {...params}
-                            variant="standard"
-                            label="Filter by county"
-                            placeholder="Filter by county"
-                        />
-                    )}
-                    disabled={filterState.disableSidebar}
-                />
-              </div>
-              <div className={style["filter-section"]}>
-                <div className={style["filter-header"]}>
                   <h5>Awarded federal funding</h5>
                   <InfoTooltip text={(`
-Fully funded means census blocks in which *all* locations either have 100/20 or greater service or are part of a planned service area that is funded by a federal grant program. 
-Unfunded means census blocks in which *all* locations are below 100/20 or greater service and have not received any federal funding to cover that service area.
+Census blocks in areas where previous winning applicants for an Auction 904 RDOF bid have been authorized to recieve funds.
+This filter maps the current 2020 Census blocks to the corresponding 2010 Census block(s) that  originally received the award.
 `)}/>
                 </div>
                 <FormGroup row className={style["form-control-group"]}>
@@ -363,7 +361,7 @@ Unfunded means census blocks in which *all* locations are below 100/20 or greate
                         name="yes"
                       />
                     }
-                    label="Fully Funded"
+                    label="Yes"
                     disabled={filterState.disableSidebar}
                   />
                   <FormControlLabel className={style["form-control-label"]}
@@ -374,52 +372,10 @@ Unfunded means census blocks in which *all* locations are below 100/20 or greate
                         name="no"
                       />
                     }
-                    label="Unfunded"
+                    label="No"
                     disabled={filterState.disableSidebar}
                   />
                 </FormGroup>
-              </div>
-              <div className={style["filter-section"]}>
-                <div className={style["filter-header"]}>
-                  <h5>Broadband technologies<a href="#fcc-bdc-sidenote" style={{textDecoration: "none"}}><sup>&dagger;</sup></a></h5>
-                  <InfoTooltip text={"Show census blocks where a certain broadband technology is reported to be present."}/>
-                </div>
-                <Autocomplete
-                    multiple
-                    options={Object.keys(broadband_technology)}
-                    defaultValue={[]}
-                    onChange={handleBroadbandTechnologyChange}
-                    renderInput={(params) => (
-                        <TextField
-                            {...params}
-                            variant="standard"
-                            label="Filter by broadband technology"
-                            placeholder="Filter by broadband technology"
-                        />
-                    )}
-                    disabled={filterState.disableSidebar}
-                />
-              </div>
-              <div className={style["filter-section"]}>
-                <div className={style["filter-header"]}>
-                  <h5>Internet service providers<a href="#fcc-bdc-sidenote" style={{textDecoration: "none"}}><sup>&dagger;</sup></a></h5>
-                  <InfoTooltip text={"Show census blocks which include at least one of the ISPs you've selected"}/>
-                </div>
-                <Autocomplete
-                    multiple
-                    options={Object.keys(isp_name_lookup)}
-                    defaultValue={[]}
-                    onChange={handleMultipleISPChange}
-                    renderInput={(params) => (
-                        <TextField
-                            {...params}
-                            variant="standard"
-                            label="Filter by ISP"
-                            placeholder="Filter by ISP"
-                        />
-                    )}
-                    disabled={filterState.disableSidebar}
-                />
               </div>
               <div className={style["filter-section"]}>
                 <div className={style["filter-header"]}>
@@ -485,9 +441,69 @@ Unfunded means census blocks in which *all* locations are below 100/20 or greate
                   />
                 </div>
               </div>
-
+              <div className={style["filter-section"]}>
+                <div className={style["filter-header"]}>
+                  <h5>Broadband technologies</h5>
+                  <InfoTooltip text={"Show census blocks where a certain broadband technology is reported to be present"}/>
+                </div>
+                <Autocomplete
+                    multiple
+                    options={Object.keys(broadband_technology)}
+                    defaultValue={[]}
+                    onChange={handleBroadbandTechnologyChange}
+                    renderInput={(params) => (
+                        <TextField
+                            {...params}
+                            variant="standard"
+                            label="Filter by broadband technology"
+                            placeholder="Filter by broadband technology"
+                        />
+                    )}
+                    disabled={filterState.disableSidebar}
+                />
+              </div>
+              <div className={style["filter-section"]}>
+                <div className={style["filter-header"]}>
+                  <h5>Internet service providers</h5>
+                  <InfoTooltip text={"Show census blocks which include at least one of the ISPs you've selected"}/>
+                </div>
+                <Autocomplete
+                  multiple
+                  options={Object.keys(isp_name_lookup)}
+                  defaultValue={[]}
+                  onChange={handleMultipleISPChange}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      variant="standard"
+                      label="Filter by ISP"
+                      placeholder="Filter by ISP"
+                    />
+                  )}
+                  disabled={filterState.disableSidebar}
+                />
+              </div>
+              <div className={style["filter-section"]}>
+                <div className={style["filter-header"]}>
+                  <h5>County</h5>
+                </div>
+                <Autocomplete
+                  multiple
+                  options={county_name_geoid.map(d => d.label)}
+                  // defaultValue={""}
+                  onChange={handleCountiesChange}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      variant="standard"
+                      label="Filter by county"
+                      placeholder="Filter by county"
+                    />
+                  )}
+                  disabled={filterState.disableSidebar}
+                />
+              </div>
             </div>
-
           </div>
 
           <div style={{ padding: "10px" }}>
