@@ -7,7 +7,7 @@ import { MapRef } from "react-map-gl";
 import { CustomButton } from "./CustomInputs";
 import { selectMapSelection, setMapSelection } from "../features";
 import { IspNameLookup } from "../app/models";
-import { parseIspId, swapKeysValues } from "../utils/utils";
+import { parseIspId, swapKeysValues, aggregateBlockSelection } from "../utils/utils";
 import "./styles/DetailedView.scss";
 import { jumpMapToFeature } from '../utils/mapUtils';
 
@@ -199,6 +199,7 @@ export default function DetailedView () {
                     && d.properties["type"] === "geojson"
                 ));
 
+            aggregateBlockSelection(block_info);
             setBlockInfo(block_info);
         } else {
             setBlockInfo([]);

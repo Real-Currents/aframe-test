@@ -5,7 +5,6 @@ interface PrettyTableProps {
 }
 
 const PrettyTable: React.FC < PrettyTableProps > = (data) => {
-    console.log(data);
     return (
         <div>
             <p>A pretty table will go here</p>

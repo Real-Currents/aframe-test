@@ -53,3 +53,12 @@ export function formatBroadbandTechnology(bb_tech_presence: boolean[]): string {
     return tech_list.join(", ")
 
 }
+
+export function aggregateBlockSelection(block_info: any[]): void {
+    
+    console.log("in aggregateBlockSelection", block_info, block_info.length);
+    for (let i = 0; i < block_info.length; i++) {
+        console.log("-- ", block_info[i]);
+    }
+    
+}
