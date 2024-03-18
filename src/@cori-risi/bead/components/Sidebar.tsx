@@ -158,24 +158,6 @@ function Sidebar () {
     }));
   };
 
-  const handle10020LocationsChange = (event: Event, newValue: number | number[]) => {
-    let slider_vals: number[] = newValue as number[];
-    // onFilterChange({...filter, total_locations: slider_vals});
-
-    dispatch(setMapFilters({
-      locations_100_20: slider_vals
-    }));
-  };
-
-  const handle253LocationsChange = (event: Event, newValue: number | number[]) => {
-    let slider_vals: number[] = newValue as number[];
-    // onFilterChange({...filter, total_locations: slider_vals});
-
-    dispatch(setMapFilters({
-      locations_25_3: slider_vals
-    }));
-  };
-
   const handleBroadbandTechnologyChange = (event: any, newValue: string[]) => {
     if (Array.isArray(newValue) && newValue.every((item) => typeof item === 'string')) {
       // onFilterChange({...filter, broadband_technology: newValue});

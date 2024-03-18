@@ -11,7 +11,7 @@ import {
     parseIspId, swapKeysValues
 } from "../../utils/utils";
 import isp_name_dict from "../../data/isp_name_lookup_rev.json";
-// import county_name_geoid from "../../data/geoid_co_name_crosswalk.json";
+import county_name_geoid from "../../data/geoid_co_name_crosswalk.json";
 
 const percentFormat = (num: number | string) => {
     // console.log(parseFloat(num));
