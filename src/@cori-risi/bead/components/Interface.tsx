@@ -8,12 +8,12 @@ import InfoPanel from "./InfoPanel";
 
 import style from "./styles/Interface.module.css";
 
-import { getFillColor } from '../utils/colors';
+import { getFillColor } from '../../utils/colors';
 
-import isp_name_dict from './../data/isp_name_lookup_rev.json';
-import isp_id_dict from './../data/isp_dict_latest.json';
+import isp_name_dict from '../../data/isp_name_lookup_rev.json';
+import isp_id_dict from '../../data/isp_dict_latest.json';
 
-import { swapKeysValues } from '../utils/utils';
+import { swapKeysValues } from '../../utils/utils';
 
 interface IspIdLookup {
     [key: string]: string[];

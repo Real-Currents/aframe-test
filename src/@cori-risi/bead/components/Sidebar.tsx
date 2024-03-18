@@ -17,15 +17,15 @@ import InfoTooltip from "./InfoTooltip";
 import {ApiContext} from "../../contexts/ApiContextProvider";
 import { selectMapFilters, setMapFilters } from "../features";
 import {FilterState, IspIdLookup, IspNameLookup} from "../app/models";
-// import { getFillColor } from '../utils/colors';
-import { swapKeysValues } from '../utils/utils';
+// import { getFillColor } from '../../utils/colors';
+import { swapKeysValues } from '../../utils/utils';
 
 import style from "./styles/Sidebar.module.css";
 
-import broadband_technology_dict from '../data/broadband_technology.json';
-import county_name_geoid from '../data/geoid_co_name_crosswalk.json';
-import isp_name_dict from '../data/isp_name_lookup_rev.json';
-import isp_id_dict from "../data/isp_dict_latest.json";
+import broadband_technology_dict from '../../data/broadband_technology.json';
+import county_name_geoid from '../../data/geoid_co_name_crosswalk.json';
+import isp_name_dict from '../../data/isp_name_lookup_rev.json';
+import isp_id_dict from "../../data/isp_dict_latest.json";
 
 const broadband_technology: Record<string, string> = broadband_technology_dict;
 

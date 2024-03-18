@@ -51,9 +51,9 @@ import { HoverInfo } from "./HoverInfo";
 import {
     // getBEADColor,
     getFillColor
-} from '../utils/colors';
+} from '../../utils/colors';
 
-import broadband_technology_dict from './../data/broadband_technology.json';
+import broadband_technology_dict from '../../data/broadband_technology.json';
 
 const broadband_technology: Record<string, string> = broadband_technology_dict;
 
