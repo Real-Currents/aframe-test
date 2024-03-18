@@ -1,7 +1,7 @@
 import React from "react";
 import IntrinsicAttributes = React.JSX.IntrinsicAttributes;
 import { LayerProps, SourceProps, MapStyle } from "react-map-gl";
-import {colors, colors_excludeDSL, getBEADColor, getFillColor} from '../utils/colors';
+import {colors, colors_excludeDSL, getBEADColor, getFillColor} from '../../utils/colors';
 import MAP_STYLE from '../../mapbox/styles/ruralinno/cl010e7b7001p15pe3l0306hv/style.json';
 import { Expression } from "maplibre-gl";
 import StyleFunction from 'react-map-gl';
