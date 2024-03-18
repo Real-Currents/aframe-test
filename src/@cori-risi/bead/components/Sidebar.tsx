@@ -16,7 +16,7 @@ import InfoTooltip from "./InfoTooltip";
 
 import {ApiContext} from "../../contexts/ApiContextProvider";
 import { selectMapFilters, setMapFilters } from "../features";
-import { FilterState } from "../models/index";
+import {FilterState, IspIdLookup, IspNameLookup} from "../app/models";
 // import { getFillColor } from '../utils/colors';
 import { swapKeysValues } from '../utils/utils';
 
@@ -29,13 +29,6 @@ import isp_id_dict from "../data/isp_dict_latest.json";
 
 const broadband_technology: Record<string, string> = broadband_technology_dict;
 
-interface IspIdLookup {
-  [key: string]: string[];
-}
-
-interface IspNameLookup {
-  [key: string]: string;
-}
 const isp_name_lookup: IspNameLookup = isp_name_dict;
 const isp_name_lookup_rev = swapKeysValues(isp_name_lookup);
 
@@ -53,6 +46,10 @@ function Sidebar () {
     right: filterState.showSidebar ? "0px": "-375px"
   });
 
+  const toggleDataLayers = () => {
+    dispatch(setMapFilters({ displayDataLayers: !filterState.displayDataLayers }));
+  };
+
   const handleFillColorChange = (event: React.SyntheticEvent, newValue: string) => {
 
       // onFillColorChange(getFillColor(newValue));
@@ -61,6 +58,29 @@ function Sidebar () {
       dispatch(setMapFilters({
         "colorVariable": newValue
       }));
+  };
+
+  const handleISPFootprintChange = (event: any, newValue: string | null): void => {
+
+    if (newValue === null) {
+      dispatch(setMapFilters({
+        isp_footprint: ""
+      }));
+    }
+    else {
+      let isp_id = isp_name_lookup[newValue];
+      if (typeof isp_id === "string") {
+        dispatch(setMapFilters({
+          isp_footprint: isp_id
+        }));
+      }
+    }
+
+  };
+
+  const handleExcludeDSLChange = () => {
+    const newExcludeDSL = !filterState.excludeDSL;
+    dispatch(setMapFilters({ excludeDSL: newExcludeDSL }));
   };
 
   const handleBEADFilterChange = (event: any) => {
@@ -120,6 +140,24 @@ function Sidebar () {
     }));
   };
 
+  const handle10020LocationsChange = (event: Event, newValue: number | number[]) => {
+    let slider_vals: number[] = newValue as number[];
+    // onFilterChange({...filter, total_locations: slider_vals});
+
+    dispatch(setMapFilters({
+      locations_100_20: slider_vals
+    }));
+  };
+
+  const handle253LocationsChange = (event: Event, newValue: number | number[]) => {
+    let slider_vals: number[] = newValue as number[];
+    // onFilterChange({...filter, total_locations: slider_vals});
+
+    dispatch(setMapFilters({
+      locations_25_3: slider_vals
+    }));
+  };
+
   const handleBroadbandTechnologyChange = (event: any, newValue: string[]) => {
     if (Array.isArray(newValue) && newValue.every((item) => typeof item === 'string')) {
       // onFilterChange({...filter, broadband_technology: newValue});
@@ -152,24 +190,6 @@ function Sidebar () {
     }));
   };
 
-  const handleISPFootprintChange = (event: any, newValue: string | null): void => {
-
-    if (newValue === null) {
-      dispatch(setMapFilters({
-        isp_footprint: ""
-      }));
-    }
-    else {
-      let isp_id = isp_name_lookup[newValue];
-      if (typeof isp_id === "string") {
-        dispatch(setMapFilters({
-          isp_footprint: isp_id
-        }));
-      }
-    }
-
-  };
-
   const handleCountiesChange = (event: any, newValue: any) => {
 
     let valid_geoid_co: string[] = [];
@@ -186,15 +206,6 @@ function Sidebar () {
     dispatch(setMapFilters({
       counties: valid_geoid_co
     }));
-  };
-
-  const handleExcludeDSLChange = () => {
-    const newExcludeDSL = !filterState.excludeDSL;
-    dispatch(setMapFilters({ excludeDSL: newExcludeDSL }));
-  };
-
-  const toggleDataLayers = () => {
-    dispatch(setMapFilters({ displayDataLayers: !filterState.displayDataLayers }));
   };
 
   return (
@@ -214,6 +225,7 @@ function Sidebar () {
                     onChange={toggleDataLayers}
                     inputProps={{ 'aria-label': 'Toggle Broadband Data Layers' }}
                 />
+                <InfoTooltip text={"Toggle data layer"}/>
                 {/*<Typography>On</Typography>*/}
               </div>
               <div className={style["color-dropdown"]}>
@@ -264,12 +276,15 @@ function Sidebar () {
                 <Typography>On</Typography>
               </div>
             </div>
+
             <hr />
+
             <div className={style["filter-container"]}>
+
               <h4>Filters</h4>
               <div className={style["filter-section"]}>
                 <div className={style["filter-header"]}>
-                  <h5>BEAD service level</h5>
+                  <h5>BEAD service level<a href="#fcc-bdc-sidenote" style={{textDecoration: "none"}}><sup>&dagger;</sup></a></h5>
                   <InfoTooltip text={`Unserved refers to areas where at least 80% of locations do not have 25/3 Mbps service. 
                     Underserved refers to areas where at least 80% of locations do not have 100/20 Mbps service. Served refers to 
                     areas that are neither Unserved nor Underserved. BEAD is an acronym for the Broadband Equity, Access, and 
@@ -313,10 +328,30 @@ function Sidebar () {
               </div>
               <div className={style["filter-section"]}>
                 <div className={style["filter-header"]}>
+                  <h5>County</h5>
+                </div>
+                <Autocomplete
+                    multiple
+                    options={county_name_geoid.map(d => d.label)}
+                    // defaultValue={""}
+                    onChange={handleCountiesChange}
+                    renderInput={(params) => (
+                        <TextField
+                            {...params}
+                            variant="standard"
+                            label="Filter by county"
+                            placeholder="Filter by county"
+                        />
+                    )}
+                    disabled={filterState.disableSidebar}
+                />
+              </div>
+              <div className={style["filter-section"]}>
+                <div className={style["filter-header"]}>
                   <h5>Awarded federal funding</h5>
                   <InfoTooltip text={(`
-Census blocks in areas where previous winning applicants for an Auction 904 RDOF bid have been authorized to recieve funds.
-This filter maps the current 2020 Census blocks to the corresponding 2010 Census block(s) that  originally received the award.
+Fully funded means census blocks in which *all* locations either have 100/20 or greater service or are part of a planned service area that is funded by a federal grant program. 
+Unfunded means census blocks in which *all* locations are below 100/20 or greater service and have not received any federal funding to cover that service area.
 `)}/>
                 </div>
                 <FormGroup row className={style["form-control-group"]}>
@@ -328,7 +363,7 @@ This filter maps the current 2020 Census blocks to the corresponding 2010 Census
                         name="yes"
                       />
                     }
-                    label="Yes"
+                    label="Fully Funded"
                     disabled={filterState.disableSidebar}
                   />
                   <FormControlLabel className={style["form-control-label"]}
@@ -339,47 +374,15 @@ This filter maps the current 2020 Census blocks to the corresponding 2010 Census
                         name="no"
                       />
                     }
-                    label="No"
+                    label="Unfunded"
                     disabled={filterState.disableSidebar}
                   />
                 </FormGroup>
               </div>
               <div className={style["filter-section"]}>
                 <div className={style["filter-header"]}>
-                  <h5>Internet service provider count</h5>
-                </div>
-                <div className={style["slider"]}>
-                  <Slider
-                    getAriaLabel={() => 'ISP Count'}
-                    value={filterState.isp_count}
-                    onChange={handleISPChange}
-                    valueLabelDisplay="auto"
-                    min={0}
-                    max={10}
-                    disabled={filterState.disableSidebar}
-                  />
-                </div>
-              </div>
-              <div className={style["filter-section"]}>
-                <div className={style["filter-header"]}>
-                  <h5>Total locations</h5>
-                </div>
-                <div className={style["slider"]}>
-                  <Slider
-                    getAriaLabel={() => 'Total locations'}
-                    value={filterState.total_locations}
-                    onChange={handleTotalLocationsChange}
-                    valueLabelDisplay="auto"
-                    min={0}
-                    max={1015}
-                    disabled={filterState.disableSidebar}
-                  />
-                </div>
-              </div>
-              <div className={style["filter-section"]}>
-                <div className={style["filter-header"]}>
-                  <h5>Broadband technologies</h5>
-                  <InfoTooltip text={"Show census blocks where a certain broadband technology is reported to be present"}/>
+                  <h5>Broadband technologies<a href="#fcc-bdc-sidenote" style={{textDecoration: "none"}}><sup>&dagger;</sup></a></h5>
+                  <InfoTooltip text={"Show census blocks where a certain broadband technology is reported to be present."}/>
                 </div>
                 <Autocomplete
                     multiple
@@ -399,47 +402,102 @@ This filter maps the current 2020 Census blocks to the corresponding 2010 Census
               </div>
               <div className={style["filter-section"]}>
                 <div className={style["filter-header"]}>
-                  <h5>Internet service providers</h5>
+                  <h5>Internet service providers<a href="#fcc-bdc-sidenote" style={{textDecoration: "none"}}><sup>&dagger;</sup></a></h5>
                   <InfoTooltip text={"Show census blocks which include at least one of the ISPs you've selected"}/>
                 </div>
                 <Autocomplete
-                  multiple
-                  options={Object.keys(isp_name_lookup)}
-                  defaultValue={[]}
-                  onChange={handleMultipleISPChange}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      variant="standard"
-                      label="Filter by ISP"
-                      placeholder="Filter by ISP"
-                    />
-                  )}
-                  disabled={filterState.disableSidebar}
+                    multiple
+                    options={Object.keys(isp_name_lookup)}
+                    defaultValue={[]}
+                    onChange={handleMultipleISPChange}
+                    renderInput={(params) => (
+                        <TextField
+                            {...params}
+                            variant="standard"
+                            label="Filter by ISP"
+                            placeholder="Filter by ISP"
+                        />
+                    )}
+                    disabled={filterState.disableSidebar}
                 />
               </div>
               <div className={style["filter-section"]}>
                 <div className={style["filter-header"]}>
-                  <h5>County</h5>
+                  <h5>Count of internet service providers in block<a href="#fcc-bdc-sidenote" style={{textDecoration: "none"}}><sup>&dagger;</sup></a></h5>
                 </div>
-                <Autocomplete
-                  multiple
-                  options={county_name_geoid.map(d => d.label)}
-                  // defaultValue={""}
-                  onChange={handleCountiesChange}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      variant="standard"
-                      label="Filter by county"
-                      placeholder="Filter by county"
-                    />
-                  )}
-                  disabled={filterState.disableSidebar}
-                />
+                <div className={style["slider"]}>
+                  <Slider
+                    getAriaLabel={() => 'ISP Count'}
+                    value={filterState.isp_count}
+                    onChange={handleISPChange}
+                    valueLabelDisplay="auto"
+                    min={0}
+                    max={10}
+                    disabled={filterState.disableSidebar}
+                  />
+                </div>
               </div>
+              <div className={style["filter-section"]}>
+                <div className={style["filter-header"]}>
+                  <h5>Count of locations (BSL) in block<a href="#fcc-bdc-sidenote" style={{textDecoration: "none"}}><sup>&dagger;</sup></a></h5>
+                </div>
+                <div className={style["slider"]}>
+                  <Slider
+                    getAriaLabel={() => 'Total locations'}
+                    value={filterState.total_locations}
+                    onChange={handleTotalLocationsChange}
+                    valueLabelDisplay="auto"
+                    min={0}
+                    max={1015}
+                    disabled={filterState.disableSidebar}
+                  />
+                </div>
+              </div>
+              <div className={style["filter-section"]}>
+                <div className={style["filter-header"]}>
+                  <h5>Count of locations {">="} 100/20 service<a href="#fcc-bdc-sidenote" style={{textDecoration: "none"}}><sup>&dagger;</sup></a></h5>
+                </div>
+                <div className={style["slider"]}>
+                  <Slider
+                    getAriaLabel={() => '100/20 locations'}
+                    value={filterState.locations_100_20}
+                    onChange={handle10020LocationsChange}
+                    valueLabelDisplay="auto"
+                    min={0}
+                    max={1015}
+                    disabled={filterState.disableSidebar}
+                  />
+                </div>
+              </div>
+              <div className={style["filter-section"]}>
+                <div className={style["filter-header"]}>
+                  <h5>Count of locations {">="} 25/3 service<a href="#fcc-bdc-sidenote" style={{textDecoration: "none"}}><sup>&dagger;</sup></a></h5>
+                </div>
+                <div className={style["slider"]}>
+                  <Slider
+                    getAriaLabel={() => 'Total locations'}
+                    value={filterState.locations_25_3}
+                    onChange={handle253LocationsChange}
+                    valueLabelDisplay="auto"
+                    min={0}
+                    max={1015}
+                    disabled={filterState.disableSidebar}
+                  />
+                </div>
+              </div>
+
             </div>
+
           </div>
+
+          <div style={{ padding: "10px" }}>
+            <p id="fcc-bdc-sidenote">
+              &dagger; Based on analysis of Broadband Serviceable Locations (BSL) by census block, as reported to the Federal Communications Commission.
+            </p>
+          </div>
+
+          <br />
+
           <div className={style["link-section"]}>
             <a href="https://ruralinnovation.us/resources/mapping-and-data-analytics/interactive-rural-broadband-service-map/" target="_blank">About</a> |
             <a href="https://ruralinnovation.us/about/contact-us/" target="_blank">Contact</a> |

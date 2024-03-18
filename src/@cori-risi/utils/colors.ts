@@ -10,7 +10,7 @@ export const colors = {
     }
 };
 
-export const colors_excludeDSL = {
+export const colors_excludeDSL: typeof colors = {
   "legend_colors": {
     "bb_bead_categories": {
       "served_area": "rgba(9, 99, 73, 0.4)",
@@ -77,9 +77,9 @@ export function getFillColor(color_scheme: string, excludeDSL: boolean): any {
         75,
         'rgba(116, 168, 141, 0.5)',
         125,
-        'rgba(69, 110, 102, 0.5)',
+        'rgba(69, 127, 102, 0.5)',
         200, // The max value is 1015, but it's rare so cap the scale at 200
-        'rgba(22, 52, 62, 0.5)'
+        'rgba(22, 99, 62, 0.5)'
       ]
     ]
     

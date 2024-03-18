@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from "react-redux";
-import { FilterState, HoverInfoState } from "../models/index";
+import { FilterState, HoverInfoState } from "../app/models";
 import { selectMapFilters, setMapFilters } from "../features";
 import { format } from 'd3-format';
 import InfoTooltip from "./InfoTooltip";
