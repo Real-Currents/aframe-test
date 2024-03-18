@@ -7,13 +7,14 @@ import { MapRef } from "react-map-gl";
 import { CustomButton } from "./CustomInputs";
 import { selectMapSelection, setMapSelection } from "../features";
 import { IspNameLookup } from "../app/models";
-import { parseIspId, swapKeysValues, aggregateBlockSelection } from "../utils/utils";
+
+import { parseIspId, swapKeysValues, aggregateBlockSelection } from "../../utils/utils";
 import "./styles/DetailedView.scss";
-import { jumpMapToFeature } from '../utils/mapUtils';
+import { jumpMapToFeature } from '../../utils/mapUtils';
 
 import PrettyTable from './PrettyTable';
 
-import isp_name_dict from "../data/isp_name_lookup_rev.json";
+import isp_name_dict from "../../data/isp_name_lookup_rev.json";
 const isp_name_lookup: IspNameLookup = isp_name_dict;
 
 interface BlockLevelFeature {

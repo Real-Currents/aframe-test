@@ -5,8 +5,8 @@ import { selectMapFilters, setMapFilters } from "../features";
 import { format } from 'd3-format';
 import InfoTooltip from "./InfoTooltip";
 import style from "./styles/MapLegend.module.css";
-import { beadDefinitions } from '../utils/constants.ts';
-import stripe_svg from "./../assets/stripe-5.svg";
+import { beadDefinitions } from '../../utils/constants.ts';
+import stripe_svg from "../assets/stripe-5.svg";
 
 const numberFormat = format(',');
 

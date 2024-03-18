@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import { useSelector } from "react-redux";
 import { format } from "d3-format";
-import { getBEADColor } from "../utils/colors";
+import { getBEADColor } from "../../utils/colors";
 import { selectMapFilters, setMapFilters } from "../features";
 import { FilterState, HoverInfoState } from "../app/models";
 import { selectMapHover } from "../features";
@@ -9,9 +9,9 @@ import style from "./styles/GlMap.module.css";
 import {
     formatBroadbandTechnology,
     parseIspId, swapKeysValues
-} from "../utils/utils";
-import isp_name_dict from "../data/isp_name_lookup_rev.json";
-import county_name_geoid from "../data/geoid_co_name_crosswalk.json";
+} from "../../utils/utils";
+import isp_name_dict from "../../data/isp_name_lookup_rev.json";
+import county_name_geoid from "../../data/geoid_co_name_crosswalk.json";
 
 const percentFormat = (num: number | string) => {
     // console.log(parseFloat(num));

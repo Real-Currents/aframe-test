@@ -18,14 +18,14 @@ import {ApiContext} from "../../contexts/ApiContextProvider";
 import { selectMapFilters, setMapFilters } from "../features";
 import {FilterState, IspIdLookup, IspNameLookup} from "../app/models";
 // import { getFillColor } from '../utils/colors';
-import { swapKeysValues } from '../utils/utils';
+import { swapKeysValues } from '../../utils/utils';
 
 import style from "./styles/Sidebar.module.css";
 
-import broadband_technology_dict from '../data/broadband_technology.json';
-import county_name_geoid from '../data/geoid_co_name_crosswalk.json';
-import isp_name_dict from '../data/isp_name_lookup_rev.json';
-import isp_id_dict from "../data/isp_dict_latest.json";
+import broadband_technology_dict from '../../data/broadband_technology.json';
+import county_name_geoid from '../../data/geoid_co_name_crosswalk.json';
+import isp_name_dict from '../../data/isp_name_lookup_rev.json';
+import isp_id_dict from "../../data/isp_dict_latest.json";
 
 const broadband_technology: Record<string, string> = broadband_technology_dict;
 
@@ -276,12 +276,15 @@ function Sidebar () {
                 <Typography>On</Typography>
               </div>
             </div>
+
             <hr />
+
             <div className={style["filter-container"]}>
+
               <h4>Filters</h4>
               <div className={style["filter-section"]}>
                 <div className={style["filter-header"]}>
-                  <h5>BEAD service level</h5>
+                  <h5>BEAD service level<a href="#fcc-bdc-sidenote" style={{textDecoration: "none"}}><sup>&dagger;</sup></a></h5>
                   <InfoTooltip text={`Unserved refers to areas where at least 80% of locations do not have 25/3 Mbps service. 
                     Underserved refers to areas where at least 80% of locations do not have 100/20 Mbps service. Served refers to 
                     areas that are neither Unserved nor Underserved. BEAD is an acronym for the Broadband Equity, Access, and 
