@@ -1,8 +1,8 @@
 {
-  "name": "@cori-risi/county-summary",
+  "name": "@cori-risi/bead",
   "version": "0.0.1",
   "author": "Rural Innovation Strategies, Inc.",
-  "description": "Broadband County Summary",
+  "description": "Rural Broadband Map",
   "private": true,
   "type": "module",
   "dependencies": {
@@ -17,8 +17,10 @@
     "@mui/icons-material": "^5.15.10",
     "@mui/material": "^5.15.3",
     "@reduxjs/toolkit": "^2.0.1",
+    "@turf/bbox": "^6.5.0",
     "aws-amplify": "^6.0.2",
     "d3-format": "^3.1.0",
+    "maplibre-gl": "^3.6.2",
     "mui": "^0.0.1",
     "mui-datatables": "^4.3.0",
     "normalize.css": "^8.0.1",
@@ -26,6 +28,7 @@
     "query-string": "^8.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-map-gl": "^7.1.7",
     "react-redux": "^9.0.0",
     "react-spring": "^9.7.3",
     "redux": "^5.0.0",
@@ -55,7 +58,8 @@
     "sass": "^1.69.7",
     "typescript": "^5.0.2",
     "vite": "^4.5.1",
-    "vitest": "^0.30.1"
+    "vitest": "^0.30.1",
+    "webpack-cli": "^5.1.4"
   },
   "jest": {
     "collectCoverageFrom": [
