@@ -1,0 +1,36 @@
+/* Table Styles */
+.pretty-table table {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    border-collapse: collapse;
+  }
+  
+  /* Cell Styles */
+  .pretty-table th,
+  .pretty-table td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  /* Horizontal Layout */
+  .pretty-table th {
+    width: 40%;
+    background-color: #f2f2f2;
+  }
+  
+  .pretty-table td {
+    width: 60%;
+  }
+  
+  /* Alternate Row Background Color */
+  .pretty-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  /* Hover Effect on Rows */
+  .pretty-table tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+  

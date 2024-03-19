@@ -204,11 +204,11 @@ const GlMap: React.FC < GlMapProps > = ({
                                 && f["properties"].hasOwnProperty("type")
                                 && f["properties"]["type"] === "isp_tech"
                             ) {
-                                console.log("ISP for this feature:", f);
+                                // console.log("ISP for this feature:", f);
                                 for (let p in f["properties"]) {
                                     columns.push(p);
                                 }
-                                console.log(columns);
+                                // console.log(columns);
                                 return true;
                             }
                         });
@@ -234,11 +234,11 @@ const GlMap: React.FC < GlMapProps > = ({
                                 && f["properties"].hasOwnProperty("type")
                                 && f["properties"]["type"] === "acs"
                             ) {
-                                console.log("Tract ACS for this feature:", f);
+                                // console.log("Tract ACS for this feature:", f);
                                 for (let p in f["properties"]) {
                                     columns.push(p);
                                 }
-                                console.log(columns);
+                                // console.log(columns);
                                 return true;
                             }
                         });

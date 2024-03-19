@@ -8,7 +8,7 @@ import { CustomButton } from "./CustomInputs";
 import { selectMapSelection, setMapSelection } from "../features";
 import { IspNameLookup } from "../app/models";
 
-import { parseIspId, swapKeysValues, aggregateBlockSelection } from "../../utils/utils";
+import { parseIspId, swapKeysValues, reduceBBServiceBlockInfo, PrettyTableInput } from "../../utils/utils";
 import "./styles/DetailedView.scss";
 import { jumpMapToFeature } from '../../utils/mapUtils';
 
@@ -185,6 +185,9 @@ export default function DetailedView () {
     const [ award_info, setAwardInfo ] = useState<GeoJSONFeature[]>([]);
     const [ acs_info, setACSInfo ] = useState<GeoJSONFeature[]>([]);
 
+    // Table variables
+    const [ bbServiceSummary, setBBServiceSummary ] = useState<PrettyTableInput | undefined>(undefined);
+
     useEffect(() => {
 
         console.log("mapSelection:", mapSelection);
@@ -200,8 +203,11 @@ export default function DetailedView () {
                     && d.properties["type"] === "geojson"
                 ));
 
-            aggregateBlockSelection(block_info);
+            const bb_service_summary = reduceBBServiceBlockInfo(block_info);
+            setBBServiceSummary(bb_service_summary);
+
             setBlockInfo(block_info);
+
         } else {
             setBlockInfo([]);
         }
@@ -295,8 +301,8 @@ export default function DetailedView () {
 
                 {
                     (
-                        block_info.length > 0? 
-                            <PrettyTable data={block_info} />: 
+                        bbServiceSummary !== null? 
+                            <PrettyTable data={bbServiceSummary} />: 
                             <></>
                     )
                 }
