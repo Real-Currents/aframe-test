@@ -398,9 +398,14 @@ const GlMap: React.FC < GlMapProps > = ({
 
         bb_array = [ ...bb_array, "Not Reported" ];
 
+        let bead_category_variable = "bead_category";
+        if (filterState.excludeDSL === true) {
+            bead_category_variable = "bead_category_dsl_excluded";
+        }
+
         let bead_filter = [
             'in',
-            ['get', 'bead_category'],
+            ['get', bead_category_variable],
             ['literal', bb_array]
         ];
 
