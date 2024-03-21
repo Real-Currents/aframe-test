@@ -45,7 +45,7 @@ export function formatBroadbandTechnology(bb_tech_presence: boolean[]): string {
         tech_list.push("Fiber");
     }
     if (bb_tech_presence[3] === true || bb_tech_presence[4] === true) {
-        tech_list.push("LBR/Licensed wireless")
+        tech_list.push("Fixed wireless")
     }
 
 
