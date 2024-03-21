@@ -153,7 +153,7 @@ export default function DetailedView () {
                     <div className={style['header-wrapper']}>
                         <h3>
                             Broadband service, technology, and funding information for selected 
-                            census blocks<a href="#fcc-bdc-footnote" style={{textDecoration: "none"}}><sup>&dagger;</sup></a>
+                            census blocks<sup>&dagger;</sup>
                         </h3>
                         <div>
                             <CustomButton
@@ -197,210 +197,149 @@ export default function DetailedView () {
                     }
                     {
                         (!(isp_info.length > 0))?
-                            <p>Select blocks on the map to view reported broadband technology data<a href="#fcc-bdc-footnote" style={{textDecoration: "none"}}><sup>&dagger;</sup></a><br /></p> :
-                            <MUIDataTable
-                                columns={isp_columns.map((col) => getLabel(col, isp_labels))}
-                                data={[ ...isp_info
-                                    .filter((b: any) => {
-                                        // console.log("b: ", b);
-                                        return !!b && b !== null && b.hasOwnProperty("properties")
-                                    })
-                                    .map((b: any) => {
-                                        const values: string[] = [];
+                            <p>Select blocks on the map to view reported broadband technology data<sup>&dagger;</sup></p> :
+                            <div className={style['mui-table-wrapper']}>
+                                <MUIDataTable
+                                    columns={isp_columns.map((col) => getLabel(col, isp_labels))}
+                                    data={[ ...isp_info
+                                        .filter((b: any) => {
+                                            // console.log("b: ", b);
+                                            return !!b && b !== null && b.hasOwnProperty("properties")
+                                        })
+                                        .map((b: any) => {
+                                            const values: string[] = [];
 
-                                        for (let col of isp_columns) {
-                                            // b.map((i: string) => {
-                                            if (b.properties.hasOwnProperty(col)
-                                                && typeof b.properties[col] !== "undefined"
-                                            ) {
-                                                // const tuple = i.toString().split(":");
-                                                // const key = tuple[0].toString().trim();
-                                                // if (col === key) {
-                                                let value = (b.properties[col] !== null && typeof b.properties[col].toString !== "undefined") ?
-                                                    b.properties[col].toString().trim() : "N/A";
-                                                
-                                                if (col === "technology") {
-                                                    if (value === "10") {
-                                                        value = "Copper wire (DSL)";
+                                            for (let col of isp_columns) {
+                                                // b.map((i: string) => {
+                                                if (b.properties.hasOwnProperty(col)
+                                                    && typeof b.properties[col] !== "undefined"
+                                                ) {
+                                                    // const tuple = i.toString().split(":");
+                                                    // const key = tuple[0].toString().trim();
+                                                    // if (col === key) {
+                                                    let value = (b.properties[col] !== null && typeof b.properties[col].toString !== "undefined") ?
+                                                        b.properties[col].toString().trim() : "N/A";
+                                                    
+                                                    if (col === "technology") {
+                                                        if (value === "10") {
+                                                            value = "Copper wire (DSL)";
+                                                        }
+                                                        if (value === "40") {
+                                                            value = "Coaxial cable/HFC";
+                                                        }
+                                                        if (value === "50") {
+                                                            value = "Optical Carrier/Fiber to the Premises";
+                                                        }
+                                                        if (value === "60") {
+                                                            value = "Geostationary Satellite";
+                                                        }
+                                                        if (value === "61") {
+                                                            value = "Non-geostationary Satellite";
+                                                        }
+                                                        if (value === "70") {
+                                                            value = "Unlicensed Terrestrial Fixed Wireless";
+                                                        }
+                                                        if (value === "71") {
+                                                            value = "Licensed Terrestrial Fixed Wireless";
+                                                        }
+                                                        if (value === "72") {
+                                                            value = "Licensed-by-Rule Terrestrial Fixed Wireless";
+                                                        }
+                                                        if (value === "0") {
+                                                            value = "Other technology";
+                                                        }
                                                     }
-                                                    if (value === "40") {
-                                                        value = "Coaxial cable/HFC";
-                                                    }
-                                                    if (value === "50") {
-                                                        value = "Optical Carrier/Fiber to the Premises";
-                                                    }
-                                                    if (value === "60") {
-                                                        value = "Geostationary Satellite";
-                                                    }
-                                                    if (value === "61") {
-                                                        value = "Non-geostationary Satellite";
-                                                    }
-                                                    if (value === "70") {
-                                                        value = "Unlicensed Terrestrial Fixed Wireless";
-                                                    }
-                                                    if (value === "71") {
-                                                        value = "Licensed Terrestrial Fixed Wireless";
-                                                    }
-                                                    if (value === "72") {
-                                                        value = "Licensed-by-Rule Terrestrial Fixed Wireless";
-                                                    }
-                                                    if (value === "0") {
-                                                        value = "Other technology";
-                                                    }
+                                                    values.push(value);
+                                                    // }
                                                 }
-                                                values.push(value);
-                                                // }
+                                                // });
                                             }
-                                            // });
-                                        }
 
-                                        return values;
-                                    })
-                                ]}
-                                options={{
-                                    "filterType": "checkbox",
-                                    "onRowsDelete": (rowsDeleted: { data: { index: number, dataIndex: number }[], lookup: { [dataIndex: number]: boolean } }, newTableData: any[]) => {
-                                        console.log("Delete Row(s):", {
-                                            rowsDeleted: {
-                                                data: rowsDeleted.data,
-                                                lookupIndex: rowsDeleted.lookup
-                                            },
-                                            newTableData: {
-                                                ...newTableData
-                                            }
-                                        });
-                                    },
-                                    "rowsPerPage": 5,
-                                    "rowsPerPageOptions": [ 5, 10, 25, 50]
-                                }}
-                                title={"Internet service providers by technology"}
-                            />
+                                            return values;
+                                        })
+                                    ]}
+                                    options={{
+                                        "filterType": "checkbox",
+                                        "onRowsDelete": (rowsDeleted: { data: { index: number, dataIndex: number }[], lookup: { [dataIndex: number]: boolean } }, newTableData: any[]) => {
+                                            console.log("Delete Row(s):", {
+                                                rowsDeleted: {
+                                                    data: rowsDeleted.data,
+                                                    lookupIndex: rowsDeleted.lookup
+                                                },
+                                                newTableData: {
+                                                    ...newTableData
+                                                }
+                                            });
+                                        },
+                                        "rowsPerPage": 5,
+                                        "rowsPerPageOptions": [ 5, 10, 25, 50]
+                                    }}
+                                    title={"Internet service providers by technology"}
+                                />
+                            </div>
                     }
-                    <br />
-
                     {
                         (!(award_info.length > 0))?
-                            <p>Select blocks on the map which have received prior federal funding to view detailed award data<br /></p> :
-                            <MUIDataTable
-                                columns={award_columns.map((col) => getLabel(col, award_labels))}
-                                data={[ ...award_info
-                                    .filter((b: any) => {
-                                        // console.log("b: ", b);
-                                        return !!b && b !== null && b.hasOwnProperty("properties")
-                                    })
-                                    .map((b: any) => {
-                                        const values: string[] = [];
+                            <p>Select blocks on the map which have received prior federal funding to view detailed award data</p> :
+                            <div className={style['mui-table-wrapper']}>
+                                <MUIDataTable
+                                    columns={award_columns.map((col) => getLabel(col, award_labels))}
+                                    data={[ ...award_info
+                                        .filter((b: any) => {
+                                            // console.log("b: ", b);
+                                            return !!b && b !== null && b.hasOwnProperty("properties")
+                                        })
+                                        .map((b: any) => {
+                                            const values: string[] = [];
 
-                                        for (let col of award_columns) {
-                                            // b.map((i: string) => {
-                                            if (b.properties.hasOwnProperty(col)
-                                                && typeof b.properties[col] !== "undefined"
-                                            ) {
-                                                // const tuple = i.toString().split(":");
-                                                // const key = tuple[0].toString().trim();
-                                                // if (col === key) {
-                                                const value = (b.properties[col] !== null && typeof b.properties[col].toString !== "undefined") ?
-                                                    b.properties[col].toString().trim() : "N/A";
-                                                // console.log([col, value]);
-                                                values.push(value);
-                                                // }
+                                            for (let col of award_columns) {
+                                                // b.map((i: string) => {
+                                                if (b.properties.hasOwnProperty(col)
+                                                    && typeof b.properties[col] !== "undefined"
+                                                ) {
+                                                    // const tuple = i.toString().split(":");
+                                                    // const key = tuple[0].toString().trim();
+                                                    // if (col === key) {
+                                                    const value = (b.properties[col] !== null && typeof b.properties[col].toString !== "undefined") ?
+                                                        b.properties[col].toString().trim() : "N/A";
+                                                    // console.log([col, value]);
+                                                    values.push(value);
+                                                    // }
+                                                }
+                                                // });
                                             }
-                                            // });
-                                        }
 
-                                        return values;
-                                    })
-                                ]}
-                                options={{
-                                    "filterType": "checkbox",
-                                    "onRowsDelete": (rowsDeleted: { data: { index: number, dataIndex: number }[], lookup: { [dataIndex: number]: boolean } }, newTableData: any[]) => {
-                                        console.log("Delete Row(s):", {
-                                            rowsDeleted: {
-                                                data: rowsDeleted.data,
-                                                lookupIndex: rowsDeleted.lookup
-                                            },
-                                            newTableData: {
-                                                ...newTableData
-                                            }
-                                        });
-                                    },
-                                    "rowsPerPage": 5,
-                                    "rowsPerPageOptions": [ 5, 10, 25, 50]
-                                }}
-                                title={"Federal funding award applicants by block"}
-                            />
+                                            return values;
+                                        })
+                                    ]}
+                                    options={{
+                                        "filterType": "checkbox",
+                                        "onRowsDelete": (rowsDeleted: { data: { index: number, dataIndex: number }[], lookup: { [dataIndex: number]: boolean } }, newTableData: any[]) => {
+                                            console.log("Delete Row(s):", {
+                                                rowsDeleted: {
+                                                    data: rowsDeleted.data,
+                                                    lookupIndex: rowsDeleted.lookup
+                                                },
+                                                newTableData: {
+                                                    ...newTableData
+                                                }
+                                            });
+                                        },
+                                        "rowsPerPage": 5,
+                                        "rowsPerPageOptions": [ 5, 10, 25, 50]
+                                    }}
+                                    title={"Federal funding award applicants by block"}
+                                />
+                            </div>
                     }
-                    <br />
-
-                    <h4>Demographics<a href="#acs-footnote" style={{textDecoration: "none"}}><sup>&Dagger;</sup></a>
-                    </h4>
-                    <hr />
-
-                    {
-                        (!(block_info.length > 0)) ?
-                            <p>Select blocks on the map to view ACS data for the relevant census tract(s)<a href="#acs-footnote" style={{textDecoration: "none"}}><sup>&Dagger;</sup></a><br/></p> :
-                            <MUIDataTable
-                                columns={acs_columns.map((col) => getLabel(col, acs_labels))}
-                                data={[ ...acs_info
-                                    .filter((b: any) => {
-                                        // console.log("b: ", b);
-                                        return !!b && b !== null && b.hasOwnProperty("properties")
-                                    })
-                                    .map((b: any) => {
-                                        const values: string[] = [];
-
-                                        for (let col of acs_columns) {
-                                            // b.map((i: string) => {
-                                            if (b.properties.hasOwnProperty(col)
-                                                && typeof b.properties[col] !== "undefined"
-                                            ) {
-                                                // const tuple = i.toString().split(":");
-                                                // const key = tuple[0].toString().trim();
-                                                // if (col === key) {
-                                                const value = (b.properties[col] !== null && typeof b.properties[col].toString !== "undefined") ?
-                                                    b.properties[col].toString().trim() : "N/A";
-                                                // console.log([col, value]);
-                                                values.push(value);
-                                                // }
-                                            }
-                                            // });
-                                        }
-
-                                        return values;
-                                    })
-                                ]}
-                                options={{
-                                    "filterType": "checkbox",
-                                    "onRowsDelete": (rowsDeleted: { data: { index: number, dataIndex: number }[], lookup: { [dataIndex: number]: boolean } }, newTableData: any[]) => {
-                                        console.log("Delete Row(s):", {
-                                            rowsDeleted: {
-                                                data: rowsDeleted.data,
-                                                lookupIndex: rowsDeleted.lookup
-                                            },
-                                            newTableData: {
-                                                ...newTableData
-                                            }
-                                        });
-                                    },
-                                    "rowsPerPage": 5,
-                                    "rowsPerPageOptions": [ 5, 10, 25, 50]
-                                }}
-                                title={"Data for census tracts that include any selected census block"}
-                            />
-                    }
-                    <br />
-
-                    <div style={{ padding: "10px" }}>
-                        <p id="fcc-bdc-footnote">
-                            &dagger; Based on analysis of Broadband Serviceable Locations (BSL) by census block, as reported to the Federal Communications Commission (FCC).<br />
-                            The FCC has publicly released this data as <a href={"https://broadbandmap.fcc.gov/data-download/nationwide-data"} target={"_blank"}>BDC (Broadband Data Collection) Public Data</a>.
-                        </p>
-                    </div>
-
-                    <div style={{ padding: "10px" }}>
-                        <p id="acs-footnote">
-                            &Dagger; Based on analysis of <a href={"https://www.census.gov/programs-surveys/acs"} target={"_blank"}>American Community Survey (ACS) data</a>.
-                        </p>
+                    <div className={style['footnotes']}>
+                        <div>
+                            <p id="fcc-bdc-footnote">
+                                &dagger; Based on analysis of Broadband Serviceable Locations (BSL) by census block, as 
+                                reported to the Federal Communications Commission (FCC). The FCC has publicly released this 
+                                data as <a href={"https://broadbandmap.fcc.gov/data-download/nationwide-data"} target={"_blank"}>BDC (Broadband Data Collection) Public Data</a>.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 .pretty-table {
-  margin: 20px 0px;
+  margin: 30px 0px;
   padding: 30px;
   max-width: 850px;
 
@@ -13,6 +13,10 @@
     border-collapse: collapse;
     border-top: .5px solid #d0d2ce;
   }
+
+.pretty-table h4 {
+  font-size: 1.25rem;
+}
   
   /* Cell Styles */
   .pretty-table th,
