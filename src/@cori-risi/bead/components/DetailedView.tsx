@@ -301,7 +301,7 @@ export default function DetailedView () {
 
                 {
                     (
-                        bbServiceSummary !== null? 
+                        bbServiceSummary !== undefined? 
                             <PrettyTable data={bbServiceSummary} />: 
                             <></>
                     )
