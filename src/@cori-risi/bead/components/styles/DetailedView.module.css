@@ -1,0 +1,43 @@
+.detailed-view {
+	background-color: white;
+	height: calc(100vh - 76px);
+	width: 100%;
+	max-width: calc(100vw);
+	line-height: 150%;
+	margin: 0 auto;
+	padding: 44px 54px;
+
+	overflow-y: scroll;
+
+	pointer-events: all !important;
+}
+
+.detailed-view .container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.detailed-view .header-wrapper {
+    margin: 100px 0px 50px 0px;
+}
+
+.detailed-view .header-wrapper button {
+    margin-right: 20px;
+}
+
+.detailed-view .affirmative-button {
+    color: #FFF;
+    background-color: #00835D;
+}
+
+div[aria-label="Table Toolbar"] {
+    width: 100% !important;
+}
+
+th.MuiTableCell-root {
+    padding: 0 !important;
+}
+
+th.MuiTableCell-root button.MuiButton-root {
+    min-width: 112px;
+}

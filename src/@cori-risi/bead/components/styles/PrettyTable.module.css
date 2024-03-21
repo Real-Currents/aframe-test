@@ -1,36 +1,55 @@
-/* Table Styles */
+.pretty-table {
+  margin: 20px 0px;
+  padding: 30px;
+  max-width: 850px;
+
+  border: 1px solid #d0d2ce;
+  border-radius: 5px;
+}
+
 .pretty-table table {
     width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
+    max-width: 800px;
     border-collapse: collapse;
+    border-top: .5px solid #d0d2ce;
   }
   
   /* Cell Styles */
   .pretty-table th,
   .pretty-table td {
     padding: 8px;
-    border-bottom: 1px solid #ddd;
-    text-align: left;
+    border-bottom: .5px solid #ddd;
   }
   
   /* Horizontal Layout */
   .pretty-table th {
     width: 40%;
-    background-color: #f2f2f2;
+    text-align: left;
+    font-weight: 500;
   }
   
   .pretty-table td {
     width: 60%;
+    text-align: right;
+    font-weight: bold;
   }
   
   /* Alternate Row Background Color */
   .pretty-table tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
+    background-color: #ECF5EF;
   }
   
   /* Hover Effect on Rows */
   .pretty-table tbody tr:hover {
-    background-color: #f1f1f1;
+    background-color: #A3E2B5;
+  }
+
+  .pretty-table h4 {
+    margin-bottom: .25rem;
+  }
+
+  .pretty-table .subtitle {
+    font-style: italic;
+    margin-bottom: 1rem;
   }
   

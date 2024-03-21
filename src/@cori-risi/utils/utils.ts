@@ -1,3 +1,5 @@
+import { PrettyTableInput, GeoJSONFeature } from "../types";
+
 // Swap the keys and values in a dictionary
 export function swapKeysValues(json: { [key: string]: string; } ): { [key: string]: string; } {
   var ret: { [key: string]: string }  = {};
@@ -54,54 +56,6 @@ export function formatBroadbandTechnology(bb_tech_presence: boolean[]): string {
 
 }
 
-
-// {
-//     "type": "geojson",
-//     "isp_id": "{1210,2081,2291,2504,2514,424,431}",
-//     "cnt_isp": 7,
-//     "cnt_25_3": 256,
-//     "geoid_bl": "080559609021227",
-//     "geoid_co": "08055",
-//     "geoid_st": "08",
-//     "geoid_tr": "08055960902",
-//     "has_fiber": true,
-//     "cnt_100_20": 250,
-//     "pct_served": 0.9696969696969697,
-//     "bl_25_3_area": "served_area",
-//     "combo_isp_id": "11563",
-//     "has_wireless": true,
-//     "bead_category": "Served",
-//     "bl_100_20_area": "served_area",
-//     "has_copperwire": true,
-//     "only_water_flag": false,
-//     "has_coaxial_cable": true,
-//     "cnt_total_locations": 264,
-//     "has_previous_funding": false
-// }
-
-interface GeoJSONFeature {
-    type: string;
-    id: string,
-    properties: {
-        [key: string]: any; // You might want to define a more specific type here
-    }
-    geometry: {
-        coordinates: number[],
-        type: string
-    }
-}
-
-export interface bbServiceAccumulator {
-    cnt_total_locations: number,
-    cnt_100_20: number,
-    cnt_25_3: number
-    has_previous_funding: boolean
-}
-
-export interface PrettyTableInput {
-    [key: string]: number | string | boolean
-}
-
 export function reduceBBServiceBlockInfo(block_info: GeoJSONFeature[]): PrettyTableInput {
     
     const blockInfoReducer = (accumulator: PrettyTableInput, currentValue: GeoJSONFeature): PrettyTableInput => {
@@ -133,42 +87,3 @@ export function reduceBBServiceBlockInfo(block_info: GeoJSONFeature[]): PrettyTa
     return block_info.reduce(blockInfoReducer, bb_service_accumulator);
 
 }
-
-interface ISPTechnologyAccumulator {
-    new_alias: string,
-    max_up: number,
-    max_down: number,
-    technology: string
-}
-
-// export function reduceISPTechnology(isp_info: GeoJSONFeature[]): void {
-
-//     // const ISPInfoReducer = (
-//     //     accumulator: ISPTechnologyAccumulator, 
-//     //     currentValue: GeoJSONFeature
-//     // ): ISPTechnologyAccumulator => {
-        
-//     //     if (currentValue.hasOwnProperty('properties')) {
-
-//     //         accumulator.cnt_total_locations += currentValue.properties.cnt_total_locations;
-//     //         accumulator.cnt_100_20 += currentValue.properties.cnt_100_20;
-//     //         accumulator.cnt_25_3 += currentValue.properties.cnt_25_3;
-
-//     //         return accumulator;
-//     //     }
-//     //     else {
-//     //         return accumulator;
-//     //     }
-//     // };
-      
-//     // const isp_accumulator: ISPTechnologyAccumulator = {
-//     //     new_alias: "",
-//     //     max_up: NaN,
-//     //     max_down: NaN,
-//     //     technology: ""
-//     // }
-    
-//     // return isp_info.reduce(ISPInfoReducer, isp_accumulator);
-
-// }
-
