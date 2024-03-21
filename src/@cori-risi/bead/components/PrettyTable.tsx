@@ -3,7 +3,8 @@ import { PrettyTableInput } from "../../types";
 
 export interface PrettyTableProps {
     data: PrettyTableInput | undefined;
-    title: string
+    title: string,
+    subtitle: string
 }
 
 const key_name_lookup: Record<string, string> = {
