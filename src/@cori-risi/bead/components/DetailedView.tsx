@@ -20,6 +20,7 @@ import style from "./styles/DetailedView.module.css";
 
 import PrettyTable from './PrettyTable';
 
+import county_name_geoid from '../../data/geoid_co_name_crosswalk.json';
 import isp_name_dict from "../../data/isp_name_lookup_rev.json";
 const isp_name_lookup: IspNameLookup = isp_name_dict;
 
@@ -205,17 +206,20 @@ export default function DetailedView () {
                                 <></>
                         )
                     }
-                    {
+
+                    <p>
+                        The blocks you've selected are located in the following counties. Click the link(s) 
+                        below to view a data summary for the relevant county:<br/>
+                        {
                         countyGEOIDs.length > 0 ?
                             countyGEOIDs.map((geoid, index) => (
-                                <p>
                                     <a key={index} href={"https://broadband-county-summary.ruralinnovation.us/?geoid=" + geoid} target="_blank">
-                                        Click here to view county data for the blocks in selection.
+                                        {county_name_geoid.filter(d => d.id === geoid)[0].label}.
                                     </a>
-                                </p>
                             ))
                         : <></>
-                    }
+                        }
+                    </p>
                     {
                         (!(isp_info.length > 0))?
                             <p>Select blocks on the map to view reported broadband technology data<sup>&dagger;</sup></p> :
