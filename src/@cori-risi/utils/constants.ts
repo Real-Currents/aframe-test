@@ -4,3 +4,129 @@ export const beadDefinitions: { [key: string]: string } = {
 	"Unserved": "Unserved refers to areas where at least 80% of locations do not have 25/3 Mbps service",
 	"Not Reported": "Areas where data was not provided"
 }
+
+export const block_columns = [
+    "geoid_bl",
+    "geoid_tr",
+    "geoid_co",
+    // "geoid_st",
+    "bead_category",
+    // "bl_100_20_area",
+    // "bl_25_3_area",
+    "cnt_total_locations",
+    "cnt_25_3",
+    "cnt_100_20",
+    "isp_id",
+    "cnt_isp",
+    // "combo_isp_id",
+    // "pct_served",
+    "has_fiber",
+    "has_coaxial_cable",
+    "has_copperwire",
+    "has_wireless",
+    // "has_lbr_wireless",
+    // "has_licensed_wireless",
+    "has_previous_funding",
+    // "only_water_flag",
+];
+
+export const block_labels = {
+    "geoid_bl": "Block ID",
+    "geoid_co": "County ID",
+    // "geoid_st": "State ID",
+    "geoid_tr": "Tract ID",
+    "isp_id": "Internet service providers",
+    "cnt_isp": "Number of ISPs",
+    "cnt_total_locations": "Locations",
+    "cnt_100_20": "Locations with 100/20 service",
+    "cnt_25_3": "Locations with 25/3 service",
+    // "pct_served": "Percent served",
+    // "bl_100_20_area": "bl_100_20_area",
+    // "bl_25_3_area": "bl_25_3_area",
+    "combo_isp_id": "combo_isp_id",
+    "bead_category": "BEAD service level",
+    "has_fiber": "Fiber service",
+    "has_coaxial_cable": "Coaxial cable service",
+    "has_copperwire": "DSL service",
+    "has_previous_funding": "Previous federal funding",
+    "has_wireless": "Wireless service",
+    "only_water_flag": "only_water_flag"
+};
+
+export const isp_columns = [
+    "geoid_bl",
+    "new_alias",
+    // "isp_id",
+    "technology",
+    "max_down",
+    "max_up",
+    // "type"
+];
+
+export const isp_labels = {
+    "geoid_bl": "Block ID",
+    "new_alias": "Internet service provider",
+    "technology": "Broadband technology",
+    "max_down": "Max download speed (Mbps)",
+    "max_up": "Max upload speed (Mbps)"
+};
+
+export const award_columns = [
+    "geoid_bl",
+    "geoid_bl_2010",
+    "applicant",
+    "latency",
+    "tier",
+    "authorized",
+    "default",
+    "geoid_co",
+    "county",
+    "state",
+];
+
+export const award_labels = {
+    "geoid_bl": "Block ID (2020 Census)",
+    "geoid_bl_2010": "Block ID (2010 Census)",
+    "applicant": "Applicant",
+    "latency": "Latency",
+    "tier": "Tier",
+    "authorized": "Authorized",
+    "default": "Default",
+    "geoid_co": "County ID",
+    "county": "County",
+    "state": "State"
+};
+
+export const acs_columns = [
+    "geoid_tr",
+    // "geoid_bl",
+    "year",
+    "total_population",
+    "total_households",
+    "total_housing_units",
+    // "broadband_usage",
+    "hh_using_broadband",
+    // "share_w_computer",
+    "hh_w_computer",
+    // "share_w_smartphone_only",
+    "hh_w_smartphone_only",
+    // "share_wo_device",
+    "hh_wo_device",
+];
+
+export const acs_labels = {
+    "geoid_tr": "Tract ID",
+    // "geoid_bl": "Block ID(s)",
+    "year": "ACS Year",
+    "total_population": "Population",
+    "total_households": "Households",
+    "total_housing_units": "Housing units",
+    "broadband_usage": "Broadband Usage",
+    "hh_using_broadband": "Households with a broadband subscription",
+    "share_w_computer": "Pct. households with a computer",
+    "hh_w_computer": "Households with a computer",
+    "share_w_smartphone_only": "Pct. households with only a smartphone",
+    "hh_w_smartphone_only": "Households with only a smartphone",
+    "share_wo_device": "Pct. households with no device",
+    "hh_wo_device": "Households with no device",
+};

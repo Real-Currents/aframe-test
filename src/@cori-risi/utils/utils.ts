@@ -1,3 +1,5 @@
+import { PrettyTableInput, GeoJSONFeature } from "../types";
+
 // Swap the keys and values in a dictionary
 export function swapKeysValues(json: { [key: string]: string; } ): { [key: string]: string; } {
   var ret: { [key: string]: string }  = {};
@@ -43,7 +45,7 @@ export function formatBroadbandTechnology(bb_tech_presence: boolean[]): string {
         tech_list.push("Fiber");
     }
     if (bb_tech_presence[3] === true || bb_tech_presence[4] === true) {
-        tech_list.push("LBR/Licensed wireless")
+        tech_list.push("Fixed wireless")
     }
 
 
@@ -51,5 +53,37 @@ export function formatBroadbandTechnology(bb_tech_presence: boolean[]): string {
         return "None";
     }
     return tech_list.join(", ")
+
+}
+
+export function reduceBBServiceBlockInfo(block_info: GeoJSONFeature[]): PrettyTableInput {
+    
+    const blockInfoReducer = (accumulator: PrettyTableInput, currentValue: GeoJSONFeature): PrettyTableInput => {
+        
+        if (currentValue.hasOwnProperty('properties')) {
+
+            if (currentValue.properties.has_previous_funding === true) {
+                accumulator.has_previous_funding = true;
+            }
+
+            accumulator.cnt_total_locations += currentValue.properties.cnt_total_locations;
+            accumulator.cnt_100_20 += currentValue.properties.cnt_100_20;
+            accumulator.cnt_25_3 += currentValue.properties.cnt_25_3;
+
+            return accumulator;
+        }
+        else {
+            return accumulator;
+        }
+    };
+      
+    const bb_service_accumulator: PrettyTableInput = {
+        cnt_total_locations: 0,
+        cnt_100_20: 0,
+        cnt_25_3: 0,
+        has_previous_funding: false
+    }
+    
+    return block_info.reduce(blockInfoReducer, bb_service_accumulator);
 
 }

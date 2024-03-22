@@ -36,8 +36,7 @@
         "has_coaxial_cable": false,
         "has_copperwire": false,
         "has_fiber": false,
-        "has_lbr_wireless": false,
-        "has_licensed_wireless": false,
+        "has_wireless": false,
         "has_previous_funding": false,
         "isp_id": ""
       }

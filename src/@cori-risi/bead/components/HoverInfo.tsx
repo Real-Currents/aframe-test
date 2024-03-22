@@ -113,8 +113,7 @@ export function HoverInfo () {
                                     hoverInfo.feature.properties.has_coaxial_cable,
                                     hoverInfo.feature.properties.has_copperwire,
                                     hoverInfo.feature.properties.has_fiber,
-                                    hoverInfo.feature.properties.has_lbr_wireless,
-                                    hoverInfo.feature.properties.has_licensed_wireless
+                                    hoverInfo.feature.properties.has_wireless
                                 ]
                             )
                         }
