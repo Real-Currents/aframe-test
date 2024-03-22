@@ -42,6 +42,7 @@ export default function DetailedView () {
 
     // Table variables
     const [ bbServiceSummary, setBBServiceSummary ] = useState<PrettyTableInput | undefined>(undefined);
+    const [ countyGEOIDs, setCountyGEOIDs ] = useState<string[]>([]);
 
     useEffect(() => {
 
@@ -60,7 +61,16 @@ export default function DetailedView () {
 
             const bb_service_summary = reduceBBServiceBlockInfo(block_info);
             setBBServiceSummary(bb_service_summary);
-
+            
+            
+            const county_geoids: string[] = [...new Set(block_info.map(function(d: any) {
+                if (d.hasOwnProperty("properties")) {
+                    if (d.properties.hasOwnProperty("geoid_co")) {
+                        return d.properties.geoid_co;
+                    }
+                }
+            }))];
+            setCountyGEOIDs(county_geoids);
             setBlockInfo(block_info);
 
         } else {
@@ -194,6 +204,17 @@ export default function DetailedView () {
                                 <PrettyTable data={bbServiceSummary} title={"Broadband service data"} subtitle={"For blocks in selection"} />: 
                                 <></>
                         )
+                    }
+                    {
+                        countyGEOIDs.length > 0 ?
+                            countyGEOIDs.map((geoid, index) => (
+                                <p>
+                                    <a key={index} href={"https://broadband-county-summary.ruralinnovation.us/?geoid=" + geoid} target="_blank">
+                                        Click here to view county data for the blocks in selection.
+                                    </a>
+                                </p>
+                            ))
+                        : <></>
                     }
                     {
                         (!(isp_info.length > 0))?
