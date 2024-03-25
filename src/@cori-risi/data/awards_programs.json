@@ -1,0 +1,110 @@
+[
+  {
+    "program_id": 6,
+    "agency_name": "Rural Utilities Service",
+    "program_name": "RURAL ECONNECTIVITY PROGRAM",
+    "type_proj": "area",
+    "file_release": "09feb2024",
+    "program_acronym": "ReConnect",
+    "program_url": "https://www.usda.gov/reconnect"
+  },
+  {
+    "program_id": 10,
+    "agency_name": "Rural Utilities Service",
+    "program_name": "COMMUNITY CONNECT GRANT PROGRAM",
+    "type_proj": "area",
+    "file_release": "09feb2024",
+    "program_acronym": "Community Connect",
+    "program_url": "https://www.rd.usda.gov/programs-services/telecommunications-programs/community-connect-grants"
+  },
+  {
+    "program_id": 11,
+    "agency_name": "NTIA",
+    "program_name": "Broadband Infrastructure Program",
+    "type_proj": "area",
+    "file_release": "09feb2024",
+    "program_acronym": "BIP",
+    "program_url": "https://broadbandusa.ntia.doc.gov/broadband-infrastructure-program"
+  },
+  {
+    "program_id": 12,
+    "agency_name": "Rural Utilities Service",
+    "program_name": "TELEPHONE LOAN PROGRAM",
+    "type_proj": "area",
+    "file_release": "09feb2024",
+    "program_acronym": "Infrastructure",
+    "program_url": "https://www.rd.usda.gov/programs-services/telecommunications-programs/telecommunications-infrastructure-loans-loan-guarantees"
+  },
+  {
+    "program_id": 18,
+    "agency_name": "US Department of Treasury",
+    "program_name": "Capital Projects Fund",
+    "type_proj": "location",
+    "file_release": "23feb2024",
+    "program_acronym": "CPF",
+    "program_url": ""
+  },
+  {
+    "program_id": 19,
+    "agency_name": "US Department of Treasury",
+    "program_name": "State and Local Fiscal Recovery Fund",
+    "type_proj": "location",
+    "file_release": "12feb2024",
+    "program_acronym": "SLFRF",
+    "program_url": ""
+  },
+  {
+    "program_id": 24,
+    "agency_name": "Federal Communications Commission",
+    "program_name": "Rural Digital Opportunity Fund",
+    "type_proj": "area",
+    "file_release": "12feb2024",
+    "program_acronym": "RDOF",
+    "program_url": "https://www.fcc.gov/auction/904"
+  },
+  {
+    "program_id": 25,
+    "agency_name": "Federal Communications Commission",
+    "program_name": "Bringing Puerto Rico Together",
+    "type_proj": "area",
+    "file_release": "09feb2024",
+    "program_acronym": "",
+    "program_url": "https://www.fcc.gov/bringing-puerto-rico-together-and-connect-usvi-fund-stage-2"
+  },
+  {
+    "program_id": 26,
+    "agency_name": "Federal Communications Commission",
+    "program_name": "Connect USVI",
+    "type_proj": "area",
+    "file_release": "09feb2024",
+    "program_acronym": "",
+    "program_url": "https://www.fcc.gov/bringing-puerto-rico-together-and-connect-usvi-fund-stage-2"
+  },
+  {
+    "program_id": 27,
+    "agency_name": "NTIA",
+    "program_name": "Tribal Broadband Connectivity Program NOFO 1",
+    "type_proj": "area",
+    "file_release": "09feb2024",
+    "program_acronym": "TBCP NOFO 1",
+    "program_url": ""
+  },
+  {
+    "program_id": 28,
+    "agency_name": "Federal Communications Commission",
+    "program_name": "Connect America Fund Phase II",
+    "type_proj": "area",
+    "file_release": "09feb2024",
+    "program_acronym": "CAF-II",
+    "program_url": "https://www.fcc.gov/auction/903"
+  },
+  {
+    "program_id": 35,
+    "agency_name": "Federal Communications Commission",
+    "program_name": "Enhanced Alternative Connect America Cost Model",
+    "type_proj": "area",
+    "file_release": "23feb2024",
+    "program_acronym": "E-ACAM",
+    "program_url": ""
+  }
+]
