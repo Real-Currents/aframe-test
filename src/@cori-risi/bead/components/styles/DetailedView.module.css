@@ -1,3 +1,5 @@
+.detail {}
+
 .detailed-view {
 	background-color: white;
 	height: calc(100vh - 76px);
@@ -35,6 +37,11 @@
 .detailed-view .affirmative-button {
     color: #FFF;
     background-color: #00835D;
+}
+
+.detailed-view ul li {
+    list-style: disclosure-closed;
+    margin-left: 20px;
 }
 
 .detailed-view .footnotes {
