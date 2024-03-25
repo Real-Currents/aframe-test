@@ -52,9 +52,6 @@ function Sidebar () {
 
   const handleFillColorChange = (event: React.SyntheticEvent, newValue: string) => {
 
-      // onFillColorChange(getFillColor(newValue));
-      // onColorVariableChange(newValue);
-
       dispatch(setMapFilters({
         "colorVariable": newValue
       }));
@@ -86,14 +83,6 @@ function Sidebar () {
   const handleBEADFilterChange = (event: any) => {
     if (typeof event.target.checked === 'boolean') {
 
-      // onFilterChange({
-      //   ...filter,
-      //   bb_service: {
-      //     ...filter.bb_service,
-      //     [event.target.name]: event.target.checked
-      //   }
-      // });
-
       dispatch(setMapFilters({
         bb_service: {
           ...filterState.bb_service,
@@ -105,13 +94,6 @@ function Sidebar () {
 
   const handleAwardChange = (event: any) => {
     if (typeof event.target.checked === 'boolean') {
-      // onFilterChange({
-      //   ...filter,
-      //   has_previous_funding: {
-      //     ...filter.has_previous_funding,
-      //     [event.target.name]: event.target.checked
-      //   }
-      // });
 
       dispatch(setMapFilters({
         has_previous_funding: {
@@ -124,7 +106,6 @@ function Sidebar () {
 
   const handleISPChange = (event: Event, newValue: number | number[]) => {
     let slider_vals: number[] = newValue as number[];
-    // onFilterChange({...filter, isp_count: slider_vals});
 
     dispatch(setMapFilters({
       isp_count: slider_vals
@@ -133,7 +114,6 @@ function Sidebar () {
 
   const handleTotalLocationsChange = (event: Event, newValue: number | number[]) => {
     let slider_vals: number[] = newValue as number[];
-    // onFilterChange({...filter, total_locations: slider_vals});
 
     dispatch(setMapFilters({
       total_locations: slider_vals
@@ -142,7 +122,6 @@ function Sidebar () {
 
   const handle10020LocationsChange = (event: Event, newValue: number | number[]) => {
     let slider_vals: number[] = newValue as number[];
-    // onFilterChange({...filter, total_locations: slider_vals});
 
     dispatch(setMapFilters({
       locations_100_20: slider_vals
@@ -151,7 +130,6 @@ function Sidebar () {
 
   const handle253LocationsChange = (event: Event, newValue: number | number[]) => {
     let slider_vals: number[] = newValue as number[];
-    // onFilterChange({...filter, total_locations: slider_vals});
 
     dispatch(setMapFilters({
       locations_25_3: slider_vals
@@ -160,7 +138,6 @@ function Sidebar () {
 
   const handleBroadbandTechnologyChange = (event: any, newValue: string[]) => {
     if (Array.isArray(newValue) && newValue.every((item) => typeof item === 'string')) {
-      // onFilterChange({...filter, broadband_technology: newValue});
 
       dispatch(setMapFilters({
         broadband_technology: newValue
@@ -183,8 +160,6 @@ function Sidebar () {
       }
     }
 
-    // onFilterChange({...filter, isp_combos: valid_isp_combos});
-
     dispatch(setMapFilters({
       isp_combos: valid_isp_combos
     }));
@@ -202,7 +177,6 @@ function Sidebar () {
       }
     }
 
-    // onFilterChange({...filter, counties: valid_geoid_co});
     dispatch(setMapFilters({
       counties: valid_geoid_co
     }));
@@ -328,7 +302,7 @@ function Sidebar () {
               </div>
               <div className={style["filter-section"]}>
                 <div className={style["filter-header"]}>
-                  <h5>Awarded federal funding</h5>
+                  <h5>Awarded RDOF funding</h5>
                   <InfoTooltip text={(`
 Census blocks in areas where previous winning applicants for an Auction 904 RDOF bid have been authorized to recieve funds.
 This filter maps the current 2020 Census blocks to the corresponding 2010 Census block(s) that  originally received the award.
