@@ -24,20 +24,21 @@ export const colors_excludeDSL: typeof colors = {
 
 
 export function getBEADColor(bead_category: string): string {
-    
-    if (bead_category === "Served") {
-        return colors["legend_colors"]["bb_bead_categories"]["served_area"];
-    }
+  
+  if (bead_category === "Served") {
+      return colors["legend_colors"]["bb_bead_categories"]["served_area"];
+  }
 
-    if (bead_category === "Underserved") {
-        return colors["legend_colors"]["bb_bead_categories"]["underserved_area"];
-    }
+  if (bead_category === "Underserved") {
+      return colors["legend_colors"]["bb_bead_categories"]["underserved_area"];
+  }
 
-    if (bead_category === "Unserved") {
-        return colors["legend_colors"]["bb_bead_categories"]["unserved_area"];
-    }
+  if (bead_category === "Unserved") {
+      return colors["legend_colors"]["bb_bead_categories"]["unserved_area"];
+  }
 
-    return colors["legend_colors"]["bb_bead_categories"]["not_reported"];
+  return "rgba(0, 0, 0, 0.1)";
+
 }
 
 export function getFillColor(color_scheme: string, excludeDSL: boolean): any {  
