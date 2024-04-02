@@ -27,13 +27,13 @@
   
   /* Horizontal Layout */
   .pretty-table th {
-    width: 40%;
+    width: 70%;
     text-align: left;
     font-weight: 500;
   }
   
   .pretty-table td {
-    width: 60%;
+    width: 30%;
     text-align: right;
     font-weight: bold;
   }
