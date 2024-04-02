@@ -9,8 +9,8 @@ export interface PrettyTableProps {
 
 const key_name_lookup: Record<string, string> = {
   "cnt_total_locations": "Total locations",
-  "cnt_100_20": "Locations with 100/20 Mbps service",
-  "cnt_25_3": "Locations with 25/3 Mbps service",
+  "cnt_100_20": "Locations with at least 100/20 Mbps service",
+  "cnt_25_3": "Locations with at least 25/3 Mbps service",
   "has_previous_funding": "Previous federal funding?"
 }
 
