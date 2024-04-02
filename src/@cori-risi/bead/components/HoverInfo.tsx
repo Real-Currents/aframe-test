@@ -59,12 +59,19 @@ export function HoverInfo () {
         && !!hoverInfo.feature.properties.bead_category
         && (
             <div className={style["tooltip"]} style={{left: hoverInfo.x, top: hoverInfo.y}}>
-                <h5><span>BEAD status</span>: <span className={style["bead-category"]} style={{textDecorationColor: getBEADColor(hoverInfo.feature.properties.bead_category)}}>{filterState.excludeDSL? hoverInfo.feature.properties.bead_category_dsl_excluded: hoverInfo.feature.properties.bead_category}</span></h5>
+                <h5>
+                    <span>BEAD status</span>: <span 
+                        className={style["bead-category"]} 
+                        style={{textDecorationColor: filterState.excludeDSL? getBEADColor(hoverInfo.feature.properties.bead_category_dsl_excluded): getBEADColor(hoverInfo.feature.properties.bead_category) }}
+                    >
+                         {filterState.excludeDSL? hoverInfo.feature.properties.bead_category_dsl_excluded: hoverInfo.feature.properties.bead_category}
+                    </span>
+                </h5>
                 <p><span>Census Block ID</span>: {hoverInfo.feature.properties.geoid_bl}</p>
-                <p><span>{county_name_geoid
+                {/* <p><span>{county_name_geoid
                     .filter(d => d.id == hoverInfo.feature.properties.geoid_co)
                     .map(d => d.label)
-                }</span></p>
+                }</span></p> */}
                 <div>
                     <div>
                         <p><b>Broadband access</b> {filterState.excludeDSL? <em>(Counting all DSL-only locations as Underserved)</em>: ""}</p>
