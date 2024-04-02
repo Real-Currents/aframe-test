@@ -68,7 +68,7 @@ export function getFillColor(color_scheme: string, excludeDSL: boolean): any {
       'match',
       ['get', category_variable],
       'Not Reported',
-      "rgba(0, 0, 0, 0.25)",
+      color_palette["legend_colors"]["bb_bead_categories"]["not_reported"],
       [
         'interpolate',
         ['linear'],
