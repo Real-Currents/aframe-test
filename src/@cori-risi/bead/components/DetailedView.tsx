@@ -210,16 +210,20 @@ export default function DetailedView () {
                     <p>
                         The blocks you've selected are located in the following counties. Click the link(s) 
                         below to view a data summary for the relevant county:<br/>
-                        {
+                        <ul>{
                         countyGEOIDs.length > 0 ?
                             countyGEOIDs.map((geoid, index) => (
+                                <li>
                                     <a key={index} href={"https://broadband-county-summary.ruralinnovation.us/?geoid=" + geoid} target="_blank">
-                                        {county_name_geoid.filter(d => d.id === geoid)[0].label}.
+                                        {county_name_geoid.filter(d => d.id === geoid)[0].label}
                                     </a>
+                                </li>
                             ))
                         : <></>
-                        }
+                        }</ul>
                     </p>
+                    <br />
+
                     {
                         (!(isp_info.length > 0))?
                             <p>Select blocks on the map to view reported broadband technology data<sup>&dagger;</sup></p> :
@@ -303,6 +307,8 @@ export default function DetailedView () {
                                 />
                             </div>
                     }
+                    <br />
+
                     {
                         (!(award_info.length > 0))?
                             <p>Select blocks on the map which have received prior federal funding to view detailed award data</p> :
@@ -357,6 +363,8 @@ export default function DetailedView () {
                                 />
                             </div>
                     }
+                    <br />
+
                     <div className={style['footnotes']}>
                         <div>
                             <p id="fcc-bdc-footnote">
