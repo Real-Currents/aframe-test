@@ -18,6 +18,14 @@ export type MapboxSourceLayerStyles = {
     layers: [(IntrinsicAttributes & LayerProps)];
 };
 
+const bead_block_sourcename =  "new_england_v3";
+
+const bead_block_source = {
+    "id": "bead_block_source",
+    "type": "vector",
+    "url": "mapbox://ruralinno." + bead_block_sourcename
+};
+
 const bead_style_function = (obj: typeof colors.legend_colors.bb_bead_categories) => {
     const array = [];
     for (let k in obj) {
@@ -97,14 +105,13 @@ export const isp_footprint_line: MapboxSourceLayerStyles = {
 
 export const not_reported_fill_layer: MapboxSourceLayerStyles = {
     "sources": [{
-        "id": "not_reported_fill_layer",
-        "type": "vector",
-        "url": "mapbox://ruralinno.bead_blockv1b"
-    }],
+        ...bead_block_source,
+        "id": "not_reported_fill_layer"
+    } as (IntrinsicAttributes & SourceProps)],
     "layers": [{
             "id": "not_reported_fill_layer.style",
             "source": "bead_dev",
-            "source-layer": "proj_beadbead_blockv1b",
+            "source-layer": "proj_bead" + bead_block_sourcename,
             "type": "fill",
             "paint": {
                 "fill-opacity": .05,
@@ -117,14 +124,13 @@ export const not_reported_fill_layer: MapboxSourceLayerStyles = {
 
 export const not_reported_pattern_layer: MapboxSourceLayerStyles = {
     "sources": [{
-        "id": "not_reported_pattern_layer",
-        "type": "vector",
-        "url": "mapbox://ruralinno.bead_blockv1b"
-    }],
+        ...bead_block_source,
+        "id": "not_reported_pattern_layer"
+    } as (IntrinsicAttributes & SourceProps)],
     "layers": [{
             "id": "not_reported_pattern_layer.style",
             "source": "bead_dev",
-            "source-layer": "proj_beadbead_blockv1b",
+            "source-layer": "proj_bead" + bead_block_sourcename,
             "type": "fill",
             "paint": {
                 "fill-opacity": .1,
@@ -137,14 +143,13 @@ export const not_reported_pattern_layer: MapboxSourceLayerStyles = {
 
 export const bead_dev: MapboxSourceLayerStyles = {
     "sources": [{
-        "id": "bead_dev",
-        "type": "vector",
-        "url": "mapbox://ruralinno.bead_blockv1b"
-    }],
+        ...bead_block_source,
+        "id": "bead_dev"
+    } as (IntrinsicAttributes & SourceProps)],
     "layers": [{
             "id": "bead_dev.style",
             "source": "bead_dev",
-            "source-layer": "proj_beadbead_blockv1b",
+            "source-layer": "proj_bead" + bead_block_sourcename,
             "type": "fill",
             "paint": {
                 // "fill-color": "#0080ff", // blue color fill
