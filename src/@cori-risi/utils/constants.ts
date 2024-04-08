@@ -3,7 +3,7 @@ export const beadDefinitions: { [key: string]: string } = {
 	"Underserved": "Underserved refers to areas where at least 80% of locations do not have 100/20 Mbps service",
 	"Unserved": "Unserved refers to areas where at least 80% of locations do not have 25/3 Mbps service",
 	"Not Reported": "Areas where data was not provided"
-}
+};
 
 export const block_columns = [
     "geoid_bl",

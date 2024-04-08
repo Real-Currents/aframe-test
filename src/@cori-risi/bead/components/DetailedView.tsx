@@ -207,21 +207,21 @@ export default function DetailedView () {
                         )
                     }
 
-                    <p>
+                    <div>
                         The blocks you've selected are located in the following counties. Click the link(s) 
                         below to view a data summary for the relevant county:<br/>
                         <ul>{
                         countyGEOIDs.length > 0 ?
                             countyGEOIDs.map((geoid, index) => (
-                                <li>
-                                    <a key={index} href={"https://broadband-county-summary.ruralinnovation.us/?geoid=" + geoid} target="_blank">
+                                <li key={index}>
+                                    <a href={"https://broadband-county-summary.ruralinnovation.us/?geoid=" + geoid} target="_blank">
                                         {county_name_geoid.filter(d => d.id === geoid)[0].label}
                                     </a>
                                 </li>
                             ))
                         : <></>
                         }</ul>
-                    </p>
+                    </div>
                     <br />
 
                     {
@@ -299,6 +299,11 @@ export default function DetailedView () {
                                                     ...newTableData
                                                 }
                                             });
+
+                                            // TODO: Remove blocks from selection that are not
+                                            //  associated with remaining isp tech records
+                                            // ...
+
                                         },
                                         "rowsPerPage": 5,
                                         "rowsPerPageOptions": [ 5, 10, 25, 50]
