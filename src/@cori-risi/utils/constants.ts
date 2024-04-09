@@ -57,6 +57,7 @@ export const isp_columns = [
     "geoid_bl",
     "new_alias",
     // "isp_id",
+    "cnt_locations",
     "technology",
     "max_down",
     "max_up",
@@ -66,6 +67,7 @@ export const isp_columns = [
 export const isp_labels = {
     "geoid_bl": "Block ID",
     "new_alias": "Internet service provider",
+    "cnt_locations": "Locations in block",
     "technology": "Broadband technology",
     "max_down": "Max download speed (Mbps)",
     "max_up": "Max upload speed (Mbps)"
