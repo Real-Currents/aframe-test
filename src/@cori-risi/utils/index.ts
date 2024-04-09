@@ -1,14 +1,5 @@
 import { PrettyTableInput, GeoJSONFeature } from "../types";
 
-// Swap the keys and values in a dictionary
-export function swapKeysValues(json: { [key: string]: string; } ): { [key: string]: string; } {
-  var ret: { [key: string]: string }  = {};
-  for(let key in json){
-    ret[json[key]] = key;
-  }
-  return ret;
-}
-
 // Convert from a list of ISP ids to their plain language names
 export function parseIspId(isp_ids: string, isp_name_lookup: { [key: string]: string } ): string {
 
@@ -86,4 +77,17 @@ export function reduceBBServiceBlockInfo(block_info: GeoJSONFeature[]): PrettyTa
     
     return block_info.reduce(blockInfoReducer, bb_service_accumulator);
 
+}
+
+// Swap the keys and values in a dictionary
+export function swapKeysValues(json: { [key: string]: string; } ): { [key: string]: string; } {
+    var ret: { [key: string]: string }  = {};
+    for(let key in json){
+        ret[json[key]] = key;
+    }
+    return ret;
+}
+
+export function sum(...numbers: number[])  {
+    return numbers.reduce((total, current) => total + current, 0);
 }

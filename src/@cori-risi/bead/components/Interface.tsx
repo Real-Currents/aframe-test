@@ -13,7 +13,7 @@ import { getFillColor } from '../../utils/colors';
 import isp_name_dict from '../../data/isp_name_lookup_rev.json';
 import isp_id_dict from '../../data/isp_dict_latest.json';
 
-import { swapKeysValues } from '../../utils/utils';
+import { swapKeysValues } from '../../utils';
 
 interface IspIdLookup {
     [key: string]: string[];
