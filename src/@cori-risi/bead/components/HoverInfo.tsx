@@ -9,7 +9,7 @@ import style from "./styles/GlMap.module.css";
 import {
     formatBroadbandTechnology,
     parseIspId, swapKeysValues
-} from "../../utils/utils";
+} from "../../utils";
 import isp_name_dict from "../../data/isp_name_lookup_rev.json";
 import county_name_geoid from "../../data/geoid_co_name_crosswalk.json";
 
