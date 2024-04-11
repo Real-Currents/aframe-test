@@ -3,7 +3,7 @@ export const beadDefinitions: { [key: string]: string } = {
 	"Underserved": "Underserved refers to areas where at least 80% of locations do not have 100/20 Mbps service",
 	"Unserved": "Unserved refers to areas where at least 80% of locations do not have 25/3 Mbps service",
 	"Not Reported": "Areas where data was not provided"
-}
+};
 
 export const block_columns = [
     "geoid_bl",
@@ -57,6 +57,7 @@ export const isp_columns = [
     "geoid_bl",
     "new_alias",
     // "isp_id",
+    "cnt_locations",
     "technology",
     "max_down",
     "max_up",
@@ -66,35 +67,68 @@ export const isp_columns = [
 export const isp_labels = {
     "geoid_bl": "Block ID",
     "new_alias": "Internet service provider",
+    "cnt_locations": "Locations in block",
     "technology": "Broadband technology",
     "max_down": "Max download speed (Mbps)",
     "max_up": "Max upload speed (Mbps)"
 };
 
 export const award_columns = [
-    "geoid_bl",
-    "geoid_bl_2010",
-    "applicant",
-    "latency",
-    "tier",
-    "authorized",
-    "default",
+    "brandname", 
+    "providerid",
+    "project",
+    "project_id",
+    "program_id",
     "geoid_co",
-    "county",
-    "state",
+    // "geoid_st",
+    "technology",
+    "maxdown",
+    "maxup",
+    "build_req",
+    "cadence",
+    "fund_awarded",
+    "fund_expended",
+    "fund_grant",
+    "fund_loan",
+    "fund_ob",
+    "loc_plan",
+    "loc_sup",
+    "project_cost",
+    "proj_start",
+    "proj_end",
+    "tranche",
+    "tribal_id",
+    "tribal_funding",
+    "tribal_location_pct"
 ];
 
 export const award_labels = {
-    "geoid_bl": "Block ID (2020 Census)",
-    "geoid_bl_2010": "Block ID (2010 Census)",
-    "applicant": "Applicant",
-    "latency": "Latency",
-    "tier": "Tier",
-    "authorized": "Authorized",
-    "default": "Default",
-    "geoid_co": "County ID",
-    "county": "County",
-    "state": "State"
+    "brandname": "brandname",
+    "providerid": "providerid",
+    "project": "project",
+    "project_id": "project_id",
+    "program_id": "program_id",
+    "geoid_co": "County",
+    // "geoid_st": "State",
+    "technology": "Broadband technology",
+    "maxdown": "Max download speed (Mbps)",
+    "maxup": "Max upload speed (Mbps)",
+    "build_req": "build_req",
+    "cadence": "cadence",
+    "fund_awarded": "fund_awarded",
+    "fund_expended": "fund_expended",
+    "fund_grant": "fund_grant",
+    "fund_loan": "fund_loan",
+    "fund_ob": "fund_ob",
+    "loc_plan": "loc_plan",
+    "loc_sup": "loc_sup",
+    "project_cost": "project_cost",
+    "proj_start": "proj_start",
+    "proj_end": "proj_end",
+    "tranche": "tranche",
+    "tribal_id": "tribal_id",
+    "tribal_funding": "tribal_funding",
+    "tribal_location_pct": "tribal_location_pct"
 };
 
 export const acs_columns = [

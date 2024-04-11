@@ -1,42 +1,25 @@
-.detail {}
+/* These are the only styles that are being applied by this "module" construct
+  ... the other rules were being ignore by React to I added them to an scss file
+ */
 
 .detailed-view {
-	background-color: white;
-	height: calc(100vh - 76px);
-	width: 100%;
-	max-width: calc(100vw);
-	line-height: 150%;
-	margin: 0 auto;
-	padding: 44px 54px;
+    background-color: white;
+    height: calc(100vh - 76px);
+    width: 100%;
+    max-width: calc(100vw);
+    line-height: 150%;
+    margin: 0 auto;
+    padding: 44px 54px;
 
-	overflow-y: scroll;
+    overflow-y: scroll;
 
-	pointer-events: all !important;
+    pointer-events: all !important;
 
     scroll-behavior: smooth;
 }
 
-.detailed-view .container {
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.detailed-view .header-wrapper {
-    margin: 100px 0px 50px 0px;
-}
-
-.detailed-view .header-wrapper button {
-    margin-right: 20px;
-    margin-left: 2.5px;
-}
-
 .detailed-view .mui-table-wrapper {
     margin: 30px 0px;
-}
-
-.detailed-view .affirmative-button {
-    color: #FFF;
-    background-color: #00835D;
 }
 
 .detailed-view ul li {
@@ -45,17 +28,14 @@
 }
 
 .detailed-view .footnotes {
-    margin: 30px 0px;
+    margin: 30px 0;
 }
 
-div[aria-label="Table Toolbar"] {
-    width: 100% !important;
+.header-wrapper {
+    margin: 100px 0 10px 0;
 }
 
-th.MuiTableCell-root {
-    padding: 0 !important;
-}
-
-th.MuiTableCell-root button.MuiButton-root {
-    min-width: 112px;
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
 }

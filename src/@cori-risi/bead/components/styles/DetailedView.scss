@@ -1,0 +1,63 @@
+#detail {
+    /* Extra general style rules can go here */
+    position: absolute;
+}
+
+#detail .block-summary {
+    display: flex;
+}
+
+#detail .block-summary div {
+    flex-basis: 80%;
+}
+
+#detail .block-summary .selection-controls {
+    flex-basis: 20%;
+    margin: 30px 0;
+    padding: 0 5% 0 5%;
+}
+
+#detail .block-summary button.MuiButton-root {
+    display: block;
+    //float: right;
+    margin: 2.5px;
+    min-width: 168px;
+    max-height: 44px;
+}
+
+@media (max-width: 760px) {
+    #detail .block-summary {
+        flex-direction: column;
+        margin: 30px 0;
+    }
+
+    #detail .block-summary div {
+        margin: 30px 0;
+    }
+
+    #detail .block-summary .selection-controls {
+        margin: 0;
+        padding: 0;
+    }
+
+    #detail .block-summary button.MuiButton-root {
+        display: inline-block;
+    }
+}
+
+#detail div[aria-label="Table Toolbar"] {
+    width: 100% !important;
+}
+
+#detail th.MuiTableCell-root {
+    padding: 0 !important;
+}
+
+#detail th.MuiTableCell-root button.MuiButton-root {
+    min-width: 112px !important;
+}
+
+#detail .affirmative-button {
+    color: #FFF;
+    background-color: #00835D;
+}

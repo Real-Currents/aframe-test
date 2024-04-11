@@ -8,19 +8,31 @@ import { CustomButton } from "./CustomInputs";
 import { selectMapSelection, setMapSelection } from "../features";
 import { IspNameLookup } from "../app/models";
 
-import { parseIspId, swapKeysValues, reduceBBServiceBlockInfo } from "../../utils/utils";
+import {
+    // parseIspId,
+    reduceBBServiceBlockInfo ,
+    swapKeysValues
+} from "../../utils";
 import { 
-    acs_columns, acs_labels, block_labels, block_columns, isp_columns, isp_labels, 
-    award_columns, award_labels  
+    // acs_columns,
+    // acs_labels,
+    // block_labels,
+    // block_columns,
+    isp_columns,
+    isp_labels,
+    award_columns,
+    award_labels
 } from '../../utils/constants';
-import { PrettyTableInput, BlockLevelFeature } from '../../types';
 import { jumpMapToFeature } from '../../utils/mapUtils';
+import { PrettyTableInput } from '../../types';
 
 import style from "./styles/DetailedView.module.css";
+import "./styles/DetailedView.scss";
 
 import PrettyTable from './PrettyTable';
 
 import county_name_geoid from '../../data/geoid_co_name_crosswalk.json';
+import federal_awards_programs from '../../data/awards_programs.json';
 import isp_name_dict from "../../data/isp_name_lookup_rev.json";
 const isp_name_lookup: IspNameLookup = isp_name_dict;
 
@@ -140,10 +152,30 @@ export default function DetailedView () {
         }
     }
 
-    function goToFeatures(features: FeatureCollection<any>, map: MapRef) {
+    function goToFeatures (features: FeatureCollection<any>, map: MapRef) {
         console.log("Call jumpMapToFeature");
 
         jumpMapToFeature(map, features, null);
+    }
+
+    function getTechnologyLabel (value: any) {
+        return (value === "10") ?
+            "Copper wire (DSL)" :
+            (value === "40") ?
+                "Coaxial cable/HFC" :
+                (value === "50") ?
+                    "Optical Carrier/Fiber to the Premises" :
+                    (value === "60") ?
+                        "Geostationary Satellite" :
+                        (value === "61") ?
+                            "Non-geostationary Satellite" :
+                            (value === "70") ?
+                                "Unlicensed Terrestrial Fixed Wireless" :
+                                (value === "71") ?
+                                    "Licensed Terrestrial Fixed Wireless" :
+                                    (value === "72") ?
+                                        "Licensed-by-Rule Terrestrial Fixed Wireless" :
+            "Other technology";
     }
 
     return (
@@ -164,64 +196,68 @@ export default function DetailedView () {
                     <div className={style['header-wrapper']}>
                         <h3>
                             Broadband service, technology, and funding information for selected 
-                            census blocks<sup>&dagger;</sup>
+                            census blocks<a href="#fcc-bdc-footnote" style={{textDecoration: "none"}}><sup>&dagger;</sup></a>
                         </h3>
-                        <div>
-                            <CustomButton
-                                className={style["affirmative-button"]}
-                                onClick={(evt) => {
-                                    if (block_info.length > 0) {
-                                        const featureCollection = {
-                                            "type": "FeatureCollection",
-                                            "features": [
-                                                ...block_info
-                                            ]
-                                        };
-                                        goToFeatures((featureCollection as FeatureCollection<any>), (window as { [key: string]: any })["map"] as MapRef);
-                                    }
-
-                                    showMap(evt);
-                                }}
-                                variant="outlined">
-                                See All On Map
-                            </CustomButton>                    
-                            <CustomButton
-                                onClick={(evt) => {
-                                    dispatch(setMapSelection({
-                                        "block_features": [],
-                                        "isp_tech_features": [],
-                                        "award_features": [],
-                                        "acs_features": []
-                                    }));
-                                }}
-                                variant="outlined">
-                                Clear selection
-                            </CustomButton>
-                        </div>
+                        <hr />
                     </div>                            
                     {
                         (
-                            bbServiceSummary !== undefined? 
-                                <PrettyTable data={bbServiceSummary} title={"Broadband service data"} subtitle={"For blocks in selection"} />: 
+                            bbServiceSummary !== undefined?
+                                <div className="block-summary">
+                                    <PrettyTable data={bbServiceSummary} title={"Broadband service data"} subtitle={"For blocks in selection"} />
+                                    { (block_info.length > 0) ? <div className="selection-controls">
+                                        <CustomButton
+                                            className={"affirmative-button"}
+                                            onClick={(evt) => {
+                                                if (block_info.length > 0) {
+                                                    const featureCollection = {
+                                                        "type": "FeatureCollection",
+                                                        "features": [
+                                                            ...block_info
+                                                        ]
+                                                    };
+                                                    goToFeatures((featureCollection as FeatureCollection<any>), (window as { [key: string]: any })["map"] as MapRef);
+                                                }
+
+                                                showMap(evt);
+                                            }}
+                                            variant="outlined">
+                                            See All On Map
+                                        </CustomButton>
+                                        <CustomButton
+                                            onClick={(evt) => {
+                                                dispatch(setMapSelection({
+                                                    "block_features": [],
+                                                    "isp_tech_features": [],
+                                                    "award_features": [],
+                                                    "acs_features": []
+                                                }));
+                                            }}
+                                            variant="outlined">
+                                            Clear selection
+                                        </CustomButton>
+                                    </div> : <></> }
+                                </div>
+                                :
                                 <></>
                         )
                     }
 
-                    <p>
+                    <div>
                         The blocks you've selected are located in the following counties. Click the link(s) 
                         below to view a data summary for the relevant county:<br/>
                         <ul>{
                         countyGEOIDs.length > 0 ?
                             countyGEOIDs.map((geoid, index) => (
-                                <li>
-                                    <a key={index} href={"https://broadband-county-summary.ruralinnovation.us/?geoid=" + geoid} target="_blank">
+                                <li key={index}>
+                                    <a href={"https://broadband-county-summary.ruralinnovation.us/?geoid=" + geoid} target="_blank">
                                         {county_name_geoid.filter(d => d.id === geoid)[0].label}
                                     </a>
                                 </li>
                             ))
                         : <></>
                         }</ul>
-                    </p>
+                    </div>
                     <br />
 
                     {
@@ -250,33 +286,7 @@ export default function DetailedView () {
                                                         b.properties[col].toString().trim() : "N/A";
                                                     
                                                     if (col === "technology") {
-                                                        if (value === "10") {
-                                                            value = "Copper wire (DSL)";
-                                                        }
-                                                        if (value === "40") {
-                                                            value = "Coaxial cable/HFC";
-                                                        }
-                                                        if (value === "50") {
-                                                            value = "Optical Carrier/Fiber to the Premises";
-                                                        }
-                                                        if (value === "60") {
-                                                            value = "Geostationary Satellite";
-                                                        }
-                                                        if (value === "61") {
-                                                            value = "Non-geostationary Satellite";
-                                                        }
-                                                        if (value === "70") {
-                                                            value = "Unlicensed Terrestrial Fixed Wireless";
-                                                        }
-                                                        if (value === "71") {
-                                                            value = "Licensed Terrestrial Fixed Wireless";
-                                                        }
-                                                        if (value === "72") {
-                                                            value = "Licensed-by-Rule Terrestrial Fixed Wireless";
-                                                        }
-                                                        if (value === "0") {
-                                                            value = "Other technology";
-                                                        }
+                                                        value = getTechnologyLabel(value);
                                                     }
                                                     values.push(value);
                                                     // }
@@ -299,6 +309,11 @@ export default function DetailedView () {
                                                     ...newTableData
                                                 }
                                             });
+
+                                            // TODO: Remove blocks from selection that are not
+                                            //  associated with remaining isp tech records
+                                            // ...
+
                                         },
                                         "rowsPerPage": 5,
                                         "rowsPerPageOptions": [ 5, 10, 25, 50]
@@ -332,6 +347,16 @@ export default function DetailedView () {
                                                     // const key = tuple[0].toString().trim();
                                                     // if (col === key) {
                                                     const value = (b.properties[col] !== null && typeof b.properties[col].toString !== "undefined") ?
+                                                        (col === "geoid_co") ?
+                                                            county_name_geoid
+                                                                .filter((d) => b.properties[col].toString().trim() === d.id)
+                                                                .map(d => d.label) :
+                                                        (col === "program_id") ?
+                                                            federal_awards_programs
+                                                                .filter((d) => parseInt(b.properties[col].toString().trim()) === d.program_id)
+                                                                .map(d => d.program_acronym || d.program_name) :
+                                                        (col === "technology") ?
+                                                            getTechnologyLabel(b.properties[col].toString().trim()) :
                                                         b.properties[col].toString().trim() : "N/A";
                                                     // console.log([col, value]);
                                                     values.push(value);

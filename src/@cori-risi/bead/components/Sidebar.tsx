@@ -18,7 +18,7 @@ import {ApiContext} from "../../contexts/ApiContextProvider";
 import { selectMapFilters, setMapFilters } from "../features";
 import {FilterState, IspIdLookup, IspNameLookup} from "../app/models";
 // import { getFillColor } from '../utils/colors';
-import { swapKeysValues } from '../../utils/utils';
+import { swapKeysValues } from '../../utils';
 
 import style from "./styles/Sidebar.module.css";
 
