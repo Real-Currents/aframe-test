@@ -302,11 +302,13 @@ function Sidebar () {
               </div>
               <div className={style["filter-section"]}>
                 <div className={style["filter-header"]}>
-                  <h5>Awarded RDOF funding</h5>
+                  <h5>Awarded federal funding</h5>
                   <InfoTooltip text={(`
-Census blocks in areas where previous winning applicants for an Auction 904 RDOF bid have been authorized to recieve funds.
-This filter maps the current 2020 Census blocks to the corresponding 2010 Census block(s) that  originally received the award.
+Funded indicates census blocks that have previously received awards from a federally funded program according to the FCC ([source citation]). 
+Unfunded indicates census blocks which have not previously received federal funding. 
 `)}/>
+{/* *all* locations are receiving service with advertised download/upload speeds of less than 100/20 Mbps.*/}
+{/*`)}/>*/}
                 </div>
                 <FormGroup row className={style["form-control-group"]}>
                   <FormControlLabel className={style["form-control-label"]}
@@ -317,7 +319,7 @@ This filter maps the current 2020 Census blocks to the corresponding 2010 Census
                         name="yes"
                       />
                     }
-                    label="Yes"
+                    label="Funded"
                     disabled={filterState.disableSidebar}
                   />
                   <FormControlLabel className={style["form-control-label"]}
@@ -328,7 +330,7 @@ This filter maps the current 2020 Census blocks to the corresponding 2010 Census
                         name="no"
                       />
                     }
-                    label="No"
+                    label="Unfunded"
                     disabled={filterState.disableSidebar}
                   />
                 </FormGroup>
