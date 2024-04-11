@@ -25,6 +25,26 @@
     max-height: 44px;
 }
 
+@media (max-width: 760px) {
+    #detail .block-summary {
+        flex-direction: column;
+        margin: 30px 0;
+    }
+
+    #detail .block-summary div {
+        margin: 30px 0;
+    }
+
+    #detail .block-summary .selection-controls {
+        margin: 0;
+        padding: 0;
+    }
+
+    #detail .block-summary button.MuiButton-root {
+        display: inline-block;
+    }
+}
+
 #detail div[aria-label="Table Toolbar"] {
     width: 100% !important;
 }
