@@ -5,15 +5,11 @@ import { FeatureCollection } from "geojson";
 import GeoJSONFeature from "maplibre-gl";
 import { MapRef } from "react-map-gl";
 import { CustomButton } from "./CustomInputs";
-import { selectMapSelection, setMapSelection } from "../features";
-import { IspNameLookup } from "../app/models";
+import PrettyTable from './PrettyTable';
 
+import { selectMapSelection, setMapSelection } from "../features";
+import { PrettyTableInput } from '../../types';
 import {
-    // parseIspId,
-    reduceBBServiceBlockInfo ,
-    swapKeysValues
-} from "../../utils";
-import { 
     // acs_columns,
     // acs_labels,
     // block_labels,
@@ -23,25 +19,20 @@ import {
     award_columns,
     award_labels
 } from '../../utils/constants';
-import { jumpMapToFeature } from '../../utils/mapUtils';
-import { PrettyTableInput } from '../../types';
+import {
+    goToFeatures
+} from '../../utils/mapUtils';
+import {
+    getLabel,
+    getTableData,
+    getTechnologyLabel,
+    reduceBBServiceBlockInfo
+} from "../../utils";
+
+import county_name_geoid from '../../data/geoid_co_name_crosswalk.json';
 
 import style from "./styles/DetailedView.module.css";
 import "./styles/DetailedView.scss";
-
-import PrettyTable from './PrettyTable';
-
-import county_name_geoid from '../../data/geoid_co_name_crosswalk.json';
-import federal_awards_programs from '../../data/awards_programs.json';
-import isp_name_dict from "../../data/isp_name_lookup_rev.json";
-const isp_name_lookup: IspNameLookup = isp_name_dict;
-
-function getLabel (col: string, labels: any) {
-    return (labels.hasOwnProperty(col)) ?
-        labels[col].trim() : col.trim();
-}
-
-const isp_name_lookup_rev = swapKeysValues(isp_name_lookup);
 
 export default function DetailedView () {
 
@@ -152,32 +143,6 @@ export default function DetailedView () {
         }
     }
 
-    function goToFeatures (features: FeatureCollection<any>, map: MapRef) {
-        console.log("Call jumpMapToFeature");
-
-        jumpMapToFeature(map, features, null);
-    }
-
-    function getTechnologyLabel (value: any) {
-        return (value === "10") ?
-            "Copper wire (DSL)" :
-            (value === "40") ?
-                "Coaxial cable/HFC" :
-                (value === "50") ?
-                    "Optical Carrier/Fiber to the Premises" :
-                    (value === "60") ?
-                        "Geostationary Satellite" :
-                        (value === "61") ?
-                            "Non-geostationary Satellite" :
-                            (value === "70") ?
-                                "Unlicensed Terrestrial Fixed Wireless" :
-                                (value === "71") ?
-                                    "Licensed Terrestrial Fixed Wireless" :
-                                    (value === "72") ?
-                                        "Licensed-by-Rule Terrestrial Fixed Wireless" :
-            "Other technology";
-    }
-
     return (
         <>
             <div id="detail" className={style["detailed-view"]}
@@ -266,37 +231,7 @@ export default function DetailedView () {
                             <div className={style['mui-table-wrapper']}>
                                 <MUIDataTable
                                     columns={isp_columns.map((col) => getLabel(col, isp_labels))}
-                                    data={[ ...isp_info
-                                        .filter((b: any) => {
-                                            // console.log("b: ", b);
-                                            return !!b && b !== null && b.hasOwnProperty("properties")
-                                        })
-                                        .map((b: any) => {
-                                            const values: string[] = [];
-
-                                            for (let col of isp_columns) {
-                                                // b.map((i: string) => {
-                                                if (b.properties.hasOwnProperty(col)
-                                                    && typeof b.properties[col] !== "undefined"
-                                                ) {
-                                                    // const tuple = i.toString().split(":");
-                                                    // const key = tuple[0].toString().trim();
-                                                    // if (col === key) {
-                                                    let value = (b.properties[col] !== null && typeof b.properties[col].toString !== "undefined") ?
-                                                        b.properties[col].toString().trim() : "N/A";
-                                                    
-                                                    if (col === "technology") {
-                                                        value = getTechnologyLabel(value);
-                                                    }
-                                                    values.push(value);
-                                                    // }
-                                                }
-                                                // });
-                                            }
-
-                                            return values;
-                                        })
-                                    ]}
+                                    data={[ ...getTableData(isp_info, isp_columns) ]}
                                     options={{
                                         "filterType": "checkbox",
                                         "onRowsDelete": (rowsDeleted: { data: { index: number, dataIndex: number }[], lookup: { [dataIndex: number]: boolean } }, newTableData: any[]) => {
@@ -330,44 +265,7 @@ export default function DetailedView () {
                             <div className={style['mui-table-wrapper']}>
                                 <MUIDataTable
                                     columns={award_columns.map((col) => getLabel(col, award_labels))}
-                                    data={[ ...award_info
-                                        .filter((b: any) => {
-                                            // console.log("b: ", b);
-                                            return !!b && b !== null && b.hasOwnProperty("properties")
-                                        })
-                                        .map((b: any) => {
-                                            const values: string[] = [];
-
-                                            for (let col of award_columns) {
-                                                // b.map((i: string) => {
-                                                if (b.properties.hasOwnProperty(col)
-                                                    && typeof b.properties[col] !== "undefined"
-                                                ) {
-                                                    // const tuple = i.toString().split(":");
-                                                    // const key = tuple[0].toString().trim();
-                                                    // if (col === key) {
-                                                    const value = (b.properties[col] !== null && typeof b.properties[col].toString !== "undefined") ?
-                                                        (col === "geoid_co") ?
-                                                            county_name_geoid
-                                                                .filter((d) => b.properties[col].toString().trim() === d.id)
-                                                                .map(d => d.label) :
-                                                        (col === "program_id") ?
-                                                            federal_awards_programs
-                                                                .filter((d) => parseInt(b.properties[col].toString().trim()) === d.program_id)
-                                                                .map(d => d.program_acronym || d.program_name) :
-                                                        (col === "technology") ?
-                                                            getTechnologyLabel(b.properties[col].toString().trim()) :
-                                                        b.properties[col].toString().trim() : "N/A";
-                                                    // console.log([col, value]);
-                                                    values.push(value);
-                                                    // }
-                                                }
-                                                // });
-                                            }
-
-                                            return values;
-                                        })
-                                    ]}
+                                    data={[ ...getTableData(award_info, award_columns) ]}
                                     options={{
                                         "filterType": "checkbox",
                                         "onRowsDelete": (rowsDeleted: { data: { index: number, dataIndex: number }[], lookup: { [dataIndex: number]: boolean } }, newTableData: any[]) => {

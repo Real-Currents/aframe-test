@@ -207,6 +207,11 @@ export function jumpMapToFeature (map: MapRef, feature: (Feature<any> | FeatureC
     }
 }
 
+export function goToFeatures (features: FeatureCollection<any>, map: MapRef) {
+    console.log("Call jumpMapToFeature...");
+    jumpMapToFeature(map, features, null);
+}
+
 //
 // function compareFeaturePriorityToF(feature: { layer: (IntrinsicAttributes & LayerProps) }, f: { layer: (IntrinsicAttributes & LayerProps) }) {
 //     if (f.layer.source === "auction-904-defaults-blocks") {
