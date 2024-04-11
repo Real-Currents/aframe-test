@@ -140,6 +140,8 @@ const GlMap: React.FC < GlMapProps > = ({
             // infoWrapper
             //     .style.opacity = "0.5";
             infoWrapper
+                .style.position = "absolute";
+            infoWrapper
                 .style.background = "rgba(46, 60, 67, 0.5) url('images/loading.gif') no-repeat fixed center";
             infoWrapper
                 .style.backgroundSize = "20px";
