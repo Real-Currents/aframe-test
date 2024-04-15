@@ -1,10 +1,8 @@
 import React from "react";
 import IntrinsicAttributes = React.JSX.IntrinsicAttributes;
 import { LayerProps, SourceProps, MapStyle } from "react-map-gl";
-import {colors, colors_excludeDSL, getBEADColor, getFillColor} from '../../utils/colors';
-import MAP_STYLE from '../../mapbox/styles/ruralinno/cl010e7b7001p15pe3l0306hv/style.json';
-import { Expression } from "maplibre-gl";
-import StyleFunction from 'react-map-gl';
+import {colors, colors_excludeDSL, getBEADColor, getFillColor} from '../../../utils/colors.ts';
+import MAP_STYLE from '../../../mapbox/styles/ruralinno/cl010e7b7001p15pe3l0306hv/style.json';
 
 // For more information on data-driven styles, see https://www.mapbox.com/help/gl-dds-ref/
 
@@ -18,7 +16,7 @@ export type MapboxSourceLayerStyles = {
     layers: [(IntrinsicAttributes & LayerProps)];
 };
 
-const bead_block_sourcename =  "new_england_v3";
+const bead_block_sourcename =  "bead_block_v3";
 
 const bead_block_source = {
     "id": "bead_block_source",

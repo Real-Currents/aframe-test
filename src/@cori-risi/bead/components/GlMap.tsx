@@ -36,7 +36,7 @@ import {
     not_reported_pattern_layer,
     contourStyle,
     mapboxStyle
-} from '../styles';
+} from '../mapbox/styles';
 
 import {
     selectMapFilters,
