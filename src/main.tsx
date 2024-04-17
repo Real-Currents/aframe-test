@@ -1,20 +1,17 @@
-import React, {ReactElement, useEffect} from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import PropTypes from "prop-types";
-import {Amplify, ResourcesConfig} from "aws-amplify";
-
-import amplifyconfig from './amplifyconfiguration.json';
-import aws_config from './aws-config';
-import App from './@cori-risi/bead/App.tsx';
 
 import mapboxgl from 'mapbox-gl';
+// import { Map } from 'mapbox-gl';
+// import { MapRef } from "react-map-gl";
+
+import { Amplify, ResourcesConfig } from "aws-amplify";
+import amplifyconfig from './amplifyconfiguration.json';
+import aws_config from './aws-config';
 
 import 'normalize.css';
 import './fonts.css';
-import './@cori-risi/bead/components/styles/images/loading.gif';
-import './@cori-risi/bead/components/styles/CustomAmplifyAuthenticator.css';
-// import { Map } from 'mapbox-gl';
-// import { MapRef } from "react-map-gl";
 
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
@@ -105,8 +102,6 @@ function initMain (evt: Event) {
             <OfflineNotification>
                 <PrivacyAuthenticator>
                     {/*<App />*/}
-                    <App app_id={react_app_id}
-                         content={() => root_content} />
                 </PrivacyAuthenticator>
             </OfflineNotification>
         </React.StrictMode>
