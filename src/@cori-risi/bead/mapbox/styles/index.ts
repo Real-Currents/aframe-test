@@ -1,8 +1,8 @@
 import React from "react";
 import IntrinsicAttributes = React.JSX.IntrinsicAttributes;
 import { LayerProps, SourceProps, MapStyle } from "react-map-gl";
-import { colors } from '../utils/colors';
-import MAP_STYLE from '../../mapbox/styles/ruralinno/cl010e7b7001p15pe3l0306hv/style.json';
+import {colors, colors_excludeDSL, getBEADColor, getFillColor} from '../../../utils/colors.ts';
+import MAP_STYLE from '../../../mapbox/styles/ruralinno/cl010e7b7001p15pe3l0306hv/style.json';
 
 // For more information on data-driven styles, see https://www.mapbox.com/help/gl-dds-ref/
 
@@ -15,6 +15,38 @@ export type MapboxSourceLayerStyles = {
     sources: [(IntrinsicAttributes & SourceProps)];
     layers: [(IntrinsicAttributes & LayerProps)];
 };
+
+const bead_block_sourcename =  "bead_block_v3";
+
+const bead_block_source = {
+    "id": "bead_block_source",
+    "type": "vector",
+    "url": "mapbox://ruralinno." + bead_block_sourcename
+};
+
+const bead_style_function = (obj: typeof colors.legend_colors.bb_bead_categories) => {
+    const array = [];
+    for (let k in obj) {
+        if (obj.hasOwnProperty(k)) {
+            let category = "Not Reported";
+            if (k === "served_area") {
+                category = ("Served");
+            } else if (k === "underserved_area") {
+                category = ("Underserved");
+            } else if (k === "unserved_area") {
+                category = ("Unserved");
+            } else if (k === "not_reported") {
+                category = ("Not Reported");
+            } else break;
+            array.push(category);
+            array.push(obj[k]);
+            console.log(`${category}:  ${obj[k]}`);
+        }
+    }
+    return array;
+};
+
+const total_locations_colors = getFillColor("Total locations", false);
 
 export const isp_footprint_fill: MapboxSourceLayerStyles = {
     "sources": [{
@@ -34,8 +66,8 @@ export const isp_footprint_fill: MapboxSourceLayerStyles = {
                 ["zoom"],
                 0, 0.2,
                 8, 0.2,
-                9, 0.1,
-                10, 0.1,
+                9, 0.2,
+                10, 0.2,
                 18, 0.05
             ]
         }
@@ -69,16 +101,53 @@ export const isp_footprint_line: MapboxSourceLayerStyles = {
     }]
 };
 
+export const not_reported_fill_layer: MapboxSourceLayerStyles = {
+    "sources": [{
+        ...bead_block_source,
+        "id": "not_reported_fill_layer"
+    } as (IntrinsicAttributes & SourceProps)],
+    "layers": [{
+            "id": "not_reported_fill_layer.style",
+            "source": "bead_dev",
+            "source-layer": "proj_bead" + bead_block_sourcename,
+            "type": "fill",
+            "paint": {
+                "fill-opacity": .05,
+                "fill-color": "black"
+            },
+            "filter": ['==', ['get', 'bead_category'], "Not Reported"]
+        },
+    ]
+};
+
+export const not_reported_pattern_layer: MapboxSourceLayerStyles = {
+    "sources": [{
+        ...bead_block_source,
+        "id": "not_reported_pattern_layer"
+    } as (IntrinsicAttributes & SourceProps)],
+    "layers": [{
+            "id": "not_reported_pattern_layer.style",
+            "source": "bead_dev",
+            "source-layer": "proj_bead" + bead_block_sourcename,
+            "type": "fill",
+            "paint": {
+                "fill-opacity": .1,
+                "fill-pattern": "stripe-5"
+            },
+            "filter": ['==', ['get', 'bead_category'], "Not Reported"]
+        },
+    ]
+};
+
 export const bead_dev: MapboxSourceLayerStyles = {
     "sources": [{
-        "id": "bead_dev",
-        "type": "vector",
-        "url": "mapbox://ruralinno.bead_blockv1b"
-    }],
+        ...bead_block_source,
+        "id": "bead_dev"
+    } as (IntrinsicAttributes & SourceProps)],
     "layers": [{
             "id": "bead_dev.style",
             "source": "bead_dev",
-            "source-layer": "proj_beadbead_blockv1b",
+            "source-layer": "proj_bead" + bead_block_sourcename,
             "type": "fill",
             "paint": {
                 // "fill-color": "#0080ff", // blue color fill
@@ -88,27 +157,7 @@ export const bead_dev: MapboxSourceLayerStyles = {
                     'rgba(255, 255, 255, 0.5)',
                     [
                         "match", ["get", "bead_category"],
-                        ...((obj) => {
-                            const array = [];
-                            for (let k in obj) {
-                                if (obj.hasOwnProperty(k)) {
-                                    let category = "Not Reported";
-                                    if (k === "served_area") {
-                                        category = ("Served");
-                                    } else if (k === "underserved_area") {
-                                        category = ("Underserved");
-                                    } else if (k === "unserved_area") {
-                                        category = ("Unserved");
-                                    } else if (k === "not_reported") {
-                                        category = ("Not Reported");
-                                    } else break;
-                                    array.push(category);
-                                    array.push(obj[k]);
-                                    console.log(`${category}:  ${obj[k]}`);
-                                }
-                            }
-                            return array;
-                        })(colors["legend_colors"]["bb_bead_categories"]),
+                        ...bead_style_function(colors["legend_colors"]["bb_bead_categories"]),
                         colors["legend_colors"]["bb_bead_categories"]["default"]
                     ]
                 ],
@@ -148,6 +197,18 @@ export const bead_dev: MapboxSourceLayerStyles = {
 //   "Property 'generateId' does not exist on type 'IntrinsicAttributes & SourceProps'."
 (bead_dev.sources[0] as any) !["generateId"] = true;
 
+let bead_merged_tr_opacity: any = [
+    "interpolate", ["linear"],
+    ["zoom"],
+    0, 0.0,
+    3, 0.0,
+    4, 0.05,
+    5, 0.5,
+    7, 0.75,
+    9, 0.75,
+    9.01, 0.05,
+    10, 0.0
+];
 export const bead_merged_tr: MapboxSourceLayerStyles = {
     "sources": [{
         "id": "bead_merged_tr",
@@ -167,44 +228,13 @@ export const bead_merged_tr: MapboxSourceLayerStyles = {
                 'rgba(255, 255, 255, 0.5)',
                 [
                     "match", ["get", "bead_category"],
-                    ...((obj) => {
-                        const array = [];
-                        for (let k in obj) {
-                            if (obj.hasOwnProperty(k)) {
-                                let category = "Not Reported";
-                                if (k === "served_area") {
-                                    category = ("Served");
-                                } else if (k === "underserved_area") {
-                                    category = ("Underserved");
-                                } else if (k === "unserved_area") {
-                                    category = ("Unserved");
-                                } else if (k === "not_reported") {
-                                    category = ("Not Reported");
-                                } else break;
-                                array.push(category);
-                                array.push(obj[k]);
-                                console.log(`${category}:  ${obj[k]}`);
-                            }
-                        }
-                        return array;
-                    })(colors["legend_colors"]["bb_bead_categories"]),
+                    ...bead_style_function(colors["legend_colors"]["bb_bead_categories"]),
                     // "rgba(105, 105, 105, 0)",
                     colors["legend_colors"]["bb_bead_categories"]["default"]
                 ]
             ],
             // "fill-opacity": 1.0,
-            "fill-opacity": [
-                "interpolate", ["linear"],
-                ["zoom"],
-                0, 0.0,
-                3, 0.0,
-                4, 0.05,
-                5, 0.5,
-                7, 0.75,
-                9, 0.75,
-                9.01, 0.05,
-                10, 0.0,
-            ]
+            "fill-opacity": bead_merged_tr_opacity
         },
     }]
 };
@@ -223,17 +253,46 @@ export const bead_merged_tr: MapboxSourceLayerStyles = {
             ['boolean', ['feature-state', 'hover'], false],
             'rgba(255, 255, 255, 0.5)',
             [
-                'interpolate',
-                ['linear'],
-                ['get', 'cnt_total_locations'],
-                0,
-                "rgba(0, 0, 0, 0.25)",
-                1,
-                'rgba(22, 52, 62, 0.5)',
-                100,
-                'rgba(93, 139, 122, 0.5)',
-                1000,
-                'rgba(163, 226, 181, 0.5)'
+                "match", ["get", "bead_category"],
+                ...bead_style_function(colors_excludeDSL["legend_colors"]["bb_bead_categories"]),
+                colors_excludeDSL["legend_colors"]["bb_bead_categories"]["default"]
+            ]
+        ],
+        // "fill-opacity": 1.0,
+        "fill-opacity": [
+            ...bead_merged_tr_opacity
+        ]
+    },
+});
+(bead_merged_tr.layers as any[]).push({
+    "id": "bead_merged_tr.style",
+    "source": "bead_merged_tr",
+    "source-layer": "proj_beadeligibility_tr",
+    "type": "fill",
+    "paint": {
+        // "fill-color": "#0080ff", // blue color fill
+        "fill-color": [
+            'case',
+            ['boolean', ['feature-state', 'hover'], false],
+            'rgba(255, 255, 255, 0.5)',
+            [
+                (total_locations_colors[0]),
+                (total_locations_colors[1]),
+                (total_locations_colors[2]),
+                (total_locations_colors[3]),
+                [
+                    (total_locations_colors[4][0]),
+                    (total_locations_colors[4][1]),
+                    (total_locations_colors[4][2]),
+                    0,
+                    (total_locations_colors[4][4]),
+                    2500,
+                    (total_locations_colors[4][6]),
+                    7500,
+                    (total_locations_colors[4][8]),
+                    25000,
+                    'rgba(22, 52, 62, 0.5)'
+                ]
             ]
         ],
         // "fill-opacity": 1.0,
@@ -243,9 +302,9 @@ export const bead_merged_tr: MapboxSourceLayerStyles = {
             0, 0.0,
             3, 0.0,
             4, 0.05,
-            5, 0.5,
-            7, 0.75,
-            9, 0.75,
+            5, 0.75,
+            7, 0.85,
+            9, 0.95,
             9.01, 0.05,
             10, 0.0,
         ]

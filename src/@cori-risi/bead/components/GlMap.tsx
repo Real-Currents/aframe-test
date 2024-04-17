@@ -1,4 +1,10 @@
-import React, {useState, useCallback, useEffect, useRef, useMemo, useContext, MutableRefObject} from 'react';
+import React, {
+    MutableRefObject,
+    useContext,
+    useEffect,
+    useRef,
+    useState
+} from 'react';
 import IntrinsicAttributes = React.JSX.IntrinsicAttributes;
 import { fitBounds } from 'viewport-mercator-project';
 import { useDispatch, useSelector } from "react-redux";
@@ -26,9 +32,11 @@ import {
     bead_merged_tr,
     isp_footprint_line,
     isp_footprint_fill,
+    not_reported_fill_layer,
+    not_reported_pattern_layer,
     contourStyle,
     mapboxStyle
-} from '../styles';
+} from '../mapbox/styles';
 
 import {
     selectMapFilters,
@@ -37,20 +45,15 @@ import {
     selectMapSelection,
     setMapSelection
 } from "../features";
-import { FilterState } from "../models/index";
+import { FilterState } from "../app/models";
 import { HoverInfo } from "./HoverInfo";
 
 import {
     // getBEADColor,
     getFillColor
-} from '../utils/colors';
-// import {
-//     formatBroadbandTechnology,
-//     parseIspId, swapKeysValues
-// } from '../utils/utils';
+} from '../../utils/colors';
 
-import broadband_technology_dict from './../data/broadband_technology.json';
-import isp_name_dict from "../data/isp_name_lookup_rev.json";
+import broadband_technology_dict from '../../data/broadband_technology.json';
 
 const broadband_technology: Record<string, string> = broadband_technology_dict;
 
@@ -58,8 +61,12 @@ const bead_merged_tr_bead_colors = {
     ...(bead_merged_tr.layers as any[])[0]
 };
 
-const bead_merged_tr_location_colors = {
+const bead_merged_tr_bead_x_dsl_colors = {
     ...(bead_merged_tr.layers as any[])[1]
+};
+
+const bead_merged_tr_loc_counts_colors = {
+    ...(bead_merged_tr.layers as any[])[2]
 };
 
 type GlMapProps = {
@@ -85,7 +92,7 @@ const GlMap: React.FC < GlMapProps > = ({
   // isShowing
 }: GlMapProps) => {
 
-    console.log("GLMap is re-rendering");
+    // console.log("GLMap is re-rendering");
 
     const apiContext = useContext(ApiContext);
 
@@ -128,6 +135,18 @@ const GlMap: React.FC < GlMapProps > = ({
     const getBlockInfoFromApi = (geoid_bl: string, token: string) => {
         // console.log("API Context state: ", apiContext);
 
+        const infoWrapper = window.document.getElementById("info-wrapper");
+        if (infoWrapper !== null) {
+            // infoWrapper
+            //     .style.opacity = "0.5";
+            infoWrapper
+                .style.position = "absolute";
+            infoWrapper
+                .style.background = "rgba(46, 60, 67, 0.5) url('images/loading.gif') no-repeat fixed center";
+            infoWrapper
+                .style.backgroundSize = "20px";
+        }
+
         const client: AxiosInstance | null = (apiContext.hasOwnProperty("apiClient") && apiContext.apiClient !== null
             && apiContext.apiClient.hasOwnProperty("get") && typeof apiContext.apiClient.get === "function"
         ) ?
@@ -142,6 +161,15 @@ const GlMap: React.FC < GlMapProps > = ({
                     // onFocusBlockChange(geoid_bl);
 
                     console.log("result is ", result);
+
+                    if (infoWrapper !== null) {
+                        // infoWrapper
+                        //     .style.opacity = "0.0";
+                        infoWrapper
+                            .style.pointerEvents = "none";
+                        infoWrapper
+                            .style.background = "transparent";
+                    }
 
                     if (result.data
                         && result.data.hasOwnProperty("features")
@@ -178,11 +206,11 @@ const GlMap: React.FC < GlMapProps > = ({
                                 && f["properties"].hasOwnProperty("type")
                                 && f["properties"]["type"] === "isp_tech"
                             ) {
-                                console.log("ISP for this feature:", f);
+                                // console.log("ISP for this feature:", f);
                                 for (let p in f["properties"]) {
                                     columns.push(p);
                                 }
-                                console.log(columns);
+                                // console.log(columns);
                                 return true;
                             }
                         });
@@ -208,11 +236,11 @@ const GlMap: React.FC < GlMapProps > = ({
                                 && f["properties"].hasOwnProperty("type")
                                 && f["properties"]["type"] === "acs"
                             ) {
-                                console.log("Tract ACS for this feature:", f);
+                                // console.log("Tract ACS for this feature:", f);
                                 for (let p in f["properties"]) {
                                     columns.push(p);
                                 }
-                                console.log(columns);
+                                // console.log(columns);
                                 return true;
                             }
                         });
@@ -226,7 +254,14 @@ const GlMap: React.FC < GlMapProps > = ({
                     }
                 })
                 .catch(error => {
+
                     console.error("Error fetching data:", error);
+
+                    if (infoWrapper !== null) {
+                        infoWrapper
+                            .style.opacity = "0.0";
+                    }
+
                     if (error.hasOwnProperty("code")) {
                         console.log("Error code:", error.code!);
                         if (error.code! === "ERR_BAD_REQUEST"
@@ -365,6 +400,17 @@ const GlMap: React.FC < GlMapProps > = ({
 
         bb_array = [ ...bb_array, "Not Reported" ];
 
+        let bead_category_variable = "bead_category";
+        if (filterState.excludeDSL === true) {
+            bead_category_variable = "bead_category_dsl_excluded";
+        }
+
+        let bead_filter = [
+            'in',
+            ['get', bead_category_variable],
+            ['literal', bb_array]
+        ];
+
         let isp_filter: any = [
             'all',
             ['>=', ['get', 'cnt_isp'], filterState.isp_count[0]],
@@ -377,9 +423,30 @@ const GlMap: React.FC < GlMapProps > = ({
             ['<=', ['get', 'cnt_total_locations'], filterState.total_locations[1]]
         ];
 
-        let new_filter: any = ["all", ['in', ['get', 'bead_category'],
-            ['literal', bb_array]
-        ], isp_filter, total_locations_filter];
+        let locations_100_20_filter: any = (!filterState.excludeDSL) ? [
+            'all',
+            ['>=', ['get', 'cnt_100_20'], filterState.locations_100_20[0]],
+            ['<=', ['get', 'cnt_100_20'], filterState.locations_100_20[1]]
+        ] : [
+            'all',
+            ['>=', ['get', 'cnt_100_20_dsl_excluded'], filterState.locations_100_20[0]],
+            ['<=', ['get', 'cnt_100_20_dsl_excluded'], filterState.locations_100_20[1]]
+        ];
+
+        let locations_25_3_filter: any = [
+            'all',
+            ['>=', ['get', 'cnt_25_3'], filterState.locations_25_3[0]],
+            ['<=', ['get', 'cnt_25_3'], filterState.locations_25_3[1]]
+        ];
+
+        let new_filter: any = [
+            "all",
+            bead_filter,
+            isp_filter,
+            total_locations_filter,
+            locations_100_20_filter,
+            locations_25_3_filter
+        ];
 
         if (filterState.isp_combos.length !== 0) {
             let isp_combo_filter = ['in', ['get', 'combo_isp_id'],
@@ -503,11 +570,25 @@ const GlMap: React.FC < GlMapProps > = ({
                         {(!!filterState.displayDataLayers) ?
                             <Layer {...(
                                 (filterState.colorVariable === "BEAD service level") ?
-                                    bead_merged_tr_bead_colors :
-                                    bead_merged_tr_location_colors
+                                    (!filterState.excludeDSL) ?
+                                        bead_merged_tr_bead_colors :
+                                        bead_merged_tr_bead_x_dsl_colors :
+                                    bead_merged_tr_loc_counts_colors
                             )} /> :
                             <></>
                         }
+                    </Source>
+
+                    <Source {...not_reported_fill_layer.sources[0]} >
+                        <Layer
+                            { ...not_reported_fill_layer.layers[0] }
+                        />
+                    </Source>
+
+                    <Source {...not_reported_pattern_layer.sources[0]} >
+                        <Layer
+                            { ...not_reported_pattern_layer.layers[0] }
+                        />
                     </Source>
 
                     <Source {...isp_footprint_fill.sources[0]} >
@@ -588,7 +669,7 @@ const GlMap: React.FC < GlMapProps > = ({
                     </div>
 
                     {mapZoom < MIN_ZOOM_LEVEL && (
-                        <animated.div style={props} className={style["zoom-message"]}>Zoom in further to view and filter data</animated.div>
+                        <animated.div style={props} className={style["zoom-message"]}>Zoom in further to filter and select data</animated.div>
                     )}
 
                     {/*{mapZoom >= MIN_ZOOM_LEVEL && (*/}

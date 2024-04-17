@@ -11,8 +11,13 @@ export default function InfoPanel() {
             minWidth: "100vw",
             minHeight: "calc(100vh - 75px)",
             paddingTop: "calc(100vh - 75px)",
+            // /* property name | duration | easing function | delay */
+            // transition: "padding-top 0.25s ease-in-out 0.05s",
             /* property name | duration | easing function | delay */
-            transition: "padding-top 0.25s ease-in-out 0.05s",
+            transition: "padding-top 0.25s ease-in-out 0.05s, opacity 0.05s ease-in-out 0.025s",
+            // opacity: "initial",
+            background: "transparent",
+            backgroundSize: "20px",
             zIndex: 100
         }}>
             {/*<div className={"info-map-viewer"} style={{ pointerEvents: "none", position: "relative", minHeight: "calc(100vh - 75px)", maxHeight: "calc(100vh - 75px)" }}>&nbsp;</div>*/}

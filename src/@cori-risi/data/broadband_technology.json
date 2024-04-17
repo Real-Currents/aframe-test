@@ -2,6 +2,5 @@
 	"Coaxial cable": "has_coaxial_cable",
 	"Copper wire (DSL)": "has_copperwire",
 	"Fiber": "has_fiber",
-	"LBR wireless": "has_lbr_wireless",
-	"Licensed wireless": "has_licensed_wireless"
+	"Fixed wireless": "has_wireless"
 }
