@@ -1,6 +1,7 @@
 import React, { ReactElement, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import PropTypes from "prop-types";
+import Aframe from "aframe";
 
 import mapboxgl from 'mapbox-gl';
 // import { Map } from 'mapbox-gl';
@@ -94,7 +95,7 @@ function initMain (evt: Event) {
         }
     }
 
-    console.log("Found embedded content:", root_content);
+    if (root_content.childNodes.length > 0) console.log("Found embedded content:", root_content.childNodes);
 
     const root = ReactDOM.createRoot(react_app_container!);
     root.render(
@@ -168,7 +169,7 @@ function PrivacyAuthenticator (props: { children?: ReactElement }) {
 
         setTimeout(() => {
             // form data-amplify-form="" data-amplify-authenticator-signin="" method="post"
-            const amplifyAuthenticatorForm: HTMLFormElement | null = document.querySelector('form[data-amplify-form]');
+            const amplifyAuthenticatorForm: Element | null = document.querySelector('form[data-amplify-form]');
             if (amplifyAuthenticatorForm !== null) {
 
                 const brandingInformation = (document.getElementById("branding-info") === null) ?
@@ -229,11 +230,11 @@ function PrivacyAuthenticator (props: { children?: ReactElement }) {
                     <p></p>
 `;
 
-                    const footerLoader: HTMLDivElement | null = document.querySelector('[data-amplify-footer]');
+                    const footerLoader: Element | null = document.querySelector('[data-amplify-footer]');
                     if (footerLoader !== null) {
-                        footerLoader.style.background = "none";
+                        (footerLoader as any).style.background = "none";
                         // (footerLoader).after(privacyInformation!);
-                        (footerLoader).before(privacyInformation!);
+                        (footerLoader as any).before(privacyInformation!);
                     }
                 }
             }

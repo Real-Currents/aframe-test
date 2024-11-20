@@ -1,6 +1,0 @@
-{
-	"Coaxial cable": "has_coaxial_cable",
-	"Copper wire (DSL)": "has_copperwire",
-	"Fiber": "has_fiber",
-	"Fixed wireless": "has_wireless"
-}

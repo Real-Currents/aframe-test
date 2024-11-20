@@ -1,9 +1,6 @@
-BEAD Dynamic Tool
-================
+A-frame test in Vite
+====================
 
-<b>About the Tool</b>
-<br />
-<br />
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
   eiusmod tempor incididunt ut labore et dolore magna aliqua. Volutpat
   sed cras ornare arcu dui. Duis aute irure dolor in reprehenderit in
@@ -12,5 +9,3 @@ BEAD Dynamic Tool
     Link to document</a>. </p>
 <br />
 <br />
-
-... yep, this readme needs an update.
